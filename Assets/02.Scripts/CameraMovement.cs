@@ -1,5 +1,4 @@
-﻿using UnityEditor.Search;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float _sensitivity = 600f;      // 마우스 감도
     [SerializeField] private float _clampAngle = 70f;        // 상하로 움직일 때 각도 제한
 
-    [SerializeField] private Transform _realCamera;          // 카메라 정보
+    [SerializeField] private Camera _realCamera;          // 카메라 정보
 
     [SerializeField] private Vector3 _dirNormalized;         // 방향 (어느 방향 보고있는지)
     [SerializeField] private Vector3 _finalDir;              // 최종적인 방향
@@ -19,6 +18,8 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private float _smoothness = 10f;
 
+    [SerializeField] private float _wheelSpeed = 3000f;
+
     private float _rotX;    // 위아래 회전
     private float _rotY;    // 좌우 회전
 
@@ -27,8 +28,8 @@ public class CameraMovement : MonoBehaviour
         _rotX = transform.localRotation.eulerAngles.x;
         _rotY = transform.localRotation.eulerAngles.y;
 
-        _dirNormalized = _realCamera.localPosition.normalized;
-        _finalDistance = _realCamera.localPosition.magnitude;
+        _dirNormalized = _realCamera.transform.localPosition.normalized;
+        _finalDistance = _realCamera.transform.localPosition.magnitude;
 
         // 커서 숨기기
         Cursor.lockState = CursorLockMode.Locked;
@@ -44,6 +45,8 @@ public class CameraMovement : MonoBehaviour
         _rotX = Mathf.Clamp(_rotX, -_clampAngle, _clampAngle);
         Quaternion rot = Quaternion.Euler(_rotX, _rotY, 0);
         transform.rotation = rot;
+
+        Zoom();
     }
 
     private void LateUpdate()
@@ -66,6 +69,15 @@ public class CameraMovement : MonoBehaviour
             _finalDistance = _maxDistance;
         }
 
-        _realCamera.localPosition = Vector3.Lerp(_realCamera.localPosition, _dirNormalized * _finalDistance, Time.deltaTime * _smoothness);
+        _realCamera.transform.localPosition = Vector3.Lerp(_realCamera.transform.localPosition, _dirNormalized * _finalDistance, Time.deltaTime * _smoothness);
+    }
+
+    private void Zoom()
+    {
+        float scrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        if (scrollWheel != 0)
+        {
+            _realCamera.fieldOfView -= scrollWheel * Time.deltaTime * _wheelSpeed;
+        }
     }
 }

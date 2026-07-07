@@ -373,13 +373,14 @@ MonoBehaviour:
   _followSpeed: 100
   _sensitivity: 600
   _clampAngle: 40
-  _realCamera: {fileID: 137748797}
+  _realCamera: {fileID: 137748796}
   _dirNormalized: {x: 0, y: 0, z: 0}
   _finalDir: {x: 0, y: 0, z: 0}
   _minDistance: 1
   _maxDistance: 10
   _finalDistance: 0
   _smoothness: 10
+  _wheelSpeed: 3000
 --- !u!4 &1083808007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 9ef625d01f79b4e4eb62fcdf032954ca, type: 3}
