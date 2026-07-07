@@ -51,8 +51,6 @@ public class SlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         if (_countText != null) _countText.gameObject.SetActive(false);
     }
 
-    // --- 드래그앤드롭 구현부 ---
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (inventory.slots[slotIndex].item == null) return;
