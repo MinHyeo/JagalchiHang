@@ -8,4 +8,5 @@ public class FarmPlotModel
     public long PlantedTimeStampTicks;
     public int CurrentGrowthStage;
     public bool IsWatered;
+    public bool IsUnlocked;
 }
