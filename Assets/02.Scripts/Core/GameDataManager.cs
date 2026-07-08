@@ -64,6 +64,7 @@ public class GameDataManager : MonoBehaviour
         return new Dictionary<string, T>();
     }
 
+    // 예시 GameDataManager.Instance.LoadData<EnemyData>();
     public void LoadData<T>() where T : GameDataBase
     {
         string dataName = typeof(T).Name;
@@ -74,7 +75,7 @@ public class GameDataManager : MonoBehaviour
         _dataList[dataName] = LoadJsonData<T>(dataName);
     }
 
-
+    // 예시 GameDataManager.Instance.GetData<EnemyData>();
     public T GetData<T>() where T : GameDataBase
     {
         string type = typeof(T).Name;

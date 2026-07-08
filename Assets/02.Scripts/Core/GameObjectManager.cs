@@ -24,12 +24,13 @@ public class GameObjectManager : MonoBehaviour
         _rootTransform = this.transform;
     }
 
+    // 예시 GameObjectManager.Instance.CreateObject("Prefab/Enemy/Enemy_01", Vector3.zero);
     public void CreateObject(string path, Vector3 spawnSpot)
     {
         CreateObjectAsync(path, spawnSpot).Forget();
     }
 
-    public async UniTaskVoid CreateObjectAsync(string path, Vector3 spawnSpot)
+    private async UniTaskVoid CreateObjectAsync(string path, Vector3 spawnSpot)
     {
         GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>(path);
         if (prefab == null)
@@ -43,6 +44,7 @@ public class GameObjectManager : MonoBehaviour
         gameObject.transform.position = spawnSpot;
     }
 
+    // 예시 GameObjectManager.Instance.RequestDestroyObject(this.gameObject);
     public void RequestDestroyObject(GameObject gameObject)
     {
         _poolManager.Push(gameObject);
