@@ -15,7 +15,7 @@ public class InventoryUI : UIBase
     private void Start()
     {
         _vm = new InventoryViewModel();
-        _vm.TestInventory();
+        _vm.AddInventorySlotViewModel();
         InitInventory();
     }
 
