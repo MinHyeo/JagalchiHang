@@ -26,13 +26,13 @@ public class NetworkInventoryService
     {
         // long uniqueId = GameUtil.GenerateUniqueId();
 
-        var newItem = new InventorySlotViewModel();
+        //var newItem = new InventorySlotViewModel();
         // newItem.ItemUniqueId = uniqueId;
-        newItem.ItemDataId = itemDataId;
-        newItem.ItemStackCount = addItemCount;
+        //newItem.ItemDataId = itemDataId;
+        //newItem.ItemStackCount = addItemCount;
 
-        var invenVm = GetLocalPlayerInventoryViewModel();
-        invenVm.AddInventorySlotViewModel(newItem);
+        //var invenVm = GetLocalPlayerInventoryViewModel();
+        //invenVm.AddInventorySlotViewModel(newItem);
 
         // NetworkManager_re.Inst.SaveLoadService.RequestSaveData();
     }

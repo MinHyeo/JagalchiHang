@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.ComponentModel;
+using System.Diagnostics.Contracts;
 
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -12,103 +13,79 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private InventorySlotViewModel _vm; // 뷰모델 멤버변수
-    private bool _isStackable;
-    private int _maxCount;
+    private InventoryUI _inventoryUI;
+    private Canvas _cachedCanvas;
 
-    private InventoryUI inventory;
+    public int SlotKey => transform.GetSiblingIndex();
 
-    private void OnEnable()
+    public void Setup(InventoryUI inv)
     {
-        var inventorySlotvm = NetworkManager_re.Inst.LocalPlayerService.GetLocalPlayerInventorySlotViewModel();
-        if (inventorySlotvm != null)
-        {
-            BindViewModel(inventorySlotvm);
-        }
+        _inventoryUI = inv;
     }
 
-    public void BindViewModel(InventorySlotViewModel vm) // 네트워크 매니저에서 호출
+    public void BindViewModel(InventorySlotViewModel vm)
     {
+        UnbindViewModel();
+
         _vm = vm;
         _vm.PropertyChanged += OnPropertyChanged_View;
-        _vm.InvokeOnceInit();
+
+        UpdateUI();
     }
 
-    public void OnDisable()
+    public void UnbindViewModel()
     {
         if (_vm != null)
-        { 
+        {
             _vm.PropertyChanged -= OnPropertyChanged_View;
+            _vm = null;
         }
     }
 
-    // TODO : 데이터 더 받아와 추가하기
     private void OnPropertyChanged_View(object sender, PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
         {
-            case nameof(InventorySlotViewModel.Name):
+            case nameof(InventorySlotViewModel.ItemDataId):
                 {
-                    
+                    UpdateIcon();
                 }
                 break;
-            case nameof(InventorySlotViewModel.Count):
+            case nameof(InventorySlotViewModel.ItemStackCount):
                 {
-                    _countText.text = $"{_vm.Count}";
-                }
-                break;
-            case nameof(InventorySlotViewModel.IsStackable):
-                {
-                    _isStackable = _vm.IsStackable;
-                }
-                break;
-            case nameof(InventorySlotViewModel.MaxCount):
-                {
-                    _maxCount = _vm.MaxCount;
+                    UpdateCountText();
                 }
                 break;
         }
     }
 
-    [HideInInspector] public int slotIndex;
-    private Canvas cachedCanvas;
-
-    public void Setup(int index, InventoryUI inv)
+    private void UpdateUI()
     {
-        slotIndex = index;
-        inventory = inv;
+        UpdateIcon();
+        UpdateCountText();
     }
 
-    public void UpdateSlot(InventorySlotViewModel slot)
+    private void UpdateIcon()
     {
-        if (slot != null && slot.item != null)
+        if (string.IsNullOrEmpty(_vm?.ItemDataId))
         {
-            _imageIcon.gameObject.SetActive(true);
-
-            if (slot.item.itemIcon != null)
-            {
-                _imageIcon.sprite = slot.item.itemIcon;
-            }
-
-            if (slot.count > 1 && _countText != null)
-            {
-                _countText.text = slot.count.ToString();
-                _countText.gameObject.SetActive(true);
-            }
-            else if (_countText != null)
-            {
-                _countText.gameObject.SetActive(false);
-            }
+            _imageIcon.gameObject.SetActive(false);
         }
         else
         {
-            ClearUI();
+            _imageIcon.gameObject.SetActive(true);
+            // TODO: 이미지 로드 필요
         }
     }
 
-    public void ClearUI()
+    private void UpdateCountText()
     {
-        _imageIcon.gameObject.SetActive(false);
-        if (_countText != null)
+        if (_vm != null && _vm.ItemStackCount > 1)
+        {
+            _countText.text = $"{_vm.ItemStackCount}";
+            _countText.gameObject.SetActive(true);
+        }
+        else
         {
             _countText.gameObject.SetActive(false);
         }
@@ -116,36 +93,31 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (inventory.slots[slotIndex].item == null) return;
+        if (_vm == null || string.IsNullOrEmpty(_vm.ItemDataId)) return;
 
-        if (!inventory.slots.ContainsKey(slotIndex)) return;
-
-        if (cachedCanvas == null)
+        if (_cachedCanvas == null)
         {
-            cachedCanvas = GetComponentInParent<Canvas>();
+            _cachedCanvas = GetComponentInParent<Canvas>();
         }
+        if (_cachedCanvas == null) return;
 
-        if (cachedCanvas == null) return;
-
-        _imageIcon.transform.SetParent(cachedCanvas.transform);
+        _imageIcon.transform.SetParent(_cachedCanvas.transform);
         _imageIcon.transform.SetAsLastSibling();
 
-        if (_canvasGroup != null) 
+        if (_canvasGroup != null)
         {
-            _canvasGroup.blocksRaycasts = false; 
+            _canvasGroup.blocksRaycasts = false;
         }
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (inventory == null || cachedCanvas == null) return;
-
-        if (!inventory.slots.ContainsKey(slotIndex) || inventory.slots[slotIndex].item == null) return;
+        if (_vm == null || string.IsNullOrEmpty(_vm.ItemDataId) || _cachedCanvas == null) return;
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            cachedCanvas.transform as RectTransform,
+            _cachedCanvas.transform as RectTransform,
             eventData.position,
-            cachedCanvas.worldCamera,
+            _cachedCanvas.worldCamera,
             out Vector2 localPoint
         );
         _imageIcon.rectTransform.localPosition = localPoint;
@@ -160,17 +132,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             _canvasGroup.blocksRaycasts = true;
         }
-
-        inventory.UpdateAllSlotsUI();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        InventorySlotUI startSlotUI = eventData.pointerDrag.GetComponent<InventorySlotUI>();
+        InventorySlotUI startSlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
 
-        if (startSlotUI != null)
+        if (startSlotUI != null && _inventoryUI != null)
         {
-            inventory.SwapSlots(startSlotUI.slotIndex, this.slotIndex);
+            _inventoryUI.RequestSwap(startSlotUI.SlotKey, this.SlotKey);
         }
     }
 }

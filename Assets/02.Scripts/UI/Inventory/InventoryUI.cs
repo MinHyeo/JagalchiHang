@@ -4,78 +4,56 @@ using UnityEngine;
 
 public class InventoryUI : UIBase
 {
-    [Header("슬롯 개수")]
-    [SerializeField] private int _slotCount = 36;
-
     [Header("등록 부분")]
     [SerializeField] private Transform _inventorySlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private Dictionary<int, InventorySlotViewModel> _slots = new Dictionary<int, InventorySlotViewModel>();
-    public Dictionary<int, InventorySlotViewModel> slots => _slots;
-
     private List<InventorySlotUI> _slotUIList = new List<InventorySlotUI>();
+
+    private InventoryViewModel _vm;
 
     private void Start()
     {
+        _vm = new InventoryViewModel();
+        _vm.TestInventory();
         InitInventory();
     }
 
-    void InitInventory()
+    private void InitInventory()
     {
-        _slots.Clear();
-        _slotUIList.Clear();
+        ClearSlotUIList();
 
-        for (int i = 0; i < _slotCount; i++)
+        for (int i = 0; i < _vm.InventorySlots.Count; i++)
         {
-            InventorySlotViewModel slotVM = new InventorySlotViewModel();
-            _slots.Add(i, slotVM);
-
             GameObject gObj = Instantiate(_slotPrefab, _inventorySlot);
+            if (gObj == null) return;
+
             InventorySlotUI slotUI = gObj.GetComponent<InventorySlotUI>();
+            if (slotUI == null) return;
 
-            slotUI.Setup(i, this);
+            slotUI.Setup(this);
+            slotUI.BindViewModel(_vm.InventorySlots[i]);
             _slotUIList.Add(slotUI);
-
-            slotUI.UpdateSlot(null);
         }
     }
 
-    public void SwapSlots(int startIdx, int endIdx)
+    private void ClearSlotUIList()
     {
-        if (startIdx == endIdx) return;
-        if (!_slots.ContainsKey(startIdx) || !_slots.ContainsKey(endIdx)) return;
-
-        ItemData tempItem = _slots[startIdx].ItemData;
-        int tempCount = _slots[startIdx].Count;
-
-        _slots[startIdx].SetItem(_slots[endIdx].ItemData, _slots[endIdx].Count);
-        _slots[endIdx].SetItem(tempItem, tempCount);
+        foreach (var slotUI in _slotUIList)
+        {
+            Destroy(slotUI.gameObject);
+        }
+        _slotUIList.Clear();
     }
 
-    public bool AcquireItem(ItemData item, int count = 1)
+    public void RequestSwap(int startIdx, int endIdx)
     {
-        if (item.isStackable)
-        {
-            for (int i = 0; i < _slotCount; i++)
-            {
-                if (_slots[i].ItemData == item && _slots[i].Count < _slots[i].MaxCount)
-                {
-                    _slots[i].Count += count;
-                    return true;
-                }
-            }
-        }
+        _vm.SwapSlots(startIdx, endIdx);
+    }
 
-        for (int i = 0; i < _slotCount; i++)
-        {
-            if (_slots[i].ItemData == null)
-            {
-                _slots[i].SetItem(item, count);
-                return true;
-            }
-        }
-
-        return false;
+    // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전
+    public bool RequestAcquireItem(string id, int count, bool isStackable, int maxCount)
+    {
+        return _vm.AcquireItem(id, count, isStackable, maxCount);
     }
 }
