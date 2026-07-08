@@ -5,6 +5,7 @@ public class GameObjectManager : MonoBehaviour
 {
     public static GameObjectManager Instance;
 
+    private Transform _rootTransform;
     private PoolManager _poolManager;
 
     private void Awake()
@@ -20,9 +21,15 @@ public class GameObjectManager : MonoBehaviour
     private void OnEnable()
     {
         _poolManager = new PoolManager();
+        _rootTransform = this.transform;
     }
 
-    public async UniTaskVoid CreateObject(string path, Vector3 spawnSpot)
+    public void CreateObject(string path, Vector3 spawnSpot)
+    {
+        CreateObjectAsync(path, spawnSpot).Forget();
+    }
+
+    public async UniTaskVoid CreateObjectAsync(string path, Vector3 spawnSpot)
     {
         GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>(path);
         if (prefab == null)
@@ -32,6 +39,7 @@ public class GameObjectManager : MonoBehaviour
         if (gameObject == null)
             return;
 
+        gameObject.transform.SetParent(_rootTransform);
         gameObject.transform.position = spawnSpot;
     }
 
