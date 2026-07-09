@@ -1,6 +1,7 @@
 [
   {
-    "name": "monster_1",
+    "Id": "Monster_1",
+    "Name": "monster_1",
     "MaxHp": 30,
     "Basic Attack": 8,
     "BasicAttackRange": 1.2,
@@ -9,7 +10,8 @@
     "PrefabPath": null
   },
   {
-    "name": "monster_2",
+    "Id": "Monster_2",
+    "Name": "monster_2",
     "MaxHp": 40,
     "Basic Attack": 12,
     "BasicAttackRange": 2.3,
@@ -18,7 +20,8 @@
     "PrefabPath": null
   },
   {
-    "name": "monster_3",
+    "Id": "Monster_3",
+    "Name": "monster_3",
     "MaxHp": 50,
     "Basic Attack": 20,
     "BasicAttackRange": 3.5,
