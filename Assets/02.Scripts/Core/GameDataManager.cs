@@ -3,21 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameDataManager : MonoBehaviour
+public class GameDataManager : SingletonBase<GameDataManager>
 {
-    public static GameDataManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
-
     [Serializable]
     private class SerializationWrapper<T>
     {
@@ -49,6 +36,7 @@ public class GameDataManager : MonoBehaviour
             string wrappedJson = "{\"items\":" + jsonString + "}";
             SerializationWrapper<T> wrapper = JsonUtility.FromJson<SerializationWrapper<T>>(wrappedJson);
 
+            Debug.Log($"a: {wrapper}, b : {wrapper.items}, c : {wrapper.items.Count}");
             if (wrapper != null && wrapper.items != null)
             {
                 Debug.Log($"{typeof(T).Name} 데이터를 {wrapper.items.Count}개 로드했습니다.");
@@ -75,8 +63,8 @@ public class GameDataManager : MonoBehaviour
         _dataList[dataName] = LoadJsonData<T>(dataName);
     }
 
-    // 예시 GameDataManager.Instance.GetData<EnemyData>();
-    public T GetData<T>() where T : GameDataBase
+    // 예시 GameDataManager.Instance.GetData<EnemyData>("id");
+    public T GetData<T>(string id) where T : GameDataBase
     {
         string type = typeof(T).Name;
         object dictObj = null;
@@ -84,7 +72,7 @@ public class GameDataManager : MonoBehaviour
         if (_dataList.TryGetValue(type, out dictObj))
         {
             var dict = dictObj as Dictionary<string, T>;
-            return dict[type];
+            return dict[id];
         }
         return null;
     }
