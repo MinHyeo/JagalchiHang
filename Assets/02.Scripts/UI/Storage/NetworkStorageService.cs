@@ -1,26 +1,25 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class NetworkInventoryService
+public class NetworkStorageService
 {
-    private InventoryViewModel _localInventoryViewModel;
+    private StorageViewModel _localStorageViewModel;
 
-    public InventoryViewModel GetLocalInventoryViewModel()
+    public StorageViewModel GetLocalStorageViewModel()
     {
-        if (_localInventoryViewModel == null)
+        if (_localStorageViewModel == null)
         {
-            CreateLocalInventoryViewModel();
+            CreateLocalStorageViewModel();
         }
 
-        return _localInventoryViewModel;
+        return _localStorageViewModel;
     }
 
-    private InventoryViewModel CreateLocalInventoryViewModel()
+    private StorageViewModel CreateLocalStorageViewModel()
     {
-        var inventoryVm = new InventoryViewModel();
-        _localInventoryViewModel = inventoryVm;
-        inventoryVm.AddInventorySlotViewModel();
-        return inventoryVm;
+        var storageVm = new StorageViewModel();
+        _localStorageViewModel = storageVm;
+        storageVm.AddInventorySlotViewModel();
+        return storageVm;
     }
 
     public void AddItem(string itemDataId, int addItemCount)
@@ -47,5 +46,4 @@ public class NetworkInventoryService
         // TODO : 저장 기능 구현 후 연동
         // NetworkManager_re.Inst.SaveLoadService.RequestSaveData();
     }
-
 }

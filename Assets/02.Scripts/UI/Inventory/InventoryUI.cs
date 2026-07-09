@@ -14,7 +14,8 @@ public class InventoryUI : UIBase
 
     private void Start()
     {
-        _vm = NetworkManager_re.Inst.InventoryService.GetLocalPlayerInventoryViewModel();
+        _vm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+        _vm.TestInventory();
         InitInventory();
     }
 
@@ -53,6 +54,11 @@ public class InventoryUI : UIBase
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
         NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+    }
+
+    public void RequestMoveFromStorage(int storageIdx, int invenIdx)
+    {
+        NetworkManager_re.Inst.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
     }
 
     // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전

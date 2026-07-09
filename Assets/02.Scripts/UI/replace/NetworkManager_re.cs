@@ -11,6 +11,7 @@ public class NetworkManager_re : MonoBehaviour
     public NetworkPlayerService_re LocalPlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
+    public NetworkStorageService StorageService { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class NetworkManager_re : MonoBehaviour
         // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
+        StorageService = new NetworkStorageService();
     }
 
     public void RequestCreateLocalPlayer()
@@ -84,13 +86,33 @@ public class NetworkManager_re : MonoBehaviour
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx)
     {
-        var invenVm = InventoryService.GetLocalPlayerInventoryViewModel();
+        var invenVm = InventoryService.GetLocalInventoryViewModel();
         var farmingVm = FarmingService.GetFarmingViewModel();
 
         if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !farmingVm.FarmingSlots.ContainsKey(farmingIdx)) return;
 
         var invenSlot = invenVm.InventorySlots[invenIdx];
         var farmingSlot = farmingVm.FarmingSlots[farmingIdx];
+
+        string tempId = invenSlot.ItemDataId;
+        int tempCount = invenSlot.ItemStackCount;
+
+        invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
+        farmingSlot.SetItem(tempId, tempCount);
+
+        // TODO: 추후 세이브 필요
+        // RequestSaveData();
+    }
+
+    public void RequestMoveItem_InvenToStorage(int invenIdx, int storageIdx)
+    {
+        var invenVm = InventoryService.GetLocalInventoryViewModel();
+        var storageVm = StorageService.GetLocalStorageViewModel();
+
+        if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !storageVm.StorageSlots.ContainsKey(storageIdx)) return;
+
+        var invenSlot = invenVm.InventorySlots[invenIdx];
+        var farmingSlot = storageVm.StorageSlots[storageIdx];
 
         string tempId = invenSlot.ItemDataId;
         int tempCount = invenSlot.ItemStackCount;

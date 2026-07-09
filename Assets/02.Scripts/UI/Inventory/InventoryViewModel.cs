@@ -19,12 +19,12 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    //public void TestInventory()
-    //{
-    //    AddInventorySlotViewModel();
-    //    _inventorySlots[0].SetItem("암", 3);
-    //    _inventorySlots[1].SetItem("암", 6);
-    //}
+    public void TestInventory()
+    {
+        AddInventorySlotViewModel();
+        _inventorySlots[0].SetItem("암", 3);
+        _inventorySlots[1].SetItem("암", 6);
+    }
 
     public void AddInventorySlotViewModel()
     {
