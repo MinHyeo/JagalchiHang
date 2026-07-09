@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class CropData
+public class CropData : GameDataBase
 {
-    public string Id;
     public string Name;
     public string Description;
     public int GrowthTimeSeconds;

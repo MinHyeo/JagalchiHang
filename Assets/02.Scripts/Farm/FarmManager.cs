@@ -111,4 +111,24 @@ public class FarmManager : MonoBehaviour
 
     }
 
+    public bool RequestUnlockPlot(FarmPlotModel plot)
+    {
+        if (plot == null)
+        {
+            Debug.LogWarning("존재하지 않는 밭입니다.");
+            return false;
+        }
+
+        if (plot.IsUnlocked == true)
+        {
+            Debug.LogWarning("이미 해금된 밭입니다.");
+            return false;
+        }
+
+        plot.IsUnlocked = true;
+
+        return true;
+    }
+
+
 }
