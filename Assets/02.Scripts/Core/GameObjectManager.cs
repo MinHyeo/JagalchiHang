@@ -1,22 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class GameObjectManager : MonoBehaviour
+public class GameObjectManager : SingletonBase<GameObjectManager>
 {
-    public static GameObjectManager Instance;
-
     private Transform _rootTransform;
     private PoolManager _poolManager;
-
-    private void Awake()
-    {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
 
     private void OnEnable()
     {
