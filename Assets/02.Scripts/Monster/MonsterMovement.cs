@@ -1,0 +1,71 @@
+﻿using UnityEngine;
+using System;
+using UnityEngine.AI;
+
+public class MonsterMovement : MonoBehaviour, IMonsterMoveable
+{
+    [SerializeField] private float _stoppingDistance = 0.1f;
+    private UnityEngine.AI.NavMeshAgent _agent;
+    private IMonsterStatProvider _statProvider;
+    private bool _isMoving;
+
+    public bool HasReachedDestination
+    {
+        get { return !_agent.pathPending && _agent.remainingDistance <= _stoppingDistance; }
+    }
+
+    public bool IsMoving
+    {
+        get { return _isMoving; }
+    }
+
+    public Vector3 Velocity
+    {
+        get { return _agent.velocity; }
+    }
+
+    public event Action<bool> OnMovingStateChanged;
+
+    private void Awake()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _statProvider = GetComponent<IMonsterStatProvider>();
+    }
+
+    private void Start()
+    {
+        _agent.speed = _statProvider.MoveSpeed;
+    }
+
+    private void Update()
+    {
+        bool wasMoving = _isMoving;
+        bool isCurrentlyMoving = _agent.velocity.sqrMagnitude > 0.01f;
+
+        if ( wasMoving != isCurrentlyMoving)
+        {
+            _isMoving = isCurrentlyMoving;
+            OnMovingStateChanged?.Invoke(_isMoving);
+        }
+    }
+
+    public void MoveTo(Vector3 destination)
+    {
+        _agent.SetDestination(destination);
+    }
+
+    public void Move(Vector3 direction)
+    {
+        if (direction == Vector3.zero)
+        {
+            return;
+        }
+
+        _agent.Move(direction.normalized * _agent.speed * Time.deltaTime);
+    }
+
+    public void Stop()
+    {
+        _agent.ResetPath();
+    }
+}
