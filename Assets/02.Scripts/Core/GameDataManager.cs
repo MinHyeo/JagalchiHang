@@ -3,21 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameDataManager : MonoBehaviour
+public class GameDataManager : SingletonBase<GameDataManager>
 {
-    public static GameDataManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if(Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-    }
-
     [Serializable]
     private class SerializationWrapper<T>
     {
