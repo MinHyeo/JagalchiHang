@@ -3,9 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _runSpeed = 8f;
-    [SerializeField] private float _smoothness = 10f;
+    [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
     
     private Vector2 _moveInput;
@@ -24,7 +22,15 @@ public class PlayerController : MonoBehaviour
 
     public Animator Animator => _animator;
 
+    private PlayerData _playerData;
+
     private StateMachine _stateMachine = new StateMachine();
+
+    private void Awake()
+    {
+        GameDataManager.Instance.LoadData<PlayerData>();
+        _playerData = GameDataManager.Instance.GetData<PlayerData>("Player_1");
+    }
 
     private void Start()
     {
@@ -40,7 +46,7 @@ public class PlayerController : MonoBehaviour
     {
         MoveDirection();
 
-        _speed = _isRuning ? _runSpeed : _moveSpeed;
+        _speed = _isRuning ? _playerData.MoveSpeed * 3f : _playerData.MoveSpeed;
 
         _stateMachine.Update(this);
 
@@ -126,7 +132,7 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(_moveDirection);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _smoothness * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
         }
     }
 
@@ -157,7 +163,7 @@ public class PlayerController : MonoBehaviour
             if(dir.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _smoothness * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
             }
         }
     }

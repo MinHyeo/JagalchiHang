@@ -32,7 +32,7 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
 
     private void Awake()
     {
-        MonsterData data = GameDataManager.Instance.GetData<MonsterData>();
+        MonsterData data = GameDataManager.Instance.GetData<MonsterData>("Monster_1");
     
         if (data == null)
         {
