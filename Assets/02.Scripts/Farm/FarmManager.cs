@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEditor.Build.Pipeline.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class FarmManager : MonoBehaviour
 {
@@ -15,6 +13,27 @@ public class FarmManager : MonoBehaviour
         }
         Instance = this;
     }
+
+    private void OnEnable()
+    {
+        TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
+
+    }
+
+    private void OnDisable()
+    {
+
+        TimeManager.Instance.OnMinuteChanged -= UpdateAllPlotGrowth;
+    }
+
+    private void UpdateAllPlotGrowth()
+    {
+
+
+
+
+    }
+
 
     public bool RequestPlantCrop(FarmPlotModel plot, string cropDataId)
     {
@@ -44,7 +63,7 @@ public class FarmManager : MonoBehaviour
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
-        plot.PlantedTimeStampTicks = DateTime.UtcNow.Ticks;
+        plot.GrowthMinutes = 0;
         plot.CurrentGrowthStage = 0;
 
         return true;
@@ -63,9 +82,19 @@ public class FarmManager : MonoBehaviour
             return 0;
         }
 
-        // TimeManager연동 후 시간 기반 성장 단계 구현 예정
+        int cropGrowthTotalMinutes = 0;
 
-        return plot.CurrentGrowthStage;
+        for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
+        {
+            cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
+
+            if (plot.GrowthMinutes < cropGrowthTotalMinutes)
+            {
+                return i;
+            }
+        }
+
+        return cropData.GrowthStageMinutesList.Count;
     }
 
     public bool RequestHarvestCrop(FarmPlotModel plot)
@@ -90,7 +119,7 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        if (currentStage < cropData.GrowthStageCount)
+        if (currentStage < cropData.GrowthStageMinutesList.Count)
         {
             Debug.LogWarning("아직 다 자라지 않았습니다.");
             return false;
