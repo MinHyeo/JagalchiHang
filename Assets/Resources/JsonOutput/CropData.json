@@ -1,6 +1,7 @@
 [
   {
-    "name": "Crob_item1",
+    "Id": "Crob_item1",
+    "Name": "Crob_item1",
     "Description": "작물 아이템 1 설명",
     "GrowthTimeSeconds": 2,
     "GrowthStageCount": 2,
@@ -14,7 +15,8 @@
     "PrefebPath": null
   },
   {
-    "name": "Crob_item2",
+    "Id": "Crob_item2",
+    "Name": "Crob_item2",
     "Description": "작물 아이템 2설명",
     "GrowthTimeSeconds": 2,
     "GrowthStageCount": 2,
@@ -28,7 +30,8 @@
     "PrefebPath": null
   },
   {
-    "name": "Crob_item3",
+    "Id": "Crob_item3",
+    "Name": "Crob_item3",
     "Description": "작물 아이템 3 설명",
     "GrowthTimeSeconds": 3,
     "GrowthStageCount": 3,
@@ -42,7 +45,8 @@
     "PrefebPath": null
   },
   {
-    "name": "Crob_item4",
+    "Id": "Crob_item4",
+    "Name": "Crob_item4",
     "Description": "작물 아이템 4 설명",
     "GrowthTimeSeconds": 3,
     "GrowthStageCount": 3,
@@ -56,7 +60,8 @@
     "PrefebPath": null
   },
   {
-    "name": "Crob_item5",
+    "Id": "Crob_item5",
+    "Name": "Crob_item5",
     "Description": "작물 아이템 5설명",
     "GrowthTimeSeconds": 4,
     "GrowthStageCount": 2,
@@ -70,7 +75,8 @@
     "PrefebPath": null
   },
   {
-    "name": "Crob_item6",
+    "Id": "Crob_item6",
+    "Name": "Crob_item6",
     "Description": "작물 아이템 6설명",
     "GrowthTimeSeconds": 3,
     "GrowthStageCount": 2,

@@ -1,6 +1,7 @@
 [
   {
-    "name": "item1",
+    "Id": "Item_01",
+    "Name": "item1",
     "IconPath": null,
     "IsStackable": true,
     "MaxCount": 8,
@@ -10,7 +11,8 @@
     "UseItemDescription": "1번 아이템 효과다!"
   },
   {
-    "name": "item2",
+    "Id": "Item_02",
+    "Name": "item2",
     "IconPath": null,
     "IsStackable": false,
     "MaxCount": 10,
@@ -20,7 +22,8 @@
     "UseItemDescription": "2번 아이템 효과다!"
   },
   {
-    "name": "item3",
+    "Id": "Item_03",
+    "Name": "item3",
     "IconPath": null,
     "IsStackable": true,
     "MaxCount": 20,
@@ -30,7 +33,8 @@
     "UseItemDescription": "3번 아이템 효과다!"
   },
   {
-    "name": "item4",
+    "Id": "Item_04",
+    "Name": "item4",
     "IconPath": null,
     "IsStackable": false,
     "MaxCount": 10,
@@ -40,7 +44,8 @@
     "UseItemDescription": "4번 아이템 효과다!"
   },
   {
-    "name": "item5",
+    "Id": "Item_05",
+    "Name": "item5",
     "IconPath": null,
     "IsStackable": false,
     "MaxCount": 10,
