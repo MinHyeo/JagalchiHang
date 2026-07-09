@@ -133,7 +133,7 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 10, y: 10}
-  m_Constraint: 2
+  m_Constraint: 0
   m_ConstraintCount: 6
 --- !u!1 &4350853828136478582
 GameObject:
@@ -185,6 +185,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efb1c13bce700ed47a97d279e05430ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUI
-  _slotCount: 36
   _inventorySlot: {fileID: 138803688540672614}
   _slotPrefab: {fileID: 5758770153417561641, guid: 89328b222a2d8214eb30d1d697cd7151, type: 3}
