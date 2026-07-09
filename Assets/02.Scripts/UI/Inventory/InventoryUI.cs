@@ -14,8 +14,7 @@ public class InventoryUI : UIBase
 
     private void Start()
     {
-        _vm = new InventoryViewModel();
-        _vm.AddInventorySlotViewModel();
+        _vm = NetworkManager_re.Inst.InventoryService.GetLocalPlayerInventoryViewModel();
         InitInventory();
     }
 
@@ -51,9 +50,15 @@ public class InventoryUI : UIBase
         _vm.SwapSlots(startIdx, endIdx);
     }
 
+    public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
+    {
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+    }
+
     // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전
     public bool RequestAcquireItem(string id, int count, bool isStackable, int maxCount)
     {
         return _vm.AcquireItem(id, count, isStackable, maxCount);
     }
+
 }
