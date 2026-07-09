@@ -10,6 +10,7 @@ public class NetworkManager_re : MonoBehaviour
 
     public NetworkPlayerService_re LocalPlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
+    public NetworkFarmingService FarmingService { get; private set; }
 
     private void Awake()
     {
@@ -20,8 +21,8 @@ public class NetworkManager_re : MonoBehaviour
     private void InitNetworkService()
     {
         // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
-        LocalPlayerService = new NetworkPlayerService_re();
         InventoryService = new NetworkInventoryService();
+        FarmingService = new NetworkFarmingService();
     }
 
     public void RequestCreateLocalPlayer()
@@ -80,4 +81,24 @@ public class NetworkManager_re : MonoBehaviour
     //    newPlayerData.PlayerTotalExp = 0;
     //    return newPlayerData;
     //}
+
+    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx)
+    {
+        var invenVm = InventoryService.GetLocalPlayerInventoryViewModel();
+        var farmingVm = FarmingService.GetFarmingViewModel();
+
+        if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !farmingVm.FarmingSlots.ContainsKey(farmingIdx)) return;
+
+        var invenSlot = invenVm.InventorySlots[invenIdx];
+        var farmingSlot = farmingVm.FarmingSlots[farmingIdx];
+
+        string tempId = invenSlot.ItemDataId;
+        int tempCount = invenSlot.ItemStackCount;
+
+        invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
+        farmingSlot.SetItem(tempId, tempCount);
+
+        // TODO: 추후 세이브 필요
+        // RequestSaveData();
+    }
 }

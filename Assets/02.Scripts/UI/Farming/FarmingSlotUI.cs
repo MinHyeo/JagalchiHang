@@ -147,7 +147,7 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         InventorySlotUI fromInventorySlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
         if (fromInventorySlotUI != null) 
         {
-            NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(fromInventorySlotUI.SlotKey, this.SlotKey);
+            _farmingUI.RequestMoveFromInventory(fromInventorySlotUI.SlotKey, this.SlotKey);
         }
     }
 }

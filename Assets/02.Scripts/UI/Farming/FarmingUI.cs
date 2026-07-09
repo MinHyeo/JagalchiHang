@@ -50,4 +50,9 @@ public class FarmingUI : UIBase
     {
         _vm.SwapSlots(startIdx, endIdx);
     }
+
+    public void RequestMoveFromInventory(int invenIdx, int farmingIdx)
+    {
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+    }
 }

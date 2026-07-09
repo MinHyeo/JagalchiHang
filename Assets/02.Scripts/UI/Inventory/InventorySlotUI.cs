@@ -136,11 +136,19 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnDrop(PointerEventData eventData)
     {
-        InventorySlotUI startSlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
+        if (_inventoryUI == null) return;
 
-        if (startSlotUI != null && _inventoryUI != null)
+        InventorySlotUI fromInventorySlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
+        if (fromInventorySlotUI != null)
         {
-            _inventoryUI.RequestSwap(startSlotUI.SlotKey, this.SlotKey);
+            _inventoryUI.RequestSwap(fromInventorySlotUI.SlotKey, this.SlotKey);
+            return;
+        }
+
+        FarmingSlotUI fromFarmingSlotUI = eventData.pointerDrag?.GetComponent<FarmingSlotUI>();
+        if (fromFarmingSlotUI != null)
+        {
+            _inventoryUI.RequestMoveFromFarming(fromFarmingSlotUI.SlotKey, this.SlotKey);
         }
     }
 }
