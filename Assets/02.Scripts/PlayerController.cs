@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private string _playerDataId;
     [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
     
@@ -16,24 +17,30 @@ public class PlayerController : MonoBehaviour
     
     private float _speed;
 
+    private PlayerData _playerData;
+
     public bool IsRunning => _isRuning;
     public bool IsWalking => _isWalking;
     public bool IsAttacking => _isAttacking;
 
     public Animator Animator => _animator;
 
-    private PlayerData _playerData;
+    private PlayerStatusController _statusController;
 
     private StateMachine _stateMachine = new StateMachine();
 
     private void Awake()
     {
-        GameDataManager.Instance.LoadData<PlayerData>();
-        _playerData = GameDataManager.Instance.GetData<PlayerData>("Player_1");
+        _statusController = this.GetComponent<PlayerStatusController>();
     }
 
     private void Start()
     {
+        GameDataManager.Instance.LoadData<PlayerData>();
+        _playerData = GameDataManager.Instance.GetData<PlayerData>(_playerDataId);
+
+        _statusController.InitPlayerStatus(_playerData);
+
         _stateMachine.AddState(StateType.Idle, new IdleState());
         _stateMachine.AddState(StateType.Walk, new WalkState());
         _stateMachine.AddState(StateType.Run, new RunState());
