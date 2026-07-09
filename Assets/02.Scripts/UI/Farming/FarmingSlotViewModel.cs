@@ -72,6 +72,20 @@ public class FarmingSlotViewModel : ViewModelBase
         }
     }
 
+    private bool _isUsable;
+    public bool IsUsable
+    {
+        get => _isUsable;
+        set
+        {
+            if (_isUsable != value)
+            {
+                _isUsable = value;
+                OnPropertyChanged(nameof(IsUsable));
+            }
+        }
+    }
+
     // TODO : 데이터 드리븐으로 받아오기(네트워크 매니저에 생성하여 부르기)
     public void SetItem(string id, int count, bool stackable = true, int max = 99)
     {
