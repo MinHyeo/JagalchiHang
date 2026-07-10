@@ -2,7 +2,7 @@
   {
     "Id": "Player_1",
     "name": "player1",
-    "Max HP": 100,
+    "MaxHp": 100,
     "MaxHunger": 30,
     "MaxThirst": 20,
     "AttackPower": 30,
