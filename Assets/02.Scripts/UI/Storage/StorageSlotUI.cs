@@ -1,29 +1,28 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
+﻿using System.ComponentModel;
 using TMPro;
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     [Header("등록 부분")]
     [SerializeField] private Image _imageIcon;
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    private InventorySlotViewModel _vm; // 뷰모델 멤버변수
-    private InventoryUI _inventoryUI;
+    private StorageSlotViewModel _vm; // 뷰모델 멤버변수
+    private StorageUI _storageUI;
     private Canvas _cachedCanvas;
 
     public int SlotKey => transform.GetSiblingIndex();
 
-    public void Setup(InventoryUI inv)
+    public void Setup(StorageUI inv)
     {
-        _inventoryUI = inv;
+        _storageUI = inv;
     }
 
-    public void BindViewModel(InventorySlotViewModel vm)
+    public void BindViewModel(StorageSlotViewModel vm)
     {
         UnbindViewModel();
 
@@ -46,12 +45,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     {
         switch (e.PropertyName)
         {
-            case nameof(InventorySlotViewModel.ItemDataId):
+            case nameof(StorageSlotViewModel.ItemDataId):
                 {
                     UpdateIcon();
                 }
                 break;
-            case nameof(InventorySlotViewModel.ItemStackCount):
+            case nameof(StorageSlotViewModel.ItemStackCount):
                 {
                     UpdateCountText();
                 }
@@ -136,25 +135,20 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (_inventoryUI == null) return;
+        if (_storageUI == null) return;
+
+        StorageSlotUI fromStorageSlotUI = eventData.pointerDrag?.GetComponent<StorageSlotUI>();
+        if (fromStorageSlotUI != null)
+        {
+            _storageUI.RequestSwap(fromStorageSlotUI.SlotKey, this.SlotKey);
+            return;
+        }
 
         InventorySlotUI fromInventorySlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
         if (fromInventorySlotUI != null)
         {
-            _inventoryUI.RequestSwap(fromInventorySlotUI.SlotKey, this.SlotKey);
+            _storageUI.RequestMoveFromInventory(fromInventorySlotUI.SlotKey, this.SlotKey);
             return;
-        }
-
-        FarmingSlotUI fromFarmingSlotUI = eventData.pointerDrag?.GetComponent<FarmingSlotUI>();
-        if (fromFarmingSlotUI != null)
-        {
-            _inventoryUI.RequestMoveFromFarming(fromFarmingSlotUI.SlotKey, this.SlotKey);
-        }
-
-        StorageSlotUI fromStorageSlotrUI = eventData.pointerDrag?.GetComponent<StorageSlotUI>();
-        if (fromStorageSlotrUI != null)
-        {
-            _inventoryUI.RequestMoveFromStorage(fromStorageSlotrUI.SlotKey, this.SlotKey);
         }
     }
 }
