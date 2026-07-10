@@ -1,0 +1,65 @@
+﻿using UnityEngine;
+using System;
+using Unity.Behavior;
+using Unity.Properties;
+using Action = Unity.Behavior.Action;
+
+[Serializable, GeneratePropertyBag]
+[NodeDescription(
+    name : "Chase Trail",
+    story : "[Agent]가 발견한 흔적 위치로 이동한다",
+    category : "Action",
+    id : "d4e5f60718293a4b5c6d7e8f90a1b2c3")]
+
+public partial class ChaseTrailAction : Action
+{
+    [SerializeReference] public BlackboardVariable<GameObject> Agent;
+
+    private IMonsterMoveable _moveable;
+    private IMonsterPerceivable _perceivable;
+
+    protected override Status OnStart()
+    {
+        _moveable = Agent.Value.GetComponent<IMonsterMoveable>();
+        _perceivable = Agent.Value.GetComponent<IMonsterPerceivable>();
+
+        if (!_perceivable.HasDetectedTrail)
+        {
+            return Status.Failure;
+        }
+
+        return Status.Running;
+    }
+
+    protected override Status OnUpdate()
+    {
+        if (!_perceivable.HasDetectedTrail)
+        {
+            _moveable.Stop();
+            return Status.Failure;
+        }
+
+        Vector3 trailPosition = _perceivable.TrailPosition.Value;
+        _moveable.MoveTo(trailPosition);
+
+        if (_moveable.HasReachedDestination)
+        {
+            _perceivable.ClearTrail();
+            return Status.Success;
+        }
+
+        return Status.Running;
+    }
+
+    protected override void OnEnd()
+    {
+        try
+        {
+            _moveable.Stop();
+        }
+        catch
+        {
+
+        }
+    }
+}
