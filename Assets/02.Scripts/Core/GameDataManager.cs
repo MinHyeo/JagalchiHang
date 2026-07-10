@@ -74,4 +74,17 @@ public class GameDataManager : SingletonBase<GameDataManager>
         }
         return null;
     }
+
+    public List<string> GetAllDataId<T>() where T : GameDataBase
+    {
+        string type = typeof(T).Name;
+        object dictObj = null;
+
+        if (_dataList.TryGetValue(type, out dictObj))
+        {
+            var dict = dictObj as Dictionary<string, T>;
+            return dict.Keys.ToList();
+        }
+        return null;
+    }
 }
