@@ -112,9 +112,12 @@ public class PlayerController : MonoBehaviour
         if (context.performed == false) return;
         if (_isAttacking == true) return;
 
-        _isAttacking = true;
+        if(_isPressedMouseRight == true)
+        {
+            _isAttacking = true;
 
-        SetState(StateType.Attack);
+            SetState(StateType.Attack);
+        }
     }
 
     // 공격 애니메이션이 종료되면 공격 상태 해제
@@ -156,10 +159,14 @@ public class PlayerController : MonoBehaviour
     // 마우스 우클릭 입력 처리
     public void OnLookToMousePos(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
-            // 한번 누를 때마다 true/false 변경
-            _isPressedMouseRight = !_isPressedMouseRight;
+            _isPressedMouseRight = true;
+        }
+
+        if(context.canceled)
+        {
+            _isPressedMouseRight = false;
         }
     }
 
