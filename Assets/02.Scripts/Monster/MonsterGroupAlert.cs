@@ -89,7 +89,7 @@ public class MonsterGroupAlert : MonoBehaviour, IMonsterAlertable
         _alertPosition = alertPosition;
         _alertElapsedTime = 0f;
 
-        Debug.Log($"{name} : 경보 수신, 목표 위치 {alertPosition}");
+        // Debug.Log($"{name} : 경보 수신, 목표 위치 {alertPosition}");
     }
 
     public void ClearAlert()
@@ -97,7 +97,7 @@ public class MonsterGroupAlert : MonoBehaviour, IMonsterAlertable
         _isAlerted =false;
         _alertPosition = null;
 
-        Debug.Log($"{name} : 경보 해제");
+        // Debug.Log($"{name} : 경보 해제");
     }
 
     private void OnDrawGizmosSelected()

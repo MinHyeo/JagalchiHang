@@ -7,6 +7,9 @@ public class MonsterFlockMovement : MonoBehaviour, IMonsterFlockMovable
     [SerializeField] private float _alignmentWeight = 1f;
     [SerializeField] private float _cohesionWeight = 1f;
     [SerializeField] private float _separationDistance = 2f;
+    [SerializeField] private float _obstacleAvoidDistance = 2f;
+    [SerializeField] private float _obstacleAvoidWeight = 3f;
+    [SerializeField] private LayerMask _obstacleLayer;
 
     private IMonsterMoveable _moveable;
     private IMonsterFlockperceivable _flockPerceivable;
@@ -31,7 +34,24 @@ public class MonsterFlockMovement : MonoBehaviour, IMonsterFlockMovable
         Vector3 cohesion = CalculateCohesion(neighbors);
 
         Vector3 combinedDirection = (separation * _separationWeight) + (alignment * _alignmentWeight) + (cohesion * _cohesionWeight);
+        Vector3 obstacleAvoidance = CalculateObstacleAvoidance(combinedDirection);
+        combinedDirection += obstacleAvoidance * _obstacleAvoidWeight;
         _moveable.Move(combinedDirection);
+    }
+
+    private Vector3 CalculateObstacleAvoidance(Vector3 moveDirection)
+    {
+        if (moveDirection ==  Vector3.zero)
+        {
+            return Vector3.zero;
+        }
+
+        if (Physics.Raycast(transform.position, moveDirection.normalized, out RaycastHit hit, _obstacleAvoidDistance, _obstacleLayer))
+        {
+            return hit.normal;
+        }
+
+        return Vector3.zero;
     }
 
     private Vector3 CalculateSeparation(IReadOnlyList<Transform> neighbors)

@@ -25,7 +25,7 @@ public partial class ChasePlayerAction : Action
         _perceivable = Agent.Value.GetComponent<IMonsterPerceivable>();
         _combatable = Agent.Value.GetComponent<IMonsterCombatable>();
 
-        Debug.Log($"{Agent.Value.name} : Chase Player 노드 시작됨 (moveable null? {_moveable == null}, perceivable null? {_perceivable == null}, combatable null? {_combatable == null})");
+       // Debug.Log($"{Agent.Value.name} : Chase Player 노드 시작됨 (moveable null? {_moveable == null}, perceivable null? {_perceivable == null}, combatable null? {_combatable == null})");
 
         return Status.Running;
     }
@@ -34,7 +34,7 @@ public partial class ChasePlayerAction : Action
     {
         if (!_perceivable.CanSeePlayer)
         {
-            Debug.Log($"{Agent.Value.name} : Chase 중 시야 잃음, 실패 처리");
+           // Debug.Log($"{Agent.Value.name} : Chase 중 시야 잃음, 실패 처리");
 
             _moveable.Stop();
             return Status.Failure;
@@ -43,7 +43,7 @@ public partial class ChasePlayerAction : Action
         Vector3 targetPosition = _perceivable.LastKnownPlayerPosition.Value;
         float distanceToTarget = Vector3.Distance(Agent.Value.transform.position, targetPosition);
 
-        Debug.Log($"{Agent.Value.name} : 추격 중, 목표까지 거리 {distanceToTarget:F1} (공격사거리 {_combatable.AttackRange})");
+       // Debug.Log($"{Agent.Value.name} : 추격 중, 목표까지 거리 {distanceToTarget:F1} (공격사거리 {_combatable.AttackRange})");
 
         if (distanceToTarget <= _combatable.AttackRange)
         {

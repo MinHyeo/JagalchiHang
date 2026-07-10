@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class TrailEmitter : MonoBehaviour
 {
@@ -6,18 +7,21 @@ public class TrailEmitter : MonoBehaviour
     [SerializeField] private float _spawnInterval = 2f;
     [SerializeField] private float _groundCheckDistance = 5f;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] float _navMeshSnapRadius = 1f;
 
-    private IMonsterMoveable _moveable;
+    private PlayerController _playerController;
     private float _timeSinceLastSpawn;
 
     private void Awake()
     {
-        _moveable = GetComponent<IMonsterMoveable>();
+        _playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        if (!_moveable.IsMoving)
+        bool isMoving = _playerController.IsWalking || _playerController.IsRunning;
+
+        if (!isMoving)
         {
             return;
         }
@@ -47,14 +51,22 @@ public class TrailEmitter : MonoBehaviour
             return;
         }
 
-        Vector3 spqwnPosition = transform.position;
+        Vector3 spawnPosition = transform.position;
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _groundCheckDistance, _groundLayer))
         {
-            spqwnPosition = hit.point;
+            spawnPosition = hit.point;
+        }
+
+        NavMeshHit navMeshHit;
+
+        if (!NavMesh.SamplePosition(spawnPosition, out navMeshHit, _navMeshSnapRadius, NavMesh.AllAreas))
+        {
+            Debug.Log($"{name} : 흔적 생성 위치가 NavMesh 밖이라 스킵함 (위치 {spawnPosition})");
+            return;
         }
 
         // 추후 _tralilMarkerPrefabPath에 Addressables 주소 넣기추가
-        GameObjectManager.Instance.CreateObject(_trailMarkerPrefabPath, spqwnPosition);
+        GameObjectManager.Instance.CreateObject(_trailMarkerPrefabPath, navMeshHit.position);
     }
 }

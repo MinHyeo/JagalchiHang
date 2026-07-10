@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class MonsterMovement : MonoBehaviour, IMonsterMoveable
 {
-    [SerializeField] private float _stoppingDistance = 0.1f;
+    [SerializeField] private float _stoppingDistance = 1f;
     private UnityEngine.AI.NavMeshAgent _agent;
     private IMonsterStatProvider _statProvider;
     private bool _isMoving;

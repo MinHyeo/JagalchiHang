@@ -25,7 +25,7 @@ public partial class CanSeePlayerCondition : Condition
     {
         if (Agent == null || Agent.Value == null)
         {
-            Debug.LogWarning("CanSeePlayerCondition : Agent가 연결되어 있지 않습니다!");
+           //  Debug.LogWarning("CanSeePlayerCondition : Agent가 연결되어 있지 않습니다!");
             return false;
         }
 
@@ -36,7 +36,7 @@ public partial class CanSeePlayerCondition : Condition
 
         bool result = _perceivable.CanSeePlayer;
 
-        Debug.Log($"{Agent.Value.name} : CanSeePlayerCondition 평가됨 -> {result}");
+       // Debug.Log($"{Agent.Value.name} : CanSeePlayerCondition 평가됨 -> {result}");
 
         return result;
     }

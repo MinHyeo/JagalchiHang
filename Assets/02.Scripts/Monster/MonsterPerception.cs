@@ -82,7 +82,7 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
 
         if (isBlocked)
         {
-            Debug.Log($"{name} : 장애물에 막혀서 실패 (거리 {distanceToTarget:F1})");
+           // Debug.Log($"{name} : 장애물에 막혀서 실패 (거리 {distanceToTarget:F1})");
             _canSeePlayer = false;
             return;
         }
@@ -92,7 +92,7 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
 
         if (!wasSeeingPlayer)
         {
-            Debug.Log($"{name} : 플레이어 발견!");
+           // Debug.Log($"{name} : 플레이어 발견!");
             OnPlayerSpotted?.Invoke(target.position);
         }
     }
@@ -127,7 +127,7 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
 
             if (marker == null)
             {
-                Debug.Log($"{name} : 스캔된 오브젝트 {hit.name}에 ITrailmarker가 없음");
+               // Debug.Log($"{name} : 스캔된 오브젝트 {hit.name}에 ITrailmarker가 없음");
 
                 continue;
             }

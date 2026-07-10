@@ -14,6 +14,7 @@ using Action = Unity.Behavior.Action;
 public partial class ChaseTrailAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
+    [SerializeReference] public BlackboardVariable<float> ArrivalTolerance;
 
     private IMonsterMoveable _moveable;
     private IMonsterPerceivable _perceivable;
@@ -40,14 +41,17 @@ public partial class ChaseTrailAction : Action
         }
 
         Vector3 trailPosition = _perceivable.TrailPosition.Value;
-        _moveable.MoveTo(trailPosition);
 
-        if (_moveable.HasReachedDestination)
+        float distanceToTrail = Vector3.Distance(Agent.Value.transform.position, trailPosition);
+
+        if (distanceToTrail <= ArrivalTolerance.Value)
         {
+            _moveable.Stop();
             _perceivable.ClearTrail();
             return Status.Success;
         }
 
+        _moveable.MoveTo(trailPosition);
         return Status.Running;
     }
 
