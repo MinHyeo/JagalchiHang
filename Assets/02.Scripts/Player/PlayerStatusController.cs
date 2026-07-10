@@ -66,20 +66,22 @@ public class PlayerStatusController : MonoBehaviour
 
     public void DecreseHp(int value)
     {
-        _playerController.Hit();
-
-        _curHp -= value;
+        _curHp = Mathf.Max(0, _curHp - value);
         Debug.Log($"플레이어의 Hp가 {value}만큼 감소했다.    현재 Hp : {_curHp}");
 
         if(_curHp <= 0)
         {
             _playerController.Die();
         }
+        else
+        {
+            _playerController.Hit();
+        }
     }
 
     public void DecreseHunger(int value)
     {
-        _curHunger -= value;
+        _curHunger = Mathf.Max(0, _curHunger - value);
         Debug.Log($"플레이어의 Hunger가 {value}만큼 감소했다.    현재 Hunger : {_curHunger}");
 
         if(_curHunger <= 0)
@@ -90,7 +92,7 @@ public class PlayerStatusController : MonoBehaviour
 
     public void DecreseThirst(int value)
     {
-        _curThirst -= value;
+        _curThirst = Mathf.Max(0, _curThirst - value);
         Debug.Log($"플레이어의 Thirst가 {value}만큼 감소했다.    현재 Hunger : {_curThirst}");
 
         if (_curThirst <= 0)
