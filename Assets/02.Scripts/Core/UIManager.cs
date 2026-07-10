@@ -6,7 +6,7 @@ public class UIBase : MonoBehaviour
 
 }
 
-public class UIManager : MonoBehaviour
+public class UIManager : SingletonBase<UIManager>
 {
     [SerializeField] private Canvas _canvasBgRoot;
     [SerializeField] private Canvas _canvasMainRoot;
@@ -14,21 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Canvas _canvasPopupRoot;
     [SerializeField] private Canvas _canvasVeryFrontRoot;
 
-    public static UIManager Instance { get; private set; }
-
     private Dictionary<UIType, UIBase> _createdUIList = new Dictionary<UIType, UIBase>();
     private HashSet<UIType> _opendUIList = new HashSet<UIType>();
-
-    private void Awake()
-    {
-        if (Instance != null)
-        {
-            Destroy(Instance);
-            return;
-        }
-
-        Instance = this;
-    }
 
     private void Start()
     {
