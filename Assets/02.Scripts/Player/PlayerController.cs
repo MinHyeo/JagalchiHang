@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private bool _isRuning;
     private bool _isAttacking;
     private bool _isPressedMouseRight;
+    private bool _isDie;
     
     private float _speed;
 
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
     public bool IsRunning => _isRuning;
     public bool IsWalking => _isWalking;
     public bool IsAttacking => _isAttacking;
+    public bool IsDie => _isDie;
 
     public Animator Animator => _animator;
 
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
         _stateMachine.AddState(StateType.Walk, new WalkState());
         _stateMachine.AddState(StateType.Run, new RunState());
         _stateMachine.AddState(StateType.Attack, new AttackState());
+        _stateMachine.AddState(StateType.Die, new DieState());
 
         _stateMachine.SetState(StateType.Idle, this);
     }
@@ -118,6 +121,13 @@ public class PlayerController : MonoBehaviour
     public void OnAttackEnd()
     {
         _isAttacking = false;
+    }
+
+    public void Die()
+    {
+        _isDie = true;
+
+        SetState(StateType.Die);
     }
 
     // 플레이어 이동
