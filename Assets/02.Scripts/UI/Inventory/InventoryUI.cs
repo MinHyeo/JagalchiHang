@@ -8,7 +8,7 @@ public class InventoryUI : UIBase
     [SerializeField] private Transform _inventorySlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private List<InventorySlotUI> _slotUIList = new List<InventorySlotUI>();
+    private Dictionary<int, InventorySlotUI> _slotUIList = new Dictionary<int, InventorySlotUI>();
 
     private InventoryViewModel _vm;
 
@@ -18,6 +18,7 @@ public class InventoryUI : UIBase
         _vm.TestInventory();
         InitInventory();
     }
+
 
     private void InitInventory()
     {
@@ -31,9 +32,9 @@ public class InventoryUI : UIBase
             InventorySlotUI slotUI = gObj.GetComponent<InventorySlotUI>();
             if (slotUI == null) return;
 
-            slotUI.Setup(this);
+            slotUI.Setup(this, i);
             slotUI.BindViewModel(_vm.InventorySlots[i]);
-            _slotUIList.Add(slotUI);
+            _slotUIList.Add(i, slotUI);
         }
     }
 
@@ -41,11 +42,19 @@ public class InventoryUI : UIBase
     {
         foreach (var slotUI in _slotUIList)
         {
-            Destroy(slotUI.gameObject);
+            var slotUIkv = slotUI.Value;
+            Destroy(slotUIkv.gameObject);
         }
         _slotUIList.Clear();
     }
 
+    private void ResetItemSlotAndCreateAll()
+    {
+
+    }
+
+
+    // 드래그 앤 드랍 부분
     public void RequestSwap(int startIdx, int endIdx)
     {
         _vm.SwapSlots(startIdx, endIdx);

@@ -3,6 +3,16 @@ using UnityEngine;
 
 public class InventorySlotViewModel : ViewModelBase
 {
+    public void InvokeOnceInit()
+    {
+        OnPropertyChanged(nameof(ItemUniqueId));
+        OnPropertyChanged(nameof(ItemDataId));
+        OnPropertyChanged(nameof(ItemStackCount));
+        OnPropertyChanged(nameof(MaxCount));
+        OnPropertyChanged(nameof(IsStackable));
+    }
+
+    // isEmpty 상태 추가하기
 
     private long _itemUniqueId;
     public long ItemUniqueId

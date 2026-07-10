@@ -36,6 +36,7 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
+    // 유니크 아이디가 생기면 교환 로직 수정
     public void SwapSlots(int startIdx, int endIdx)
     {
         if (!_inventorySlots.ContainsKey(startIdx) || !_inventorySlots.ContainsKey(endIdx)) return;
