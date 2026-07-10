@@ -14,7 +14,7 @@ public class FarmManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         if (TimeManager.Instance != null)
         {
