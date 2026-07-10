@@ -30,8 +30,6 @@ public class FarmManager : MonoBehaviour
     {
 
 
-
-
     }
 
 
@@ -54,7 +52,7 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        var cropData = GameDataManager.Instance.GetData<CropData>();
+        var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
         if (cropData == null)
         {
             Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
@@ -76,7 +74,7 @@ public class FarmManager : MonoBehaviour
             return 0;
         }
 
-        var cropData = GameDataManager.Instance.GetData<CropData> ();
+        var cropData = GameDataManager.Instance.GetData<CropData> (plot.CropDataId);
         if (cropData == null)
         {
             return 0;
@@ -112,7 +110,7 @@ public class FarmManager : MonoBehaviour
         }
 
         int currentStage = CalculateGrowthStage(plot);
-        var cropData = GameDataManager.Instance.GetData<CropData>();
+        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
         if (cropData == null)
         {
             Debug.LogWarning("작물 데이터를 찾을 수 없습니다.");
