@@ -3,9 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _runSpeed = 8f;
-    [SerializeField] private float _smoothness = 10f;
+    [SerializeField] private string _playerDataId;
+    [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
     
     private Vector2 _moveInput;
@@ -15,23 +14,44 @@ public class PlayerController : MonoBehaviour
     private bool _isRuning;
     private bool _isAttacking;
     private bool _isPressedMouseRight;
+    private bool _isDie;
+    private bool _isHit;
     
     private float _speed;
+
+    private PlayerData _playerData;
 
     public bool IsRunning => _isRuning;
     public bool IsWalking => _isWalking;
     public bool IsAttacking => _isAttacking;
+    public bool IsDie => _isDie;
+
+    public bool IsHit => _isHit;
 
     public Animator Animator => _animator;
 
+    private PlayerStatusController _statusController;
+
     private StateMachine _stateMachine = new StateMachine();
+
+    private void Awake()
+    {
+        _statusController = this.GetComponent<PlayerStatusController>();
+    }
 
     private void Start()
     {
+        GameDataManager.Instance.LoadData<PlayerData>();
+        _playerData = GameDataManager.Instance.GetData<PlayerData>(_playerDataId);
+
+        _statusController.InitPlayerStatus(_playerData);
+
         _stateMachine.AddState(StateType.Idle, new IdleState());
         _stateMachine.AddState(StateType.Walk, new WalkState());
         _stateMachine.AddState(StateType.Run, new RunState());
         _stateMachine.AddState(StateType.Attack, new AttackState());
+        _stateMachine.AddState(StateType.Die, new DieState());
+        _stateMachine.AddState(StateType.Hit, new HitState());
 
         _stateMachine.SetState(StateType.Idle, this);
     }
@@ -40,7 +60,7 @@ public class PlayerController : MonoBehaviour
     {
         MoveDirection();
 
-        _speed = _isRuning ? _runSpeed : _moveSpeed;
+        _speed = _isRuning ? _playerData.MoveSpeed * 3f : _playerData.MoveSpeed;
 
         _stateMachine.Update(this);
 
@@ -96,15 +116,39 @@ public class PlayerController : MonoBehaviour
         if (context.performed == false) return;
         if (_isAttacking == true) return;
 
-        _isAttacking = true;
+        if(_isPressedMouseRight == true)
+        {
+            _isAttacking = true;
 
-        SetState(StateType.Attack);
+            SetState(StateType.Attack);
+        }
     }
 
     // 공격 애니메이션이 종료되면 공격 상태 해제
     public void OnAttackEnd()
     {
         _isAttacking = false;
+    }
+
+    // 사망
+    public void Die()
+    {
+        _isDie = true;
+
+        SetState(StateType.Die);
+    }
+
+    // 피격
+    public void Hit()
+    {
+        _isHit = true;
+        SetState(StateType.Hit);
+    }
+
+    // 피격 애니메이션이 종료되면 피격 상태 해제
+    public void OnHitEnd()
+    {
+        _isHit = false;
     }
 
     // 플레이어 이동
@@ -126,17 +170,21 @@ public class PlayerController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(_moveDirection);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _smoothness * Time.deltaTime);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
         }
     }
 
     // 마우스 우클릭 입력 처리
     public void OnLookToMousePos(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
-            // 한번 누를 때마다 true/false 변경
-            _isPressedMouseRight = !_isPressedMouseRight;
+            _isPressedMouseRight = true;
+        }
+
+        if(context.canceled)
+        {
+            _isPressedMouseRight = false;
         }
     }
 
@@ -157,7 +205,7 @@ public class PlayerController : MonoBehaviour
             if(dir.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _smoothness * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
             }
         }
     }

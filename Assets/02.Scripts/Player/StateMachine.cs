@@ -6,7 +6,9 @@ public enum StateType
     Idle,
     Walk,
     Run,
-    Attack
+    Attack,
+    Die,
+    Hit
 }
 
 public class StateMachine
