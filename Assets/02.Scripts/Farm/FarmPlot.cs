@@ -35,6 +35,7 @@ public class FarmPlot : MonoBehaviour
 
     public void RemoveCropObject()
     {
+        Debug.Log($"RemoveCropObject 호출, _currentCropObject: {_currentCropObject}");
         if (_currentCropObject != null)
         {
             Destroy(_currentCropObject);

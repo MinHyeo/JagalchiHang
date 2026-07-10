@@ -16,7 +16,7 @@ public class TestFarm : MonoBehaviour
 
         Plot_Test.InitPlot(_testPlotModel.PlotUniqueId);
 
-        Debug.Log("테스트 준비 - 1: 해금/ 2: 심기/ 3: 수확");
+        Debug.Log("테스트 준비 - 2: 해금/ 3: 심기/ 4: 수확");
     }
 
     private void Update()
@@ -47,7 +47,7 @@ public class TestFarm : MonoBehaviour
             bool result = FarmManager.Instance.RequestHarvestCrop(_testPlotModel);
             if (result)
             {
-                Plot_Test.ActivatePlot();
+                Plot_Test.RemoveCropObject();
                 Debug.Log("수확 완료");
             }
         }

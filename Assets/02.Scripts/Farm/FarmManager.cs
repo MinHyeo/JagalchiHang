@@ -16,14 +16,22 @@ public class FarmManager : MonoBehaviour
 
     private void Start()
     {
-        TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
+        if (TimeManager.Instance != null)
+        {
+            TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
+
+        }
 
     }
 
     private void OnDisable()
     {
+        if (TimeManager.Instance != null)
+        {
+            TimeManager.Instance.OnMinuteChanged -= UpdateAllPlotGrowth;
 
-        TimeManager.Instance.OnMinuteChanged -= UpdateAllPlotGrowth;
+        }
+
     }
 
     private void UpdateAllPlotGrowth()
@@ -74,25 +82,27 @@ public class FarmManager : MonoBehaviour
             return 0;
         }
 
-        var cropData = GameDataManager.Instance.GetData<CropData> (plot.CropDataId);
-        if (cropData == null)
-        {
-            return 0;
-        }
+        //var cropData = GameDataManager.Instance.GetData<CropData> (plot.CropDataId);
+        //if (cropData == null)
+        //{
+        //    return 0;
+        //}
 
-        int cropGrowthTotalMinutes = 0;
+        //int cropGrowthTotalMinutes = 0;
 
-        for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
-        {
-            cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
+        //for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
+        //{
+        //    cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
 
-            if (plot.GrowthMinutes < cropGrowthTotalMinutes)
-            {
-                return i;
-            }
-        }
+        //    if (plot.GrowthMinutes < cropGrowthTotalMinutes)
+        //    {
+        //        return i;
+        //    }
+        //}
 
-        return cropData.GrowthStageMinutesList.Count;
+        //return cropData.GrowthStageMinutesList.Count;
+
+        return plot.CurrentGrowthStage;
     }
 
     public bool RequestHarvestCrop(FarmPlotModel plot)
@@ -110,18 +120,18 @@ public class FarmManager : MonoBehaviour
         }
 
         int currentStage = CalculateGrowthStage(plot);
-        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
-        if (cropData == null)
-        {
-            Debug.LogWarning("작물 데이터를 찾을 수 없습니다.");
-            return false;
-        }
+        //var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+        //if (cropData == null)
+        //{
+        //    Debug.LogWarning("작물 데이터를 찾을 수 없습니다.");
+        //    return false;
+        //}
 
-        if (currentStage < cropData.GrowthStageMinutesList.Count)
-        {
-            Debug.LogWarning("아직 다 자라지 않았습니다.");
-            return false;
-        }
+        //if (currentStage < cropData.GrowthStageMinutesList.Count)
+        //{
+        //    Debug.LogWarning("아직 다 자라지 않았습니다.");
+        //    return false;
+        //}
 
         // 작물 아이템 지급 (인벤 연동 후에)
         //int harvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount + 1);
