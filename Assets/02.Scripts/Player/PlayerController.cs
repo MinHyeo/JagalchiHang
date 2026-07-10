@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private bool _isAttacking;
     private bool _isPressedMouseRight;
     private bool _isDie;
+    private bool _isHit;
     
     private float _speed;
 
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public bool IsWalking => _isWalking;
     public bool IsAttacking => _isAttacking;
     public bool IsDie => _isDie;
+
+    public bool IsHit => _isHit;
 
     public Animator Animator => _animator;
 
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
         _stateMachine.AddState(StateType.Run, new RunState());
         _stateMachine.AddState(StateType.Attack, new AttackState());
         _stateMachine.AddState(StateType.Die, new DieState());
+        _stateMachine.AddState(StateType.Hit, new HitState());
 
         _stateMachine.SetState(StateType.Idle, this);
     }
@@ -126,11 +130,25 @@ public class PlayerController : MonoBehaviour
         _isAttacking = false;
     }
 
+    // 사망
     public void Die()
     {
         _isDie = true;
 
         SetState(StateType.Die);
+    }
+
+    // 피격
+    public void Hit()
+    {
+        _isHit = true;
+        SetState(StateType.Hit);
+    }
+
+    // 피격 애니메이션이 종료되면 피격 상태 해제
+    public void OnHitEnd()
+    {
+        _isHit = false;
     }
 
     // 플레이어 이동

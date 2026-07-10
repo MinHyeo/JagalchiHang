@@ -66,6 +66,8 @@ public class PlayerStatusController : MonoBehaviour
 
     public void DecreseHp(int value)
     {
+        _playerController.Hit();
+
         _curHp -= value;
         Debug.Log($"플레이어의 Hp가 {value}만큼 감소했다.    현재 Hp : {_curHp}");
 
@@ -96,4 +98,5 @@ public class PlayerStatusController : MonoBehaviour
             DecreseHp(5);
         }
     }
+
 }
