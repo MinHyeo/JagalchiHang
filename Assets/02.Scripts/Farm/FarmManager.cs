@@ -14,7 +14,7 @@ public class FarmManager : MonoBehaviour
         Instance = this;
     }
 
-    private void OnEnable()
+    private void Start()
     {
         TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
 
@@ -52,12 +52,12 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
-        if (cropData == null)
-        {
-            Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
-            return false;
-        }
+        //var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
+        //if (cropData == null)
+        //{
+        //    Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
+        //    return false;
+        //}
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
