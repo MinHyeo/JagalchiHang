@@ -12,6 +12,7 @@ public class FarmManager : MonoBehaviour
             return;
         }
         Instance = this;
+
     }
 
     private void OnEnable()
@@ -21,7 +22,15 @@ public class FarmManager : MonoBehaviour
             TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
 
         }
+    }
 
+    private void Start()
+    {
+        if (GameDataManager.Instance != null)
+        {
+            GameDataManager.Instance.LoadData<CropData>();
+
+        }
     }
 
     private void OnDisable()
@@ -46,6 +55,7 @@ public class FarmManager : MonoBehaviour
         if (plot == null)
         {
             Debug.LogWarning("존재하지 않는 밭입니다.");
+            return false;
         }
 
         if (plot.IsUnlocked == false)
@@ -60,12 +70,12 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        //var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
-        //if (cropData == null)
-        //{
-        //    Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
-        //    return false;
-        //}
+        var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
+        if (cropData == null)
+        {
+            Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
+            return false;
+        }
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
@@ -82,27 +92,26 @@ public class FarmManager : MonoBehaviour
             return 0;
         }
 
-        //var cropData = GameDataManager.Instance.GetData<CropData> (plot.CropDataId);
-        //if (cropData == null)
-        //{
-        //    return 0;
-        //}
+        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+        if (cropData == null)
+        {
+            return 0;
+        }
 
-        //int cropGrowthTotalMinutes = 0;
+        int cropGrowthTotalMinutes = 0;
 
-        //for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
-        //{
-        //    cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
+        for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
+        {
+            cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
 
-        //    if (plot.GrowthMinutes < cropGrowthTotalMinutes)
-        //    {
-        //        return i;
-        //    }
-        //}
+            if (plot.GrowthMinutes < cropGrowthTotalMinutes)
+            {
+                return i;
+            }
+        }
 
-        //return cropData.GrowthStageMinutesList.Count;
+        return cropData.GrowthStageMinutesList.Count;
 
-        return plot.CurrentGrowthStage;
     }
 
     public bool RequestHarvestCrop(FarmPlotModel plot)
@@ -120,24 +129,24 @@ public class FarmManager : MonoBehaviour
         }
 
         int currentStage = CalculateGrowthStage(plot);
-        //var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
-        //if (cropData == null)
-        //{
-        //    Debug.LogWarning("작물 데이터를 찾을 수 없습니다.");
-        //    return false;
-        //}
+        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+        if (cropData == null)
+        {
+            Debug.LogWarning("작물 데이터를 찾을 수 없습니다.");
+            return false;
+        }
 
-        //if (currentStage < cropData.GrowthStageMinutesList.Count)
-        //{
-        //    Debug.LogWarning("아직 다 자라지 않았습니다.");
-        //    return false;
-        //}
+        if (currentStage < cropData.GrowthStageMinutesList.Count)
+        {
+            Debug.LogWarning("아직 다 자라지 않았습니다.");
+            return false;
+        }
 
-        // 작물 아이템 지급 (인벤 연동 후에)
+        //작물 아이템 지급(인벤 연동 후에)
         //int harvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount + 1);
 
-        // 씨앗 아이템 지급 (인벤 연동 후)
-        // int seedCount = Random.Range(cropData.SeedDropMinCount,cropData.SeedDropMaxCount + 1);
+        //씨앗 아이템 지급(인벤 연동 후)
+        // int seedCount = Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
 
 
         plot.CropDataId = string.Empty;
