@@ -31,7 +31,7 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
 
         gameObject.transform.SetParent(_rootTransform);
         gameObject.transform.position = spawnSpot;
-        AddObjectOnCreate(gameObject, dataId)
+        AddObjectOnCreate(gameObject, dataId);
     }
 
     private void AddObjectOnCreate(GameObject createdObject, string dataId)
