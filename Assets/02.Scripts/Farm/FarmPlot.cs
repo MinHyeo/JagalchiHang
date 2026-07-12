@@ -43,4 +43,11 @@ public class FarmPlot : MonoBehaviour
         }
     }
 
+    public void ChangeCropObject(GameObject newCropPrefab)
+    {
+        RemoveCropObject();
+
+        _currentCropObject = Instantiate(newCropPrefab, Transform_CropSpawnPoint);
+    }
+
 }

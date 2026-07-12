@@ -3,7 +3,10 @@
 public class TestFarm : MonoBehaviour
 {
     [SerializeField] private FarmPlot Plot_Test;
-    [SerializeField] private GameObject Prefab_TestCrop;
+    [SerializeField] private GameObject Prefab_CropStage1;
+    [SerializeField] private GameObject Prefab_CropStage2;
+    [SerializeField] private GameObject Prefab_CropStage3;
+
 
     private FarmPlotModel _testPlotModel;
 
@@ -34,10 +37,10 @@ public class TestFarm : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            bool result = FarmManager.Instance.RequestPlantCrop(_testPlotModel, "test_crop");
+            bool result = FarmManager.Instance.RequestPlantCrop(_testPlotModel, "Crop_item1");
             if (result)
             {
-                Plot_Test.SpawnCropObject(Prefab_TestCrop);
+                Plot_Test.SpawnCropObject(Prefab_CropStage1);
                 Debug.Log("심기 완료");
             }
         }
@@ -49,6 +52,25 @@ public class TestFarm : MonoBehaviour
             {
                 Plot_Test.RemoveCropObject();
                 Debug.Log("수확 완료");
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _testPlotModel.CurrentGrowthStage++;
+            Debug.Log($"현재 성장 단계: {_testPlotModel.CurrentGrowthStage}");
+
+            switch (_testPlotModel.CurrentGrowthStage)
+            {
+                case 1:
+                    Plot_Test.ChangeCropObject(Prefab_CropStage1);
+                    break;
+                case 2:
+                    Plot_Test.ChangeCropObject(Prefab_CropStage2);
+                    break;
+                case 3:
+                    Plot_Test.ChangeCropObject(Prefab_CropStage3);
+                    break;
             }
         }
 
