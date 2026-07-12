@@ -12,13 +12,16 @@ public class InventoryUI : UIBase
 
     private InventoryViewModel _vm;
 
-    private void Start()
+    private void OnEnable()
     {
         _vm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
-        _vm.TestInventory();
         InitInventory();
     }
 
+    private void OnDisable()
+    {
+        ClearSlotUIList();
+    }
 
     private void InitInventory()
     {
@@ -47,12 +50,6 @@ public class InventoryUI : UIBase
         }
         _slotUIList.Clear();
     }
-
-    private void ResetItemSlotAndCreateAll()
-    {
-
-    }
-
 
     // 드래그 앤 드랍 부분
     public void RequestSwap(int startIdx, int endIdx)

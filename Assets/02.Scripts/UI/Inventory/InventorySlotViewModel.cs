@@ -84,16 +84,20 @@ public class InventorySlotViewModel : ViewModelBase
     }
 
     // TODO : 데이터 드리븐으로 받아오기
-    public void SetItem(string id, int count, bool stackable = true, int max = 99)
+    public void SetItem(string itemDataId, int stackCount)
     {
-        ItemDataId = id;
-        ItemStackCount = count;
-        IsStackable = stackable;
-        MaxCount = max;
+        _itemDataId = itemDataId;
+        _itemStackCount = stackCount;
+
+        //var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        //ItemDataId = itemData.Id;
+        //ItemStackCount = stackCount;
+        //IsStackable = itemData.isStackable;
+        //MaxCount = itemData.maxCount;
     }
 
     public void Clear()
     {
-        SetItem(null, 0, false, 0);
+        SetItem(null, 0);
     }
 }
