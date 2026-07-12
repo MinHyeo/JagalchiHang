@@ -6,10 +6,10 @@ using Action = Unity.Behavior.Action;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(
-    name : "Move To Alert Position",
-    story : "[Agent]가 경보 받은 위치로 이동한다",
-    category : "Action",
-    id : "0718293a4b5c6d7e8f90a1b2c3d4e5f6")]
+    name: "Move To Alert Position",
+    story: "[Agent]가 경보 받은 위치로 이동한다",
+    category: "Action",
+    id: "0718293a4b5c6d7e8f90a1b2c3d4e5f6")]
 
 public partial class MoveToAlertPositionAction : Action
 {

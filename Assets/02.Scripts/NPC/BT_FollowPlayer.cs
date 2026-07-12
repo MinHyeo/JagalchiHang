@@ -17,9 +17,9 @@ public partial class BT_FollowPlayer : Action
 
     protected override Status OnStart()
     {
-        _agent  = Self.Value.GetComponent<NavMeshAgent>(); //자기 자신에서 NavMesh 컴포넌트 가져오기 
+        _agent = Self.Value.GetComponent<NavMeshAgent>(); //자기 자신에서 NavMesh 컴포넌트 가져오기 
 
-        if(_agent == null || Target.Value == null)
+        if (_agent == null || Target.Value == null)
         {
             return Status.Failure; //실패 처리 
         }
@@ -35,7 +35,7 @@ public partial class BT_FollowPlayer : Action
 
     protected override Status OnUpdate()
     {
-        if(Target.Value == null || _agent == null)
+        if (Target.Value == null || _agent == null)
         {
             return Status.Failure;
         }
@@ -47,7 +47,7 @@ public partial class BT_FollowPlayer : Action
 
     protected override void OnEnd()
     {
-        if(_agent != null && _agent.isOnNavMesh) // 컴포넌트가 존재하고 NavMesh 바닥위에 정상적으로 서있다면 
+        if (_agent != null && _agent.isOnNavMesh) // 컴포넌트가 존재하고 NavMesh 바닥위에 정상적으로 서있다면 
         {
             _agent.ResetPath(); // 경로 초기화 
         }

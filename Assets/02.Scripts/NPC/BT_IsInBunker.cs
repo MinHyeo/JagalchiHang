@@ -7,16 +7,16 @@ using UnityEngine;
 public partial class BT_IsInBunker : Condition
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    [SerializeReference] public BlackboardVariable<BTState> CurrentState; 
+    [SerializeReference] public BlackboardVariable<BTState> CurrentState;
 
     public override bool IsTrue() //조건 구분해주는 함수 
     {
-        if (Self.Value == null)  
+        if (Self.Value == null)
         {
             return false;
         }
 
-        if(CurrentState.Value == BTState.Idle) // Idle 상태 확인 
+        if (CurrentState.Value == BTState.Idle) // Idle 상태 확인 
         {
             return true;
         }

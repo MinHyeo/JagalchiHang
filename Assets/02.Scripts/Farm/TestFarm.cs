@@ -40,7 +40,7 @@ public class TestFarm : MonoBehaviour
             bool result = FarmManager.Instance.RequestPlantCrop(_testPlotModel, "Crop_item1");
             if (result)
             {
-                Plot_Test.SpawnCropObject(Prefab_CropStage1);
+                Plot_Test.SpawnCropObject(Prefab_CropStage1, "Crop_Item1", 0);
                 Debug.Log("심기 완료");
             }
         }
@@ -58,6 +58,7 @@ public class TestFarm : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             _testPlotModel.CurrentGrowthStage++;
+            _testPlotModel.GrowthMiniutes += 999;
             Debug.Log($"현재 성장 단계: {_testPlotModel.CurrentGrowthStage}");
 
             switch (_testPlotModel.CurrentGrowthStage)

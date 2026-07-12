@@ -70,6 +70,231 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 2706326100496351435
+      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 8268714752214469510
+          m_Value1: 6150460965323554598
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: -2
+        m_Child:
+          rid: 2706326100496351436
+        Repeat: 1
+        AllowMultipleRepeatsPerTick: 0
+    - rid: 2706326100496351436
+      type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 6532739538705240473
+          m_Value1: 5379599707058915184
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351435
+        m_Children:
+        - rid: 2706326100496351437
+        - rid: 2706326100496351438
+        - rid: 2706326100496351439
+        - rid: 2706326100496351440
+        - rid: 2706326100496351441
+        m_RegisteredObservers: []
+    - rid: 2706326100496351437
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 244849900853180705
+          m_Value1: 17088516804928426139
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351436
+        m_Children:
+        - rid: 2706326100496351442
+        - rid: 2706326100496351443
+        - rid: 2706326100496351444
+        m_RegisteredObservers:
+        - Observer:
+            rid: 2706326100496351442
+    - rid: 2706326100496351438
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 2143295537652401200
+          m_Value1: 2802517196352418566
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351436
+        m_Children:
+        - rid: 2706326100496351445
+        - rid: 2706326100496351446
+        m_RegisteredObservers:
+        - Observer:
+            rid: 2706326100496351445
+    - rid: 2706326100496351439
+      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 231337778201264270
+          m_Value1: 5641269426156439981
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351436
+        m_Children:
+        - rid: 2706326100496351447
+        - rid: 2706326100496351448
+        m_RegisteredObservers:
+        - Observer:
+            rid: 2706326100496351447
+    - rid: 2706326100496351440
+      type: {class: FlockAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 8961447585820291678
+          m_Value1: 18040543370222135128
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351436
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351441
+      type: {class: PatrolAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 7599754905651602907
+          m_Value1: 11575260796660794153
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351436
+        Agent:
+          rid: 3513192757068825087
+        WanderRadius:
+          rid: 3513192757068825088
+        WaitDuration:
+          rid: 3513192757068825089
+    - rid: 2706326100496351442
+      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 14668474393239198362
+          m_Value1: 7948957833083017683
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351437
+        m_Child:
+          rid: -2
+        m_Conditions:
+        - rid: 2706326100496351449
+        m_RequiresAllConditions: 0
+        m_ObserverType: 2
+    - rid: 2706326100496351443
+      type: {class: ChasePlayerAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 15540637953534606528
+          m_Value1: 8110599242187296958
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351437
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351444
+      type: {class: AttackAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 7042934584508195384
+          m_Value1: 11477130981088178992
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351437
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351445
+      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 6451096270270454024
+          m_Value1: 2238982944739452059
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351438
+        m_Child:
+          rid: -2
+        m_Conditions:
+        - rid: 2706326100496351450
+        m_RequiresAllConditions: 0
+        m_ObserverType: 2
+    - rid: 2706326100496351446
+      type: {class: ChaseTrailAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 16719221466808068478
+          m_Value1: 12350495344269475217
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351438
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351447
+      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        ID:
+          m_Value0: 4567581252304661617
+          m_Value1: 3322683860251623807
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351439
+        m_Child:
+          rid: -2
+        m_Conditions:
+        - rid: 2706326100496351451
+        m_RequiresAllConditions: 0
+        m_ObserverType: 2
+    - rid: 2706326100496351448
+      type: {class: MoveToAlertPositionAction, ns: , asm: Assembly-CSharp}
+      data:
+        ID:
+          m_Value0: 11642878765314426247
+          m_Value1: 9850025393670216929
+        Graph:
+          rid: 3513192722384814264
+        m_Parent:
+          rid: 2706326100496351439
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351449
+      type: {class: CanSeePlayerCondition, ns: , asm: Assembly-CSharp}
+      data:
+        Graph:
+          rid: 3513192722384814264
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351450
+      type: {class: HasDetectedTrailCondition, ns: , asm: Assembly-CSharp}
+      data:
+        Graph:
+          rid: 3513192722384814264
+        Agent:
+          rid: 3513192757068825087
+    - rid: 2706326100496351451
+      type: {class: IsAlertedCondition, ns: , asm: Assembly-CSharp}
+      data:
+        Graph:
+          rid: 3513192722384814264
+        Agent:
+          rid: 3513192757068825087
     - rid: 3513192722384814264
       type: {class: BehaviorGraphModule, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -81,8 +306,8 @@ MonoBehaviour:
           rid: 3513192722384814265
         BlackboardGroupReferences: []
         Root:
-          rid: 3513192757068825139
-        m_VersionTimestamp: 639192907268447194
+          rid: 2706326100496351435
+        m_VersionTimestamp: 639194732340280685
     - rid: 3513192722384814265
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -120,231 +345,6 @@ MonoBehaviour:
           m_Value1: 4303294877025873911
         Name: WaitDuration
         m_Value: 3
-    - rid: 3513192757068825139
-      type: {class: Start, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 8268714752214469510
-          m_Value1: 6150460965323554598
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: -2
-        m_Child:
-          rid: 3513192757068825140
-        Repeat: 1
-        AllowMultipleRepeatsPerTick: 0
-    - rid: 3513192757068825140
-      type: {class: SelectorComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 6532739538705240473
-          m_Value1: 5379599707058915184
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825139
-        m_Children:
-        - rid: 3513192757068825141
-        - rid: 3513192757068825142
-        - rid: 3513192757068825143
-        - rid: 3513192757068825144
-        - rid: 3513192757068825145
-        m_RegisteredObservers: []
-    - rid: 3513192757068825141
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 244849900853180705
-          m_Value1: 17088516804928426139
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825140
-        m_Children:
-        - rid: 3513192757068825146
-        - rid: 3513192757068825147
-        - rid: 3513192757068825148
-        m_RegisteredObservers:
-        - Observer:
-            rid: 3513192757068825146
-    - rid: 3513192757068825142
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 2143295537652401200
-          m_Value1: 2802517196352418566
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825140
-        m_Children:
-        - rid: 3513192757068825149
-        - rid: 3513192757068825150
-        m_RegisteredObservers:
-        - Observer:
-            rid: 3513192757068825149
-    - rid: 3513192757068825143
-      type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 231337778201264270
-          m_Value1: 5641269426156439981
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825140
-        m_Children:
-        - rid: 3513192757068825151
-        - rid: 3513192757068825152
-        m_RegisteredObservers:
-        - Observer:
-            rid: 3513192757068825151
-    - rid: 3513192757068825144
-      type: {class: FlockAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 8961447585820291678
-          m_Value1: 18040543370222135128
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825140
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825145
-      type: {class: PatrolAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 7599754905651602907
-          m_Value1: 11575260796660794153
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825140
-        Agent:
-          rid: 3513192757068825087
-        WanderRadius:
-          rid: 3513192757068825088
-        WaitDuration:
-          rid: 3513192757068825089
-    - rid: 3513192757068825146
-      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 14668474393239198362
-          m_Value1: 7948957833083017683
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825141
-        m_Child:
-          rid: -2
-        m_Conditions:
-        - rid: 3513192757068825153
-        m_RequiresAllConditions: 0
-        m_ObserverType: 2
-    - rid: 3513192757068825147
-      type: {class: ChasePlayerAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 15540637953534606528
-          m_Value1: 8110599242187296958
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825141
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825148
-      type: {class: AttackAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 7042934584508195384
-          m_Value1: 11477130981088178992
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825141
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825149
-      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 6451096270270454024
-          m_Value1: 2238982944739452059
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825142
-        m_Child:
-          rid: -2
-        m_Conditions:
-        - rid: 3513192757068825154
-        m_RequiresAllConditions: 0
-        m_ObserverType: 2
-    - rid: 3513192757068825150
-      type: {class: ChaseTrailAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 16719221466808068478
-          m_Value1: 12350495344269475217
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825142
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825151
-      type: {class: ConditionalGuardModifier, ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        ID:
-          m_Value0: 4567581252304661617
-          m_Value1: 3322683860251623807
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825143
-        m_Child:
-          rid: -2
-        m_Conditions:
-        - rid: 3513192757068825155
-        m_RequiresAllConditions: 0
-        m_ObserverType: 2
-    - rid: 3513192757068825152
-      type: {class: MoveToAlertPositionAction, ns: , asm: Assembly-CSharp}
-      data:
-        ID:
-          m_Value0: 11642878765314426247
-          m_Value1: 9850025393670216929
-        Graph:
-          rid: 3513192722384814264
-        m_Parent:
-          rid: 3513192757068825143
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825153
-      type: {class: CanSeePlayerCondition, ns: , asm: Assembly-CSharp}
-      data:
-        Graph:
-          rid: 3513192722384814264
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825154
-      type: {class: HasDetectedTrailCondition, ns: , asm: Assembly-CSharp}
-      data:
-        Graph:
-          rid: 3513192722384814264
-        Agent:
-          rid: 3513192757068825087
-    - rid: 3513192757068825155
-      type: {class: IsAlertedCondition, ns: , asm: Assembly-CSharp}
-      data:
-        Graph:
-          rid: 3513192722384814264
-        Agent:
-          rid: 3513192757068825087
 --- !u!114 &-5724895507032317771
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -443,7 +443,7 @@ MonoBehaviour:
   - rid: 3513192757068824917
   - rid: 3513192757068824956
   - rid: 3513192757068824997
-  m_VersionTimestamp: 639192907268447194
+  m_VersionTimestamp: 639194732340280685
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -1887276022845957537}
   m_RuntimeGraph: {fileID: -7104015724878349120}

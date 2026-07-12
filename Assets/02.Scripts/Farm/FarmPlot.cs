@@ -23,19 +23,32 @@ public class FarmPlot : MonoBehaviour
         Object_PlotSet.SetActive(true);
     }
 
-    public void SpawnCropObject(GameObject cropPrefab)
+    public void SpawnCropObject(GameObject cropPrefab, string cropDataId, int stage)
     {
-        if (_currentCropObject != null)
-        {
-            Destroy(_currentCropObject);
-        }
+        var gObj = Instantiate(cropPrefab, Transform_CropSpawnPoint);
+        _currentCropObject = gObj;
 
-        _currentCropObject = Instantiate(cropPrefab, Transform_CropSpawnPoint);
+        var cropObject = gObj.GetComponent<CropObject>();
+
+        if (cropObject != null)
+        {
+            cropObject.InitCrop(cropDataId, stage);
+        }
+    }
+
+    public void OnCropRequestDestroy(GameObject cropObject)
+    {
+        //GameObjectManager.Instance.RequestDestroyObject(cropObject);
+        //ISpawnable  머지 후 GameObject6Manager로 교체
+
+
+        Destroy(cropObject);
     }
 
     public void RemoveCropObject()
     {
-        Debug.Log($"RemoveCropObject 호출, _currentCropObject: {_currentCropObject}");
+        Debug.Log($"RemoveCropObject: _currentCropObject = {_currentCropObject}");
+        
         if (_currentCropObject != null)
         {
             Destroy(_currentCropObject);
@@ -46,8 +59,7 @@ public class FarmPlot : MonoBehaviour
     public void ChangeCropObject(GameObject newCropPrefab)
     {
         RemoveCropObject();
-
         _currentCropObject = Instantiate(newCropPrefab, Transform_CropSpawnPoint);
     }
-
+    
 }
