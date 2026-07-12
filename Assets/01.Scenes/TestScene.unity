@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eba9a076f3590c4b8548a1805f1f9a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimeManager
-  _timeScale: 60
+  _fullDayTime: 600
   _sun: {fileID: 1370153098}
   _sunColor:
     serializedVersion: 2
@@ -1285,9 +1285,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  Day: 0
-  Hour: 0
-  Minute: 0
 --- !u!4 &1327671708
 Transform:
   m_ObjectHideFlags: 0

@@ -1,8 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public class TimeManager : SingletonBase<TimeManager>
 {
+    [Header("시간 설정")]
+    [Tooltip("하루의 기준 시간을 설정(600 => 10분이 하루)")]
+    [SerializeField] private float _fullDayTime = 600f;
+
     [Header("Sun")]
     [SerializeField] private Light _sun;
     [SerializeField] private Gradient _sunColor;
@@ -16,12 +21,12 @@ public class TimeManager : SingletonBase<TimeManager>
     [SerializeField] private AnimationCurve _lightingIntensityMultiplier;
     [SerializeField] private AnimationCurve _reflectionIntensityMultiplier;
 
-    public int Day;
-    public int Hour;
-    public int Minute;
+    public int Day => _day;
+    public int Hour => (int)(_time * 24f) ;
+    public int Minute => (int)((_time * 1440f) % 60f);
 
+    private int _day;
     private float _time;
-    private float _fullDayTime = 30f;
     private float _startTime = 0.4f;
     private float _timeRate;
     private Vector3 _noon = new Vector3(90, 0, 0);
@@ -32,19 +37,47 @@ public class TimeManager : SingletonBase<TimeManager>
 
     private void OnEnable()
     {
+        _day = 0;
         _timeRate = 1.0f / _fullDayTime;
         _time = _startTime;
     }
 
     private void Update()
     {
-        _time = (_time + _timeRate * Time.deltaTime) % 1.0f;
+        UpdateTime();
 
         UpdateLighting(_sun, _sunColor, _sunIntenstiy);
         UpdateLighting(_moon, _moonColor, _moonIntenstiy);
 
         RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
+    }
+
+    private void UpdateTime()
+    {
+        int prevHour = Hour;
+        int prevMinute = Minute;
+
+        _time = _time + _timeRate * Time.deltaTime;
+
+        if(_time >= 1.0f)
+        {
+            int passedDays = (int)_time;
+            _day += passedDays;
+            _time = _time % 1.0f;
+
+            OnDayChanged?.Invoke();
+        }
+
+        if(Minute != prevMinute)
+        {
+            OnMinuteChanged?.Invoke();
+        }
+
+        if(Hour != prevHour)
+        {
+            OnHourChanged?.Invoke();
+        }
     }
 
     private void UpdateLighting(Light light, Gradient gradient, AnimationCurve animationCurve)
