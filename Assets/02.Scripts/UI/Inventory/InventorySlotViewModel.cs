@@ -86,8 +86,8 @@ public class InventorySlotViewModel : ViewModelBase
     // TODO : 데이터 드리븐으로 받아오기
     public void SetItem(string itemDataId, int stackCount)
     {
-        _itemDataId = itemDataId;
-        _itemStackCount = stackCount;
+        ItemDataId = itemDataId;
+        ItemStackCount = stackCount;
 
         //var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
         //ItemDataId = itemData.Id;
