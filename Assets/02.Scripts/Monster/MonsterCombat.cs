@@ -49,7 +49,14 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 
     private void OnDestroy()
     {
-        _damageable.OnDied -= HandleDied;
+        try
+        {
+            _damageable.OnDied -= HandleDied;
+        }
+        catch
+        {
+
+        }
     }
 
     public bool CanAttack()
