@@ -15,40 +15,17 @@ public class FarmManager : MonoBehaviour
 
     }
 
+
+
     private void OnEnable()
-    {
-        if (TimeManager.Instance != null)
-        {
-            TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
-
-        }
-    }
-
-    private void Start()
     {
         if (GameDataManager.Instance != null)
         {
             GameDataManager.Instance.LoadData<CropData>();
-
         }
     }
 
-    private void OnDisable()
-    {
-        if (TimeManager.Instance != null)
-        {
-            TimeManager.Instance.OnMinuteChanged -= UpdateAllPlotGrowth;
-
-        }
-
-    }
-
-    private void UpdateAllPlotGrowth()
-    {
-
-
-    }
-
+ 
 
     public bool RequestPlantCrop(FarmPlotModel plot, string cropDataId)
     {
@@ -60,13 +37,13 @@ public class FarmManager : MonoBehaviour
 
         if (plot.IsUnlocked == false)
         {
-            Debug.LogWarning("아직 해금되지 않은 밭입니다.");
+            Debug.LogWarning("해금되지 않은 밭입니다.");
             return false;
         }
 
         if (plot.IsPlanted == true)
         {
-            Debug.LogWarning("이미 작물이 심어져 있습니다.");
+            Debug.LogWarning("작물이 심어져 있습니다.");
             return false;
         }
 
@@ -85,34 +62,7 @@ public class FarmManager : MonoBehaviour
         return true;
     }
 
-    public int CalculateGrowthStage(FarmPlotModel plot)
-    {
-        if (plot.IsPlanted == false)
-        {
-            return 0;
-        }
 
-        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
-        if (cropData == null)
-        {
-            return 0;
-        }
-
-        int cropGrowthTotalMinutes = 0;
-
-        for (int i = 0; i < cropData.GrowthStageMinutesList.Count; i++)
-        {
-            cropGrowthTotalMinutes += cropData.GrowthStageMinutesList[i];
-
-            if (plot.GrowthMinutes < cropGrowthTotalMinutes)
-            {
-                return i;
-            }
-        }
-
-        return cropData.GrowthStageMinutesList.Count;
-
-    }
 
     public bool RequestHarvestCrop(FarmPlotModel plot)
     {
@@ -128,7 +78,6 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        int currentStage = CalculateGrowthStage(plot);
         var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
         if (cropData == null)
         {
@@ -136,7 +85,8 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        if (currentStage < cropData.GrowthStageMinutesList.Count)
+        var growthStages = cropData.GetGrowthStageMinutes();
+        if (plot.CurrentGrowthStage < growthStages.Count)
         {
             Debug.LogWarning("아직 다 자라지 않았습니다.");
             return false;
@@ -152,6 +102,7 @@ public class FarmManager : MonoBehaviour
         plot.CropDataId = string.Empty;
         plot.IsPlanted = false;
         plot.CurrentGrowthStage = 0;
+        plot.GrowthMinutes = 0;
 
         return true;
 
@@ -176,5 +127,13 @@ public class FarmManager : MonoBehaviour
         return true;
     }
 
+    public void OnCropGrowthChanged(int instanceId, string cropDataId, int currentStage, int growthMinutes)
+    {
+
+        //FarmPlotModel갱신
+        //plot.CurrentGrowthStage = currentStage;
+        //Plot.GrowthMinutes = growthMinutes;
+
+    }
 
 }

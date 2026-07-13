@@ -9,7 +9,7 @@
     "HarvestMinCount": 2,
     "HarvestMaxCount": 10,
     "SeedDropMinCount": 2,
-    "SeedDropMaxCount": 10,
+    "SeedDropMaxCount": 3,
     "IconPath": null,
     "PrefabPath": null
   },
@@ -22,8 +22,8 @@
     "HarvestItemDataId": "HarvestItem2",
     "HarvestMinCount": 3,
     "HarvestMaxCount": 20,
-    "SeedDropMinCount": 4,
-    "SeedDropMaxCount": 20,
+    "SeedDropMinCount": 3,
+    "SeedDropMaxCount": 5,
     "IconPath": null,
     "PrefabPath": null
   },
@@ -36,8 +36,8 @@
     "HarvestItemDataId": "HarvestItem3",
     "HarvestMinCount": 3,
     "HarvestMaxCount": 10,
-    "SeedDropMinCount": 2,
-    "SeedDropMaxCount": 10,
+    "SeedDropMinCount": 1,
+    "SeedDropMaxCount": 6,
     "IconPath": null,
     "PrefabPath": null
   },
@@ -51,7 +51,7 @@
     "HarvestMinCount": 3,
     "HarvestMaxCount": 20,
     "SeedDropMinCount": 3,
-    "SeedDropMaxCount": 30,
+    "SeedDropMaxCount": 7,
     "IconPath": null,
     "PrefabPath": null
   },
@@ -65,7 +65,7 @@
     "HarvestMinCount": 2,
     "HarvestMaxCount": 20,
     "SeedDropMinCount": 2,
-    "SeedDropMaxCount": 20,
+    "SeedDropMaxCount": 5,
     "IconPath": null,
     "PrefabPath": null
   },
@@ -73,13 +73,13 @@
     "Id": "Crop_item6",
     "Name": "Crop_item6",
     "Description": "작물 아이템 6설명",
-    "GrowthStageMinutesList": "60120120",
+    "GrowthStageMinutesList": "60,120,30",
     "SeedItemDataId": "SeedItem6",
     "HarvestItemDataId": "HarvestItem6",
     "HarvestMinCount": 3,
     "HarvestMaxCount": 10,
-    "SeedDropMinCount": 3,
-    "SeedDropMaxCount": 30,
+    "SeedDropMinCount": 1,
+    "SeedDropMaxCount": 4,
     "IconPath": null,
     "PrefabPath": null
   }

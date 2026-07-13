@@ -3,12 +3,13 @@
 public class TestFarm : MonoBehaviour
 {
     [SerializeField] private FarmPlot Plot_Test;
+    [SerializeField] private GameObject Prefab_CropStage0;
     [SerializeField] private GameObject Prefab_CropStage1;
     [SerializeField] private GameObject Prefab_CropStage2;
-    [SerializeField] private GameObject Prefab_CropStage3;
 
 
     private FarmPlotModel _testPlotModel;
+    private CropObject _currentrCrop;
 
     private void Start()
     {
@@ -18,7 +19,6 @@ public class TestFarm : MonoBehaviour
         _testPlotModel.IsPlanted = false;
 
         Plot_Test.InitPlot(_testPlotModel.PlotUniqueId);
-
         Debug.Log("테스트 준비 - 2: 해금/ 3: 심기/ 4: 수확");
     }
 
@@ -40,7 +40,12 @@ public class TestFarm : MonoBehaviour
             bool result = FarmManager.Instance.RequestPlantCrop(_testPlotModel, "Crop_item1");
             if (result)
             {
-                Plot_Test.SpawnCropObject(Prefab_CropStage1, "Crop_Item1", 0);
+                var gObj = Instantiate(Prefab_CropStage0, Plot_Test.transform);
+                _currentrCrop = gObj.GetComponent<CropObject>();
+                if (_currentrCrop != null)
+                {
+                    _currentrCrop.Init(0, "Crop_item1");
+                }
                 Debug.Log("심기 완료");
             }
         }
@@ -50,30 +55,15 @@ public class TestFarm : MonoBehaviour
             bool result = FarmManager.Instance.RequestHarvestCrop(_testPlotModel);
             if (result)
             {
-                Plot_Test.RemoveCropObject();
+                if (_currentrCrop != null)
+                {
+                    Destroy(_currentrCrop.gameObject);
+                    _currentrCrop = null;
+                }
                 Debug.Log("수확 완료");
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            _testPlotModel.CurrentGrowthStage++;
-            _testPlotModel.GrowthMiniutes += 999;
-            Debug.Log($"현재 성장 단계: {_testPlotModel.CurrentGrowthStage}");
-
-            switch (_testPlotModel.CurrentGrowthStage)
-            {
-                case 1:
-                    Plot_Test.ChangeCropObject(Prefab_CropStage1);
-                    break;
-                case 2:
-                    Plot_Test.ChangeCropObject(Prefab_CropStage2);
-                    break;
-                case 3:
-                    Plot_Test.ChangeCropObject(Prefab_CropStage3);
-                    break;
-            }
-        }
 
 
 
