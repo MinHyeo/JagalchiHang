@@ -67,6 +67,6 @@ public class TrailEmitter : MonoBehaviour
         }
 
         // 추후 _tralilMarkerPrefabPath에 Addressables 주소 넣기추가
-        GameObjectManager.Instance.CreateObject(_trailMarkerPrefabPath, navMeshHit.position);
+        GameObjectManager.Instance.CreateObject(string.Empty, _trailMarkerPrefabPath, navMeshHit.position);
     }
 }

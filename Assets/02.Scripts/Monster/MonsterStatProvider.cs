@@ -1,7 +1,7 @@
-﻿using Unity.Android.Gradle.Manifest;
+﻿using System;
 using UnityEngine;
 
-public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
+public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider, ISpawnable
 {
     [SerializeField] private string _monsterId;
 
@@ -30,24 +30,37 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
         get { return _moveSpeed; }
     }
 
+    public event Action OnStatsLoaded;
+
     private void Awake()
+    {
+        LoadStats();
+    }
+    
+    public void Init(int instanceId, string dataId)
+    {
+        _monsterId = dataId;
+        LoadStats();
+    }
+
+    private void LoadStats()
     {
         MonsterData data = null;
 
-        if (GameDataManager.Instance != null )
+        if (GameDataManager.Instance != null)
         {
             try
             {
                 data = GameDataManager.Instance.GetData<MonsterData>(_monsterId);
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
-                Debug.LogWarning($"{name} : GameDataManager 조회 실패, 기본값으로 대체합니다 ({exception.Message})");
+                Debug.LogWarning($"{name} : GameDataManager 조회 실패, 기본갑으로 대체 합니다.({exception.Message})");
             }
         }
         else
         {
-            Debug.LogWarning($"{name} : GameDataManager.Instance가 null입니다. 씬에 GameDataManager가 있는지 확인요망. 기본값으로 대체합니다.");
+            Debug.LogWarning($"{name} : GameDataManager.Instance가 null입니다. 기본값으로 대체합니다.");
         }
 
         if (data == null)
@@ -56,12 +69,15 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
             _attackPower = 10;
             _attackRange = 2f;
             _moveSpeed = 3.5f;
-            return;
+        }
+        else
+        {
+            _maxHealth = data.MaxHp;
+            _attackPower = data.BasicAttack;
+            _attackRange = data.BasicAttackRange;
+            _moveSpeed = data.BasicSpeed;
         }
 
-        _maxHealth = data.MaxHp;
-        _attackPower = data.BasicAttack;
-        _attackRange = data.BasicAttackRange;
-        _moveSpeed = data.BasicSpeed;
-    } 
+        OnStatsLoaded?.Invoke();
+    }
 }

@@ -30,6 +30,36 @@ public class MonsterHealth : MonoBehaviour, IMonsterDamageable
     private void Awake()
     {
         _statProvider = GetComponent<IMonsterStatProvider>();
+        _statProvider.OnStatsLoaded += HandleStatsLoaded;
+    }
+
+    private void OnEnable()
+    {
+        MonsterRegistry.Register(this);
+    }
+
+    private void OnDisable()
+    {
+        MonsterRegistry.Unregister(this);
+    }
+
+    private void OnDestroy()
+    {
+        try
+        {
+            _statProvider.OnStatsLoaded -= HandleStatsLoaded;
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+    private void HandleStatsLoaded()
+    {
+        _maxHealth = _statProvider.MaxHealth;
+        _currenHealth = _maxHealth;
+        _isDead = false;
     }
 
     private void Start()
@@ -52,15 +82,13 @@ public class MonsterHealth : MonoBehaviour, IMonsterDamageable
         }
 
         Debug.Log($"{name} : 데미지 {amount}, 남은 체력 {_currenHealth} / {_maxHealth}");
-
         OnDamaged?.Invoke();
 
         if (_currenHealth <= 0)
         {
             _isDead = true;
-
             Debug.Log($"{name} : 사망");
-
+            MonsterRegistry.Unregister(this);
             OnDied?.Invoke();
         }
     }

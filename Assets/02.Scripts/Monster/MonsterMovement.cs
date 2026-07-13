@@ -30,11 +30,30 @@ public class MonsterMovement : MonoBehaviour, IMonsterMoveable
     {
         _agent = GetComponent<NavMeshAgent>();
         _statProvider = GetComponent<IMonsterStatProvider>();
+        _statProvider.OnStatsLoaded += HandleStatsLoaded;
     }
 
-    private void Start()
+    private void OnDestroy()
+    {
+        try
+        {
+            _statProvider.OnStatsLoaded -= HandleStatsLoaded;
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+    private void HandleStatsLoaded()
     {
         _agent.speed = _statProvider.MoveSpeed;
+    }
+
+    private void OnEnable()
+    {
+        _isMoving = false;
+        Stop();
     }
 
     private void Update()

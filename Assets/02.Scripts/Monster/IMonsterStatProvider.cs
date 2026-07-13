@@ -6,4 +6,6 @@ public interface IMonsterStatProvider
     int AttackPower { get; }  
     float AttackRange { get; }
     float MoveSpeed { get; }
+
+    event System.Action OnStatsLoaded;
 }
