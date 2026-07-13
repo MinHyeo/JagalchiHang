@@ -32,7 +32,7 @@ public class NetworkInventoryService
         //var newItem = new InventorySlotViewModel();
         //if (newItem == null) return;
 
-        //var itemData = GameDataManager.Instance.GetData<ItemData>();
+        //var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
         //if (ItemData == null) return;
 
         //newItem.ItemDataId = itemData.Id;
