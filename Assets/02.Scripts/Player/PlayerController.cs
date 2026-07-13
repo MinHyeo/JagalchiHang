@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISpawnable
 {
     [SerializeField] private string _playerDataId;
     [SerializeField] private float _rotationSmoothness = 10f;
@@ -20,6 +19,9 @@ public class PlayerController : MonoBehaviour
     private bool _isPickUp;
     
     private float _speed;
+
+    private string _dataId;
+    private int _instanceId;
 
     private PlayerData _playerData;
 
@@ -79,6 +81,12 @@ public class PlayerController : MonoBehaviour
         {
             RotateToMoveDirection();
         }
+    }
+
+    public void Init(int instanceId, string dataId)
+    {
+        _instanceId = instanceId;
+        _dataId = dataId;
     }
 
     // 플레이어 상태 바꾸기
