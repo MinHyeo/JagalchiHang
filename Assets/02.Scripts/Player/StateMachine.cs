@@ -8,7 +8,8 @@ public enum StateType
     Run,
     Attack,
     Die,
-    Hit
+    Hit,
+    PickUp
 }
 
 public class StateMachine
