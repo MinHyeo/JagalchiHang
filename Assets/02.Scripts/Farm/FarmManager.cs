@@ -92,11 +92,12 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        //작물 아이템 지급(인벤 연동 후에)
+        //var invenVm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
         //int harvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount + 1);
+        //invenVm.AcquireItem(cropData.HarvestItemDataId, harvestCount);
+        //int seedCount = Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
+        //invenVm.AcquireItem(cropData.SeedItemDataId, seedCount);
 
-        //씨앗 아이템 지급(인벤 연동 후)
-        // int seedCount = Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
 
 
         plot.CropDataId = string.Empty;
