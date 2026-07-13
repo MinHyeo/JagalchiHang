@@ -3,6 +3,16 @@ using UnityEngine;
 
 public class InventorySlotViewModel : ViewModelBase
 {
+    public void InvokeOnceInit()
+    {
+        OnPropertyChanged(nameof(ItemUniqueId));
+        OnPropertyChanged(nameof(ItemDataId));
+        OnPropertyChanged(nameof(ItemStackCount));
+        OnPropertyChanged(nameof(MaxCount));
+        OnPropertyChanged(nameof(IsStackable));
+    }
+
+    // isEmpty 상태 추가하기
 
     private long _itemUniqueId;
     public long ItemUniqueId
@@ -74,16 +84,20 @@ public class InventorySlotViewModel : ViewModelBase
     }
 
     // TODO : 데이터 드리븐으로 받아오기
-    public void SetItem(string id, int count, bool stackable = true, int max = 99)
+    public void SetItem(string itemDataId, int stackCount)
     {
-        ItemDataId = id;
-        ItemStackCount = count;
-        IsStackable = stackable;
-        MaxCount = max;
+        ItemDataId = itemDataId;
+        ItemStackCount = stackCount;
+
+        //var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        //ItemDataId = itemData.Id;
+        //ItemStackCount = stackCount;
+        //IsStackable = itemData.isStackable;
+        //MaxCount = itemData.maxCount;
     }
 
     public void Clear()
     {
-        SetItem(null, 0, false, 0);
+        SetItem(null, 0);
     }
 }

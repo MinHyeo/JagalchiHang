@@ -12,11 +12,16 @@ public class FarmingUI : UIBase
 
     private FarmingViewModel _vm;
 
-    private void Start()
+    private void OnEnable()
     {
         _vm = NetworkManager_re.Inst.FarmingService.GetFarmingViewModel();
         _vm.TestFarming();
         InitFarmingSlot();
+    }
+
+    private void OnDisable()
+    {
+        ClearSlotUIList();
     }
 
     private void InitFarmingSlot()
