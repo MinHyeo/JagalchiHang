@@ -66,6 +66,11 @@ public class MonsterMovement : MonoBehaviour, IMonsterMoveable
 
     public void Stop()
     {
+        if (_agent == null || !_agent.isOnNavMesh)
+        {
+            return;
+        }
+
         _agent.ResetPath();
     }
 }

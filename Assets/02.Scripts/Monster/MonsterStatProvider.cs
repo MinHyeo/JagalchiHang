@@ -32,8 +32,24 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
 
     private void Awake()
     {
-        MonsterData data = GameDataManager.Instance.GetData<MonsterData>("Monster_1");
-    
+        MonsterData data = null;
+
+        if (GameDataManager.Instance != null )
+        {
+            try
+            {
+                data = GameDataManager.Instance.GetData<MonsterData>(_monsterId);
+            }
+            catch (System.Exception exception)
+            {
+                Debug.LogWarning($"{name} : GameDataManager 조회 실패, 기본값으로 대체합니다 ({exception.Message})");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"{name} : GameDataManager.Instance가 null입니다. 씬에 GameDataManager가 있는지 확인요망. 기본값으로 대체합니다.");
+        }
+
         if (data == null)
         {
             _maxHealth = 100;

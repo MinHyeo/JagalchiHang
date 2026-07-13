@@ -1,58 +1,105 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public class TimeManager : SingletonBase<TimeManager>
 {
-    [SerializeField] private float _timeScale = 60f;
+    [Header("시간 설정")]
+    [Tooltip("하루의 기준 시간을 설정(600 => 10분이 하루)")]
+    [SerializeField] private float _fullDayTime = 600f;
 
-    private int _year = 2026;
-    private int _month = 7;
-    private int _day = 9;
-    private int _hour = 11;
-    private int _minute = 0;
-    private float _second = 0;
+    [Header("Sun")]
+    [SerializeField] private Light _sun;
+    [SerializeField] private Gradient _sunColor;
+    [SerializeField] private AnimationCurve _sunIntenstiy;
+    [Header("Moon")]
+    [SerializeField] private Light _moon;
+    [SerializeField] private Gradient _moonColor;
+    [SerializeField] private AnimationCurve _moonIntenstiy;
 
-    public int Year => _year;
-    public int Month => _month;
+    [Header("Other Lighting")]
+    [SerializeField] private AnimationCurve _lightingIntensityMultiplier;
+    [SerializeField] private AnimationCurve _reflectionIntensityMultiplier;
+
     public int Day => _day;
-    public int Hour => _hour;
-    public int Minute => _minute;
+    public int Hour => (int)(_time * 24f) ;
+    public int Minute => (int)((_time * 1440f) % 60f);
+
+    private int _day;
+    private float _time;
+    private float _startTime = 0.4f;
+    private float _timeRate;
+    private Vector3 _noon = new Vector3(90, 0, 0);
 
     public event Action OnMinuteChanged;
     public event Action OnHourChanged;
     public event Action OnDayChanged;
 
+    private void OnEnable()
+    {
+        _day = 0;
+        _timeRate = 1.0f / _fullDayTime;
+        _time = _startTime;
+    }
+
     private void Update()
     {
         UpdateTime();
+
+        UpdateLighting(_sun, _sunColor, _sunIntenstiy);
+        UpdateLighting(_moon, _moonColor, _moonIntenstiy);
+
+        RenderSettings.ambientIntensity = _lightingIntensityMultiplier.Evaluate(_time);
+        RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
     private void UpdateTime()
     {
-        _second = _second + _timeScale * Time.deltaTime;
+        int prevHour = Hour;
+        int prevMinute = Minute;
 
-        if(_second >= 60)
+        _time = _time + _timeRate * Time.deltaTime;
+
+        if(_time >= 1.0f)
         {
-            int plusMinute = (int)_second / 60;
-            _second %= 60;
-            _minute = _minute + plusMinute;
+            int passedDays = (int)_time;
+            _day += passedDays;
+            _time = _time % 1.0f;
+
+            OnDayChanged?.Invoke();
+        }
+
+        if(Minute != prevMinute)
+        {
             OnMinuteChanged?.Invoke();
         }
 
-        if(_minute >= 60)
+        if(Hour != prevHour)
         {
-            int plusHour = _minute / 60;
-            _minute %= 60;
-            _hour = _hour + plusHour;
             OnHourChanged?.Invoke();
         }
+    }
 
-        if(_hour >= 24)
+    private void UpdateLighting(Light light, Gradient gradient, AnimationCurve animationCurve)
+    {
+        if (light == null)
+            return;
+
+        float intensity = animationCurve.Evaluate(_time);
+        Color color = gradient.Evaluate(_time);
+
+        light.transform.eulerAngles = (_time - (light == _sun ? 0.25f : 0.75f)) * _noon * 4.0f;
+        light.color = color;
+        light.intensity = intensity;
+
+        GameObject lightObject = light.gameObject;
+        if(light.intensity == 0 && lightObject.activeInHierarchy == true)
         {
-            int plusDay = _hour / 24;
-            _hour %= 24;
-            _day = _day + plusDay;
-            OnDayChanged?.Invoke();
+            lightObject.SetActive(false);
+        }
+        else if(light.intensity > 0 && lightObject.activeInHierarchy == false)
+        {
+            lightObject.SetActive(true);
         }
     }
 }
