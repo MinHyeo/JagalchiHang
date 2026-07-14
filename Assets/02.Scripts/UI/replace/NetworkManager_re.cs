@@ -7,7 +7,6 @@ using UnityEngine;
 public class NetworkManager_re : MonoBehaviour
 {
     public static NetworkManager_re Inst { get; set; }
-
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
