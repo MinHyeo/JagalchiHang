@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class WorldManager
 {
-    private PlayerManager _playerManager;
+    //private PlayerManager _playerManager
     //private NpcManager _npcManager;
     //private MonsterManager _monsterManager;
     //private FarmManager _farmManager;
@@ -13,12 +13,12 @@ public class WorldManager
     {
         LoadSaveData();
 
-        _playerManager = new PlayerManager();
+        //_playerManager = new PlayerManager();
         //_monsterManager = new MonsterManager();
         //_npcManager = new NpcManager();
         //_farmManager = new FarmManager();
 
-        _playerManager.SpawnPlayer().Forget();
+        //_playerManager.SpawnPlayer();
 
         //ITargetable target = _playerManager;
 
