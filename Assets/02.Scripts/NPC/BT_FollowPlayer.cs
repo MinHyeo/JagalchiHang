@@ -11,7 +11,7 @@ public partial class BT_FollowPlayer : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
-    [SerializeReference] public BlackboardVariable<NPCState> CurrentState;
+    [SerializeReference] public BlackboardVariable<NpcState> CurrentState;
 
     private NavMeshAgent _agent;
 
@@ -24,7 +24,7 @@ public partial class BT_FollowPlayer : Action
             return Status.Failure; //실패 처리 
         }
 
-        CurrentState.Value = NPCState.Chase; //추적 상태로 변경
+        CurrentState.Value = NpcState.Chase; //추적 상태로 변경
 
         _agent.speed = 5.0f; //NPC 이동속도 
         _agent.SetDestination(Target.Value.transform.position); // 설정해둔 타겟(플레이어)의 위치를 목적지로 설정

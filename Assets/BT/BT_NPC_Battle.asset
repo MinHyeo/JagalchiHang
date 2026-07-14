@@ -33,7 +33,7 @@ MonoBehaviour:
         BlackboardGroupReferences: []
         Root:
           rid: 6163278663384301627
-        m_VersionTimestamp: 639196380573237859
+        m_VersionTimestamp: 639196427527447749
     - rid: 6163278529966637057
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -68,7 +68,7 @@ MonoBehaviour:
         Name: Target
         m_Value: {fileID: 0}
     - rid: 6163278654565253262
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 13679741696954006052
@@ -262,7 +262,7 @@ MonoBehaviour:
         IsInBunker:
           rid: 6163278654565253263
     - rid: 6163278663384301637
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -293,7 +293,7 @@ MonoBehaviour:
         IsInBunker:
           rid: 6163278654565253263
     - rid: 6163278663384301640
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -341,7 +341,7 @@ MonoBehaviour:
         Name: 
         m_Value: 1
     - rid: 6163278663384301646
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
         m_IsShared: 0
         m_Value: {fileID: 0}
     - rid: 6163278552853119060
-      type: {class: 'TypedVariableModel`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 13679741696954006052
@@ -492,7 +492,7 @@ MonoBehaviour:
   - rid: 6163278573309002111
   - rid: 6163278573309002268
   - rid: 6163278573309002419
-  m_VersionTimestamp: 639196380573237859
+  m_VersionTimestamp: 639196427527447749
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -372534558345469660}
   m_RuntimeGraph: {fileID: -8299888321907847663}
@@ -544,7 +544,7 @@ MonoBehaviour:
       Tooltip: 
     - Name: CurrentState
       Type:
-        m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       Tooltip: 
     NamedChildren: []
@@ -659,8 +659,8 @@ MonoBehaviour:
   m_HasMissingTypeInManagedRef: 0
   m_EnumDependencyCache:
     Entries:
-    - EnumTypeId: NPCState, Assembly-CSharp
-      SignatureHash: 885a85ebbf0727ccdaac55e54722b4f7
+    - EnumTypeId: NpcState, Assembly-CSharp
+      SignatureHash: 1bfea6d333b1024283641a9631a9561d
   references:
     version: 2
     RefIds:
@@ -909,7 +909,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: 
     - rid: 6163278553088262323
-      type: {class: 'TypedVariableModel`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 13679741696954006052
@@ -1185,14 +1185,14 @@ MonoBehaviour:
       data:
         FieldName: CurrentState
         Type:
-          m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
           rid: 6163278555438645364
         LinkedVariable:
           rid: -2
     - rid: 6163278555438645364
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -1250,7 +1250,7 @@ MonoBehaviour:
           rid: 6163278557539729635
         m_Connections: []
     - rid: 6163278557539729663
-      type: {class: 'TypedVariableModel`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 13679741696954006052
@@ -1264,7 +1264,7 @@ MonoBehaviour:
       data:
         FieldName: Variable
         Type:
-          m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
           rid: 6163278557539729666
@@ -1275,14 +1275,14 @@ MonoBehaviour:
       data:
         FieldName: Value
         Type:
-          m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
           rid: 6163278557539729667
         LinkedVariable:
           rid: -2
     - rid: 6163278557539729666
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -1290,7 +1290,7 @@ MonoBehaviour:
         Name: 
         m_Value: 0
     - rid: 6163278557539729667
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -1435,7 +1435,7 @@ MonoBehaviour:
           rid: 6163278573309002268
         m_Connections: []
     - rid: 6163278573309002287
-      type: {class: 'TypedVariableModel`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      type: {class: 'TypedVariableModel`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
         ID:
           m_Value0: 13679741696954006052
@@ -1449,7 +1449,7 @@ MonoBehaviour:
       data:
         FieldName: Variable
         Type:
-          m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
           rid: 6163278573309002290
@@ -1460,14 +1460,14 @@ MonoBehaviour:
       data:
         FieldName: Value
         Type:
-          m_SerializableType: NPCState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+          m_SerializableType: NpcState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
             PublicKeyToken=null
         LocalValue:
           rid: 6163278573309002291
         LinkedVariable:
           rid: -2
     - rid: 6163278573309002290
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -1475,7 +1475,7 @@ MonoBehaviour:
         Name: 
         m_Value: 0
     - rid: 6163278573309002291
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
@@ -1775,7 +1775,7 @@ MonoBehaviour:
         Name: Self
         m_Value: {fileID: 0}
     - rid: 6163278552853119065
-      type: {class: 'BlackboardVariable`1[[NPCState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[NpcState, Assembly-CSharp]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 13679741696954006052

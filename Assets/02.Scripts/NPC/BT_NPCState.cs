@@ -2,7 +2,7 @@
 using Unity.Behavior;
 
 [BlackboardEnum]
-public enum NPCState
+public enum NpcState
 {
 	Idle,
 	Patrol,

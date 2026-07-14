@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class NPCManager : MonoBehaviour // 벙커 로직 테스트용 
+public class NpcManager : MonoBehaviour // 벙커 로직 테스트용 
 {
-    public static NPCManager Instance { get; private set; }
+    public static NpcManager Instance { get; private set; }
 
     public static Action<bool,  Vector3> OnBunkerEnterEvent;
     public static Action<bool, Vector3> OnBunkerExitEvent;
