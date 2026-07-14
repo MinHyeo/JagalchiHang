@@ -36,7 +36,6 @@ public class GameDataManager : SingletonBase<GameDataManager>
             string wrappedJson = "{\"items\":" + jsonString + "}";
             SerializationWrapper<T> wrapper = JsonUtility.FromJson<SerializationWrapper<T>>(wrappedJson);
 
-            Debug.Log($"a: {wrapper}, b : {wrapper.items}, c : {wrapper.items.Count}");
             if (wrapper != null && wrapper.items != null)
             {
                 Debug.Log($"{typeof(T).Name} 데이터를 {wrapper.items.Count}개 로드했습니다.");
@@ -52,7 +51,6 @@ public class GameDataManager : SingletonBase<GameDataManager>
         return new Dictionary<string, T>();
     }
 
-    // 예시 GameDataManager.Instance.LoadData<EnemyData>();
     public void LoadData<T>() where T : GameDataBase
     {
         string dataName = typeof(T).Name;
@@ -63,7 +61,7 @@ public class GameDataManager : SingletonBase<GameDataManager>
         _dataList[dataName] = LoadJsonData<T>(dataName);
     }
 
-    // 예시 GameDataManager.Instance.GetData<EnemyData>("id");
+
     public T GetData<T>(string id) where T : GameDataBase
     {
         string type = typeof(T).Name;
@@ -73,6 +71,19 @@ public class GameDataManager : SingletonBase<GameDataManager>
         {
             var dict = dictObj as Dictionary<string, T>;
             return dict[id];
+        }
+        return null;
+    }
+
+    public List<string> GetAllDataId<T>() where T : GameDataBase
+    {
+        string type = typeof(T).Name;
+        object dictObj = null;
+
+        if (_dataList.TryGetValue(type, out dictObj))
+        {
+            var dict = dictObj as Dictionary<string, T>;
+            return dict.Keys.ToList();
         }
         return null;
     }
