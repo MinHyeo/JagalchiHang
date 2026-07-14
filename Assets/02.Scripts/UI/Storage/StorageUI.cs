@@ -11,7 +11,7 @@ public class StorageUI : UIBase
 
     private StorageViewModel _vm;
 
-    private void Start()
+    private void OnEnable()
     {
         _vm = NetworkManager_re.Inst.StorageService.GetLocalStorageViewModel();
         InitStorage();

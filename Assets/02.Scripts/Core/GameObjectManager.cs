@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameObjectManager : SingletonBase<GameObjectManager>
 {
+    private static int _objectInstanceKeyGenerator = 0;
+
     private Transform _rootTransform;
     private PoolManager _poolManager;
 
@@ -12,13 +14,12 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
         _rootTransform = this.transform;
     }
 
-    // 예시 GameObjectManager.Instance.CreateObject("Prefab/Enemy/Enemy_01", Vector3.zero);
-    public void CreateObject(string path, Vector3 spawnSpot)
+    public void CreateObject(string dataId, string path, Vector3 spawnSpot)
     {
-        CreateObjectAsync(path, spawnSpot).Forget();
+        CreateObjectAsync(dataId, path, spawnSpot).Forget();
     }
 
-    private async UniTaskVoid CreateObjectAsync(string path, Vector3 spawnSpot)
+    public async UniTaskVoid CreateObjectAsync(string dataId, string path, Vector3 spawnSpot)
     {
         GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>(path);
         if (prefab == null)
@@ -30,9 +31,20 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
 
         gameObject.transform.SetParent(_rootTransform);
         gameObject.transform.position = spawnSpot;
+        AddObjectOnCreate(gameObject, dataId);
     }
 
-    // 예시 GameObjectManager.Instance.RequestDestroyObject(this.gameObject);
+    private void AddObjectOnCreate(GameObject createdObject, string dataId)
+    {
+        int generatedInstanceId = _objectInstanceKeyGenerator++;
+        ISpawnable createdScript = createdObject.GetComponent<ISpawnable>();
+
+        if (createdScript == null)
+            return;
+
+        createdScript.Init(generatedInstanceId, dataId);
+    }
+
     public void RequestDestroyObject(GameObject gameObject)
     {
         _poolManager.Push(gameObject);
