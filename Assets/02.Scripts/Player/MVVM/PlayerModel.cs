@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class PlayerModel
@@ -8,4 +9,6 @@ public class PlayerModel
     public int CurrentHp;
     public int CurrentHunger;
     public int CurrentThirst;
+
+    public List<FarmPlotModel> FarmPlotList = new List<FarmPlotModel>();
 }
