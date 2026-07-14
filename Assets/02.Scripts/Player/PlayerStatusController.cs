@@ -10,10 +10,6 @@ public enum DamageType
 
 public class PlayerStatusController : MonoBehaviour
 {
-    private int _maxHp;
-    private int _maxHunger;
-    private int _maxThirst;
-
     private int _hungerInterval;
     private int _thirstInterval;
     private int _hungerDecrease;
@@ -21,21 +17,9 @@ public class PlayerStatusController : MonoBehaviour
     private int _hungerDamage;
     private int _thirstDamage;
 
-    private int _curHp;
-    private int _curHunger;
-    private int _curThirst;
-
-    public int MaxHp => _maxHp;
-    public int MaxHunger => _maxHunger;
-    public int MaxThirst => _maxThirst;
-    public int CurHp => _curHp;
-    public int CurHunger => _curHunger;
-    public int CurThirst => _curThirst;
-
     private PlayerController _playerController;
+    private PlayerViewModel _vm = new PlayerViewModel();
 
-    public event Action PlayerStatusChanged;
-    
     private void Start()
     {
         _playerController = GetComponent<PlayerController>();
@@ -56,9 +40,11 @@ public class PlayerStatusController : MonoBehaviour
 
     public void InitPlayerStatus(PlayerData playerData)
     {
-        _maxHp = playerData.MaxHp;
-        _maxHunger = playerData.MaxHunger;
-        _maxThirst = playerData.MaxThirst;
+        if (playerData == null) return;
+
+        _vm.MaxHp = playerData.MaxHp;
+        _vm.MaxHunger = playerData.MaxHunger;
+        _vm.MaxThirst = playerData.MaxThirst;
 
         _hungerInterval = playerData.HungerInterval;
         _thirstInterval = playerData.ThirstInterval;
@@ -67,11 +53,9 @@ public class PlayerStatusController : MonoBehaviour
         _hungerDamage = playerData.HungerDamage;
         _thirstDamage = playerData.ThirstDamage;
 
-        _curHp = _maxHp;
-        _curHunger = _maxHunger;
-        _curThirst = _maxThirst;
-
-        OnPlayerStatusChanged();
+        _vm.CurrentHp = _vm.MaxHp;
+        _vm.CurrentHunger = _vm.MaxHunger;
+        _vm.CurrentThirst = _vm.MaxThirst;
     }
 
     private void TestStatusDecrease()
@@ -127,10 +111,10 @@ public class PlayerStatusController : MonoBehaviour
                 break;
         }
 
-        _curHp = Mathf.Max(0, _curHp - decreaseValue);
-        Debug.Log($"플레이어의 Hp가 {decreaseValue}만큼 감소했다.    현재 Hp : {_curHp}");
+        _vm.CurrentHp = Mathf.Max(0, _vm.CurrentHp - decreaseValue);
+        Debug.Log($"플레이어의 Hp가 {decreaseValue}만큼 감소했다.    현재 Hp : {_vm.CurrentHp}");
 
-        if(_curHp <= 0)
+        if(_vm.CurrentHp <= 0)
         {
             _playerController.Die();
         }
@@ -138,38 +122,27 @@ public class PlayerStatusController : MonoBehaviour
         {
             _playerController.Hit();
         }
-
-        OnPlayerStatusChanged();
     }
 
     public void DecreaseHunger()
     {
-        _curHunger = Mathf.Max(0, _curHunger - _hungerDecrease);
-        Debug.Log($"플레이어의 Hunger가 {_hungerDecrease}만큼 감소했다.    현재 Hunger : {_curHunger}");
+        _vm.CurrentHunger = Mathf.Max(0, _vm.CurrentHunger - _hungerDecrease);
+        Debug.Log($"플레이어의 Hunger가 {_hungerDecrease}만큼 감소했다.    현재 Hunger : {_vm.CurrentHunger}");
 
-        if(_curHunger <= 0)
+        if(_vm.CurrentHunger <= 0)
         {
             DecreaseHp(DamageType.Hunger);
         }
-
-        OnPlayerStatusChanged();
     }
 
     public void DecreaseThirst()
     {
-        _curThirst = Mathf.Max(0, _curThirst - _thirstDecrease);
-        Debug.Log($"플레이어의 Thirst가 {_thirstDecrease}만큼 감소했다.    현재 Thirst  : {_curThirst}");
+        _vm.CurrentThirst = Mathf.Max(0, _vm.CurrentThirst - _thirstDecrease);
+        Debug.Log($"플레이어의 Thirst가 {_thirstDecrease}만큼 감소했다.    현재 Thirst  : {_vm.CurrentThirst}");
 
-        if (_curThirst <= 0)
+        if (_vm.CurrentThirst <= 0)
         {
             DecreaseHp(DamageType.Thirst);
         }
-
-        OnPlayerStatusChanged();
-    }
-
-    private void OnPlayerStatusChanged()
-    {
-        PlayerStatusChanged?.Invoke();
     }
 }
