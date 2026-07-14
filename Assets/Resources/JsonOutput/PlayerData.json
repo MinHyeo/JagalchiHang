@@ -6,6 +6,12 @@
     "MaxHunger": 30,
     "MaxThirst": 20,
     "AttackPower": 30,
-    "MoveSpeed": 1.8
+    "MoveSpeed": 1.8,
+    "HungerInterval": 20,
+    "ThirstInterval": 10,
+    "HungerDecrease": 1,
+    "ThirstDecrease": 1,
+    "HungerDamage": 2,
+    "ThirstDamage": 3
   }
 ]
