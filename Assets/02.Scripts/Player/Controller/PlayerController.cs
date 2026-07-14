@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, ISpawnable
 {
-    [SerializeField] private string _playerDataId;
     [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
     
@@ -16,8 +15,12 @@ public class PlayerController : MonoBehaviour
     private bool _isPressedMouseRight;
     private bool _isDie;
     private bool _isHit;
+    private bool _isPickUp;
     
     private float _speed;
+
+    private string _dataId;
+    private int _instanceId;
 
     private PlayerData _playerData;
 
@@ -28,9 +31,13 @@ public class PlayerController : MonoBehaviour
 
     public bool IsHit => _isHit;
 
+    public bool IsPickUp => _isPickUp;
+
     public Animator Animator => _animator;
 
     private PlayerStatusController _statusController;
+
+    private ItemController _currentItem;
 
     private StateMachine _stateMachine = new StateMachine();
 
@@ -42,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         GameDataManager.Instance.LoadData<PlayerData>();
-        _playerData = GameDataManager.Instance.GetData<PlayerData>(_playerDataId);
+        _playerData = GameDataManager.Instance.GetData<PlayerData>(_dataId);
 
         _statusController.InitPlayerStatus(_playerData);
 
@@ -52,6 +59,7 @@ public class PlayerController : MonoBehaviour
         _stateMachine.AddState(StateType.Attack, new AttackState());
         _stateMachine.AddState(StateType.Die, new DieState());
         _stateMachine.AddState(StateType.Hit, new HitState());
+        _stateMachine.AddState(StateType.PickUp, new PickUpState());
 
         _stateMachine.SetState(StateType.Idle, this);
     }
@@ -72,6 +80,12 @@ public class PlayerController : MonoBehaviour
         {
             RotateToMoveDirection();
         }
+    }
+
+    public void Init(int instanceId, string dataId)
+    {
+        _instanceId = instanceId;
+        _dataId = dataId;
     }
 
     // 플레이어 상태 바꾸기
@@ -149,6 +163,29 @@ public class PlayerController : MonoBehaviour
     public void OnHitEnd()
     {
         _isHit = false;
+    }
+
+    public void OnPickUp(InputAction.CallbackContext context)
+    {
+        if (_currentItem == null) return;
+        if (context.performed == false) return;
+        if (_isPickUp == true) return;
+
+        _isPickUp = true;
+
+        SetState(StateType.PickUp);
+        Debug.Log($"{_currentItem}을 주웠다.");
+        _currentItem.DestroyItem();
+    }
+
+    public void OnPickUpEnd()
+    {
+        _isPickUp = false;
+    }
+
+    public void SetCurrentItem(ItemController Item)
+    {
+        _currentItem = Item;
     }
 
     // 플레이어 이동

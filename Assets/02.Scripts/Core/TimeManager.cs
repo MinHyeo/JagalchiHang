@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using static UnityEngine.InputSystem.XR.TrackedPoseDriver;
 
 public class TimeManager : SingletonBase<TimeManager>
 {

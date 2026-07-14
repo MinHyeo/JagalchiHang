@@ -15,13 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 13f035feed29ed246ba1a825e93415c4
   m_SerializeEntries:
-  - m_GUID: 22fb9cfb5fd19c840bd24a7c6f720051
-    m_Address: Assets/03.Prefabs/Test_Trail.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 638a002a0c42fca49b721cf5284c17f4
-    m_Address: Assets/03.Prefabs/Monster.prefab
+  - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
+    m_Address: Prefab/Player
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
