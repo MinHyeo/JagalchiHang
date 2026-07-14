@@ -7,7 +7,7 @@ public class BattleNPC : MonoBehaviour
     [SerializeField] private BehaviorGraphAgent behaviorAgent;
 
     private BlackboardVariable<bool> _isInBunker; //벙커 안밖 여부
-    private BlackboardVariable<BTState> _currentState; //BattleNPC 현재 상태
+    private BlackboardVariable<NPCState> _currentState; //BattleNPC 현재 상태
     private BlackboardVariable<Vector3> _bunkerSpawnPosition; // 벙커 스폰위치
     private BlackboardVariable<Vector3> _returnSpawnPosition; //돌아갈 위치
 
@@ -26,14 +26,14 @@ public class BattleNPC : MonoBehaviour
 
     private void OnEnable()
     {
-        TestNPCManager.OnBunkerEvent += EnterBunker;
-        TestNPCManager.OnBunkerExitEvent += ExitBunker;
+        NPCManager.OnBunkerEnterEvent += EnterBunker;
+        NPCManager.OnBunkerExitEvent += ExitBunker;
     }
 
     private void OnDisable()
     {
-        TestNPCManager.OnBunkerEvent -= EnterBunker;
-        TestNPCManager.OnBunkerExitEvent -= ExitBunker;
+        NPCManager.OnBunkerEnterEvent -= EnterBunker;
+        NPCManager.OnBunkerExitEvent -= ExitBunker;
     }
 
     private void EnterBunker(bool value, Vector3 bunkerPos)
@@ -59,7 +59,7 @@ public class BattleNPC : MonoBehaviour
             transform.position = _bunkerSpawnPosition.Value;
         }
 
-        _currentState.Value = BTState.Idle;
+        _currentState.Value = NPCState.Idle;
 
     }
 
@@ -82,7 +82,7 @@ public class BattleNPC : MonoBehaviour
             transform.position = _returnSpawnPosition.Value;
         }
 
-        _currentState.Value = BTState.Chase;
+        _currentState.Value = NPCState.Chase;
 
     }
 }
