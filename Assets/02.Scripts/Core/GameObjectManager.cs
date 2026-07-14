@@ -19,19 +19,21 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
         CreateObjectAsync(dataId, path, spawnSpot).Forget();
     }
 
-    public async UniTaskVoid CreateObjectAsync(string dataId, string path, Vector3 spawnSpot)
+    public async UniTask<GameObject> CreateObjectAsync(string dataId, string path, Vector3 spawnSpot)
     {
         GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>(path);
         if (prefab == null)
-            return;
+            return null;
 
         GameObject gameObject = _poolManager.Pop(prefab);
         if (gameObject == null)
-            return;
+            return null;
 
         gameObject.transform.SetParent(_rootTransform);
         gameObject.transform.position = spawnSpot;
         AddObjectOnCreate(gameObject, dataId);
+
+        return gameObject;
     }
 
     private void AddObjectOnCreate(GameObject createdObject, string dataId)
