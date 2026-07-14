@@ -8,7 +8,7 @@ public class NetworkManager_re : MonoBehaviour
 {
     public static NetworkManager_re Inst { get; set; }
 
-    public NetworkPlayerService_re LocalPlayerService { get; private set; }
+    public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
@@ -22,6 +22,7 @@ public class NetworkManager_re : MonoBehaviour
     private void InitNetworkService()
     {
         // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
+        PlayerService = new NetworkPlayerService();
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();

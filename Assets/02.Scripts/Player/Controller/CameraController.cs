@@ -9,6 +9,11 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float _minZoomFOV = 30f;
     [SerializeField] private float _maxZoomFOV = 80f;
 
+    private void OnEnable()
+    {
+        SampleGameManager.Instance.PlayerSpawned += OnSetTarget;
+    }
+
     private void Update()
     {
         // 현재 마우스 휠 입력값 가져옴
@@ -23,5 +28,10 @@ public class CameraController : MonoBehaviour
 
             _camera.Lens = lens;
         }
+    }
+
+    private void OnSetTarget(GameObject player)
+    {
+        _camera.Target.TrackingTarget = player.transform;
     }
 }

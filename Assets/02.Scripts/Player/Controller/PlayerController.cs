@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour, ISpawnable
 
     private void Start()
     {
-        GameDataManager.Instance.LoadData<PlayerData>();
         _playerData = GameDataManager.Instance.GetData<PlayerData>(_dataId);
 
         _statusController.InitPlayerStatus(_playerData);
