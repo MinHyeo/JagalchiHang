@@ -6,9 +6,11 @@ public class TestNPCManager : MonoBehaviour // 벙커 로직 테스트용
     public static TestNPCManager Instance { get; private set; }
 
     public static Action<bool,  Vector3> OnBunkerEvent;
+    public static Action<bool, Vector3> OnBunkerExitEvent;
 
     public Vector3 testBunkerSpawnPos = new Vector3(-7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
     public Vector3 testBattleNPCHomePos = new Vector3(0, 1, -13); // NPC  매니저에서 관리 
+    public Vector3 testReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
 
     private void Awake()
     {
@@ -29,6 +31,11 @@ public class TestNPCManager : MonoBehaviour // 벙커 로직 테스트용
         {
             OnBunkerData(true, testBunkerSpawnPos);
         }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            OnBunkerExitData(false, testReturnPos);
+        }
     }
 
 
@@ -37,7 +44,14 @@ public class TestNPCManager : MonoBehaviour // 벙커 로직 테스트용
 
         OnBunkerEvent?.Invoke(isInBunker, bunkerPos);
 
-        Debug.Log($"[NPC 매니저] 게임 매니저로부터 값을 받아왔고 데이터 전달");
+        Debug.Log($"[NPC 매니저] 벙커 진입");
+    }
+
+    public void OnBunkerExitData(bool isInBunker, Vector3 returnPos)
+    {
+        OnBunkerExitEvent?.Invoke(isInBunker, returnPos);
+
+        Debug.Log($"[NPC 매니저] 벙커 탈출 ");
     }
 
 

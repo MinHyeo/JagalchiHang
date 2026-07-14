@@ -524,6 +524,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1265691215}
   - component: {fileID: 1265691214}
+  - component: {fileID: 1265691218}
   - component: {fileID: 1265691213}
   - component: {fileID: 1265691212}
   - component: {fileID: 1265691216}
@@ -624,7 +625,7 @@ Transform:
   m_GameObject: {fileID: 1265691211}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 3.63}
+  m_LocalPosition: {x: 7.82, y: 1, z: -6.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -668,6 +669,7 @@ MonoBehaviour:
   m_BlackboardVariableOverridesList:
   - rid: 6163278557539729475
   - rid: 6163278557539729759
+  - rid: 6163278654565253285
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -690,6 +692,27 @@ MonoBehaviour:
           m_Value1: 13290150049927136338
         Name: Target
         m_Value: {fileID: 709147257}
+    - rid: 6163278654565253285
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12687865303571638535
+          m_Value1: 7334765443183230496
+        Name: ReturnSpawnPosition
+        m_Value: {x: 7, y: 1, z: -8.5}
+--- !u!114 &1265691218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1265691211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d0b5ddf7fd7f549ae3f0f310311eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleNPC
+  behaviorAgent: {fileID: 1265691217}
 --- !u!1 &1293235992
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,8 +1007,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 016273f1488ea9a4897b18234dab3f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestNPCManager
-  testBunkerSpawnPos: {x: -7, y: 1, z: -9}
+  testBunkerSpawnPos: {x: 7, y: 1, z: -9}
   testBattleNPCHomePos: {x: 0, y: 1, z: -13}
+  testReturnPos: {x: 7, y: 1, z: -8.5}
 --- !u!4 &1799197128
 Transform:
   m_ObjectHideFlags: 0
