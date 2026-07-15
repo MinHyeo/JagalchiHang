@@ -4,10 +4,17 @@ using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera _camera;
+    [SerializeField] private CinemachineCamera _myCamera;
     [SerializeField] private float _sensitivity = 5.0f;
     [SerializeField] private float _minZoomFOV = 30f;
     [SerializeField] private float _maxZoomFOV = 80f;
+
+    private static CinemachineCamera _camera;
+
+    private void Awake()
+    {
+        _camera = _myCamera;
+    }
 
     private void Update()
     {
@@ -23,5 +30,16 @@ public class CameraController : MonoBehaviour
 
             _camera.Lens = lens;
         }
+    }
+
+    // 플레이어를 TrackingTarget으로 설정
+    public static void SetTrackingTarget(Transform targetTransform)
+    {
+        if(targetTransform != null)
+        {
+            _camera.Target.TrackingTarget = targetTransform;
+        }
+
+        return;
     }
 }
