@@ -13,11 +13,13 @@ public class PlayerManager : ITargetable
     // 플레이어 동적 생성
     public async UniTaskVoid SpawnPlayer()
     {
+        LoadPlayerData();
+
         _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos);
         if (_player == null) return;
 
         Debug.Log($"플레이어가 생성됐다!");
-
+        
         UpdateCameraTarget();
     }
 
@@ -45,4 +47,16 @@ public class PlayerManager : ITargetable
         return component.IsDie == true;
     }
 
+    private void LoadPlayerData()
+    {
+        if (GameDataManager.Instance == null)
+        {
+            Debug.LogError("GameDataManager.Instance가 없습니다.");
+            return;
+        }
+
+        GameDataManager.Instance.LoadData<PlayerData>();
+
+        Debug.Log("PlayerData 로드 완료");
+    }
 }
