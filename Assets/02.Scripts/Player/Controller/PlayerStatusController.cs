@@ -10,6 +10,10 @@ public enum DamageType
 
 public class PlayerStatusController : MonoBehaviour
 {
+    private int _maxHp;
+    private int _maxHunger;
+    private int _maxThirst;
+
     private int _hungerInterval;
     private int _thirstInterval;
     private int _hungerDecrease;
@@ -18,12 +22,16 @@ public class PlayerStatusController : MonoBehaviour
     private int _thirstDamage;
 
     private PlayerController _playerController;
-    private PlayerViewModel _vm = new PlayerViewModel();
+    private PlayerViewModel _vm;
 
-    private void Start()
+    private void Awake()
     {
+        _vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
         _playerController = GetComponent<PlayerController>();
+    }
 
+    private void OnEnable()
+    {
         if (TimeManager.Instance != null)
         {
             TimeManager.Instance.OnMinuteChanged += OnHungerChanged;
@@ -42,9 +50,9 @@ public class PlayerStatusController : MonoBehaviour
     {
         if (playerData == null) return;
 
-        _vm.MaxHp = playerData.MaxHp;
-        _vm.MaxHunger = playerData.MaxHunger;
-        _vm.MaxThirst = playerData.MaxThirst;
+        _maxHp = playerData.MaxHp;
+        _maxHunger = playerData.MaxHunger;
+        _maxThirst = playerData.MaxThirst;
 
         _hungerInterval = playerData.HungerInterval;
         _thirstInterval = playerData.ThirstInterval;
@@ -53,9 +61,9 @@ public class PlayerStatusController : MonoBehaviour
         _hungerDamage = playerData.HungerDamage;
         _thirstDamage = playerData.ThirstDamage;
 
-        _vm.CurrentHp = _vm.MaxHp;
-        _vm.CurrentHunger = _vm.MaxHunger;
-        _vm.CurrentThirst = _vm.MaxThirst;
+        _vm.CurrentHp = _maxHp;
+        _vm.CurrentHunger = _maxHunger;
+        _vm.CurrentThirst = _maxThirst;
     }
 
     private void TestStatusDecrease()
