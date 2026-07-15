@@ -225,6 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FarmPlot
   Object_PlotSet: {fileID: 6846557198180354160}
+  Transform_CropSpawnPoint: {fileID: 5360024481480725025}
 --- !u!1 &8109636880961375535
 GameObject:
   m_ObjectHideFlags: 0

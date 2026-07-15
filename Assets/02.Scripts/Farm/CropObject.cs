@@ -14,6 +14,7 @@ public class CropObject : MonoBehaviour
         _cropDataId = dataId;
         _currentStage = 0;
         _growthMinutes = 0;
+        //FarmManager.Instance.RegisterCropObject(_plotUniqueId, this);
     }
     private void OnEnable()
     {

@@ -62,15 +62,14 @@ public class GameDataManager : SingletonBase<GameDataManager>
     }
 
 
-    public T GetData<T>() where T : GameDataBase
+    public T GetData<T>(string id) where T : GameDataBase
     {
         string type = typeof(T).Name;
         object dictObj = null;
-
         if (_dataList.TryGetValue(type, out dictObj))
         {
             var dict = dictObj as Dictionary<string, T>;
-            return dict[type];
+            return dict[id];
         }
         return null;
     }

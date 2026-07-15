@@ -4,12 +4,8 @@ public class TestFarm : MonoBehaviour
 {
     [SerializeField] private FarmPlot Plot_Test;
     [SerializeField] private GameObject Prefab_CropStage0;
-    [SerializeField] private GameObject Prefab_CropStage1;
-    [SerializeField] private GameObject Prefab_CropStage2;
-
 
     private FarmPlotModel _testPlotModel;
-    private CropObject _currentrCrop;
 
     private void Start()
     {
@@ -19,6 +15,7 @@ public class TestFarm : MonoBehaviour
         _testPlotModel.IsPlanted = false;
 
         Plot_Test.InitPlot(_testPlotModel.PlotUniqueId);
+
         Debug.Log("테스트 준비 - 2: 해금/ 3: 심기/ 4: 수확");
     }
 
@@ -41,10 +38,10 @@ public class TestFarm : MonoBehaviour
             if (result)
             {
                 var gObj = Instantiate(Prefab_CropStage0, Plot_Test.transform);
-                _currentrCrop = gObj.GetComponent<CropObject>();
-                if (_currentrCrop != null)
+                var cropObject = gObj.GetComponent<CropObject>();
+                if (cropObject != null)
                 {
-                    _currentrCrop.Init(0, "Crop_item1");
+                    cropObject.Init(0, "Crop_item1");
                 }
                 Debug.Log("심기 완료");
             }
@@ -55,15 +52,9 @@ public class TestFarm : MonoBehaviour
             bool result = FarmManager.Instance.RequestHarvestCrop(_testPlotModel);
             if (result)
             {
-                if (_currentrCrop != null)
-                {
-                    Destroy(_currentrCrop.gameObject);
-                    _currentrCrop = null;
-                }
                 Debug.Log("수확 완료");
             }
         }
-
 
 
 
