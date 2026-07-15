@@ -1,21 +1,17 @@
 ﻿using System;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class SampleGameManager : SingletonBase<SampleGameManager>
 {
     private LobbyManager _lobbyManager;
     private SampleWorldManager _worldManager;
-
-    public event Action<GameObject> PlayerSpawned;
-
     private void Start()
     {
         LoadData();
 
         _lobbyManager = new LobbyManager();
         _worldManager = new SampleWorldManager();
-
-        _worldManager.PlayerSpawned += OnPlayerSpawned;
 
         _lobbyManager.EnterLobby();
     }
@@ -28,11 +24,6 @@ public class SampleGameManager : SingletonBase<SampleGameManager>
         if (_lobbyManager == null)
             return;
         _lobbyManager.ExitLobby();
-    }
-
-    private void OnPlayerSpawned(GameObject player)
-    {
-        PlayerSpawned?.Invoke(player);
     }
 
     private void LoadData()

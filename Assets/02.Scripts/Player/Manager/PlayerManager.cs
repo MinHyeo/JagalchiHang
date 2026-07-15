@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Security;
 using UnityEngine;
 
 public class PlayerManager : ITargetable
@@ -9,9 +10,7 @@ public class PlayerManager : ITargetable
     //[나라]TODO 
     private Vector3 _playerSpawnPos = Vector3.zero;
 
-    //[나라]TODO : MainUI 생성되면 UIManager 통해 불러오기
-    public event Action<GameObject> PlayerSpawned;
-
+    // 플레이어 동적 생성
     public async UniTaskVoid SpawnPlayer()
     {
         _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos);
@@ -19,7 +18,13 @@ public class PlayerManager : ITargetable
 
         Debug.Log($"플레이어가 생성됐다!");
 
-        PlayerSpawned?.Invoke(_player);
+        UpdateCameraTarget();
+    }
+
+    // 생성된 플레이어를 카메라의 추적 대상으로 설정
+    private void UpdateCameraTarget()
+    {
+        CameraController.SetTrackingTarget(_player.transform);
     }
 
     public Vector3 GetPosition()
@@ -34,7 +39,10 @@ public class PlayerManager : ITargetable
 
     public bool IsDead()
     {
-        // [나라]TODO 
-        return true;
+        var component = _player.GetComponent<PlayerController>();
+        if (component == null) return false;
+
+        return component.IsDie == true;
     }
+
 }
