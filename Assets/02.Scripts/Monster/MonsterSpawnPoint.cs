@@ -2,14 +2,8 @@
 
 public class MonsterSpawnPoint : MonoBehaviour
 {
-    [SerializeField] private string _monsterPrefabPath;
     [SerializeField] private string _monsterId;
     [SerializeField] private bool _spawnOnSceneStart = true;
-
-    public string MonsterPrefabPath
-    {
-        get { return _monsterPrefabPath; }
-    }
 
     public string MonsterId
     {

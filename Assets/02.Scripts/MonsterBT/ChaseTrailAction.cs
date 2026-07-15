@@ -21,8 +21,10 @@ public partial class ChaseTrailAction : Action
 
     protected override Status OnStart()
     {
-        _moveable = Agent.Value.GetComponent<IMonsterMoveable>();
-        _perceivable = Agent.Value.GetComponent<IMonsterPerceivable>();
+        Monster monster = Agent.Value.GetComponent<Monster>();
+
+        _moveable = monster.Moveable;
+        _perceivable = monster.Perceivable;
 
         if (!_perceivable.HasDetectedTrail)
         {
@@ -40,8 +42,7 @@ public partial class ChaseTrailAction : Action
             return Status.Failure;
         }
 
-        Vector3 trailPosition = _perceivable.TrailPosition.Value;
-
+        Vector3 trailPosition = _perceivable.TrailPosition;
         float distanceToTrail = Vector3.Distance(Agent.Value.transform.position, trailPosition);
 
         if (distanceToTrail <= ArrivalTolerance.Value)
@@ -57,13 +58,6 @@ public partial class ChaseTrailAction : Action
 
     protected override void OnEnd()
     {
-        try
-        {
-            _moveable.Stop();
-        }
-        catch
-        {
-
-        }
+        _moveable.Stop();
     }
 }

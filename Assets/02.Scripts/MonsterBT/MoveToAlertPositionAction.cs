@@ -16,14 +16,16 @@ public partial class MoveToAlertPositionAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
 
     private IMonsterMoveable _moveable;
-    private IMonsterAlertable _alertable;
+    private IMonsterGroupBehavior _group;
 
     protected override Status OnStart()
     {
-        _moveable = Agent.Value.GetComponent<IMonsterMoveable>();
-        _alertable = Agent.Value.GetComponent<IMonsterAlertable>();
+        Monster monster = Agent.Value.GetComponent<Monster>();
 
-        if (!_alertable.IsAlerted)
+        _moveable = monster.Moveable;
+        _group = monster.Group;
+
+        if (!_group.IsAlerted)
         {
             return Status.Failure;
         }
@@ -33,18 +35,18 @@ public partial class MoveToAlertPositionAction : Action
 
     protected override Status OnUpdate()
     {
-        if (!_alertable.IsAlerted)
+        if (!_group.IsAlerted)
         {
             _moveable.Stop();
             return Status.Failure;
         }
 
-        Vector3 targetPosition = _alertable.AlertPosition.Value;
+        Vector3 targetPosition = _group.AlertPosition;
         _moveable.MoveTo(targetPosition);
 
         if (_moveable.HasReachedDestination)
         {
-            _alertable.ClearAlert();
+            _group.ClearAlert();
             return Status.Success;
         }
 
@@ -53,13 +55,6 @@ public partial class MoveToAlertPositionAction : Action
 
     protected override void OnEnd()
     {
-        try
-        {
-            _moveable.Stop();
-        }
-        catch
-        {
-
-        }
+        _moveable.Stop();
     }
 }

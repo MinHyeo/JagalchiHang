@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
@@ -9,13 +11,19 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private float _trailScanRadius = 5f;
     [SerializeField] private LayerMask _trailLayer;
+    [SerializeField] private float _obstacleCheckInterval = 0.1f;
 
     private bool _canSeePlayer;
-    private Vector3? _lastKnowPlayerPosition;
+    private Vector3 _lastKnowPlayerPosition;
     private bool _hasDetectedTrail;
-    private Vector3? _trailPosition;
+    private Vector3 _trailPosition;
     private ITrailmarker _lockedTrailMarker;
     private Transform _lockedTrailTransform;
+    private SphereCollider _viewRangeCollider;
+    private SphereCollider _trailRangeCollider;
+    private readonly HashSet<Transform> _playersInRange = new HashSet<Transform>();
+    private readonly List<Transform> _trailMarkersInRange = new List<Transform>();
+    private bool _cachedIsBlockedByObstacle;
 
     public bool CanSeePlayer
     {
@@ -23,8 +31,8 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
     }
 
     public event Action<Vector3> OnPlayerSpotted;
-   
-    public Vector3? LastKnownPlayerPosition
+
+    public Vector3 LastKnownPlayerPosition
     {
         get { return _lastKnowPlayerPosition; }
     }
@@ -34,9 +42,101 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
         get { return _hasDetectedTrail; }
     }
 
-    public Vector3? TrailPosition
+    public Vector3 TrailPosition
     {
         get { return _trailPosition; }
+    }
+
+    private void Awake()
+    {
+        _viewRangeCollider = gameObject.AddComponent<SphereCollider>();
+        _viewRangeCollider.isTrigger = true;
+        _viewRangeCollider.radius = _viewRadius;
+
+        _trailRangeCollider = gameObject.AddComponent<SphereCollider>();
+        _trailRangeCollider.isTrigger = true;
+        _trailRangeCollider.radius = _trailScanRadius;
+    }
+
+    private void OnEnable()
+    {
+        StartCoroutine(ObstacleCheckRoutine());
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
+
+    private IEnumerator ObstacleCheckRoutine() 
+    {
+        WaitForSeconds wait = new WaitForSeconds(_obstacleCheckInterval);
+
+        while (true)
+        {
+            UpdateObstacleCheck();
+
+            yield return wait;
+        }
+    }
+
+    private void UpdateObstacleCheck() 
+    {
+        if (_playersInRange.Count == 0)
+        {
+            _cachedIsBlockedByObstacle = false;
+            return;
+        }
+
+        Transform target = GetFirstPlayerCandidate();
+
+        if (target == null)
+        {
+            _cachedIsBlockedByObstacle = false;
+            return;
+        }
+
+        Vector3 directionToTarget = (target.position - transform.position).normalized;
+        float distanceToTarget = Vector3.Distance(transform.position, target.position);
+
+        _cachedIsBlockedByObstacle = Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstacleLayer);
+    }
+
+    private Transform GetFirstPlayerCandidate()
+    {
+        foreach (Transform candidate in _playersInRange)
+        {
+            return candidate;
+        }
+
+        return null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (IsOnLayer(other.gameObject, _playerLayer))
+        {
+            _playersInRange.Add(other.transform);
+        }
+
+        if (IsOnLayer(other.gameObject, _trailLayer))
+        {
+            if (!_trailMarkersInRange.Contains(other.transform))
+            {
+                _trailMarkersInRange.Add(other.transform);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        _playersInRange.Remove(other.transform);
+        _trailMarkersInRange.Remove(other.transform);
+    }
+
+    private bool IsOnLayer(GameObject target, LayerMask layerMask)
+    {
+        return (layerMask.value & (1 << target.layer)) != 0;
     }
 
     private void Update()
@@ -49,17 +149,19 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
     {
         bool wasSeeingPlayer = _canSeePlayer;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, _viewRadius, _playerLayer);
-
-        // Debug.Log($"{name} : 플레이어 스캔 결과 {hits.Length}개 발견 (반경 {_viewRadius}, 레이어 {_playerLayer.value})");
-
-        if (hits.Length == 0)
+       if (_playersInRange.Count == 0)
         {
             _canSeePlayer = false;
             return;
         }
 
-        Transform target = hits[0].transform;
+        Transform target = GetFirstPlayerCandidate();
+
+        if (target == null)
+        {
+            _canSeePlayer = false;
+            return;
+        }
 
         Vector3 directionToTarget = (target.position - transform.position).normalized;
 
@@ -77,12 +179,8 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
             return;
         }
 
-        float distanceToTarget = Vector3.Distance(transform.position, target.position);
-        bool isBlocked = Physics.Raycast(transform.position, directionToTarget, distanceToTarget, _obstacleLayer);
-
-        if (isBlocked)
+        if (_cachedIsBlockedByObstacle)
         {
-           // Debug.Log($"{name} : 장애물에 막혀서 실패 (거리 {distanceToTarget:F1})");
             _canSeePlayer = false;
             return;
         }
@@ -92,7 +190,6 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
 
         if (!wasSeeingPlayer)
         {
-           // Debug.Log($"{name} : 플레이어 발견!");
             OnPlayerSpotted?.Invoke(target.position);
         }
     }
@@ -105,25 +202,19 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
             return;
         }
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, _trailScanRadius, _trailLayer);
-
-        // Debug.Log($"{name} : 흔적 스캔 결과 {hits.Length}개 발견 (반경 {_trailScanRadius})");
-
-        if (hits.Length == 0)
+        if (_trailMarkersInRange.Count == 0)
         {
             _hasDetectedTrail = false;
-            _trailPosition = null;
             return;
         }
 
         ITrailmarker strongestMarker = null;
         Transform strongestTransform = null;
-
         float highestStrength = 0f;
 
-        foreach (Collider hit in hits)
+        foreach (Transform candidate in _trailMarkersInRange)
         {
-            ITrailmarker marker = hit.GetComponent<ITrailmarker>();
+            ITrailmarker marker = candidate.GetComponent<ITrailmarker>();
 
             if (marker == null)
             {
@@ -136,14 +227,13 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
             {
                 highestStrength = marker.Strength;
                 strongestMarker = marker;
-                strongestTransform = hit.transform;
+                strongestTransform = candidate;
             }
         }
 
         if (strongestMarker ==  null)
         {
             _hasDetectedTrail = false;
-            _trailPosition = null;
             return;
         }
 
@@ -156,7 +246,6 @@ public class MonsterPerception : MonoBehaviour, IMonsterPerceivable
     public void ClearTrail()
     {
         _hasDetectedTrail = false;
-        _trailPosition = null;
         _lockedTrailMarker = null;
         _lockedTrailTransform = null;
     }

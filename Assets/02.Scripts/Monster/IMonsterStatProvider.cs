@@ -7,5 +7,5 @@ public interface IMonsterStatProvider
     float AttackRange { get; }
     float MoveSpeed { get; }
 
-    event System.Action OnStatsLoaded;
+    void LoadStats(string monsterId);
 }

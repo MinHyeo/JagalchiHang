@@ -8,13 +8,13 @@ public class RingSpawnAlgorithm : MonoBehaviour, IMonsterSpawnAlgorithm
     [SerializeField] private int _maxAttemptCount = 10;
     [SerializeField] private float _navMeshSnapRadius = 2f;
 
-    public bool TryGetSpawnPosition(Transform playerTransform, out Vector3 spawnPosition)
+    public bool TryGetSpawnPosition(Vector3 playerPosition, out Vector3 spawnPosition)
     {
         for (int attempt = 0; attempt < _maxAttemptCount; attempt++)
         {
-            Vector2 randomDirection2D = Random.insideUnitCircle.normalized;
-            float randomDistance = Random.Range(_minSpawnDistance, _maxSpawnDistance);
-            Vector3 candidatePosition = playerTransform.position + (new Vector3(randomDirection2D.x, 0f, randomDirection2D.y) * randomDistance);
+            Vector2 randomDirection2D = UnityEngine.Random.insideUnitCircle.normalized;
+            float randomDistance = UnityEngine.Random.Range(_minSpawnDistance, _maxSpawnDistance);
+            Vector3 candidatePosition = playerPosition + (new Vector3(randomDirection2D.x, 0f, randomDirection2D.y) * randomDistance);
 
             if (!NavMesh.SamplePosition(candidatePosition, out NavMeshHit navMeshHit, _navMeshSnapRadius, NavMesh.AllAreas))
             {

@@ -2,5 +2,5 @@
 
 public interface IMonsterSpawnAlgorithm
 {
-    bool TryGetSpawnPosition(Transform playerTransform, out Vector3 spawnPosition);
+    bool TryGetSpawnPosition(Vector3 playerPosition, out Vector3 spawnPosition);
 }

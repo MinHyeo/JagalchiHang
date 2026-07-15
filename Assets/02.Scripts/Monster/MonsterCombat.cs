@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 {
     [SerializeField] private float _attackCooldown = 1.5f;
@@ -10,8 +11,6 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
     private IMonsterDamageable _damageable;
     private IMonsterStatProvider _statProvider;
     private Collider _collider;
-    private float _attackPower;
-    private float _attackRange;
     private bool _isAttacking;
     private float _lastAttackTime;
 
@@ -22,12 +21,12 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 
     public float AttackRange
     {
-        get { return _attackRange; }
+        get { return _statProvider.AttackRange; }
     }
 
     public float AttackPower
     {
-        get { return _attackPower; }
+        get { return _statProvider.AttackPower; }
     }
 
     public event Action OnAttackStarted;
@@ -36,30 +35,21 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
     private void Awake()
     {
         _damageable = GetComponent<IMonsterDamageable>();
-        _statProvider = GetComponent<IMonsterStatProvider>();
         _collider = GetComponent<Collider>();
-
         _damageable.OnDied += HandleDied;
-        _statProvider.OnStatsLoaded += HandleStatsLoaded;
+    }
+
+    private void Start() 
+    {
+        _statProvider = GetComponent<Monster>().StatProvider;
     }
 
     private void OnDestroy()
     {
-        try
+        if (_damageable is UnityEngine.Object damageableObject && damageableObject != null)
         {
             _damageable.OnDied -= HandleDied;
-            _statProvider.OnStatsLoaded -= HandleStatsLoaded;
         }
-        catch (Exception)
-        {
-
-        }
-    }
-
-    private void HandleStatsLoaded()
-    {
-        _attackPower = _statProvider.AttackPower;
-        _attackRange = _statProvider.AttackRange;
     }
 
     private void OnEnable()
@@ -104,7 +94,7 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         _isAttacking = true;
         _lastAttackTime = Time.time;
 
-        Debug.Log($"{name} : 공격 시작 (사거리 {_attackRange})");
+        Debug.Log($"{name} : 공격 시작 (사거리 {AttackRange})");
 
         OnAttackStarted?.Invoke();
 
