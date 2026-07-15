@@ -1073,7 +1073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090ba8d712e2dc94ba187f3cbe131e78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawnPoint
-  _monsterPrefabPath: Assets/03.Prefabs/Monster.prefab
   _monsterId: Monster_1
   _spawnOnSceneStart: 1
 --- !u!4 &645851065
@@ -1497,10 +1496,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d48acb696747ce49bf79c06d4f1f51f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  _playerTransform: {fileID: 118326296}
-  _dynamicMonsterEntries:
-  - PrefabPath: Assets/03.Prefabs/Monster.prefab
-    MonsterId: Monster_1
   _maxActiveMonsterCount: 10
   _dynamicSpawnInterval: 5
   _isSpawningEnabled: 1
