@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BattleNPC : MonoBehaviour
+public class BattleNpc : MonoBehaviour
 {
     [SerializeField] private BehaviorGraphAgent behaviorAgent;
 
@@ -24,20 +24,15 @@ public class BattleNPC : MonoBehaviour
         behaviorAgent.BlackboardReference.GetVariable("ReturnSpawnPosition", out _returnSpawnPosition);
     }
 
-    private void OnEnable()
+    public void EnterBunker(bool value, Vector3 bunkerPos)
     {
-        NpcManager.OnBunkerEnterEvent += EnterBunker;
-        NpcManager.OnBunkerExitEvent += ExitBunker;
-    }
 
-    private void OnDisable()
-    {
-        NpcManager.OnBunkerEnterEvent -= EnterBunker;
-        NpcManager.OnBunkerExitEvent -= ExitBunker;
-    }
+        if(behaviorAgent != null)
+        {
+            behaviorAgent.enabled = false;
+        }
 
-    private void EnterBunker(bool value, Vector3 bunkerPos)
-    {
+
         _isInBunker.Value = value; //블랙보드로 값 넣어주기 
 
         _bunkerSpawnPosition.Value = bunkerPos;
@@ -45,7 +40,7 @@ public class BattleNPC : MonoBehaviour
         /*NavMeshAgent를 켜놓은 상태로 BattleNPC를 위치 이동시키는 건 충돌을 일으키기 때문에
          * NavMeshAgent를 끄고 이동시킨 후 다시 켜야한다.*/
 
-        if(_agent != null)
+        if (_agent != null)
         {
             _agent.ResetPath(); // 경로 초기화
 
@@ -61,14 +56,21 @@ public class BattleNPC : MonoBehaviour
 
         _currentState.Value = NpcState.Idle;
 
+        if(behaviorAgent != null)
+        {
+            behaviorAgent.enabled = true;
+        }
+
     }
 
-    private void ExitBunker(bool value, Vector3 bunkerExitPos)
+    public void ExitBunker(bool value, Vector3 bunkerExitPos)
     {
+
         _isInBunker.Value = value;
         _returnSpawnPosition.Value = bunkerExitPos;
 
-        if (_agent != null)
+
+        if (_agent != null) 
         {
             _agent.ResetPath(); // 경로 초기화
 
