@@ -51,6 +51,41 @@ public class FarmingViewModel : ViewModelBase
     // TODO : 자동 아이템 생성 로직 만들어야 함
     public void CreateRandomFarmingItemSlot()
     {
+        AddFarmingSlotViewModel();
 
+        var itemDictionary = GameDataManager.Instance.GetAllData<ItemData>();
+
+        if (itemDictionary == null || itemDictionary.Count == 0)
+        {
+            GameDataManager.Instance.LoadData<ItemData>();
+            itemDictionary = GameDataManager.Instance.GetAllData<ItemData>();
+        }
+
+        if (itemDictionary == null || itemDictionary.Count == 0) return;
+
+        List<ItemData> globalPool = new List<ItemData>(itemDictionary.Values);
+
+        int slotsToFill = Random.Range(2, 6); // 무작위 슬롯 수 결정, 수정 가능
+        slotsToFill = Mathf.Clamp(slotsToFill, 0, _slotCount);
+
+        List<ItemData> chosenItems = FarmingLogic.SelectRandomItems(globalPool, slotsToFill);
+
+        for (int i = 0; i < chosenItems.Count; i++)
+        {
+            var itemData = chosenItems[i];
+
+            int maxAvailableStack = itemData.IsStackable ? itemData.MaxCount : 1;
+
+            int minRange = Mathf.Min(itemData.MinDropCount, maxAvailableStack);
+            int maxRange = Mathf.Min(itemData.MaxDropCount, maxAvailableStack);
+
+            int stackCount = Random.Range(minRange, maxRange + 1);
+
+            if (FarmingSlots.TryGetValue(i, out var slotVm))
+            {
+                slotVm.ItemUniqueId = i + 1;
+                slotVm.SetItem(itemData.Id, stackCount);
+            }
+        }
     }
 }

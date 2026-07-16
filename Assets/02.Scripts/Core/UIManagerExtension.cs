@@ -13,7 +13,9 @@ public enum UIRootType
 public enum UIType
 {
     MainTest,
-    PopupTest
+    PopupTest,
+    InventoryUI,
+    FarmingUI
 }
 
 public static class UIManagerExtension
