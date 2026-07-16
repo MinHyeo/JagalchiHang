@@ -13,6 +13,21 @@ public class SampleGameManager : SingletonBase<GameManager>
         _lobbyManager.EnterLobby();
     }
 
+    // [TODO] 플레이어 위치 잘 받아오는지 테스트용 코드
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.V))
+        {
+            UpdatePlayerPosition();
+        }
+    }
+
+    private void UpdatePlayerPosition()
+    {
+        Vector3 playerPos = _worldManager.GetPlayerPosition();
+        Debug.Log($"플레이어의 현재 위치 -> {playerPos}");
+    }
+
     // TODO : 저장되어 있는 파일 전달해줘야 함
     public void EnterInGame()
     {

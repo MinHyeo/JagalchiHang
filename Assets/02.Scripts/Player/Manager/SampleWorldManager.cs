@@ -31,4 +31,10 @@ public class SampleWorldManager
     {
 
     }
+
+    // 플레이어 위치 가져오기
+    public Vector3 GetPlayerPosition()
+    {
+        return _playerManager.GetPosition();
+    }
 }
