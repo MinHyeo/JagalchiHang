@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FarmManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class FarmManager : MonoBehaviour
 
     private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
     private Dictionary<int, CropObject> _cropObjectDictionary = new Dictionary<int, CropObject>();
+    private Dictionary<int, FarmPlot> _farmPlotDictionary = new Dictionary<int, FarmPlot>();
     private void Awake()
     {
         if (Instance != null)
@@ -72,15 +74,36 @@ public class FarmManager : MonoBehaviour
             if (newStage != plot.CurrentGrowthStage)
             {
                 plot.CurrentGrowthStage = newStage;
-                OnPlotGrowthChanged(plot);
+                OnPlotGrowthChanged(plot).Forget();
             }
         }
 
     }
 
-    private void OnPlotGrowthChanged(FarmPlotModel plot)
+    private async UniTask OnPlotGrowthChanged(FarmPlotModel plot)
     {
-        Debug.Log($"밭 {plot.PlotUniqueId}  성장 단계 변경: {plot.CurrentGrowthStage}");
+        var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+        if (cropData == null)
+        {
+            return;
+        }
+
+        if (_farmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
+        {
+            return;
+        }
+
+        var farmPlot = _farmPlotDictionary[plot.PlotUniqueId];
+        var growthStageMinutes = cropData.GetGrowthStageMinutes();
+
+        if (plot.CurrentGrowthStage >= growthStageMinutes.Count)
+        {
+            Debug.Log($"밭 {plot.PlotUniqueId} 수확가능");
+            return;
+        }
+
+        string prefabPath = cropData.PrefabPath + "_" + plot.CurrentGrowthStage;
+        await farmPlot.ChangeCropModel(prefabPath, plot.CropDataId);
     }
 
     private int CalculateGrowthStage(FarmPlotModel plot, List<int> growthStageMinutes)
@@ -138,7 +161,23 @@ public class FarmManager : MonoBehaviour
         }
     }
 
-    public bool RequestPlantCrop(FarmPlotModel plot, string cropDataId)
+    public void RegisterFarmPlot(int plotUniqueId, FarmPlot farmPlot)
+    {
+        if (_farmPlotDictionary.ContainsKey(plotUniqueId) == false)
+        {
+            _farmPlotDictionary.Add(plotUniqueId, farmPlot);
+        }
+    }
+
+    public void UnregisterFarmPlot(int plotUniqueId)
+    {
+        if (_farmPlotDictionary.ContainsKey(plotUniqueId))
+        {
+            _farmPlotDictionary.Remove(plotUniqueId);
+        }
+    }
+
+    public async UniTask<bool>  RequestPlantCrop(FarmPlotModel plot, string cropDataId)
     {
         if (plot == null)
         {
@@ -164,6 +203,16 @@ public class FarmManager : MonoBehaviour
             Debug.LogWarning($"작물을 찾을 수 없습니다.: {cropDataId}");
             return false;
         }
+
+        if (_farmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
+        {
+            Debug.LogWarning($"밭 오브젝트를 찾을 수 없습니다.: {plot.PlotUniqueId}");
+            return false;
+        }
+
+        var farmPlot = _farmPlotDictionary[plot.PlotUniqueId];
+        string prefabPath = cropData.PrefabPath + "_0";
+        await farmPlot.ChangeCropModel(prefabPath, cropDataId);
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
@@ -203,7 +252,10 @@ public class FarmManager : MonoBehaviour
         }
 
         var invenVm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
-        int garvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount +1);
+        int harvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount +1);
+        invenVm.AcquireItem(cropData.HarvestItemDataId, harvestCount);
+        int seedCount = Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
+        invenVm.AcquireItem(cropData.SeedItemDataId, seedCount);
 
 
         plot.CropDataId = string.Empty;
@@ -240,9 +292,6 @@ public class FarmManager : MonoBehaviour
         return true;
     }
 
-    public void OnCropGrowthChanged(int instanceId, string cropDataId, int currentStage, int growthMinutes)
-    {
 
-    }
 
 }

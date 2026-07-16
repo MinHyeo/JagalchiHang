@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.CompilerServices;
+using UnityEngine;
 
 public class FarmPlot : MonoBehaviour
 {
@@ -6,7 +8,6 @@ public class FarmPlot : MonoBehaviour
     [SerializeField] private Transform Transform_CropSpawnPoint;
 
     private int _plotUniqueId;
-    private GameObject _currentCropObject;
 
     private void Awake()
     {
@@ -16,6 +17,7 @@ public class FarmPlot : MonoBehaviour
     public void InitPlot(int plotUniqueId)
     {
         _plotUniqueId = plotUniqueId;
+        FarmManager.Instance.RegisterFarmPlot(_plotUniqueId, this);
     }
 
     public void ActivatePlot()
@@ -23,24 +25,26 @@ public class FarmPlot : MonoBehaviour
         Object_PlotSet.SetActive(true);
     }
 
-    public void SpawnCropObject(GameObject cropPrefab)
+    public Vector3 GetSpawnPosition()
     {
-        if (_currentCropObject != null)
-        {
-            Destroy(_currentCropObject);
-        }
-
-        _currentCropObject = Instantiate(cropPrefab, Transform_CropSpawnPoint);
+        return Transform_CropSpawnPoint.position;
     }
 
-    public void RemoveCropObject()
+    public async UniTask ChangeCropModel(string prefabPath, string cropDataId)
     {
-        Debug.Log($"RemoveCropObject 호출, _currentCropObject: {_currentCropObject}");
-        if (_currentCropObject != null)
+        var gObj = await GameObjectManager.Instance.CreateObjectAsync(cropDataId, prefabPath, Transform_CropSpawnPoint.position);
+        if (gObj == null)
         {
-            Destroy(_currentCropObject);
-            _currentCropObject = null;
+            return;
         }
+
+        var cropObject = gObj.GetComponent<CropObject>();
+        if (cropObject != null)
+        {
+            FarmManager.Instance.RegisterCropObject(_plotUniqueId, cropObject);
+        }
+
     }
+
 
 }

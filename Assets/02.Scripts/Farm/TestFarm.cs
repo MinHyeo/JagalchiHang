@@ -19,7 +19,7 @@ public class TestFarm : MonoBehaviour
         Debug.Log("테스트 준비 - 2: 해금/ 3: 심기/ 4: 수확");
     }
 
-    private void Update()
+    private async void Update()
     {
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -34,7 +34,7 @@ public class TestFarm : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            bool result = FarmManager.Instance.RequestPlantCrop(_testPlotModel, "Crop_item1");
+            bool result = await FarmManager.Instance.RequestPlantCrop(_testPlotModel, "Crop_item1");
             if (result)
             {
                 var gObj = Instantiate(Prefab_CropStage0, Plot_Test.transform);

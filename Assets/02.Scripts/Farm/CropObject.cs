@@ -65,7 +65,6 @@ public class CropObject : MonoBehaviour
         if (newStage != _currentStage)
         {
             _currentStage = newStage;
-            FarmManager.Instance.OnCropGrowthChanged(_instanceId, _cropDataId, _currentStage, _growthMinutes);
 
             if (_currentStage >= growthStageMinutes.Count)
             {
