@@ -19,13 +19,6 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    //public void TestInventory()
-    //{
-    //    AddInventorySlotViewModel();
-    //    _inventorySlots[0].SetItem("암", 3);
-    //    _inventorySlots[1].SetItem("암", 6);
-    //}
-
     public void AddInventorySlotViewModel()
     {
         _inventorySlots.Clear();
@@ -36,6 +29,7 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
+    // 유니크 아이디가 생기면 교환 로직 수정
     public void SwapSlots(int startIdx, int endIdx)
     {
         if (!_inventorySlots.ContainsKey(startIdx) || !_inventorySlots.ContainsKey(endIdx)) return;
@@ -67,7 +61,7 @@ public class InventoryViewModel : ViewModelBase
         {
             if (string.IsNullOrEmpty(InventorySlots[i].ItemDataId))
             {
-                InventorySlots[i].SetItem(itemDataId, count, isStackable, maxCount);
+                InventorySlots[i].SetItem(itemDataId, count);
                 return true;
             }
         }

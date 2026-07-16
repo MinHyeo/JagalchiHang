@@ -12,7 +12,7 @@ using UnityEngine.AI;
     category: "Action",
     id: "29394a5b6c7d8e9f0a1b2c3d4e5f6071")]
 
-public class PatrolAction : Action
+public partial class PatrolAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<float> WanderRadius;
@@ -24,7 +24,7 @@ public class PatrolAction : Action
 
     protected override Status OnStart()
     {
-        _moveable = Agent.Value.GetComponent<IMonsterMoveable>();
+        _moveable = Agent.Value.GetComponent<Monster>().Moveable;
 
         _isWaiting = false;
         _waitElapsedTime = 0f;
@@ -73,14 +73,6 @@ public class PatrolAction : Action
 
     protected override void OnEnd()
     {
-        try
-        {
-            _moveable.Stop();
-        }
-        catch
-        {
-
-        }
-        
+        _moveable.Stop();
     }
 }

@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class NetworkInventoryService
 {
-    private InventoryViewModel _localPlayerInventoryViewModel;
+    private InventoryViewModel _localInventoryViewModel;
 
-    public InventoryViewModel GetLocalPlayerInventoryViewModel()
+    public InventoryViewModel GetLocalInventoryViewModel()
     {
-        if (_localPlayerInventoryViewModel == null)
+        if (_localInventoryViewModel == null)
         {
-            CreateLocalPlayerInventoryViewModel();
+            CreateLocalInventoryViewModel();
         }
 
-        return _localPlayerInventoryViewModel;
+        return _localInventoryViewModel;
     }
 
-    private InventoryViewModel CreateLocalPlayerInventoryViewModel()
+    private InventoryViewModel CreateLocalInventoryViewModel()
     {
         var inventoryVm = new InventoryViewModel();
-        _localPlayerInventoryViewModel = inventoryVm;
+        _localInventoryViewModel = inventoryVm;
         inventoryVm.AddInventorySlotViewModel();
         return inventoryVm;
     }
@@ -32,7 +32,7 @@ public class NetworkInventoryService
         //var newItem = new InventorySlotViewModel();
         //if (newItem == null) return;
 
-        //var itemData = GameDataManager.Instance.GetData<ItemData>();
+        //var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
         //if (ItemData == null) return;
 
         //newItem.ItemDataId = itemData.Id;
