@@ -12,10 +12,10 @@ public enum UIRootType
 
 public enum UIType
 {
+    LobbyUI,
+    LoadGameUI,
     MainTest,
     PopupTest,
-    InventoryUI,
-    FarmingUI
 }
 
 public static class UIManagerExtension
@@ -30,5 +30,17 @@ public static class UIManagerExtension
 
     public static void ShowStartupUIOnGameStart(this UIManager uiManager)
     {
+    }
+
+    public static void OpenLoadGameUI(this UIManager uiManager, LoadGameUIType loadGameType)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        if (uiBase == null)
+            return;
+
+        if(uiBase is LoadGameUI loadGameUI)
+        {
+            loadGameUI.Init(loadGameType);
+        }
     }
 }
