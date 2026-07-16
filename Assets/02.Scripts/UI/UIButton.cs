@@ -1,37 +1,24 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UIButton : MonoBehaviour
 {
     [SerializeField] private Button Button_Base;
-    [SerializeField] private TextMeshPro Text_Base;
+    [SerializeField] private TextMeshProUGUI Text_Base;
     [SerializeField] private Image Image_Base;
     [SerializeField] private Image Image_Select;
 
-    private bool _isManualUnbindEvent;
-
-    private void Awake()
+    private void Start()
     {
+        // 1-2) 이 오브젝트가 생성될 때, 한번 컴포넌트를 찾아서 캐싱하자
         InitUIButton();
-        SetDefalultUI();
     }
 
     private void OnDisable()
     {
-        if (_isManualUnbindEvent == false)
-        {
-            Button_Base.onClick.RemoveAllListeners();
-        }
-    }
-
-    private void SetDefalultUI()
-    {
-        if (Image_Select != null)
-        {
-            Image_Select.gameObject.SetActive(false);
-        }
+        Button_Base.onClick.RemoveAllListeners();
     }
 
     private void InitUIButton()
@@ -41,6 +28,8 @@ public class UIButton : MonoBehaviour
             return;
         }
 
+        // 1-1) 외부에서도 등록할 수 있고,
+        // 누군가 누락했다면 등록안해도 알아서 찾아주도록 로직을 넣어 놨다
         var button = this.gameObject.GetComponentInChildren<Button>();
         if (button != null)
         {
@@ -48,23 +37,23 @@ public class UIButton : MonoBehaviour
         }
     }
 
-    public void BindOnClickButtonEvent(Action onClickCallback, bool isManualUnbindEvent = false)
+    public void BindOnClickButtonEvent(Action onClickCallback)
     {
         if (Button_Base == null) return;
 
-        Button_Base.onClick.AddListener(onClickCallback.Invoke);
-        _isManualUnbindEvent = isManualUnbindEvent;
+        Button_Base.onClick.AddListener(new UnityEngine.Events.UnityAction(onClickCallback));
     }
 
-    public void UnBindAllOnClickButtonEvent()
+    public void UnBindOnClickButtonEvent(Action onClickCallback)
     {
         if (Button_Base == null) return;
 
-        Button_Base.onClick.RemoveAllListeners();
+        Button_Base.onClick.RemoveListener(new UnityEngine.Events.UnityAction(onClickCallback));
     }
 
     public void ChangeButtonText(string buttonStr)
     {
+        // 혹시 이버튼을 동적으로, 코드에서 텍스트를 수정해야할 때 사용
         if (Text_Base == null) return;
 
         Text_Base.text = buttonStr;
