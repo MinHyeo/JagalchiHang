@@ -1,10 +1,8 @@
-﻿using Unity.Android.Gradle.Manifest;
-using UnityEngine;
+﻿using UnityEngine;
+using System;
 
-public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
+public class MonsterStats : IMonsterStatProvider
 {
-    [SerializeField] private string _monsterId;
-
     private int _maxHealth;
     private int _attackPower;
     private float _attackRange;
@@ -30,24 +28,24 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
         get { return _moveSpeed; }
     }
 
-    private void Awake()
+    public void LoadStats(string monsterId) 
     {
         MonsterData data = null;
 
-        if (GameDataManager.Instance != null )
+        if (GameDataManager.Instance != null)
         {
             try
             {
-                data = GameDataManager.Instance.GetData<MonsterData>(_monsterId);
+                data = GameDataManager.Instance.GetData<MonsterData>(monsterId);
             }
-            catch (System.Exception exception)
+            catch (Exception exception)
             {
-                Debug.LogWarning($"{name} : GameDataManager 조회 실패, 기본값으로 대체합니다 ({exception.Message})");
+                Debug.LogWarning($"MonsterStats : GameDataManager 조회 실패, 기본값으로 대체합니다 ({exception.Message})");
             }
         }
         else
         {
-            Debug.LogWarning($"{name} : GameDataManager.Instance가 null입니다. 씬에 GameDataManager가 있는지 확인요망. 기본값으로 대체합니다.");
+            Debug.LogWarning("MonsterStats : GameDataManager.Instance가 null입니다. 기본값으로 대체합니다.");
         }
 
         if (data == null)
@@ -63,5 +61,5 @@ public class MonsterStatProvider : MonoBehaviour, IMonsterStatProvider
         _attackPower = data.BasicAttack;
         _attackRange = data.BasicAttackRange;
         _moveSpeed = data.BasicSpeed;
-    } 
+    }
 }

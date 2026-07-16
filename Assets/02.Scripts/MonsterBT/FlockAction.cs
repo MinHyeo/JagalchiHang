@@ -15,25 +15,23 @@ public partial class FlockAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
 
-    private IMonsterFlockMovable _flockMovable;
-    private IMonsterFlockperceivable _flockPerceivable;
+    private IMonsterGroupBehavior _group;
 
     protected override Status OnStart()
     {
-        _flockMovable = Agent.Value.GetComponent<IMonsterFlockMovable>();
-        _flockPerceivable = Agent.Value.GetComponent<IMonsterFlockperceivable>();
+        _group = Agent.Value.GetComponent<Monster>().Group;
 
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        if (_flockPerceivable.Neighbors.Count == 0)
+        if (_group.Neighbors.Count == 0)
         {
             return Status.Failure;
         }
 
-        _flockMovable.Tick();
+        _group.Tick();
 
         return Status.Running;
     }

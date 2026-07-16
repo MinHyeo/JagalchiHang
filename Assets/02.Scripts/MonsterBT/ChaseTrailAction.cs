@@ -14,14 +14,17 @@ using Action = Unity.Behavior.Action;
 public partial class ChaseTrailAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
+    [SerializeReference] public BlackboardVariable<float> ArrivalTolerance;
 
     private IMonsterMoveable _moveable;
     private IMonsterPerceivable _perceivable;
 
     protected override Status OnStart()
     {
-        _moveable = Agent.Value.GetComponent<IMonsterMoveable>();
-        _perceivable = Agent.Value.GetComponent<IMonsterPerceivable>();
+        Monster monster = Agent.Value.GetComponent<Monster>();
+
+        _moveable = monster.Moveable;
+        _perceivable = monster.Perceivable;
 
         if (!_perceivable.HasDetectedTrail)
         {
@@ -39,27 +42,22 @@ public partial class ChaseTrailAction : Action
             return Status.Failure;
         }
 
-        Vector3 trailPosition = _perceivable.TrailPosition.Value;
-        _moveable.MoveTo(trailPosition);
+        Vector3 trailPosition = _perceivable.TrailPosition;
+        float distanceToTrail = Vector3.Distance(Agent.Value.transform.position, trailPosition);
 
-        if (_moveable.HasReachedDestination)
+        if (distanceToTrail <= ArrivalTolerance.Value)
         {
+            _moveable.Stop();
             _perceivable.ClearTrail();
             return Status.Success;
         }
 
+        _moveable.MoveTo(trailPosition);
         return Status.Running;
     }
 
     protected override void OnEnd()
     {
-        try
-        {
-            _moveable.Stop();
-        }
-        catch
-        {
-
-        }
+        _moveable.Stop();
     }
 }
