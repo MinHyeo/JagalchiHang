@@ -3,29 +3,30 @@ using UnityEngine;
 
 public class NetworkManager : SingletonBase<NetworkManager>
 {
-    private string _saveFilePath;
-
-    private void Start()
+    private string GetSaveFilePath(int slotIndex)
     {
-        _saveFilePath = Path.Combine(Application.persistentDataPath, "saveData.json");
+        return Path.Combine(Application.persistentDataPath, $"saveData{slotIndex}.json");
     }
 
-    public void SaveGame(SaveModel saveModel)
+    public void SaveGame(int slotIndex, SaveModel saveModel)
     {
+        string saveFilePath = GetSaveFilePath(slotIndex);
         string jsonText = JsonUtility.ToJson(saveModel, true);
 
-        File.WriteAllText(_saveFilePath, jsonText);
-
-        Debug.Log($"저장 완료: {_saveFilePath}");
+        File.WriteAllText(saveFilePath, jsonText);
+        Debug.Log($"저장 완료: {saveFilePath}");
     }
 
-    public SaveModel LoadGame()
+    public SaveModel LoadGame(int slotIndex)
     {
-        if (File.Exists(_saveFilePath) == false)
-            return new SaveModel();
+        string saveFilePath = GetSaveFilePath(slotIndex);
 
-        string jsonText = File.ReadAllText(_saveFilePath);
+        if (File.Exists(saveFilePath) == false)
+            return null;
+
+        string jsonText = File.ReadAllText(saveFilePath);
         SaveModel saveModel = JsonUtility.FromJson<SaveModel>(jsonText);
+
         return saveModel;
     }
 }
