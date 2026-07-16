@@ -16,6 +16,9 @@ public enum UIType
     LoadGameUI,
     MainTest,
     PopupTest,
+    InventoryUI,
+    FarmingUI,
+    StorageUI
 }
 
 public static class UIManagerExtension

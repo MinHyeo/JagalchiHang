@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
 
 public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -66,14 +67,15 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void UpdateIcon()
     {
-        if (string.IsNullOrEmpty(_vm?.ItemDataId))
+        if (_vm == null || string.IsNullOrEmpty(_vm?.ItemDataId))
         {
             _imageIcon.gameObject.SetActive(false);
         }
         else
         {
             _imageIcon.gameObject.SetActive(true);
-            // TODO: 이미지 로드 필요
+            var iconPath = _vm.IconPath;
+            GameUtil.LoadAndSetSpriteImage(_imageIcon, iconPath).Forget();
         }
     }
 

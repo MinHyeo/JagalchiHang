@@ -9,7 +9,7 @@ public class WorldManager
     //private MonsterManager _monsterManager;
     //private FarmManager _farmManager;
 
-    public void EnterWorld()
+    public void EnterWorld(SaveModel saveModel)
     {
         LoadSaveData();
 

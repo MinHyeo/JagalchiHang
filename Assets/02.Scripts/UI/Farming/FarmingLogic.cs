@@ -8,8 +8,13 @@ public static class FarmingLogic
         List<ItemData> result = new List<ItemData>();
 
         List<ItemData> activePool = new List<ItemData>(pool);
-
-        activePool.RemoveAll(item => item.DropWeight <= 0);
+        foreach (var item in pool)
+        {
+            if (item.DropWeight > 0)
+            {
+                activePool.Add(item);
+            }
+        }
 
         int actualCount = Mathf.Min(countToSelect, activePool.Count);
 
