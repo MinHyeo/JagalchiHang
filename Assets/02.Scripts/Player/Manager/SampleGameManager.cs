@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SampleGameManager : SingletonBase<GameManager>
+public class SampleGameManager : SingletonBase<SampleGameManager>
 {
     private LobbyManager _lobbyManager;
     private SampleWorldManager _worldManager;
