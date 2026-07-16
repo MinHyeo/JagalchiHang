@@ -17,11 +17,16 @@ public partial class HasDetectedTrailCondition : Condition
 
     private IMonsterPerceivable _perceivable;
 
+    public override void OnStart()
+    {
+
+    }
+
     public override bool IsTrue()
     {
         if (_perceivable == null)
         {
-            _perceivable = Agent.Value.GetComponent<IMonsterPerceivable>();
+            _perceivable = Agent.Value.GetComponent<Monster>().Perceivable;
         }
 
         return _perceivable.HasDetectedTrail;

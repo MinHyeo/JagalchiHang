@@ -15,4 +15,5 @@ public interface IMonsterMoveable
     void Move(Vector3 direction);
 
     void Stop();
+    void ApplySpeed(float speed);
 }

@@ -2,11 +2,12 @@
 using System;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class MonsterMovement : MonoBehaviour, IMonsterMoveable
 {
-    [SerializeField] private float _stoppingDistance = 0.1f;
-    private UnityEngine.AI.NavMeshAgent _agent;
-    private IMonsterStatProvider _statProvider;
+    [SerializeField] private float _stoppingDistance = 1f;
+
+    private NavMeshAgent _agent;
     private bool _isMoving;
 
     public bool HasReachedDestination
@@ -29,12 +30,17 @@ public class MonsterMovement : MonoBehaviour, IMonsterMoveable
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _statProvider = GetComponent<IMonsterStatProvider>();
     }
 
-    private void Start()
+    public void ApplySpeed(float speed)
     {
-        _agent.speed = _statProvider.MoveSpeed;
+        _agent.speed = speed;
+    }
+
+    private void OnEnable()
+    {
+        _isMoving = false;
+        Stop();
     }
 
     private void Update()

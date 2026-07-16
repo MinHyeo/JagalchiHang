@@ -14,16 +14,21 @@ public partial class IsAlertedCondition : Condition
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
 
-    private IMonsterAlertable _alertable;
+    private IMonsterGroupBehavior _group;
+
+    public override void OnStart()
+    {
+
+    }
 
     public override bool IsTrue()
     {
-        if (_alertable == null)
+        if (_group == null)
         {
-            _alertable = Agent.Value.GetComponent<IMonsterAlertable>();
+            _group = Agent.Value.GetComponent<Monster>().Group;
         }
 
-        return _alertable.IsAlerted;
+        return _group.IsAlerted;
     }
 
     public override void OnEnd()
