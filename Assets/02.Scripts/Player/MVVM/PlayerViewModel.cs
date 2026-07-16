@@ -6,9 +6,9 @@ public class PlayerViewModel : ViewModelBase
     // [나라]TODO : 수정 필요
     private PlayerModel _model = new PlayerModel();
 
-    public int MaxHp { get; private set; }
-    public int MaxHunger { get; private set; }
-    public int MaxThirst { get; private set; }
+    public int MaxHp { get; set; }
+    public int MaxHunger { get; set; }
+    public int MaxThirst { get; set; }
 
     public void InvokeOnceOnInit()
     {

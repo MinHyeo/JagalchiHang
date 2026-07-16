@@ -10,10 +10,6 @@ public enum DamageType
 
 public class PlayerStatusController : MonoBehaviour
 {
-    private int _maxHp;
-    private int _maxHunger;
-    private int _maxThirst;
-
     private int _hungerInterval;
     private int _thirstInterval;
     private int _hungerDecrease;
@@ -50,9 +46,9 @@ public class PlayerStatusController : MonoBehaviour
     {
         if (playerData == null) return;
 
-        _maxHp = playerData.MaxHp;
-        _maxHunger = playerData.MaxHunger;
-        _maxThirst = playerData.MaxThirst;
+        _vm.MaxHp = playerData.MaxHp;
+        _vm.MaxHunger = playerData.MaxHunger;
+        _vm.MaxThirst = playerData.MaxThirst;
 
         _hungerInterval = playerData.HungerInterval;
         _thirstInterval = playerData.ThirstInterval;
@@ -61,9 +57,9 @@ public class PlayerStatusController : MonoBehaviour
         _hungerDamage = playerData.HungerDamage;
         _thirstDamage = playerData.ThirstDamage;
 
-        _vm.CurrentHp = _maxHp;
-        _vm.CurrentHunger = _maxHunger;
-        _vm.CurrentThirst = _maxThirst;
+        _vm.CurrentHp = _vm.MaxHp;
+        _vm.CurrentHunger = _vm.MaxHunger;
+        _vm.CurrentThirst = _vm.MaxThirst;
     }
 
     private void TestStatusDecrease()
