@@ -209,13 +209,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ecb0de62a42d74d900393b70cea284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterPerception
-  _viewAngle: 90
-  _obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  _obstacleCheckInterval: 0.1
-  _viewRangeDetector: {fileID: 0}
-  _trailRangeDetector: {fileID: 0}
+  _viewRangeSensor: {fileID: 7503467889874933872}
+  _trailRangeSensor: {fileID: 2245553058514789785}
 --- !u!114 &2343653663086626723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,23 +225,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterGroup
   _alertRadius: 15
   _alertDuration: 8
-  _separationWeight: 1.5
-  _alignmentWeight: 1
-  _cohesionWeight: 1
-  _separationDistance: 2
-  _obstacleAvoidDistance: 1.5
-  _obstacleAvoidWeight: 3
-  _obstacleCheckInterval: 0.1
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 128
-  _obstacleLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  _flockRangeDetector: {fileID: 0}
+  _flockRangeSensor: {fileID: 2032888206882309859}
 --- !u!1 &4112171596232471764
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,9 +329,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1095583173638638190}
   - component: {fileID: 2047027956275387738}
-  - component: {fileID: 6851558513942589840}
+  - component: {fileID: 7503467889874933872}
   m_Layer: 7
-  m_Name: PlayerDetector
+  m_Name: ViewRangeSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,7 +373,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6851558513942589840
+--- !u!114 &7503467889874933872
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,12 +382,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4760657946148313303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7149333c8b81c284c90edcb9cb7e98f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 428d0d3ae26e15f43a6ec20fb2a204ec, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangeDetector
-  _targetLayer:
+  m_EditorClassIdentifier: Assembly-CSharp::ViewRangeSensor
+  _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _viewAngle: 90
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _obstacleCheckInterval: 0.3
 --- !u!1 &6790763386229169701
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,9 +403,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5559320133607301445}
   - component: {fileID: 5198419171736306734}
-  - component: {fileID: 3255394242372895693}
+  - component: {fileID: 2245553058514789785}
   m_Layer: 7
-  m_Name: TrailDetector
+  m_Name: TrailRangeSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -460,7 +447,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3255394242372895693
+--- !u!114 &2245553058514789785
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -469,10 +456,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6790763386229169701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7149333c8b81c284c90edcb9cb7e98f9, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bafd7d4a5907624693d2d16db0f4d5f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangeDetector
-  _targetLayer:
+  m_EditorClassIdentifier: Assembly-CSharp::TrailRangeSensor
+  _trailLayer:
     serializedVersion: 2
     m_Bits: 512
 --- !u!1 &8285560043263037303
@@ -485,9 +472,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2146216483379275416}
   - component: {fileID: 6768265253219568022}
-  - component: {fileID: 5900605379184451044}
+  - component: {fileID: 2032888206882309859}
   m_Layer: 7
-  m_Name: MonsterDetector
+  m_Name: FlockRangeSensor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +516,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5900605379184451044
+--- !u!114 &2032888206882309859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -538,9 +525,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8285560043263037303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7149333c8b81c284c90edcb9cb7e98f9, type: 3}
+  m_Script: {fileID: 11500000, guid: d8b8725cea748e34f8c154c08c687841, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RangeDetector
-  _targetLayer:
+  m_EditorClassIdentifier: Assembly-CSharp::FlockRangeSensor
+  _monsterLayer:
     serializedVersion: 2
     m_Bits: 128
+  _separationWeight: 1.5
+  _alignmentWeight: 1
+  _cohesionWeight: 1
+  _separationDistance: 2
+  _obstacleAvoidDistance: 1.5
+  _obstacleAvoidWeight: 3
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  _obstacleCheckInterval: 0.1
