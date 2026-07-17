@@ -13,7 +13,8 @@ public enum UIRootType
 public enum UIType
 {
     MainTest,
-    PopupTest
+    PopupTest,
+    HudMainUI
 }
 
 public static class UIManagerExtension
@@ -28,5 +29,38 @@ public static class UIManagerExtension
 
     public static void ShowStartupUIOnGameStart(this UIManager uiManager)
     {
+    }
+
+    public static void AddHudSlot(this UIManager uIManager, int instanceId, Transform targetTransform)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.AddSlotHudHp(instanceId, targetTransform);
+        }
+    }
+
+    public static void RemoveHudSlot(this UIManager uIManager, int instanceId)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.RemoveSlotHudHp(instanceId);
+        }
+    }
+
+    public static void RemoverAllSlotHudHp(this UIManager uIManager)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.RemoveAllSlotHudHp();
+        }
     }
 }
