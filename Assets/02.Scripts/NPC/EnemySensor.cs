@@ -7,11 +7,13 @@ public class EnemySensor : MonoBehaviour
 
     public GameObject CurrentTarget { get; private set; }
 
+    public bool isAutoDetect = true; // 자동탐색을 제어하기 위함
+
     private void Update()
     {
      
-        // 현재 잡혀있던 목스터가 죽어서 null일 때 목록에 다른 몬스터가 남아있으면 타켓 갱신 
-        if (CurrentTarget == null && monsters.Count >0 )
+        // 현재 잡혀있던 몬스터가 죽어서 null일 때 목록에 다른 몬스터가 남아있으면 타켓 갱신 
+        if (isAutoDetect == true &&CurrentTarget == null && monsters.Count >0 )
         {
             UpdateCurrentTarget();
         }
@@ -30,7 +32,11 @@ public class EnemySensor : MonoBehaviour
         }
 
         monsters.Add(other.gameObject);
-        UpdateCurrentTarget();
+
+        if (isAutoDetect == true)
+        {
+            UpdateCurrentTarget();
+        }
     }
 
     private void OnTriggerExit(Collider other) //감지범위 벗어났을 때 
@@ -41,8 +47,10 @@ public class EnemySensor : MonoBehaviour
         }
         monsters.Remove(other.gameObject);
 
-        UpdateCurrentTarget();
-
+        if (isAutoDetect == true)
+        {
+            UpdateCurrentTarget();
+        }
     }
 
     public void ClearTarget() // 타겟을 완전히 비우고 센서 초기화 

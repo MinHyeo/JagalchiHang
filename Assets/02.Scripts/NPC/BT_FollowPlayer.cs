@@ -6,7 +6,7 @@ using Unity.Properties;
 using UnityEngine.AI;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "BT_FollowPlayer", story: "[Self] Follow Player", category: "Action", id: "107259c8e0a53a3ea69149a2704dc9cb")]
+[NodeDescription(name: "BT_FollowPlayer", story: "[Self] Follow Player[PlayerTarget]", category: "Action", id: "107259c8e0a53a3ea69149a2704dc9cb")]
 public partial class BT_FollowPlayer : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
@@ -16,16 +16,25 @@ public partial class BT_FollowPlayer : Action
 
     [SerializeReference] public BlackboardVariable<bool> IsInBunker;
 
+    [SerializeReference] public BlackboardVariable<BattleMode> CurrentBattleMode;
+
     private NavMeshAgent _agent;
     private EnemySensor _sensor;
 
+
     protected override Status OnStart()
     {
-        _agent  = Self.Value.GetComponent<NavMeshAgent>(); //자기 자신에서 NavMesh 컴포넌트 가져오기 
+        _agent = Self.Value.GetComponent<NavMeshAgent>(); //자기 자신에서 NavMesh 컴포넌트 가져오기 
         _sensor = Self.Value.GetComponentInChildren<EnemySensor>();
 
         CurrentState.Value = NpcState.Chase; //추적 상태로 변경
 
+        EnemyTarget.Value = null;
+
+        if (_sensor != null)
+        {
+            _sensor.ClearTarget();
+        }
         _agent.speed = 5.0f; //NPC 이동속도 
         return Status.Running; //실행중
 
@@ -33,32 +42,24 @@ public partial class BT_FollowPlayer : Action
 
     protected override Status OnUpdate()
     {
-        if (IsInBunker.Value == true) //쫓아가는 상태이던중 벙커 안으로 들어올때 
-        {
-            if (_agent.isOnNavMesh)
-            {
-                _agent.ResetPath(); //벙커 밖 플레어를 향하던 경로를 초기화
-                return Status.Failure;
 
-            }
+        if (CheckBunkerStatus() == true) 
+        {
+            return Status.Failure;
         }
 
-        if(_sensor != null)
+        if (CheckPlayerDistance() == true) 
         {
-            GameObject monster = _sensor.CurrentTarget;
-
-            if (monster != null)
-            {
-                EnemyTarget.Value = monster;
-
-                CurrentState.Value = NpcState.Attack;
-
-                Debug.Log("[BT_FollowPlayer] 몬스터 발견 -> Attack");
-
-                return Status.Success;
-
-            }
+            return Status.Running;
         }
+
+        UpdateSensorSetting();
+
+        if(BattleModeSetting() == true)
+        {
+            return Status.Success;
+        }
+     
         _agent.SetDestination(PlayerTarget.Value.transform.position);
 
         return Status.Running;
@@ -67,10 +68,98 @@ public partial class BT_FollowPlayer : Action
 
     protected override void OnEnd()
     {
-        if(_agent != null && _agent.isOnNavMesh) // 컴포넌트가 존재하고 NavMesh 바닥위에 정상적으로 서있다면 
+        if (_agent != null && _agent.isOnNavMesh) // 컴포넌트가 존재하고 NavMesh 바닥위에 정상적으로 서있다면 
         {
             _agent.ResetPath(); // 경로 초기화 
         }
+    }
+
+    private bool CheckBunkerStatus() // 벙커 진입 상태 체크
+    {
+        if (IsInBunker.Value == true && _agent.isOnNavMesh) //쫓아가는 상태이던중 벙커 안으로 들어올때 
+        {
+            _agent.ResetPath(); //벙커 밖 플레어를 향하던 경로를 초기화
+            return true;
+        }
+        return false;
+    }
+
+    private bool CheckPlayerDistance() //플레이어와의 거리가 벌어졌을 때 강제 복귀
+    {
+        float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, PlayerTarget.Value.transform.position);
+
+        if (distanceToPlayer >= 15.0f)
+        {
+            EnemyTarget.Value = null;
+
+            if (_sensor != null)
+            {
+                _sensor.isAutoDetect = false;
+            }
+            _agent.SetDestination(PlayerTarget.Value.transform.position);
+            return true;
+        }
+        return false;
+    }
+
+    private void UpdateSensorSetting() // 자동탐색 제어 
+    {
+        if (_sensor == null)
+        {
+            return;
+        }
+        //자동 공격 모드일 때만 센서 키기 위함
+        _sensor.isAutoDetect = (CurrentBattleMode.Value == BattleMode.AutoAttack);
+    }
+
+    private bool BattleModeSetting() // 배틀모드 설정
+    {
+        if (CurrentBattleMode.Value == BattleMode.FollowOnly)//3번모드
+        {
+            EnemyTarget.Value = null;
+            Debug.Log("[BT_FollowPlayer] 동행 전용모드 시작");
+
+            return false;
+        }
+
+        if (CurrentBattleMode.Value == BattleMode.AutoAttack) //1번 모드 
+        {
+            if (_sensor != null && _sensor.CurrentTarget != null)
+            {
+                EnemyTarget.Value = _sensor.CurrentTarget;
+
+                CurrentState.Value = NpcState.Attack;
+
+                Debug.Log("[BT_FollowPlayer] 몬스터 발견 -> Attack");
+                Debug.Log("[BT_FollowPlayer] 자동 전투모드 시작");
+
+                return true;
+            }
+        }
+
+        else if (CurrentBattleMode.Value == BattleMode.AssistAttack) // 임시 코드 추후 다시 진짜 플레이어 코드랑 연동하면서 바꿀 예정
+        {
+            TestPlayer testPlayer = PlayerTarget.Value.GetComponent<TestPlayer>();
+
+            if (testPlayer != null && _sensor != null)
+            {
+                GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
+
+
+                if (playerTargetMonster != null)
+                {
+                    EnemyTarget.Value = playerTargetMonster;
+
+                    CurrentState.Value = NpcState.Attack;
+
+                    Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
+
+                    return true;
+                }
+            }
+        }
+        return false;
+
     }
 }
 
