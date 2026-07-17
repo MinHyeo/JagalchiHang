@@ -2,7 +2,7 @@
 
 public class Test_InventroyOpen : MonoBehaviour
 {
-    [SerializeField] UIButton Button;
+    [SerializeField] private UIButton Button;
 
     private void OnEnable()
     {
