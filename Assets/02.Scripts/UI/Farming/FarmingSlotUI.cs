@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -65,7 +66,7 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         UpdateCountText();
     }
 
-    private void UpdateIcon()
+    private async Task UpdateIcon()
     {
         if (_vm == null || string.IsNullOrEmpty(_vm?.ItemDataId))
         {
@@ -73,15 +74,14 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else
         {
-            _imageIcon.gameObject.SetActive(true);
             var iconPath = _vm.IconPath;
-            GameUtil.LoadAndSetSpriteImage(_imageIcon, iconPath).Forget();
+            _imageIcon.gameObject.SetActive(true);
         }
     }
 
     private void UpdateCountText()
     {
-        if (_vm != null && _vm.ItemStackCount > 1)
+        if (_vm != null && _vm.ItemStackCount >= 1)
         {
             _countText.text = $"{_vm.ItemStackCount}";
             _countText.gameObject.SetActive(true);
