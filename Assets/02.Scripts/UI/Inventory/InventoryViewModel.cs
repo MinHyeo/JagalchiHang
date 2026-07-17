@@ -42,9 +42,12 @@ public class InventoryViewModel : ViewModelBase
         InventorySlots[endIdx].SetItem(tempId, tempCount);
     }
 
-    // TODO : 아이템 데이터 추가시 바꿔야 함
-    public bool AcquireItem(string itemDataId, int count = 1, bool isStackable = true, int maxCount = 99)
+    public bool AcquireItem(string itemDataId, int count)
     {
+        var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        bool isStackable = itemData.IsStackable;
+        int maxCount = itemData.MaxCount;
+
         if (isStackable)
         {
             for (int i = 0; i < _slotCount; i++)

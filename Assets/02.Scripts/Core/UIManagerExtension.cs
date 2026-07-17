@@ -13,9 +13,14 @@ public enum UIRootType
 
 public enum UIType
 {
+    LobbyUI,
+    LoadGameUI,
     MainTest,
     PopupTest,
-    HudMainUI
+    HudMainUI,
+    InventoryUI,
+    FarmingUI,
+    StorageUI,
 }
 
 public static class UIManagerExtension
@@ -85,6 +90,18 @@ public static class UIManagerExtension
         if (uiBase is HudMainUI hudMainUI)
         {
             hudMainUI.RemoveInteractionSlot(instanceId);
+        }
+    }
+  
+    public static void OpenLoadGameUI(this UIManager uiManager, LoadGameUIType loadGameType)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        if (uiBase == null)
+            return;
+
+        if(uiBase is LoadGameUI loadGameUI)
+        {
+            loadGameUI.Init(loadGameType);
         }
     }
 }
