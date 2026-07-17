@@ -67,7 +67,7 @@ public class FarmingViewModel : ViewModelBase
         int slotsToFill = Random.Range(2, 6); // 무작위 슬롯 수 결정, 수정 가능
         slotsToFill = Mathf.Clamp(slotsToFill, 0, _slotCount);
 
-        List<ItemData> chosenItems = FarmingLogic.SelectRandomItems(globalPool, slotsToFill);
+        List<ItemData> chosenItems = SelectRandomItems(globalPool, slotsToFill);
 
         for (int i = 0; i < chosenItems.Count; i++)
         {
@@ -85,5 +85,54 @@ public class FarmingViewModel : ViewModelBase
             slotVm.ItemUniqueId = i + 1;
             slotVm.SetItem(itemData.Id, stackCount);
         }
+    }
+
+    public List<ItemData> SelectRandomItems(List<ItemData> pool, int countToSelect)
+    {
+        List<ItemData> result = new List<ItemData>();
+
+        List<ItemData> activePool = new List<ItemData>(pool);
+        foreach (var item in pool)
+        {
+            if (item.DropWeight > 0)
+            {
+                activePool.Add(item);
+            }
+        }
+
+        int actualCount = Mathf.Min(countToSelect, activePool.Count);
+
+        for (int i = 0; i < actualCount; i++)
+        {
+            int totalWeight = 0;
+            foreach (var item in activePool)
+            {
+                totalWeight += item.DropWeight;
+            }
+
+            if (totalWeight <= 0) break;
+
+            int randomValue = Random.Range(0, totalWeight);
+            int currentSum = 0;
+            int selectedIndex = -1;
+
+            for (int j = 0; j < activePool.Count; j++)
+            {
+                currentSum += activePool[j].DropWeight;
+                if (randomValue < currentSum)
+                {
+                    selectedIndex = j;
+                    break;
+                }
+            }
+
+            if (selectedIndex != -1)
+            {
+                result.Add(activePool[selectedIndex]);
+                activePool.RemoveAt(selectedIndex);
+            }
+        }
+
+        return result;
     }
 }
