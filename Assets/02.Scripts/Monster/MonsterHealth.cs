@@ -3,15 +3,13 @@ using System;
 
 public class MonsterHealth : MonoBehaviour, IMonsterDamageable
 {
-    private IMonsterStatProvider _statProvider;
-
     private int _maxHealth;
-    private int _currenHealth;
+    private int _currentHealth;
     private bool _isDead;
 
     public int Health
     {
-        get { return _currenHealth; }
+        get { return _currentHealth; }
     }
 
     public int MaxHealth
@@ -27,15 +25,11 @@ public class MonsterHealth : MonoBehaviour, IMonsterDamageable
     public event Action OnDamaged;
     public event Action OnDied;
 
-    private void Awake()
+    public void ResetForSpawn(int maxHealth)
     {
-        _statProvider = GetComponent<IMonsterStatProvider>();
-    }
-
-    private void Start()
-    {
-        _maxHealth = _statProvider.MaxHealth;
-        _currenHealth = _maxHealth;
+        _maxHealth = maxHealth;
+        _currentHealth = maxHealth;
+        _isDead = false;
     }
 
     public void TakeDamage(int amount)
@@ -44,25 +38,32 @@ public class MonsterHealth : MonoBehaviour, IMonsterDamageable
 
         if (amount <= 0) { return; }
 
-        _currenHealth -= amount;
+        _currentHealth -= amount;
 
-        if (_currenHealth < 0)
+        if (_currentHealth < 0)
         {
-            _currenHealth = 0;
+            _currentHealth = 0;
         }
 
-        Debug.Log($"{name} : 데미지 {amount}, 남은 체력 {_currenHealth} / {_maxHealth}");
-
+        Debug.Log($"{name} : 데미지 {amount}, 남은 체력 {_currentHealth} / {_maxHealth}");
         OnDamaged?.Invoke();
 
-        if (_currenHealth <= 0)
+        if (_currentHealth <= 0)
         {
             _isDead = true;
-
             Debug.Log($"{name} : 사망");
-
+            MonsterRegistry.Unregister(this);
             OnDied?.Invoke();
         }
     }
 
+    private void OnEnable()
+    {
+        MonsterRegistry.Register(this);
+    }
+
+    private void OnDisable()
+    {
+        MonsterRegistry.Unregister(this);
+    }
 }

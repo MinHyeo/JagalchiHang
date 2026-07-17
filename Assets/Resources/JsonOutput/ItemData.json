@@ -1,57 +1,72 @@
 [
   {
     "Id": "Item_01",
-    "Name": "item1",
-    "IconPath": null,
+    "ItemName": "나무 조각",
+    "IconPath": "Image_Icon/Image_Can",
     "IsStackable": true,
     "MaxCount": 8,
     "IsUsable": true,
     "UseItemType": "Type1",
     "UseItemParameterList": "1번아이템 사용!",
-    "UseItemDescription": "1번 아이템 효과다!"
+    "UseItemDescription": "1번 아이템 효과다!",
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_02",
-    "Name": "item2",
-    "IconPath": null,
-    "IsStackable": false,
+    "ItemName": "철 조각",
+    "IconPath": "Image_Icon/Image_IronPiece",
+    "IsStackable": true,
     "MaxCount": 10,
     "IsUsable": false,
     "UseItemType": "type2",
     "UseItemParameterList": "2번아이템 사용!",
-    "UseItemDescription": "2번 아이템 효과다!"
+    "UseItemDescription": "2번 아이템 효과다!",
+    "DropWeight": 1,
+    "MinDropCount": 2,
+    "MaxDropCount": 4
   },
   {
     "Id": "Item_03",
-    "Name": "item3",
-    "IconPath": null,
+    "ItemName": "물",
+    "IconPath": "Image_Icon/Image_Water",
     "IsStackable": true,
     "MaxCount": 20,
     "IsUsable": true,
     "UseItemType": "type3",
     "UseItemParameterList": "3번아이템 사용!",
-    "UseItemDescription": "3번 아이템 효과다!"
+    "UseItemDescription": "3번 아이템 효과다!",
+    "DropWeight": 1,
+    "MinDropCount": 3,
+    "MaxDropCount": 6
   },
   {
     "Id": "Item_04",
-    "Name": "item4",
-    "IconPath": null,
-    "IsStackable": false,
+    "ItemName": "통조림",
+    "IconPath": "Image_Icon/Image_WoodPiece",
+    "IsStackable": true,
     "MaxCount": 10,
     "IsUsable": true,
     "UseItemType": "type4",
     "UseItemParameterList": "4번아이템 사용",
-    "UseItemDescription": "4번 아이템 효과다!"
+    "UseItemDescription": "4번 아이템 효과다!",
+    "DropWeight": 2,
+    "MinDropCount": 4,
+    "MaxDropCount": 8
   },
   {
     "Id": "Item_05",
-    "Name": "item5",
-    "IconPath": null,
-    "IsStackable": false,
+    "ItemName": "막대기",
+    "IconPath": "Image_Icon/Image_WoodStick",
+    "IsStackable": true,
     "MaxCount": 10,
     "IsUsable": false,
     "UseItemType": "type5",
     "UseItemParameterList": "5번아이템 사용!",
-    "UseItemDescription": "5번 아이템 효과다!"
+    "UseItemDescription": "5번 아이템 효과다!",
+    "DropWeight": 2,
+    "MinDropCount": 5,
+    "MaxDropCount": 10
   }
 ]

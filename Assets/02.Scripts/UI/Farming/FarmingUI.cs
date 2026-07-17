@@ -15,7 +15,7 @@ public class FarmingUI : UIBase
     private void OnEnable()
     {
         _vm = NetworkManager_re.Inst.FarmingService.GetFarmingViewModel();
-        _vm.TestFarming();
+        _vm.CreateRandomFarmingItemSlot();
         InitFarmingSlot();
     }
 

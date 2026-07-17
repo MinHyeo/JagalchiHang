@@ -68,9 +68,9 @@ public class InventoryUI : UIBase
     }
 
     // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전
-    public bool RequestAcquireItem(string id, int count, bool isStackable, int maxCount)
+    public bool RequestAcquireItem(string id, int count)
     {
-        return _vm.AcquireItem(id, count, isStackable, maxCount);
+        return _vm.AcquireItem(id, count);
     }
 
 }

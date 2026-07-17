@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
 
+[Serializable]
 public class MonsterData : GameDataBase
 {
-    public string Id;
     public string MonsterName;
     public int MaxHp;
     public int BasicAttack;
