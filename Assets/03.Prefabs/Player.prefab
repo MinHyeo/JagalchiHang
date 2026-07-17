@@ -88,7 +88,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7293259724407414201}
@@ -616,8 +616,8 @@ GameObject:
   - component: {fileID: 4175056410575702275}
   - component: {fileID: 3418325716360562950}
   - component: {fileID: 2094188870305907693}
-  - component: {fileID: 2066035163789851050}
   - component: {fileID: 3243567161711154039}
+  - component: {fileID: 3528179161605534818}
   - component: {fileID: 7976609560303363326}
   - component: {fileID: 1610493138410536156}
   - component: {fileID: 2888918975945442839}
@@ -836,19 +836,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &2066035163789851050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3656254881343102050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64bb63397c61d1647a9a323c57c2b244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerOilController
-  _oilSpawnPoint: {fileID: 8779031101209027556}
 --- !u!114 &3243567161711154039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +848,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d28bb9edb6dfc54b8af16463b761f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusController
+--- !u!114 &3528179161605534818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656254881343102050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cfab76e0004e44cbcf23cb7b3d1dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrailEmitter
+  _trailMarkerPrefabPath: Prefab/OilTrail
+  _spawnInterval: 2
+  _groundCheckDistance: 5
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  _trailSpawnPoint: {fileID: 8779031101209027556}
 --- !u!54 &7976609560303363326
 Rigidbody:
   m_ObjectHideFlags: 0

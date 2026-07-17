@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 13f035feed29ed246ba1a825e93415c4
   m_SerializeEntries:
   - m_GUID: 0c1fc64c70affa4418da81c4bbbc731a
-    m_Address: Prefab/Oil
+    m_Address: Prefab/OilTrail
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

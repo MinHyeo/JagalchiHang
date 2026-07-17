@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5929684819204455209}
-  - component: {fileID: 9015404860280913047}
+  - component: {fileID: 5748975694721177751}
   - component: {fileID: 8701627397995452849}
   - component: {fileID: 7520968938591931191}
   - component: {fileID: 3786769415066879817}
   m_Layer: 0
-  m_Name: OilDrop
+  m_Name: OilTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,7 +35,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9015404860280913047
+--- !u!114 &5748975694721177751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,10 +44,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2645940860361957896}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 414f565ef9ff53944916505c33f271d7, type: 3}
+  m_Script: {fileID: 11500000, guid: d881c3ba3aca80e4fb303477d43c3389, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OilDrop
-  _maxLifeTime: 10
+  m_EditorClassIdentifier: Assembly-CSharp::OilTrailMarker
+  _lifetime: 15
 --- !u!33 &8701627397995452849
 MeshFilter:
   m_ObjectHideFlags: 0
