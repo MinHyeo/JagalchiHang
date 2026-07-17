@@ -1,33 +1,25 @@
-﻿using JetBrains.Annotations;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class WorldManager
 {
-    //private PlayerManager _playerManager
+    private PlayerManager _playerManager;
+    private SaveModel _saveModel;
     //private NpcManager _npcManager;
     //private MonsterManager _monsterManager;
     //private FarmManager _farmManager;
 
-    public void EnterWorld()
+    public void EnterWorld(SaveModel saveModel)
     {
-        LoadSaveData();
-
-        //_playerManager = new PlayerManager();
+        _playerManager = new PlayerManager();
         //_monsterManager = new MonsterManager();
         //_npcManager = new NpcManager();
         //_farmManager = new FarmManager();
 
-        //_playerManager.SpawnPlayer();
+        _playerManager.SpawnPlayer().Forget();
 
         //ITargetable target = _playerManager;
 
         //_monsterManager.Init(target);
         //_npcManager.Init(target);
-    }
-
-    private void LoadSaveData()
-    {
-
     }
 }
