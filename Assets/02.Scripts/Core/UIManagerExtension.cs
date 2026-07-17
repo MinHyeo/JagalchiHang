@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public enum UIRootType 
 {
@@ -31,7 +32,7 @@ public static class UIManagerExtension
     {
     }
 
-    public static void AddHudSlot(this UIManager uIManager, int instanceId, Transform targetTransform)
+    public static void AddSlotHpHud(this UIManager uIManager, int instanceId, Transform targetTransform)
     {
         var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
         if (uiBase == null) return;
@@ -42,7 +43,7 @@ public static class UIManagerExtension
         }
     }
 
-    public static void RemoveHudSlot(this UIManager uIManager, int instanceId)
+    public static void RemoveSlotHpHud(this UIManager uIManager, int instanceId)
     {
         var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
         if (uiBase == null) return;
@@ -61,6 +62,29 @@ public static class UIManagerExtension
         if (uiBase is HudMainUI hudMainUI)
         {
             hudMainUI.RemoveAllSlotHudHp();
+        }
+    }
+
+    public static void AddSlotHudInteraction(this UIManager uIManager, int instanceId, string interactionTitle, string interactionKey,
+        Transform targetTransform, Action<string> onClickCallback = null)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.AddInteractionSlot(instanceId, interactionTitle, interactionKey, targetTransform, onClickCallback);
+        }
+    }
+
+    public static void RemoveSlotHudInteraction(this UIManager uIManager, int instanceId)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.RemoveInteractionSlot(instanceId);
         }
     }
 }
