@@ -17,11 +17,13 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private FarmingUI _farmingUI;
     private Canvas _cachedCanvas;
 
-    public int SlotKey => transform.GetSiblingIndex();
+    private int _slotKey;
+    public int SlotKey => _slotKey;
 
-    public void Setup(FarmingUI farming)
+    public void Setup(FarmingUI farming, int slotKey)
     {
         _farmingUI = farming;
+        _slotKey = slotKey;
     }
 
     public void BindViewModel(FarmingSlotViewModel vm)

@@ -8,26 +8,28 @@ public class FarmingUI : UIBase
     [SerializeField] private Transform _farmingSlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private List<FarmingSlotUI> _slotUIList = new List<FarmingSlotUI>();
-
+    private Dictionary<int, FarmingSlotUI> _slotUIList = new Dictionary<int, FarmingSlotUI>();
     private FarmingViewModel _vm;
-
-    private void OnEnable()
-    {
-        _vm = NetworkManager_re.Inst.FarmingService.GetFarmingViewModel();
-        _vm.CreateRandomFarmingItemSlot();
-        InitFarmingSlot();
-    }
+    private string _boxtUniqueId;
 
     private void OnDisable()
     {
-        ClearSlotUIList();
+        ClearAllFarmingSlot();
+    }
+
+    public void Init(string boxId)
+    {
+        _boxtUniqueId = boxId;
+
+        ClearAllFarmingSlot();
+
+        _vm = NetworkManager_re.Inst.FarmingService.LoadFarmingBox(boxId);
+
+        InitFarmingSlot();
     }
 
     private void InitFarmingSlot()
     {
-        ClearSlotUIList();
-
         for (int i = 0; i < _vm.FarmingSlots.Count; i++)
         {
             GameObject gObj = Instantiate(_slotPrefab, _farmingSlot);
@@ -36,18 +38,23 @@ public class FarmingUI : UIBase
             FarmingSlotUI slotUI = gObj.GetComponent<FarmingSlotUI>();
             if (slotUI == null) return;
 
-            slotUI.Setup(this);
+            slotUI.Setup(this, i);
             slotUI.BindViewModel(_vm.FarmingSlots[i]);
-            _slotUIList.Add(slotUI);
+            _slotUIList.Add(i, slotUI);
         }
     }
 
-    private void ClearSlotUIList()
+    private void ClearAllFarmingSlot()
     {
-        foreach (var slotUI in _slotUIList)
+        foreach (var slotUI in _slotUIList.Values)
         {
-            Destroy(slotUI.gameObject);
+            if (slotUI != null)
+            {
+                slotUI.UnbindViewModel();
+                Destroy(slotUI.gameObject);
+            }
         }
+
         _slotUIList.Clear();
     }
 
@@ -58,6 +65,6 @@ public class FarmingUI : UIBase
 
     public void RequestMoveFromInventory(int invenIdx, int farmingIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, _boxtUniqueId);
     }
 }

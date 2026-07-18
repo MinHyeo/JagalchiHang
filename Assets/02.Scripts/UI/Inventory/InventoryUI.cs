@@ -59,7 +59,8 @@ public class InventoryUI : UIBase
 
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+        string currentBoxUniqueId = NetworkManager_re.Inst.FarmingService.CurrentActiveBoxUniqueId;
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, currentBoxUniqueId);
     }
 
     public void RequestMoveFromStorage(int storageIdx, int invenIdx)

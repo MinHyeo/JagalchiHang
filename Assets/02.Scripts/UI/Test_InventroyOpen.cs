@@ -11,6 +11,13 @@ public class Test_InventroyOpen : MonoBehaviour
 
     private void OnClickOpenInventory()
     {
-        UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
+        if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
+        }
     }
 }

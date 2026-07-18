@@ -2,15 +2,37 @@
 
 public class Test_FarmingOpen : MonoBehaviour
 {
-    [SerializeField] private UIButton Button;
+    [SerializeField] private UIButton Button_First;
+    [SerializeField] private UIButton Button_Second;
+
 
     private void OnEnable()
     {
-        Button.BindOnClickButtonEvent(OnClickOpenFarming);
+        Button_First.BindOnClickButtonEvent(OnClickOpenFarmingFirst);
+        Button_Second.BindOnClickButtonEvent(OnClickOpenFarmingSecond);
     }
 
-    private void OnClickOpenFarming()
+    private void OnClickOpenFarmingFirst()
     {
-        UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.FarmingUI);
+        if (UIManager.Instance.IsOpenUI(UIType.FarmingUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenFarmingUI("1번 상자");
+        }
+    }
+
+    private void OnClickOpenFarmingSecond()
+    {
+        if (UIManager.Instance.IsOpenUI(UIType.FarmingUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenFarmingUI("2번 상자");
+        }
     }
 }

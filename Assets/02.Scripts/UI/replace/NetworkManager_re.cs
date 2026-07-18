@@ -84,10 +84,10 @@ public class NetworkManager_re : MonoBehaviour
     //    return newPlayerData;
     //}
 
-    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx)
+    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
     {
         var invenVm = InventoryService.GetLocalInventoryViewModel();
-        var farmingVm = FarmingService.GetFarmingViewModel();
+        var farmingVm = FarmingService.LoadFarmingBox(boxUniqueId);
 
         if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !farmingVm.FarmingSlots.ContainsKey(farmingIdx)) return;
 
