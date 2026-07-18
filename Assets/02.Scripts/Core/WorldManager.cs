@@ -7,7 +7,7 @@ public class WorldManager
     //private PlayerManager _playerManager
     //private NpcManager _npcManager;
     //private MonsterManager _monsterManager;
-    //private FarmManager _farmManager;
+    private FarmManager _farmManager;
 
     public void EnterWorld()
     {
@@ -16,7 +16,7 @@ public class WorldManager
         //_playerManager = new PlayerManager();
         //_monsterManager = new MonsterManager();
         //_npcManager = new NpcManager();
-        //_farmManager = new FarmManager();
+        _farmManager = new FarmManager();
 
         //_playerManager.SpawnPlayer();
 
@@ -28,6 +28,6 @@ public class WorldManager
 
     private void LoadSaveData()
     {
-
+        NetworkManager_re.Inst.RequestLoadFarmData();
     }
 }

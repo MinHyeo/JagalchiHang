@@ -7,10 +7,14 @@ using UnityEngine;
 public class NetworkManager_re : MonoBehaviour
 {
     public static NetworkManager_re Inst { get; set; }
+
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
+    public NetworkFarmService FarmService { get; private set; }
+
+    public event Action<FarmViewModel> OnFarmSpawnDataReceived;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class NetworkManager_re : MonoBehaviour
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
+        FarmService = new NetworkFarmService();
     }
 
     public void RequestCreateLocalPlayer()
@@ -122,5 +127,16 @@ public class NetworkManager_re : MonoBehaviour
 
         // TODO: 추후 세이브 필요
         // RequestSaveData();
+    }
+
+    public void RequestLoadFarmData()
+    {
+        // 추후 세이브 데이터 불러옴
+        FarmPlotModel model = new FarmPlotModel();
+
+        FarmViewModel farmViewModel = FarmService.GetFarmViewModel();
+        //farmViewModel.GrowthMinutes = 10;
+
+        OnFarmSpawnDataReceived?.Invoke(farmViewModel);
     }
 }
