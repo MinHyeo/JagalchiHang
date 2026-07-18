@@ -41,11 +41,18 @@ public class FarmingViewModel : ViewModelBase
         if (!FarmingSlots.ContainsKey(startIdx) || !FarmingSlots.ContainsKey(endIdx)) return;
         if (startIdx == endIdx) return;
 
-        string tempId = FarmingSlots[startIdx].ItemDataId;
-        int tempCount = FarmingSlots[startIdx].ItemStackCount;
+        var startSlot = _farmingSlots[startIdx];
+        var endSlot = _farmingSlots[endIdx];
 
-        FarmingSlots[startIdx].SetItem(FarmingSlots[endIdx].ItemDataId, FarmingSlots[endIdx].ItemStackCount);
-        FarmingSlots[endIdx].SetItem(tempId, tempCount);
+        long tempUniqueId = startSlot.ItemUniqueId;
+        string tempId = startSlot.ItemDataId;
+        int tempCount = startSlot.ItemStackCount;
+
+        startSlot.ItemUniqueId = endSlot.ItemUniqueId;
+        startSlot.SetItem(endSlot.ItemDataId, endSlot.ItemStackCount);
+
+        endSlot.ItemUniqueId = tempUniqueId;
+        endSlot.SetItem(tempId, tempCount);
     }
 
     public void CreateRandomFarmingItemSlot()
@@ -82,7 +89,7 @@ public class FarmingViewModel : ViewModelBase
 
             FarmingSlotViewModel slotVm = FarmingSlots[i];
 
-            slotVm.ItemUniqueId = i + 1;
+            slotVm.ItemUniqueId = GameUtil.GenerateUniqueId();
             slotVm.SetItem(itemData.Id, stackCount);
         }
     }

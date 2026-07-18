@@ -1,11 +1,12 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Slot_HudInteraction : MonoBehaviour
 {
-    [SerializeField] private Text _textInteractionTitle;
-    [SerializeField] private Text _textKeyName;
+    [SerializeField] private TextMeshProUGUI _textInteractionTitle;
+    [SerializeField] private TextMeshProUGUI _textKeyName;
     [SerializeField] private UIButton _buttonOnClickInteraction;
 
     [SerializeField] private int slotOffsetX;

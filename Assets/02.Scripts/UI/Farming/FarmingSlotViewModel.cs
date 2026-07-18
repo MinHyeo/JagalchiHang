@@ -104,6 +104,7 @@ public class FarmingSlotViewModel : ViewModelBase
     {
         if (string.IsNullOrEmpty(itemDataId) || stackCount <= 0)
         {
+            ItemUniqueId = 0;
             ItemDataId = null;
             ItemStackCount = 0;
             IsStackable = false;

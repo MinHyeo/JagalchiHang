@@ -104,4 +104,15 @@ public static class UIManagerExtension
             loadGameUI.Init(loadGameType);
         }
     }
+
+    public static void OpenFarmingUI(this UIManager uiManager, string boxUniqueId)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.FarmingUI);
+        if (uiBase == null) return;
+
+        if (uiBase is FarmingUI farmingUI)
+        {
+            farmingUI.Init(boxUniqueId);
+        }
+    }
 }

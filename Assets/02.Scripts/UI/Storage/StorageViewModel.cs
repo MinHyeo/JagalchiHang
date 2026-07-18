@@ -26,7 +26,7 @@ public class StorageViewModel : ViewModelBase
     //    _inventorySlots[1].SetItem("암", 6);
     //}
 
-    public void AddInventorySlotViewModel()
+    public void AddStorageSlotViewModel()
     {
         _storageSlots.Clear();
 
@@ -41,10 +41,19 @@ public class StorageViewModel : ViewModelBase
         if (!StorageSlots.ContainsKey(startIdx) || !StorageSlots.ContainsKey(endIdx)) return;
         if (startIdx == endIdx) return;
 
-        string tempId = StorageSlots[startIdx].ItemDataId;
-        int tempCount = StorageSlots[startIdx].ItemStackCount;
+        var startSlot = _storageSlots[startIdx];
+        var endSlot = _storageSlots[endIdx];
 
-        StorageSlots[startIdx].SetItem(StorageSlots[endIdx].ItemDataId, StorageSlots[endIdx].ItemStackCount);
-        StorageSlots[endIdx].SetItem(tempId, tempCount);
+        long tempUniqueId = startSlot.ItemUniqueId;
+        string tempId = startSlot.ItemDataId;
+        int tempCount = startSlot.ItemStackCount;
+
+        startSlot.ItemUniqueId = endSlot.ItemUniqueId;
+        startSlot.SetItem(endSlot.ItemDataId, endSlot.ItemStackCount);
+
+        endSlot.ItemUniqueId = tempUniqueId;
+        endSlot.SetItem(tempId, tempCount);
+
+        OnPropertyChanged("StorageChanged");
     }
 }

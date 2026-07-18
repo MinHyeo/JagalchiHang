@@ -15,11 +15,18 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private StorageUI _storageUI;
     private Canvas _cachedCanvas;
 
-    public int SlotKey => transform.GetSiblingIndex();
+    private int _slotKey;
+    public int SlotKey => _slotKey;
 
-    public void Setup(StorageUI inv)
+    private void OnDisable()
+    {
+        UnbindViewModel();
+    }
+
+    public void Setup(StorageUI inv, int key)
     {
         _storageUI = inv;
+        _slotKey = key;
     }
 
     public void BindViewModel(StorageSlotViewModel vm)

@@ -8,7 +8,7 @@ public class InventoryUI : UIBase
     [SerializeField] private Transform _inventorySlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private Dictionary<int, InventorySlotUI> _slotUIList = new Dictionary<int, InventorySlotUI>();
+    private Dictionary<long, InventorySlotUI> _slotUIList = new Dictionary<long, InventorySlotUI>();
 
     private InventoryViewModel _vm;
 
@@ -59,18 +59,12 @@ public class InventoryUI : UIBase
 
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+        string currentBoxUniqueId = NetworkManager_re.Inst.FarmingService.CurrentActiveBoxUniqueId;
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, currentBoxUniqueId);
     }
 
     public void RequestMoveFromStorage(int storageIdx, int invenIdx)
     {
         NetworkManager_re.Inst.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
     }
-
-    // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전
-    public bool RequestAcquireItem(string id, int count)
-    {
-        return _vm.AcquireItem(id, count);
-    }
-
 }
