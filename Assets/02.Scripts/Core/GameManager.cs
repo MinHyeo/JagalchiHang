@@ -10,7 +10,8 @@ public class GameManager : SingletonBase<GameManager>
         _lobbyManager = new LobbyManager();
         _worldManager = new WorldManager();
 
-        _lobbyManager.EnterLobby();
+        //_lobbyManager.EnterLobby();
+        _worldManager.EnterWorld();
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함

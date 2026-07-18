@@ -6,7 +6,8 @@ public class FarmManager : MonoBehaviour
 {
     public static FarmManager Instance { get; private set; }
 
-    private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
+    private FarmViewModel _viewModel;
+    //private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
     private Dictionary<int, CropObject> _cropObjectDictionary = new Dictionary<int, CropObject>();
     private Dictionary<int, FarmPlot> _farmPlotDictionary = new Dictionary<int, FarmPlot>();
     private void Awake()
@@ -31,6 +32,7 @@ public class FarmManager : MonoBehaviour
             TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
         }
 
+        NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnViewModelPropertyChanged;
     }
 
     private void OnDisable()
@@ -43,11 +45,16 @@ public class FarmManager : MonoBehaviour
 
     }
 
+    private void OnViewModelPropertyChanged(FarmViewModel viewModel)
+    {
+        _viewModel = viewModel;
+    }
+
     private void UpdateAllPlotGrowth()
     {
-        for (int i = 0; i < _farmPlotList.Count; i++)
+        for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
         {
-            var plot = _farmPlotList[i];
+            var plot = _viewModel.FarmPlotList[i];
 
             if (plot.IsPlanted == false)
             {
@@ -125,16 +132,16 @@ public class FarmManager : MonoBehaviour
 
     public List<FarmPlotModel> GetFarmPlotList()
     {
-        return _farmPlotList;
+        return _viewModel.FarmPlotList;
     }
 
     public FarmPlotModel GetFarmPlotCanBeNull(int plotUniqueId)
     {
-        for (int i = 0; i < _farmPlotList.Count; i++)
+        for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
         {
-            if (_farmPlotList[i].PlotUniqueId == plotUniqueId)
+            if (_viewModel.FarmPlotList[i].PlotUniqueId == plotUniqueId)
             {
-                return _farmPlotList[i];
+                return _viewModel.FarmPlotList[i];
             }
         }
         return null;
@@ -142,7 +149,7 @@ public class FarmManager : MonoBehaviour
 
     public void AddFarmPlot(FarmPlotModel newPlot)
     {
-        _farmPlotList.Add(newPlot);
+        _viewModel.FarmPlotList.Add(newPlot);
     }
 
     public void RegisterCropObject(int plotUniqueId, CropObject cropObject)
