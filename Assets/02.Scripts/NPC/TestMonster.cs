@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+
 
 public class TestMonster : MonoBehaviour // 테스트용 몬스터 코드
 {
@@ -6,6 +8,7 @@ public class TestMonster : MonoBehaviour // 테스트용 몬스터 코드
     private int _currentHealth;
     private bool _isDead = false;
 
+    public event Action<TestMonster> OnDead;
     private void Start()
     {
         _currentHealth = maxHealth;
@@ -42,6 +45,8 @@ public class TestMonster : MonoBehaviour // 테스트용 몬스터 코드
         _isDead = true;
 
         Debug.Log($"[TestMonster] {name}의 체력이 0이 되어 소멸");
+
+        OnDead?.Invoke(this);
 
         Destroy(gameObject);
     }
