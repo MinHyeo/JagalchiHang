@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Crops
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Crops
+  m_GUID: 7e85532b652d742459445f55f0d9f34a
+  m_SerializeEntries:
+  - m_GUID: 14b7ff4d577022e4fbdc22f7d899f97a
+    m_Address: Crop_Carrot_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1ab764de8da80f141b35c0ea90c909f1
+    m_Address: Crop_Carrot_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 205df847f2cf4754b9ecb073d5cecccc
+    m_Address: Crop_Potato_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 267bf516a4d0ae443b289b53174ae76e
+    m_Address: Crop_Pumpkin_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 29395793892c04a478b701dcb9619739
+    m_Address: Crop_Pumpkin_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ecd7849759141e44a4c4531189372e3
+    m_Address: Crop_Pea_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f67417fed97bb34da3868f26562e93a
+    m_Address: Crop_Pea_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4a39d96807ea73846bff1257f847c1c7
+    m_Address: Crop_Potato_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5cd8366d0cc762143928287b294b1a5a
+    m_Address: Crop_Wheat_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6066581b9b4f87445ae317a3dd009724
+    m_Address: Crop_Onion_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 76bc680fe93b7434a9e636b1c8589782
+    m_Address: Crop_Tomato_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 780a3e19394606342a4b51835bf2e627
+    m_Address: Crop_Pumpkin_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8de0ddbb7cd2d634bbaf29899fc93765
+    m_Address: Crop_Potato_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a878a83fa707e8a4e924b8342afa7953
+    m_Address: Crop_Corn_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b600d733bef9a5644bf921a65abde06a
+    m_Address: Crop_Corn_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dba2ddbac0984634e944ae968bf7b6bc
+    m_Address: Crop_Onion_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e30cc0ebd6983b3429377f30cc17e7aa
+    m_Address: Crop_Tomato_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea62ed5f6de88b74b9b9289ef32c6407
+    m_Address: Crop_Tomato_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2a179ccc6db0a6458ec5adf72928d4f
+    m_Address: Crop_Tomato_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f671dbf8c54c025488ac7aef15fceb19
+    m_Address: Crop_Pea_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f85aa106b73602941abc2aa3d02ad5b0
+    m_Address: Crop_Carrot_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d1e9ef7c354e227479738996816d53c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: acf70f2daa2e4f640a20f15e17754daf, type: 2}
+    - {fileID: 11400000, guid: 8efb1fbc34ca44a409090a3f1b1faeaf, type: 2}

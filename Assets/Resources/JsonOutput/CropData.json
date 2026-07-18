@@ -11,7 +11,7 @@
     "SeedDropMinCount": 2,
     "SeedDropMaxCount": 11,
     "IconPath": "Icon_Crop",
-    "PrefabPath": null
+    "PrefabPath": "Crop_Carrot"
   },
   {
     "Id": "Crop_Corn",
@@ -25,7 +25,7 @@
     "SeedDropMinCount": 3,
     "SeedDropMaxCount": 13,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Corn"
   },
   {
     "Id": "Crop_Onion",
@@ -39,7 +39,7 @@
     "SeedDropMinCount": 5,
     "SeedDropMaxCount": 14,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Onion"
   },
   {
     "Id": "Crop_Pea",
@@ -53,7 +53,7 @@
     "SeedDropMinCount": 5,
     "SeedDropMaxCount": 15,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Pea"
   },
   {
     "Id": "Crop_Potato",
@@ -67,7 +67,7 @@
     "SeedDropMinCount": 1,
     "SeedDropMaxCount": 5,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Potato"
   },
   {
     "Id": "Crop_Pumpkin",
@@ -81,7 +81,7 @@
     "SeedDropMinCount": 10,
     "SeedDropMaxCount": 21,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Pumpkin"
   },
   {
     "Id": "Crop_Tomato",
@@ -95,7 +95,7 @@
     "SeedDropMinCount": 3,
     "SeedDropMaxCount": 10,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Tomato"
   },
   {
     "Id": "Crop_Wheat",
@@ -109,6 +109,6 @@
     "SeedDropMinCount": 4,
     "SeedDropMaxCount": 10,
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "Crop_Wheat"
   }
 ]
