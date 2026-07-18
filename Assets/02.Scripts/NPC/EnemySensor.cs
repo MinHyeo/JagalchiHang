@@ -9,15 +9,6 @@ public class EnemySensor : MonoBehaviour
 
     public bool isAutoDetect = true; // 자동탐색을 제어하기 위함
 
-    private void Update()
-    {
-     
-        // 현재 잡혀있던 몬스터가 죽어서 null일 때 목록에 다른 몬스터가 남아있으면 타켓 갱신 
-        if (isAutoDetect == true &&CurrentTarget == null && monsters.Count >0 )
-        {
-            UpdateCurrentTarget();
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -33,6 +24,13 @@ public class EnemySensor : MonoBehaviour
 
         monsters.Add(other.gameObject);
 
+        TestMonster monster = other.GetComponent<TestMonster>();
+
+        if (monster != null) 
+        {
+            monster.OnDead += OnMonsterDead;
+        }
+
         if (isAutoDetect == true)
         {
             UpdateCurrentTarget();
@@ -46,6 +44,13 @@ public class EnemySensor : MonoBehaviour
             return;
         }
         monsters.Remove(other.gameObject);
+
+        TestMonster monster = other.GetComponent<TestMonster>();
+
+        if (monster != null)
+        {
+            monster.OnDead -= OnMonsterDead;
+        }
 
         if (isAutoDetect == true)
         {
@@ -82,6 +87,22 @@ public class EnemySensor : MonoBehaviour
                 closeDistance = distance;
                 CurrentTarget = monsters[i];
             }
+        }
+    }
+
+    //몬스터가 죽었을 때 호출 되는 함수(이벤트로 사용)
+    private void OnMonsterDead(TestMonster monster) 
+    {
+        monsters.Remove(monster.gameObject);
+
+        if(CurrentTarget == monster.gameObject)
+        {
+            CurrentTarget = null;
+        }
+
+        if (isAutoDetect == true) 
+        {
+            UpdateCurrentTarget(); // 범위에서 벗어나지 않았을 경우를 대비해서 다시 감지
         }
     }
 

@@ -43,23 +43,23 @@ public partial class BT_FollowPlayer : Action
     protected override Status OnUpdate()
     {
 
-        if (CheckBunkerStatus() == true) 
+        if (CheckBunkerStatus() == true)
         {
             return Status.Failure;
         }
 
-        if (CheckPlayerDistance() == true) 
+        if (CheckPlayerDistance() == true)
         {
             return Status.Running;
         }
 
         UpdateSensorSetting();
 
-        if(BattleModeSetting() == true)
+        if (BattleModeSetting() == true)
         {
             return Status.Success;
         }
-     
+
         _agent.SetDestination(PlayerTarget.Value.transform.position);
 
         return Status.Running;
@@ -114,52 +114,70 @@ public partial class BT_FollowPlayer : Action
 
     private bool BattleModeSetting() // 배틀모드 설정
     {
-        if (CurrentBattleMode.Value == BattleMode.FollowOnly)//3번모드
+       switch (CurrentBattleMode.Value)
         {
-            EnemyTarget.Value = null;
-            Debug.Log("[BT_FollowPlayer] 동행 전용모드 시작");
+            case BattleMode.AutoAttack:
+                return AutoAttackMode();
 
-            return false;
+            case BattleMode.AssistAttack:
+                return AssistAttackMode();
+
+            case BattleMode.FollowOnly:
+                return FollowOnlyMode();
+
+            default:
+                return false;
         }
 
-        if (CurrentBattleMode.Value == BattleMode.AutoAttack) //1번 모드 
+    }
+
+    private bool FollowOnlyMode()
+    {
+        EnemyTarget.Value = null;
+        Debug.Log("[BT_FollowPlayer] 동행 전용모드 시작");
+
+        return false;
+    }
+
+    private bool AutoAttackMode()
+    {
+
+        if (_sensor != null && _sensor.CurrentTarget != null)
         {
-            if (_sensor != null && _sensor.CurrentTarget != null)
+            EnemyTarget.Value = _sensor.CurrentTarget;
+
+            CurrentState.Value = NpcState.Attack;
+
+            Debug.Log("[BT_FollowPlayer] 몬스터 발견 -> Attack");
+            Debug.Log("[BT_FollowPlayer] 자동 전투모드 시작");
+
+            return true;
+        }
+        return false;
+    }
+
+    private bool AssistAttackMode()
+    {
+
+        TestPlayer testPlayer = PlayerTarget.Value.GetComponent<TestPlayer>();
+
+        if (testPlayer != null && _sensor != null)
+        {
+            GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
+
+
+            if (playerTargetMonster != null)
             {
-                EnemyTarget.Value = _sensor.CurrentTarget;
+                EnemyTarget.Value = playerTargetMonster;
 
                 CurrentState.Value = NpcState.Attack;
 
-                Debug.Log("[BT_FollowPlayer] 몬스터 발견 -> Attack");
-                Debug.Log("[BT_FollowPlayer] 자동 전투모드 시작");
+                Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
 
                 return true;
             }
         }
-
-        else if (CurrentBattleMode.Value == BattleMode.AssistAttack) // 임시 코드 추후 다시 진짜 플레이어 코드랑 연동하면서 바꿀 예정
-        {
-            TestPlayer testPlayer = PlayerTarget.Value.GetComponent<TestPlayer>();
-
-            if (testPlayer != null && _sensor != null)
-            {
-                GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
-
-
-                if (playerTargetMonster != null)
-                {
-                    EnemyTarget.Value = playerTargetMonster;
-
-                    CurrentState.Value = NpcState.Attack;
-
-                    Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
-
-                    return true;
-                }
-            }
-        }
         return false;
-
     }
 }
 
