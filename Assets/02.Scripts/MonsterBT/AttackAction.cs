@@ -19,7 +19,7 @@ public partial class AttackAction : Action
 
     protected override Status OnStart()
     {
-        _combatable = Agent.Value.GetComponent<IMonsterCombatable>();
+        _combatable = Agent.Value.GetComponent<Monster>().Combatable;
 
         if (!_combatable.CanAttack())
         {

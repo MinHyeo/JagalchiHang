@@ -11,4 +11,5 @@ public interface IMonsterDamageable
     event Action OnDied;
 
     void TakeDamage(int amount);
+    void ResetForSpawn(int maxHealth);
 }

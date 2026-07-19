@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
-{
-
-}
-
 public class UIManager : SingletonBase<UIManager>
 {
     [SerializeField] private Canvas _canvasBgRoot;

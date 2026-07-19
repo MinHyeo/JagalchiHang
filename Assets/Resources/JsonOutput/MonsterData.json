@@ -7,26 +7,6 @@
     "BasicAttackRange": 1.2,
     "BasicSpeed": 1.3,
     "MonsterDescription": "로봇",
-    "PrefabPath": null
-  },
-  {
-    "Id": "Monster_2",
-    "Name": "monster_2",
-    "MaxHp": 40,
-    "Basic Attack": 12,
-    "BasicAttackRange": 2.3,
-    "BasicSpeed": 2.4,
-    "MonsterDescription": "2번몬스터설명",
-    "PrefabPath": null
-  },
-  {
-    "Id": "Monster_3",
-    "Name": "monster_3",
-    "MaxHp": 50,
-    "Basic Attack": 20,
-    "BasicAttackRange": 3.5,
-    "BasicSpeed": 3.5,
-    "MonsterDescription": "3번몬스터설명",
-    "PrefabPath": null
+    "PrefabPath": "Prefab/Monster"
   }
 ]
