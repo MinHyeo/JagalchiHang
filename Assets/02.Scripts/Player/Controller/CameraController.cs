@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,9 @@ public class CameraController : MonoBehaviour
 
     [SerializeField]
     private LayerMask _buildingLayer;
+
+    private readonly HashSet<BuildingVisibility> _hiddenBuildings = new();     // 숨겨진 건물 목록
+    private readonly HashSet<BuildingVisibility> _detectedBuildings = new();   // 새롭게 감지된 건물 목록
 
     private void Awake()
     {
@@ -38,7 +42,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        HideBuilding();
+        HideBuildings();
     }
 
     // 플레이어를 TrackingTarget으로 설정
@@ -52,7 +56,8 @@ public class CameraController : MonoBehaviour
         return;
     }
 
-    private void HideBuilding()
+    // 건물 숨기기
+    private void HideBuildings()
     {
         var playerPos = SampleGameManager.Instance.GetPlayerPosition();
         var cameraPos = this.transform.position;
@@ -60,20 +65,56 @@ public class CameraController : MonoBehaviour
         var direction = (playerPos - cameraPos).normalized;
         var distance = Vector3.Distance(cameraPos, playerPos);
 
+        // 거리가 너무 짧으면 return
+        if(distance <= 0.01f)
+        {
+            return;
+        }
+
         float radius = 0.5f;
 
+        // 카메라 위치에서 플레이어 방향으로 구 형태의 검사 보내기
         RaycastHit[] hits = Physics.SphereCastAll(cameraPos, radius, direction, distance, _buildingLayer);
 
-        if (hits.Length > 0)
+        // 감지된 건물 리스트 지우기
+        _detectedBuildings.Clear();
+
+        foreach (RaycastHit hit in hits)
         {
-            foreach (RaycastHit hit in hits)
+            // 직접 맞힌 Collider의 부모의 BuildingVisibility 컴포넌트 찾기
+            BuildingVisibility building = hit.collider.GetComponentInParent<BuildingVisibility>();
+
+            if (building == null)
             {
-                Debug.Log($"감지된 건물: {hit.collider.name}");
-                var renderer = hit.collider.GetComponent<Renderer>();
-                Color color = renderer.material.color;
-                color.a = 0.5f;
-                renderer.material.color = color;
+                continue;
             }
+
+            _detectedBuildings.Add(building);
+            building.Hide();
+
+            Debug.Log($"감지된 건물: {building.name}");
+        }
+
+        // 이전에 숨겼던 건물 확인
+        foreach (BuildingVisibility hiddenBuilding in _hiddenBuildings)
+        {
+            // 감지된 건물에 숨겼던 건물이 없다면
+            if (_detectedBuildings.Contains(hiddenBuilding) == false)
+            {
+                // 다시 보여줘
+                hiddenBuilding.Show();
+            }
+        }
+
+        // 숨겼던 건물 리스트 지우기
+        _hiddenBuildings.Clear();
+
+        // 현재 감지된 건물 확인
+        foreach (BuildingVisibility detectedBuilding in _detectedBuildings)
+        {
+            // 감지돼서 숨긴 건물들 _hiddenBuildings 리스트에 저장
+            _hiddenBuildings.Add(detectedBuilding);
         }
     }
 }
+
