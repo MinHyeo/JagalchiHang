@@ -24,6 +24,11 @@ public class IdleState : IPlayerState
         }
     }
 
+    public void FixedUpdate(PlayerController player)
+    {
+
+    }
+
     public void Exit(PlayerController player)
     {
 

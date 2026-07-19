@@ -50,4 +50,11 @@ public class StateMachine
         }
     }
     
+    public void FixedUpdate(PlayerController player)
+    {
+        if (_currentState != null)
+        {
+            _currentState.FixedUpdate(player);
+        }
+    }
 }

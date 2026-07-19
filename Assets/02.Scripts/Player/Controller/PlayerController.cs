@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour, ISpawnable
         _speed = _isRuning ? _playerData.MoveSpeed * 3f : _playerData.MoveSpeed;
 
         _stateMachine.Update(this);
+        _stateMachine.FixedUpdate(this);
 
         if(_isPressedMouseRight == true)
         {

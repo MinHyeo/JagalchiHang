@@ -28,6 +28,11 @@ public class SampleGameManager : SingletonBase<SampleGameManager>
         Debug.Log($"플레이어의 현재 위치 -> {playerPos}");
     }
 
+    public Vector3 GetPlayerPosition()
+    {
+        return _worldManager.GetPlayerPosition();   
+    }
+
     // TODO : 저장되어 있는 파일 전달해줘야 함
     public void EnterInGame()
     {

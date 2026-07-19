@@ -29,6 +29,11 @@ public class HitState : IPlayerState
         player.SetState(StateType.Walk);
     }
 
+    public void FixedUpdate(PlayerController player)
+    {
+
+    }
+
     public void Exit(PlayerController player)
     {
 
