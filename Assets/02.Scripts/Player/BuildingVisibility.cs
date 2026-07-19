@@ -7,7 +7,7 @@ public class BuildingVisibility : MonoBehaviour
     [SerializeField]
     private LayerMask _excludeLayer;     // 제외할 오브젝트 레이어
 
-    private readonly List<Renderer> _renderers = new List<Renderer>(); // Renderer들을 저장하는 List
+    private List<Renderer> _renderers = new List<Renderer>();          // Renderer들을 저장하는 List
     private ShadowCastingMode[] _originalShadowModes;                  // 어떤 Shadow Mode였는지 저장하는 배열
 
     private void Awake()
@@ -18,7 +18,7 @@ public class BuildingVisibility : MonoBehaviour
         foreach (Renderer targetRenderer in childRenderers)
         {
             // 특정 오브젝트의 Layer가 _excludeLayer가 아니라면
-            if (IsInLayerMask(targetRenderer.gameObject.layer, _excludeLayer))
+            if (IsInLayerMask(targetRenderer.gameObject.layer, _excludeLayer) == true)
             {
                 continue;
             }

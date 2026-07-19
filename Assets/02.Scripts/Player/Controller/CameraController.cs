@@ -16,8 +16,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private LayerMask _buildingLayer;
 
-    private readonly HashSet<BuildingVisibility> _hiddenBuildings = new();     // 숨겨진 건물 목록
-    private readonly HashSet<BuildingVisibility> _detectedBuildings = new();   // 새롭게 감지된 건물 목록
+    private HashSet<BuildingVisibility> _hiddenBuildings = new HashSet<BuildingVisibility>();      // 숨겨진 건물 목록
+    private HashSet<BuildingVisibility> _detectedBuildings = new HashSet<BuildingVisibility>();    // 새롭게 감지된 건물 목록
 
     private void Awake()
     {
