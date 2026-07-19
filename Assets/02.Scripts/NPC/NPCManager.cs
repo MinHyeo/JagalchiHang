@@ -4,12 +4,18 @@ public class NpcManager : MonoBehaviour // 벙커 로직 테스트용
 {
 
     [SerializeField] private BattleNpc battleNpc; 
+    [SerializeField] private BagNpc bagNpc;
+
+    [SerializeField] private Transform playerTransform;
 
     public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
-    public Vector3 BattleNPCHomePos = new Vector3(0, 1, -13); // NPC  매니저에서 관리 
     public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
     private void Update()
     {
+        if(playerTransform != null)
+        {
+            bagNpc.UpdatePlayerPosition(playerTransform.position);
+        }
         if (Input.GetKeyDown(KeyCode.F)) // 테스트용 코드
         {
             OnBunkerEnterData(true, BunkerSpawnPos);
@@ -35,6 +41,9 @@ public class NpcManager : MonoBehaviour // 벙커 로직 테스트용
        if(battleNpc != null)
         {
             battleNpc.EnterBunker(isInBunker, bunkerPos);
+            Debug.Log($"[NPC 매니저] Battle Npc벙커 진입");
+            bagNpc.EnterBunker(isInBunker, bunkerPos);
+            Debug.Log($"[NPC 매니저] Bag Npc벙커 진입");
         }
 
         Debug.Log($"[NPC 매니저] 벙커 진입");
@@ -45,6 +54,7 @@ public class NpcManager : MonoBehaviour // 벙커 로직 테스트용
         if (battleNpc != null)
         {
             battleNpc.ExitBunker(isInBunker, returnPos);
+            bagNpc.ExitBunker(isInBunker, returnPos);
         }
 
 

@@ -1041,9 +1041,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 574671150}
+  - component: {fileID: 574671153}
+  - component: {fileID: 574671152}
   - component: {fileID: 574671149}
   - component: {fileID: 574671148}
   - component: {fileID: 574671147}
+  - component: {fileID: 574671151}
   m_Layer: 0
   m_Name: Npc_Bag
   m_TagString: Untagged
@@ -1144,6 +1147,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &574671151
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574671146}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &574671152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574671146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5e66375902c8d4fac6a0384ef5258f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BagNpc
+  behaviorAgent: {fileID: 574671153}
+  bonusSlotCount: 8
+--- !u!114 &574671153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574671146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: -1665126217808811635, guid: 6dd9cbdd9483a1a4b865c3f400925d77, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 6163278761845588111
+  m_OriginalGraph: {fileID: 0}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 6163278761845588111
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 574671146}
 --- !u!1 &724305664
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,7 +1716,7 @@ GameObject:
   - component: {fileID: 1265691212}
   - component: {fileID: 1265691216}
   m_Layer: 0
-  m_Name: NPC_Battle
+  m_Name: Npc_Battle
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2724,7 +2792,7 @@ GameObject:
   - component: {fileID: 1799197128}
   - component: {fileID: 1799197127}
   m_Layer: 0
-  m_Name: NPCManager
+  m_Name: NpcManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2743,8 +2811,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestNPCManager
   battleNpc: {fileID: 1265691218}
+  bagNpc: {fileID: 574671152}
+  playerTransform: {fileID: 9081587253298932724}
   BunkerSpawnPos: {x: 7, y: 1, z: -9}
-  BattleNPCHomePos: {x: 0, y: 1, z: -13}
   ReturnPos: {x: 7, y: 1, z: -8.5}
 --- !u!4 &1799197128
 Transform:
