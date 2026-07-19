@@ -14,12 +14,17 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
-    public void EnterInGame(SaveModel saveModel)
+    public void EnterInGame()
     {
-        _worldManager.EnterWorld(saveModel);
+        _worldManager.EnterWorld();
 
         if (_lobbyManager == null)
             return;
         _lobbyManager.ExitLobby();
+    }
+
+    public void ExitInGame()
+    {
+
     }
 }
