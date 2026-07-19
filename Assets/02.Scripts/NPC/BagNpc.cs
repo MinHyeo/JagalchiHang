@@ -42,7 +42,7 @@ public class BagNpc : MonoBehaviour
     private void AddInventorySlot(int count)
     {
         //인벤토리 뷰 모델 주소 가져오기 
-        InventoryViewModel inventoryVM = NetworkManager_re.Inst?.InventoryService?.GetLocalInventoryViewModel();
+        InventoryViewModel inventoryVM = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
 
         if(inventoryVM != null && inventoryVM.InventorySlots != null)
         {
