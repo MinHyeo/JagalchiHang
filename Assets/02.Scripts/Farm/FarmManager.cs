@@ -184,7 +184,7 @@ public class FarmManager : MonoBehaviour
         }
     }
 
-    public async UniTask<bool>  RequestPlantCrop(FarmPlotModel plot, string cropDataId)
+    public bool  RequestPlantCrop(FarmPlotModel plot, string cropDataId)
     {
         if (plot == null)
         {
@@ -217,9 +217,6 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        var farmPlot = _farmPlotDictionary[plot.PlotUniqueId];
-        string prefabPath = cropData.PrefabPath + "_0";
-        await farmPlot.ChangeCropModel(prefabPath, cropDataId);
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
