@@ -49,7 +49,7 @@ public class SaveDataSlot : MonoBehaviour
 
         _saveModel = new SaveModel();
         NetworkManager.Instance.SaveGame(_slotIndex, _saveModel);
-        GameManager.Instance.EnterInGame(_saveModel);
+        GameManager.Instance.EnterInGame();
     }
 
     private void LoadGame()
@@ -61,6 +61,6 @@ public class SaveDataSlot : MonoBehaviour
         }
 
         Debug.Log("기존 게임 시작");
-        GameManager.Instance.EnterInGame(_saveModel);
+        GameManager.Instance.EnterInGame();
     }
 }

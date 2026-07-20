@@ -2,13 +2,17 @@
 using UnityEngine;
 
 [System.Serializable]
-public class ItemData : ScriptableObject
+public class ItemData : GameDataBase
 {
-    public string itemName;
+    public string ItemName;
     public string IconPath;
-    public bool isStackable;
-    public int maxCount;
+    public bool IsStackable;
+    public int MaxCount;
+    public bool IsUsable;
     public string UseItemType;
     public List<string> UseItemParameterList;
-    public string Description;
+    public string UseItemDescription;
+    public int DropWeight;
+    public int MinDropCount;
+    public int MaxDropCount;
 }

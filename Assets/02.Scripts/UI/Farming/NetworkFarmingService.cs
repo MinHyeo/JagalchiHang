@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class NetworkFarmingService
 {
+    private Dictionary<string, FarmingViewModel> _activeFarmingBoxList = new Dictionary<string, FarmingViewModel>();
     private FarmingViewModel _localFarmingViewModel;
+
+    private string _currentActiveBoxUniqueId = string.Empty;
+    public string CurrentActiveBoxUniqueId => _currentActiveBoxUniqueId;
 
     public FarmingViewModel GetFarmingViewModel()
     {
@@ -10,7 +15,6 @@ public class NetworkFarmingService
         {
             CreateLocalFarmingViewModel();
         }
-
         return _localFarmingViewModel;
     }
 
@@ -22,29 +26,26 @@ public class NetworkFarmingService
         return farmingVm;
     }
 
-    public void AddItem(string itemDataId, int addItemCount)
+    public FarmingViewModel LoadFarmingBox(string boxUniqueId)
     {
-        // TODO : 정보 저장용
-        // long uniqueId = GameUtil.GenerateUniqueId();
+        _currentActiveBoxUniqueId = boxUniqueId;
 
-        // TODO: 데이터 드리븐용
-        //var newItem = new FarmingSlotViewModel();
-        //if (newItem == null) return;
+        if (_activeFarmingBoxList.ContainsKey(boxUniqueId))
+        {
+            return _activeFarmingBoxList[boxUniqueId];
+        }
 
-        //var itemData = GameDataManager.Instance.GetData<ItemData>();
-        //if (itemData == null) return;
+        var newFarmingVm = new FarmingViewModel();
 
-        //newItem.ItemUniqueId = uniqueId;
-        //newItem.ItemDataId = itemData.Id;
-        
+        newFarmingVm.CreateRandomFarmingItemSlot();
 
-        // TODO : 아이템 랜덤 로직 넣기
-        //newItem.ItemStackCount = addItemCount;
+        _activeFarmingBoxList.Add(boxUniqueId, newFarmingVm);
 
-        var invenVm = GetFarmingViewModel();
-        //invenVm.AddInventorySlotViewModel(newItem);
-
-        // TODO : 저장 기능 구현 후 수정
-        // NetworkManager_re.Inst.SaveLoadService.RequestSaveData();
+        return newFarmingVm;
+    }
+    
+    public void OnExitMap()
+    {
+        _activeFarmingBoxList.Clear();
     }
 }
