@@ -36,7 +36,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 541799363d8fca0478ed4586b06852db
-    m_Address: Prefab/Npc_Bag
+    m_Address: Prefabs/Npc/BagNpc
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9ae1ec6f90e86bf46ac6e77f420cef65
-    m_Address: Prefab/Npc_Battle
+    m_Address: Prefabs/Npc/BattleNpc
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
