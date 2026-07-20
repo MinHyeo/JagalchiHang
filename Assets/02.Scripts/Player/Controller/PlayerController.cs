@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, ISpawnable
 {
     [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
+
+    [Header("Attack")]
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private float _attackRadius = 1f;
+    [SerializeField] private LayerMask _monsterLayer;
     
     private Vector2 _moveInput;
     private Vector3 _moveDirection;   
@@ -40,6 +47,8 @@ public class PlayerController : MonoBehaviour, ISpawnable
     private ItemController _currentItem;
 
     private StateMachine _stateMachine = new StateMachine();
+
+    public event Action<Monster> OnMonsterAttacked;
 
     private void Awake()
     {
@@ -154,6 +163,39 @@ public class PlayerController : MonoBehaviour, ISpawnable
         _isAttacking = false;
     }
 
+    // 몬스터 공격
+    public void AttackMoster()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
+
+        HashSet<Monster> damageMonsters = new HashSet<Monster>();
+
+        foreach(Collider hitCollider in hitColliders)
+        {
+            Monster monster = hitCollider.GetComponent<Monster>();
+
+            if(monster == null)
+            {
+                continue;
+            }
+
+            if(monster.Damageable == null)
+            {
+                continue;
+            }
+
+            if(damageMonsters.Add(monster) == false)
+            {
+                continue;
+            }
+
+            monster.Damageable.TakeDamage(_playerData.AttackPower);
+            Debug.LogWarning($"플레이어가 {monster.InstanceId}번 몬스터를 공격했다!");
+
+            OnMonsterAttacked?.Invoke(monster);
+        }
+    }
+
     // 사망
     public void Die()
     {
@@ -255,5 +297,15 @@ public class PlayerController : MonoBehaviour, ISpawnable
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
             }
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_attackPoint == null)
+        {
+            return;
+        }
+
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
     }
 }

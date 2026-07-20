@@ -3,12 +3,12 @@
 public class WorldManager
 {
     private PlayerManager _playerManager;
-    //private NpcManager _npcManager;
+    private NpcManager _npcManager;
     private MonsterManager _monsterManager;
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public void EnterWorld(SaveModel saveModel)
+    public void EnterWorld()
     {
         CreateManager();
 
@@ -16,9 +16,9 @@ public class WorldManager
 
         _playerManager.SpawnPlayer().Forget();
 
-        //ITargetable target = _playerManager;
+        ITargetable target = _playerManager;
 
-        //_monsterManager.Init(target);
+        _monsterManager.Init(target);
         //_npcManager.Init(target);
     }
 
@@ -26,7 +26,7 @@ public class WorldManager
     {
         _playerManager = new PlayerManager();
         _monsterManager = new MonsterManager();
-        //_npcManager = new NpcManager();
+        _npcManager = new NpcManager();
         _farmManager = new FarmManager();
         _mapManager = new MapManager();
     }
