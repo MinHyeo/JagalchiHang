@@ -8,7 +8,7 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public void EnterWorld()
+    public void EnterWorld(SaveModel saveModel)
     {
         CreateManager();
 

@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 
 public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -15,11 +17,13 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private FarmingUI _farmingUI;
     private Canvas _cachedCanvas;
 
-    public int SlotKey => transform.GetSiblingIndex();
+    private int _slotKey;
+    public int SlotKey => _slotKey;
 
-    public void Setup(FarmingUI farming)
+    public void Setup(FarmingUI farming, int slotKey)
     {
         _farmingUI = farming;
+        _slotKey = slotKey;
     }
 
     public void BindViewModel(FarmingSlotViewModel vm)
@@ -64,22 +68,22 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         UpdateCountText();
     }
 
-    private void UpdateIcon()
+    private async Task UpdateIcon()
     {
-        if (string.IsNullOrEmpty(_vm?.ItemDataId))
+        if (_vm == null || string.IsNullOrEmpty(_vm?.ItemDataId))
         {
             _imageIcon.gameObject.SetActive(false);
         }
         else
         {
+            var iconPath = _vm.IconPath;
             _imageIcon.gameObject.SetActive(true);
-            // TODO: 이미지 로드 필요
         }
     }
 
     private void UpdateCountText()
     {
-        if (_vm != null && _vm.ItemStackCount > 1)
+        if (_vm != null && _vm.ItemStackCount >= 1)
         {
             _countText.text = $"{_vm.ItemStackCount}";
             _countText.gameObject.SetActive(true);

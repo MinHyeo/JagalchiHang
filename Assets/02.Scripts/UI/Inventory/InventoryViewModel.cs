@@ -35,37 +35,94 @@ public class InventoryViewModel : ViewModelBase
         if (!_inventorySlots.ContainsKey(startIdx) || !_inventorySlots.ContainsKey(endIdx)) return;
         if (startIdx == endIdx) return;
 
-        string tempId = InventorySlots[startIdx].ItemDataId;
-        int tempCount = InventorySlots[startIdx].ItemStackCount;
+        var startSlot = _inventorySlots[startIdx];
+        var endSlot = _inventorySlots[endIdx];
 
-        InventorySlots[startIdx].SetItem(InventorySlots[endIdx].ItemDataId, InventorySlots[endIdx].ItemStackCount);
-        InventorySlots[endIdx].SetItem(tempId, tempCount);
+        long tempUniqueId = startSlot.ItemUniqueId;
+        string tempId = startSlot.ItemDataId;
+        int tempCount = startSlot.ItemStackCount;
+
+        startSlot.ItemUniqueId = endSlot.ItemUniqueId;
+        startSlot.SetItem(endSlot.ItemDataId, endSlot.ItemStackCount);
+
+        endSlot.ItemUniqueId = tempUniqueId;
+        endSlot.SetItem(tempId, tempCount);
     }
 
-    // TODO : 아이템 데이터 추가시 바꿔야 함
-    public bool AcquireItem(string itemDataId, int count = 1, bool isStackable = true, int maxCount = 99)
+    public bool AcquireItem(string itemDataId, int count)
     {
+        var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        if (itemData == null) return false;
+
+        bool isStackable = itemData.IsStackable;
+        int maxCount = itemData.MaxCount;
+
         if (isStackable)
         {
             for (int i = 0; i < _slotCount; i++)
             {
                 if (InventorySlots[i].ItemDataId == itemDataId && _inventorySlots[i].ItemStackCount < maxCount)
                 {
-                    InventorySlots[i].ItemStackCount += count;
-                    return true;
+                    int fullCount = maxCount - _inventorySlots[i].ItemStackCount;
+                    int addAmount = Mathf.Min(fullCount, count);
+
+                    _inventorySlots[i].ItemStackCount += addAmount;
+                    count -= addAmount;
+
+                    if (count <= 0)
+                    {
+                        OnPropertyChanged("ItemListAdded");
+                        return true;
+                    }
                 }
             }
         }
 
+        while (count > 0)
+        {
+            int emptySlotIdx = GetEmptySlotIndex();
+            if (emptySlotIdx == -1)
+            {
+                OnPropertyChanged("ItemListAdded");
+                return false;
+            }
+
+            int insertCount = isStackable ? Mathf.Min(maxCount, count) : 1;
+
+            long newUniqueId = GameUtil.GenerateUniqueId();
+            _inventorySlots[emptySlotIdx].ItemUniqueId = newUniqueId;
+            _inventorySlots[emptySlotIdx].SetItem(itemDataId, insertCount);
+
+            count -= insertCount;
+        }
+
+        OnPropertyChanged("ItemListAdded");
+        return true;
+    }
+
+    private int GetEmptySlotIndex()
+    {
         for (int i = 0; i < _slotCount; i++)
         {
-            if (string.IsNullOrEmpty(InventorySlots[i].ItemDataId))
+            if (string.IsNullOrEmpty(_inventorySlots[i].ItemDataId))
             {
-                InventorySlots[i].SetItem(itemDataId, count);
-                return true;
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void RemoveItemSlotViewModel(long uniqueId)
+    {
+        foreach (var slot in _inventorySlots.Values)
+        {
+            if (slot.ItemUniqueId == uniqueId) 
+            {
+                slot.Clear();
+                break;
             }
         }
 
-        return false;
+        OnPropertyChanged("ItemListRemoved");
     }
 }
