@@ -14,7 +14,7 @@ public class InventoryUI : UIBase
 
     private void OnEnable()
     {
-        _vm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+        _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
         InitInventory();
     }
 
