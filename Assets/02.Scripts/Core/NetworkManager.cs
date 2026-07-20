@@ -83,4 +83,9 @@ public class NetworkManager : SingletonBase<NetworkManager>
         // TODO: 추후 세이브 필요
         // RequestSaveData();
     }
+
+    public void AddItemToInventory(string itemDataId, int stackCount)
+    {
+        InventoryService.AddItem(itemDataId, stackCount);
+    }
 }

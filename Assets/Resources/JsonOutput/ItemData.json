@@ -2,7 +2,7 @@
   {
     "Id": "Item_01",
     "ItemName": "나무 조각",
-    "IconPath": null,
+    "IconPath": "Images/Image_WoodPiece",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -16,7 +16,7 @@
   {
     "Id": "Item_02",
     "ItemName": "막대기",
-    "IconPath": null,
+    "IconPath": "Images/Image_WoodStick",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -30,7 +30,7 @@
   {
     "Id": "Item_03",
     "ItemName": "철 조각",
-    "IconPath": null,
+    "IconPath": "Images/Image_IronPiece",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -224,7 +224,7 @@
     "MaxDropCount": null
   },
   {
-    "Id": "Crop_Grain",
+    "Id": "Crop_Wheat",
     "ItemName": "밀",
     "IconPath": null,
     "IsStackable": true,

@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using Cysharp.Threading.Tasks;
 
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -79,8 +80,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else
         {
+            InitImage().Forget();
             _imageIcon.gameObject.SetActive(true);
-            // TODO: 이미지 로드 필요
         }
     }
 
@@ -95,6 +96,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             _countText.gameObject.SetActive(false);
         }
+    }
+
+    private async UniTask InitImage()
+    {
+        var iconPath = _vm.IconPath;
+        _imageIcon.sprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
     }
 
     // 드래그 부분
