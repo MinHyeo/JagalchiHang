@@ -32,8 +32,10 @@ public class BattleNpc : MonoBehaviour
 
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
+        Debug.Log($"[BattleNpc] {currentPlayerPosition}");
         if (_playerPosition != null)
         {
+            Debug.Log($"if문 안으로 들어옴 ");
             _playerPosition.Value = currentPlayerPosition;
         }
     }

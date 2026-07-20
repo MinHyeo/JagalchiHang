@@ -1,7 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Splines;
 
 public class NpcManager : MonoBehaviour// 벙커 로직 테스트용 
 {
@@ -10,8 +9,6 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
 
     [SerializeField] private BattleNpc battleNpc; 
     [SerializeField] private BagNpc bagNpc;
-
-   // [SerializeField] private Vector3 playerTransform;
 
     private ITargetable _chasePlayer;
 
@@ -40,7 +37,7 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
         if (_bagNpc != null)
         {
             bagNpc = _bagNpc.GetComponent<BagNpc>();
-            Debug.Log("[NPCManager] BaNpc 생성 및 컴포넌트 연결 완료 ");
+            Debug.Log("[NPCManager] BagNpc 생성 및 컴포넌트 연결 완료 ");
         }
 
     }

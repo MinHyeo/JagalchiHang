@@ -10,6 +10,8 @@ public class WorldManager
 
     public void EnterWorld()
     {
+        NetworkManager.Instance.InitNetworkService();
+
         CreateManager();
 
         _mapManager.CreateMap();
@@ -19,7 +21,7 @@ public class WorldManager
         ITargetable target = _playerManager;
 
         _monsterManager.Init(target);
-        //_npcManager.Init(target);
+        _npcManager.Init(target);
     }
 
     private void CreateManager()
@@ -29,5 +31,10 @@ public class WorldManager
         _npcManager = new NpcManager();
         _farmManager = new FarmManager();
         _mapManager = new MapManager();
+    }
+
+    public void WorldUpdate()
+    {
+        _npcManager.NpcUpdate();
     }
 }
