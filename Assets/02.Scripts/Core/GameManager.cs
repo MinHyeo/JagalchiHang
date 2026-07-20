@@ -22,4 +22,9 @@ public class GameManager : SingletonBase<GameManager>
             return;
         _lobbyManager.ExitLobby();
     }
+
+    public void ExitInGame()
+    {
+
+    }
 }

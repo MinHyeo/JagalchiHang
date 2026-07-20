@@ -1,11 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class UIBase : MonoBehaviour
-{
-
-}
-
 public class UIManager : SingletonBase<UIManager>
 {
     [SerializeField] private Canvas _canvasBgRoot;
@@ -100,5 +95,10 @@ public class UIManager : SingletonBase<UIManager>
     public UIBase GetOpenUI(UIRootType uiRootType, UIType uiType)
     {
         return GetCreatedUI(uiRootType, uiType);
+    }
+
+    public bool IsOpenUI(UIType uiType)
+    {
+        return _opendUIList.Contains(uiType);
     }
 }

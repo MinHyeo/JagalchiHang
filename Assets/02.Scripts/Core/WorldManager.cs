@@ -1,22 +1,18 @@
-﻿using JetBrains.Annotations;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class WorldManager
 {
     private PlayerManager _playerManager;
     //private NpcManager _npcManager;
-    //private MonsterManager _monsterManager;
-    //private FarmManager _farmManager;
+    private MonsterManager _monsterManager;
+    private FarmManager _farmManager;
+    private MapManager _mapManager;
 
-    public void EnterWorld()
+    public void EnterWorld(SaveModel saveModel)
     {
-        LoadSaveData();
+        CreateManager();
 
-        _playerManager = new PlayerManager();
-        //_monsterManager = new MonsterManager();
-        //_npcManager = new NpcManager();
-        //_farmManager = new FarmManager();
+        _mapManager.CreateMap();
 
         _playerManager.SpawnPlayer().Forget();
 
@@ -26,8 +22,12 @@ public class WorldManager
         //_npcManager.Init(target);
     }
 
-    private void LoadSaveData()
+    private void CreateManager()
     {
-
+        _playerManager = new PlayerManager();
+        _monsterManager = new MonsterManager();
+        //_npcManager = new NpcManager();
+        _farmManager = new FarmManager();
+        _mapManager = new MapManager();
     }
 }

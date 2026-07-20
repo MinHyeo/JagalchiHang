@@ -21,6 +21,17 @@ public class PlayerManager : ITargetable
         Debug.Log($"플레이어가 생성됐다!");
         
         UpdateCameraTarget();
+
+        var vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
+        if (vm == null) return;
+
+        var testPlayerStatus = SampleUIManager.Instance.GetCreatedUI(SampleUIRootType.MainUI, SampleUIType.TestPlayerStatus);
+        if(testPlayerStatus == null) return;
+
+        var testPlayerStatusView = testPlayerStatus.GetComponent<TestPlayerStatusView>();
+        if(testPlayerStatusView == null) return;
+
+        testPlayerStatusView.BindViewModel(vm);
     }
 
     // 생성된 플레이어를 카메라의 추적 대상으로 설정

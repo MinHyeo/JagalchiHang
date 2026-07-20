@@ -15,8 +15,23 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 13f035feed29ed246ba1a825e93415c4
   m_SerializeEntries:
+  - m_GUID: 0c1fc64c70affa4418da81c4bbbc731a
+    m_Address: Prefab/OilTrail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 22fb9cfb5fd19c840bd24a7c6f720051
     m_Address: Prefab/Trail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b8b8cc6a46132140b18eafe82bc10dc
+    m_Address: Prefab/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3da1af30b22b3344a84269b28bc9b462
+    m_Address: Prefab/Player
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -26,7 +41,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
-    m_Address: Prefab/Player
+    m_Address: Prefab/Dog
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -86,7 +86,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void UpdateCountText()
     {
-        if (_vm != null && _vm.ItemStackCount > 1)
+        if (_vm != null && _vm.ItemStackCount >= 1)
         {
             _countText.text = $"{_vm.ItemStackCount}";
             _countText.gameObject.SetActive(true);

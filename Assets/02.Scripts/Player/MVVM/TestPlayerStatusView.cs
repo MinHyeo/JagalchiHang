@@ -14,10 +14,6 @@ public class TestPlayerStatusView : ViewBase
 
     private PlayerViewModel _vm;
 
-    private void OnEnable()
-    {
-    }
-
     // [나라]TODO : 플레이어 생성될 때 호출해주기
     public void BindViewModel(PlayerViewModel vm)
     {
@@ -59,7 +55,7 @@ public class TestPlayerStatusView : ViewBase
 
     private void UpdateThirst()
     {
-        _sliderThirst.value = (float)_vm.CurrentHunger / _vm.MaxThirst;
-        _textThirst.text = $"{_vm.CurrentHunger} / {_vm.MaxThirst}";
+        _sliderThirst.value = (float)_vm.CurrentThirst / _vm.MaxThirst;
+        _textThirst.text = $"{_vm.CurrentThirst} / {_vm.MaxThirst}";
     }
 }

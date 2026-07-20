@@ -21,7 +21,10 @@ public class WalkState : IPlayerState
             player.SetState(StateType.Run);
             return;
         }
+    }
 
+    public void FixedUpdate(PlayerController player)
+    {
         player.PlayerMove();
     }
 

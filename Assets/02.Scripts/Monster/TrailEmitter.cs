@@ -6,6 +6,7 @@ public class TrailEmitter : MonoBehaviour
     [SerializeField] private float _spawnInterval = 2f;
     [SerializeField] private float _groundCheckDistance = 5f;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private Transform _trailSpawnPoint;
 
     private IMonsterMoveable _moveable;
     private float _timeSinceLastSpawn;
@@ -17,10 +18,10 @@ public class TrailEmitter : MonoBehaviour
 
     private void Update()
     {
-        if (!_moveable.IsMoving)
-        {
-            return;
-        }
+        //if (!_moveable.IsMoving)
+        //{
+        //    return;
+        //}
 
         _timeSinceLastSpawn += Time.deltaTime;
 
@@ -47,14 +48,15 @@ public class TrailEmitter : MonoBehaviour
             return;
         }
 
-        Vector3 spqwnPosition = transform.position;
+        Vector3 trailspawnPos = _trailSpawnPoint.position;
+        trailspawnPos.y = 0f;
 
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _groundCheckDistance, _groundLayer))
         {
-            spqwnPosition = hit.point;
+            trailspawnPos = hit.point;
         }
 
         // 추후 _tralilMarkerPrefabPath에 Addressables 주소 넣기추가
-        GameObjectManager.Instance.CreateObject("sss", _trailMarkerPrefabPath, spqwnPosition);
+        GameObjectManager.Instance.CreateObject("sss", _trailMarkerPrefabPath, trailspawnPos);
     }
 }

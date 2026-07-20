@@ -48,10 +48,6 @@ public class PlayerController : MonoBehaviour, ISpawnable
 
     private void Start()
     {
-        _playerData = GameDataManager.Instance.GetData<PlayerData>(_dataId);
-
-        _statusController.InitPlayerStatus(_playerData);
-
         _stateMachine.AddState(StateType.Idle, new IdleState());
         _stateMachine.AddState(StateType.Walk, new WalkState());
         _stateMachine.AddState(StateType.Run, new RunState());
@@ -70,6 +66,7 @@ public class PlayerController : MonoBehaviour, ISpawnable
         _speed = _isRuning ? _playerData.MoveSpeed * 3f : _playerData.MoveSpeed;
 
         _stateMachine.Update(this);
+        _stateMachine.FixedUpdate(this);
 
         if(_isPressedMouseRight == true)
         {
@@ -85,6 +82,20 @@ public class PlayerController : MonoBehaviour, ISpawnable
     {
         _instanceId = instanceId;
         _dataId = dataId;
+
+        _playerData = GameDataManager.Instance.GetData<PlayerData>(_dataId);
+        if(_playerData == null)
+        {
+            Debug.LogError($"플레이어 데이터를 찾을 수 없습니다.");
+            return;
+        }
+
+        if(_statusController == null)
+        {
+            _statusController = GetComponent<PlayerStatusController>();
+        }
+
+        _statusController.InitPlayerStatus(_playerData);
     }
 
     // 플레이어 상태 바꾸기
