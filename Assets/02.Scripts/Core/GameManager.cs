@@ -11,7 +11,8 @@ public class GameManager : SingletonBase<GameManager>
         _worldManager = new WorldManager();
 
         //_lobbyManager.EnterLobby();
-        _worldManager.EnterWorld();
+        //_worldManager.EnterWorld(null); //테스트용
+
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함

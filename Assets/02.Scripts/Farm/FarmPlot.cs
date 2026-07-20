@@ -1,24 +1,56 @@
 ﻿using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.CompilerServices;
 using UnityEngine;
 
 public class FarmPlot : MonoBehaviour
 {
     [SerializeField] private GameObject Object_PlotSet;
     [SerializeField] private Transform Transform_CropSpawnPoint;
+    [SerializeField] private int _plotUniqueId;
 
-    private int _plotUniqueId;
+    private FarmManager _farmManager;
 
     private void Awake()
     {
         Object_PlotSet.SetActive(false);
     }
 
-    public void InitPlot(int plotUniqueId)
+    private void OnEnable()
     {
-        _plotUniqueId = plotUniqueId;
-        FarmManager.Instance.RegisterFarmPlot(_plotUniqueId, this);
+        SubscribeNextFrame().Forget();
+
+        //if (NetworkManager_re.Inst != null)
+        //{
+        //    NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
+
+        //}
     }
+
+    
+    private async UniTaskVoid SubscribeNextFrame()
+    {
+        await UniTask.NextFrame();
+        if (NetworkManager_re.Inst != null)
+        {
+            NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (NetworkManager_re.Inst != null)
+        {
+            NetworkManager_re.Inst.OnFarmSpawnDataReceived -= OnFarmViewModelReceived;
+
+        }
+    }
+
+
+    private void OnFarmViewModelReceived(FarmViewModel viewModel)
+    {
+        _farmManager = viewModel.GetFarmManager();
+        _farmManager.RegisterFarmPlot(_plotUniqueId, this);
+    }
+
 
     public void ActivatePlot()
     {
@@ -41,7 +73,8 @@ public class FarmPlot : MonoBehaviour
         var cropObject = gObj.GetComponent<CropObject>();
         if (cropObject != null)
         {
-            FarmManager.Instance.RegisterCropObject(_plotUniqueId, cropObject);
+            Debug.Log($"RegisterCropObject 호출: {_plotUniqueId}");
+            _farmManager.RegisterCropObject(_plotUniqueId, cropObject);
         }
 
     }

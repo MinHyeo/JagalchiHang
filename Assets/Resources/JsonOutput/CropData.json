@@ -3,7 +3,7 @@
     "Id": "Crop_Carrot",
     "Name": "Carrot",
     "Description": "달달한 당근. 씨앗으로 당근씨유를 만들 수 있다.",
-    "GrowthStageMinutesList": "864,2592,864",
+    "GrowthStageMinutesList": "72,144,144",
     "SeedItemDataId": "Item_Seed_Carrot",
     "HarvestItemDataId": "Item_Carrot",
     "HarvestMinCount": 3,

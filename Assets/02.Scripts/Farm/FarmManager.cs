@@ -2,26 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FarmManager : MonoBehaviour
+public class FarmManager
 {
-    public static FarmManager Instance { get; private set; }
-
     private FarmViewModel _viewModel;
     //private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
     private Dictionary<int, CropObject> _cropObjectDictionary = new Dictionary<int, CropObject>();
-    private Dictionary<int, FarmPlot> _farmPlotDictionary = new Dictionary<int, FarmPlot>();
-    private void Awake()
+    public void Init()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    }
+        Debug.Log("FarmManager Init 호출됨");
 
-    private void OnEnable()
-    {
         if (GameDataManager.Instance != null)
         {
             GameDataManager.Instance.LoadData<CropData>();
@@ -32,26 +21,48 @@ public class FarmManager : MonoBehaviour
             TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
         }
 
-        NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnViewModelPropertyChanged;
+        if (NetworkManager_re.Inst != null)
+        {
+            NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnViewModelPropertyChanged;
+
+        }
+
+        RequestLoadFarmDataNextFrame().Forget();
     }
 
-    private void OnDisable()
+    private async UniTask RequestLoadFarmDataNextFrame()
+    {
+        await UniTask.NextFrame();
+        if (NetworkManager_re.Inst != null)
+        {
+            NetworkManager_re.Inst.RequestLoadFarmData();
+        }
+
+
+    }
+
+    public void Dispose()
     {
         if (TimeManager.Instance != null)
         {
             TimeManager.Instance.OnMinuteChanged -= UpdateAllPlotGrowth;
-
         }
-
     }
 
     private void OnViewModelPropertyChanged(FarmViewModel viewModel)
     {
         _viewModel = viewModel;
+        _viewModel.SetFarmManager(this);
     }
 
     private void UpdateAllPlotGrowth()
     {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
+
         for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
         {
             var plot = _viewModel.FarmPlotList[i];
@@ -95,18 +106,24 @@ public class FarmManager : MonoBehaviour
             return;
         }
 
-        if (_farmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
+        if (_viewModel.FarmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
         {
             return;
         }
 
-        var farmPlot = _farmPlotDictionary[plot.PlotUniqueId];
+        var farmPlot = _viewModel.FarmPlotDictionary[plot.PlotUniqueId];
         var growthStageMinutes = cropData.GetGrowthStageMinutes();
 
         if (plot.CurrentGrowthStage >= growthStageMinutes.Count)
         {
             Debug.Log($"밭 {plot.PlotUniqueId} 수확가능");
             return;
+        }
+
+        if (_cropObjectDictionary.ContainsKey(plot.PlotUniqueId))
+        {
+            _cropObjectDictionary[plot.PlotUniqueId].RequestDestroySelf();
+            UnregisterCropObject(plot.PlotUniqueId);
         }
 
         string prefabPath = cropData.PrefabPath + "_" + plot.CurrentGrowthStage;
@@ -149,6 +166,10 @@ public class FarmManager : MonoBehaviour
 
     public void AddFarmPlot(FarmPlotModel newPlot)
     {
+        if (_viewModel == null)
+        {
+            _viewModel = new FarmViewModel();
+        }
         _viewModel.FarmPlotList.Add(newPlot);
     }
 
@@ -170,17 +191,17 @@ public class FarmManager : MonoBehaviour
 
     public void RegisterFarmPlot(int plotUniqueId, FarmPlot farmPlot)
     {
-        if (_farmPlotDictionary.ContainsKey(plotUniqueId) == false)
+        if (_viewModel.FarmPlotDictionary.ContainsKey(plotUniqueId) == false)
         {
-            _farmPlotDictionary.Add(plotUniqueId, farmPlot);
+            _viewModel.FarmPlotDictionary.Add(plotUniqueId, farmPlot);
         }
     }
 
     public void UnregisterFarmPlot(int plotUniqueId)
     {
-        if (_farmPlotDictionary.ContainsKey(plotUniqueId))
+        if (_viewModel.FarmPlotDictionary.ContainsKey(plotUniqueId))
         {
-            _farmPlotDictionary.Remove(plotUniqueId);
+            _viewModel.FarmPlotDictionary.Remove(plotUniqueId);
         }
     }
 
@@ -211,7 +232,7 @@ public class FarmManager : MonoBehaviour
             return false;
         }
 
-        if (_farmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
+        if (_viewModel.FarmPlotDictionary.ContainsKey(plot.PlotUniqueId) == false)
         {
             Debug.LogWarning($"밭 오브젝트를 찾을 수 없습니다.: {plot.PlotUniqueId}");
             return false;

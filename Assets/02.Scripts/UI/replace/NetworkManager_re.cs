@@ -18,6 +18,7 @@ public class NetworkManager_re : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("NetworkManager_re Awake");
         Inst = this;
         InitNetworkService();
     }
@@ -131,6 +132,8 @@ public class NetworkManager_re : MonoBehaviour
 
     public void RequestLoadFarmData()
     {
+        Debug.Log("RequestLoadFarmData 호출됨");
+
         // 추후 세이브 데이터 불러옴
         FarmPlotModel model = new FarmPlotModel();
 

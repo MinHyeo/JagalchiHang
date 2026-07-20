@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2709464662570926002}
   - component: {fileID: 3329893463057358651}
   - component: {fileID: 2810293087392055057}
+  - component: {fileID: -5421583581307016192}
   m_Layer: 0
   m_Name: Crop_Pea_3
   m_TagString: Untagged
@@ -90,3 +91,15 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-5421583581307016192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4393621370147099345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2776e6a95313dc54d84e1c2c75bd59cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CropObject
