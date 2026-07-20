@@ -10,8 +10,10 @@ public class BattleNpc : MonoBehaviour
     private BlackboardVariable<NpcState> _currentState; //BattleNPC 현재 상태
     private BlackboardVariable<Vector3> _bunkerSpawnPosition; // 벙커 스폰위치
     private BlackboardVariable<Vector3> _returnSpawnPosition; //돌아갈 위치
+    private BlackboardVariable<Vector3> _playerPosition; //플레이어 위치  
 
     private BlackboardVariable<BattleMode> _currentBattleMode;
+
 
     private NavMeshAgent _agent;
 
@@ -25,8 +27,16 @@ public class BattleNpc : MonoBehaviour
         behaviorAgent.BlackboardReference.GetVariable("BunkerSpawnPosition", out _bunkerSpawnPosition);
         behaviorAgent.BlackboardReference.GetVariable("ReturnSpawnPosition", out _returnSpawnPosition);
         behaviorAgent.BlackboardReference.GetVariable("CurrentBattleMode", out _currentBattleMode);
+        behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
     }
 
+    public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
+    {
+        if (_playerPosition != null)
+        {
+            _playerPosition.Value = currentPlayerPosition;
+        }
+    }
     public void SetBattleMode(BattleMode battleMode)
     {
         if(_currentBattleMode != null)

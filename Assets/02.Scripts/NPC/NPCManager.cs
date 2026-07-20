@@ -14,6 +14,7 @@ public class NpcManager : MonoBehaviour // 벙커 로직 테스트용
     {
         if(playerTransform != null)
         {
+            battleNpc.UpdatePlayerPosition(playerTransform.position);
             bagNpc.UpdatePlayerPosition(playerTransform.position);
         }
         if (Input.GetKeyDown(KeyCode.F)) // 테스트용 코드

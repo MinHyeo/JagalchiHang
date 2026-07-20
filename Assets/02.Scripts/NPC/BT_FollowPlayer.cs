@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public partial class BT_FollowPlayer : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-    [SerializeReference] public BlackboardVariable<GameObject> PlayerTarget;
+    [SerializeReference] public BlackboardVariable<Vector3> PlayerPosition;
     [SerializeReference] public BlackboardVariable<GameObject> EnemyTarget;
     [SerializeReference] public BlackboardVariable<NpcState> CurrentState;
 
@@ -60,7 +60,7 @@ public partial class BT_FollowPlayer : Action
             return Status.Success;
         }
 
-        _agent.SetDestination(PlayerTarget.Value.transform.position);
+        _agent.SetDestination(PlayerPosition.Value);
 
         return Status.Running;
 
@@ -86,7 +86,7 @@ public partial class BT_FollowPlayer : Action
 
     private bool CheckPlayerDistance() //플레이어와의 거리가 벌어졌을 때 강제 복귀
     {
-        float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, PlayerTarget.Value.transform.position);
+        float distanceToPlayer = Vector3.Distance(Self.Value.transform.position, PlayerPosition.Value);
 
         if (distanceToPlayer >= 15.0f)
         {
@@ -96,7 +96,7 @@ public partial class BT_FollowPlayer : Action
             {
                 _sensor.isAutoDetect = false;
             }
-            _agent.SetDestination(PlayerTarget.Value.transform.position);
+            _agent.SetDestination(PlayerPosition.Value);
             return true;
         }
         return false;
@@ -159,24 +159,24 @@ public partial class BT_FollowPlayer : Action
     private bool AssistAttackMode()
     {
 
-        TestPlayer testPlayer = PlayerTarget.Value.GetComponent<TestPlayer>();
+        //TestPlayer testPlayer = PlayerPosition.Value.GetComponent<TestPlayer>();
 
-        if (testPlayer != null && _sensor != null)
-        {
-            GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
+        //if (testPlayer != null && _sensor != null)
+        //{
+        //    GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
 
 
-            if (playerTargetMonster != null)
-            {
-                EnemyTarget.Value = playerTargetMonster;
+        //    if (playerTargetMonster != null)
+        //    {
+        //        EnemyTarget.Value = playerTargetMonster;
 
-                CurrentState.Value = NpcState.Attack;
+        //        CurrentState.Value = NpcState.Attack;
 
-                Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
+        //        Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
 
-                return true;
-            }
-        }
+        //        return true;
+        //    }
+        //}
         return false;
     }
 }
