@@ -52,7 +52,7 @@ public class BagNpc : MonoBehaviour
             //inventoryVM._slotCount += count; 
 
 
-            ////인벤토리 슬롯 개수 값을 추가 슬롯으로 더해준 값으로 늘려주기 위해 
+            //인벤토리 슬롯 개수 값을 추가 슬롯으로 더해준 값으로 늘려주기 위해 
             //while(inventoryVM.InventorySlots.Count < inventoryVM._slotCount)
             //{
 
