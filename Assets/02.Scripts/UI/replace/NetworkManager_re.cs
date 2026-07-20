@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 
@@ -11,6 +12,9 @@ public class NetworkManager_re : MonoBehaviour
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
+    public NetworkNpcService NpcService { get; private set; }
+
+    public event Action<NpcViewModel> OnNpcSpawnDataReceived;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class NetworkManager_re : MonoBehaviour
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
+        NpcService = new NetworkNpcService();
     }
 
     public void RequestCreateLocalPlayer()
@@ -172,5 +177,13 @@ public class NetworkManager_re : MonoBehaviour
 
         // TODO: 추후 세이브 필요
         // RequestSaveData();
+    }
+
+    public void RequestLoadNpcData()
+    {
+        //SaveData saveData = new SaveData();
+        NpcViewModel npcViewModel = NpcService.GetNpcViewModel();
+
+        OnNpcSpawnDataReceived?.Invoke(npcViewModel);
     }
 }
