@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 465647167814665058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_ToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861964753763897892}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_ThighTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 272360115734277251}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tripo_convert_3519bfbc-b259-47ef-a45d-577f5c24956f
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3833325530946523455}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5076358925100415969}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NeckTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3369688676208795531}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_UpperarmTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6159066075785472996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -235,7 +235,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1683584709584843024}
   - component: {fileID: 8002698832001442451}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tripo_node_3519bfbc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5322600982860836100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_ForearmTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -387,7 +387,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8435057251794870184}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -420,7 +420,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7432771217801075325}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7228035537020922583}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_ForearmTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 464557774289197732}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Waist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1053847837075051324}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Upperarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4962966335993988228}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_ToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3297098666299115582}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Upperarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,14 +614,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4175056410575702275}
+  - component: {fileID: 2340542254851510601}
   - component: {fileID: 3418325716360562950}
-  - component: {fileID: 2094188870305907693}
+  - component: {fileID: 795308412745370794}
   - component: {fileID: 3243567161711154039}
+  - component: {fileID: 2094188870305907693}
   - component: {fileID: 3528179161605534818}
   - component: {fileID: 7976609560303363326}
   - component: {fileID: 1610493138410536156}
   - component: {fileID: 2888918975945442839}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -644,6 +646,18 @@ Transform:
   - {fileID: 272360115734277251}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2340542254851510601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656254881343102050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52897bfcff02fd45b3c255d418f87ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
 --- !u!114 &3418325716360562950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,8 +670,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8cbaf503cc40694fa82cc779a97570a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  _rotationSmoothness: 10
   _animator: {fileID: 2888918975945442839}
+  _attackPoint: {fileID: 8345893436553426165}
+  _attackRadius: 1
+  _monsterLayer:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &795308412745370794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656254881343102050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15acbf47c26d13b419fd42ac9b66e1c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveController
+  _rotationSmoothness: 10
+--- !u!114 &3243567161711154039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656254881343102050}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d28bb9edb6dfc54b8af16463b761f01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusController
 --- !u!114 &2094188870305907693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -836,18 +879,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &3243567161711154039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3656254881343102050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d28bb9edb6dfc54b8af16463b761f01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerStatusController
 --- !u!114 &3528179161605534818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1088487985268670219}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_UpperarmTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +1010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1825654793598228570}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_ThighTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1042,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8751971893830602643}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3878414001031750073}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,7 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8035111165426855266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Thigh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1108,7 +1139,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6280947314980974743}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1127,7 +1158,8 @@ Transform:
   m_LocalPosition: {x: -0.0000010183375, y: 0.11877109, z: -0.00000055973203}
   m_LocalScale: {x: 1, y: 1.0000001, z: 0.99999994}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8345893436553426165}
   m_Father: {fileID: 7432771217801075325}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4963348326921992365
@@ -1139,7 +1171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6617023992237552674}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_ForearmTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,6 +1194,37 @@ Transform:
   - {fileID: 3476362670136146064}
   m_Father: {fileID: 2673567992119714145}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5008687891875692721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8345893436553426165}
+  m_Layer: 6
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8345893436553426165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5008687891875692721}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6280947314980974743}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5348907795617910622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1234,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1688952855958264789}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spine01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1203,7 +1266,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6205893380106189153}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1236,7 +1299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1701051285503379408}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1268,7 +1331,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2330062294373823977}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_CalfTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1299,7 +1362,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7293259724407414201}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1331,7 +1394,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2673567992119714145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Forearm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1364,7 +1427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4334488165332525857}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Calf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1397,7 +1460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1309250178486388689}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1429,7 +1492,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6939770888271320717}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NeckTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1461,7 +1524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6857998064607292632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_UpperarmTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1493,7 +1556,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8704979951264744356}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_ThighTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1524,7 +1587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6979299579149278303}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spine02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1558,7 +1621,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5380528597690698762}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_CalfTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1590,7 +1653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8448573475398321295}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_CalfTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1621,7 +1684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3476362670136146064}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_ForearmTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,7 +1715,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5162396472748203058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_CalfTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1684,7 +1747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6019336068682152003}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: L_ThighTwist01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1716,7 +1779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1079137356952334768}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_Clavicle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1748,7 +1811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224213139911409471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: R_UpperarmTwist02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1779,7 +1842,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4332969551790976286}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1810,7 +1873,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8779031101209027556}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: OilSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,43 +2,82 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BattleNpc : MonoBehaviour
+public class BagNpc : MonoBehaviour
 {
     [SerializeField] private BehaviorGraphAgent behaviorAgent;
 
     private BlackboardVariable<bool> _isInBunker; //벙커 안밖 여부
-    private BlackboardVariable<NpcState> _currentState; //BattleNPC 현재 상태
+    private BlackboardVariable<NpcState> _currentState; //NPC 현재 상태
     private BlackboardVariable<Vector3> _bunkerSpawnPosition; // 벙커 스폰위치
     private BlackboardVariable<Vector3> _returnSpawnPosition; //돌아갈 위치
 
-    private BlackboardVariable<BattleMode> _currentBattleMode;
+    private BlackboardVariable<Vector3> _playerPosition; //플레이어 위치  
 
     private NavMeshAgent _agent;
+
+
+    [Header("인벤토리 확장 설정")]
+    [SerializeField] private int bonusSlotCount = 6; //임시 설정 
+
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
 
+
+        
         //블랙보드와 연결 해주기 
         behaviorAgent.BlackboardReference.GetVariable("IsInBunker", out _isInBunker);
         behaviorAgent.BlackboardReference.GetVariable("CurrentState", out _currentState);
         behaviorAgent.BlackboardReference.GetVariable("BunkerSpawnPosition", out _bunkerSpawnPosition);
         behaviorAgent.BlackboardReference.GetVariable("ReturnSpawnPosition", out _returnSpawnPosition);
-        behaviorAgent.BlackboardReference.GetVariable("CurrentBattleMode", out _currentBattleMode);
+        behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
     }
 
-    public void SetBattleMode(BattleMode battleMode)
+    private void Start()
     {
-        if(_currentBattleMode != null)
+        AddInventorySlot(bonusSlotCount);
+    }
+
+    private void AddInventorySlot(int count)
+    {
+        //인벤토리 뷰 모델 주소 가져오기 
+        InventoryViewModel inventoryVM = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+
+        if(inventoryVM != null && inventoryVM.InventorySlots != null)
         {
-            _currentBattleMode.Value = battleMode;
-            Debug.Log($"[BattleNpc] 블랙보드 CurrentBattleMode 값을 {battleMode}로 변경");
+            /*InventoryViewModel에 있는 _slotCount 를 접근할 수 있게 바꿔주고 Const를 지워주시면 
+             _slotCount에 값 더해주기 */
+
+            //inventoryVM._slotCount += count; 
+
+
+            //인벤토리 슬롯 개수 값을 추가 슬롯으로 더해준 값으로 늘려주기 위해 
+            //while(inventoryVM.InventorySlots.Count < inventoryVM._slotCount)
+            //{
+
+            //    //0번부터 값이 들어가니까 현재 카운트를 넣어서 개수 이어가기 
+            //    int nextSlotIndex = inventoryVM.InventorySlots.Count;
+
+            //    //새 key값을 넣고 키 값에 맞는 새 슬롯을 만들어준다
+            //    inventoryVM.InventorySlots.Add(nextSlotIndex, new InventorySlotViewModel());
+            //}
+
+            //Debug.Log($"[BagNpc] 추가 인벤토리 칸 연동 완료 총 인벤토리 칸: {inventoryVM._slotCount} ");
         }
     }
+    public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
+    {
+        if(_playerPosition != null)
+        {
+            _playerPosition.Value = currentPlayerPosition;
+        }
+    }
+
     public void EnterBunker(bool value, Vector3 bunkerPos)
     {
 
-        if(behaviorAgent != null)
+        if (behaviorAgent != null)
         {
             behaviorAgent.enabled = false;
         }
@@ -67,7 +106,7 @@ public class BattleNpc : MonoBehaviour
 
         _currentState.Value = NpcState.Idle;
 
-        if(behaviorAgent != null)
+        if (behaviorAgent != null)
         {
             behaviorAgent.enabled = true;
         }
@@ -81,7 +120,7 @@ public class BattleNpc : MonoBehaviour
         _returnSpawnPosition.Value = bunkerExitPos;
 
 
-        if (_agent != null) 
+        if (_agent != null)
         {
             _agent.ResetPath(); // 경로 초기화
 
