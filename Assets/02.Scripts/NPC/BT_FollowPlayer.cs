@@ -6,7 +6,7 @@ using Unity.Properties;
 using UnityEngine.AI;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "BT_FollowPlayer", story: "[Self] Follow Player[PlayerTarget]", category: "Action", id: "107259c8e0a53a3ea69149a2704dc9cb")]
+[NodeDescription(name: "BT_FollowPlayer", story: "[Self] Follow[PlayerPosition]", category: "Action", id: "107259c8e0a53a3ea69149a2704dc9cb")]
 public partial class BT_FollowPlayer : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
