@@ -17,9 +17,10 @@ public class NetworkInventoryService
 
     private InventoryViewModel CreateLocalInventoryViewModel()
     {
+        GameDataManager.Instance.LoadData<ItemData>();
         var inventoryVm = new InventoryViewModel();
-        _localInventoryViewModel = inventoryVm;
         inventoryVm.AddInventorySlotViewModel();
+        _localInventoryViewModel = inventoryVm;
         return inventoryVm;
     }
 

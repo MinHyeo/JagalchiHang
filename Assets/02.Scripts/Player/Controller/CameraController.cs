@@ -59,14 +59,14 @@ public class CameraController : MonoBehaviour
     // 건물 숨기기
     private void HideBuildings()
     {
-        var playerPos = SampleGameManager.Instance.GetPlayerPosition();
+        var playerPos = _camera.Target.TrackingTarget.position;
         var cameraPos = this.transform.position;
 
         var direction = (playerPos - cameraPos).normalized;
         var distance = Vector3.Distance(cameraPos, playerPos);
 
         // 거리가 너무 짧으면 return
-        if(distance <= 0.01f)
+        if (distance <= 0.01f)
         {
             return;
         }

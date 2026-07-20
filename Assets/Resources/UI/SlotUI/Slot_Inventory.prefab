@@ -279,7 +279,6 @@ MonoBehaviour:
   _imageIcon: {fileID: 7392423216987250161}
   _countText: {fileID: 7983595825264926166}
   _canvasGroup: {fileID: 6462193512229090015}
-  slotIndex: 0
 --- !u!1 &7616642195350162380
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 058a1ff09e52a4241b04ff61a23f2f14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0f33ccabc69f62d4c9e3c30e6dfea837, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

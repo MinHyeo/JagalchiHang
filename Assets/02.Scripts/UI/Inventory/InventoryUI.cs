@@ -8,13 +8,14 @@ public class InventoryUI : UIBase
     [SerializeField] private Transform _inventorySlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private Dictionary<long, InventorySlotUI> _slotUIList = new Dictionary<long, InventorySlotUI>();
+    private Dictionary<int, InventorySlotUI> _slotUIList = new Dictionary<int, InventorySlotUI>();
 
     private InventoryViewModel _vm;
 
     private void OnEnable()
     {
-        _vm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+        _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        _vm.TestAddItem();
         InitInventory();
     }
 
@@ -49,6 +50,14 @@ public class InventoryUI : UIBase
             Destroy(slotUIkv.gameObject);
         }
         _slotUIList.Clear();
+    }
+
+    private void OnPropertyChanged_View(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "ItemListAdded")
+        {
+            InitInventory();
+        }
     }
 
     // 드래그 앤 드랍 부분

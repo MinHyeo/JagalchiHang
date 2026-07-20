@@ -35,6 +35,15 @@ public class NetworkManager : SingletonBase<NetworkManager>
         return saveModel;
     }
 
+    public void InitNetworkService()
+    {
+        // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
+        PlayerService = new NetworkPlayerService();
+        InventoryService = new NetworkInventoryService();
+        FarmingService = new NetworkFarmingService();
+        StorageService = new NetworkStorageService();
+    }
+
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx)
     {
         var invenVm = InventoryService.GetLocalInventoryViewModel();
@@ -73,5 +82,10 @@ public class NetworkManager : SingletonBase<NetworkManager>
 
         // TODO: 추후 세이브 필요
         // RequestSaveData();
+    }
+
+    public void AddItemToInventory(string itemDataId, int stackCount)
+    {
+        InventoryService.AddItem(itemDataId, stackCount);
     }
 }
