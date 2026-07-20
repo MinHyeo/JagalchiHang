@@ -22,7 +22,7 @@ public class PlayerStatusController : MonoBehaviour
 
     private void Awake()
     {
-        _vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
+        _vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         _playerController = GetComponent<PlayerController>();
     }
 

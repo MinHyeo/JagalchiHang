@@ -22,10 +22,10 @@ public class PlayerManager : ITargetable
         
         UpdateCameraTarget();
 
-        var vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
+        var vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         if (vm == null) return;
 
-        var testPlayerStatus = SampleUIManager.Instance.GetCreatedUI(SampleUIRootType.MainUI, SampleUIType.TestPlayerStatus);
+        var testPlayerStatus = UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.TestPlayerStatus);
         if(testPlayerStatus == null) return;
 
         var testPlayerStatusView = testPlayerStatus.GetComponent<TestPlayerStatusView>();

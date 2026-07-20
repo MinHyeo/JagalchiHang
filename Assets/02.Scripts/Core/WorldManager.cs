@@ -8,9 +8,10 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public void EnterWorld(SaveModel saveModel)
+    public void EnterWorld()
     {
         CreateManager();
+        NetworkManager.Instance.InitNetworkService();
 
         _mapManager.CreateMap();
 
