@@ -41,5 +41,7 @@ public class GameManager : SingletonBase<GameManager>
                 UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
             }
         }
+
+        _worldManager.WorldUpdate();
     }
 }

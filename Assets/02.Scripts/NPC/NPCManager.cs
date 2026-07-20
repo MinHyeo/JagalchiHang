@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Splines;
 
-public class NpcManager: MonoBehaviour// 벙커 로직 테스트용 
+public class NpcManager : MonoBehaviour// 벙커 로직 테스트용 
 {
     private GameObject _battleNpc;
     private GameObject _bagNpc;
@@ -21,6 +21,7 @@ public class NpcManager: MonoBehaviour// 벙커 로직 테스트용
     public void Init(ITargetable target)
     {
         _chasePlayer = target;
+        Debug.Log($"{_chasePlayer}");
 
         SpawnNpc().Forget();
     }
@@ -43,10 +44,15 @@ public class NpcManager: MonoBehaviour// 벙커 로직 테스트용
         }
 
     }
-    private void Update()
-    {
 
-        if (_chasePlayer == null) return;
+    public void NpcUpdate()
+    {
+        if (_chasePlayer == null)
+        {
+            Debug.Log("예외 발생");
+            return;
+        }
+            
 
         if(battleNpc != null)
         {
