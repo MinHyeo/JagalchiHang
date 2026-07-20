@@ -17,9 +17,9 @@ public class WorldManager
 
         _playerManager.SpawnPlayer().Forget();
 
-        //ITargetable target = _playerManager;
+        ITargetable target = _playerManager;
 
-        //_monsterManager.Init(target);
+        _monsterManager.Init(target);
         //_npcManager.Init(target);
     }
 

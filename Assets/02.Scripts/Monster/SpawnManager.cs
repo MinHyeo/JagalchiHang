@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(RingSpawnAlgorithm))]
 public class SpawnManager : SingletonBase<SpawnManager>
 {
     [SerializeField] private int _maxActiveMonsterCount = 10;
@@ -24,13 +25,10 @@ public class SpawnManager : SingletonBase<SpawnManager>
         _playerTarget = playerTarget;
     } 
 
-    private void Awake()
-    {
-        _spawnAlgorithm = GetComponent<IMonsterSpawnAlgorithm>();
-    }
-
     private void Start()
     {
+        _spawnAlgorithm = GetComponent<IMonsterSpawnAlgorithm>();
+        _spawnAlgorithm = GetComponent<IMonsterSpawnAlgorithm>();
         LoadDynamicSpawnTable();
         SpawnAllManualSpawnPoints();
     }
