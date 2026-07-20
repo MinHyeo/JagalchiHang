@@ -32,8 +32,8 @@ public class GameManager : SingletonBase<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if(UIManager.Instance.IsOpenUI(UIType.InventoryUI))
-{
+            if(UIManager.Instance.IsOpenUI(UIType.InventoryUI)) 
+            {
                 UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
             }
             else
