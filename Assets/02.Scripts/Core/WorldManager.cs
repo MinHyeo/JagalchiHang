@@ -10,8 +10,8 @@ public class WorldManager
 
     public void EnterWorld()
     {
+        InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
-
         CreateManager();
 
         _mapManager.CreateMap();
@@ -24,6 +24,12 @@ public class WorldManager
         //_npcManager.Init(target);
     }
 
+    public void ExitWorld()
+    {
+        InputManager.Instance.EnableGamePlayInput(false);
+
+    }
+
     private void CreateManager()
     {
         _playerManager = new PlayerManager();
@@ -31,5 +37,10 @@ public class WorldManager
         _npcManager = new NpcManager();
         _farmManager = new FarmManager();
         _mapManager = new MapManager();
+    }
+
+    public void WorldUpdate()
+    {
+
     }
 }
