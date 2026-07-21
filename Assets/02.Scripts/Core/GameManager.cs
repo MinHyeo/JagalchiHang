@@ -11,7 +11,7 @@ public class GameManager : SingletonBase<GameManager>
         _worldManager = new WorldManager();
 
         //_lobbyManager.EnterLobby();
-        //_worldManager.EnterWorld(null); //테스트용
+        _worldManager.EnterWorld(); //테스트용
 
     }
 

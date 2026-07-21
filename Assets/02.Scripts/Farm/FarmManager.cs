@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ public class FarmManager
     private FarmViewModel _viewModel;
     //private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
     private Dictionary<int, CropObject> _cropObjectDictionary = new Dictionary<int, CropObject>();
-    public void Init()
+
+    public static event Action OnFarmPlotsSpawned;
+    public FarmManager()
     {
-        Debug.Log("FarmManager Init 호출됨");
+        Debug.Log("FarmManager 생성자 호출됨");
 
         if (GameDataManager.Instance != null)
         {
@@ -21,25 +24,14 @@ public class FarmManager
             TimeManager.Instance.OnMinuteChanged += UpdateAllPlotGrowth;
         }
 
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnViewModelPropertyChanged;
+        _viewModel = NetworkManager.Instance.FarmService.GetFarmViewModel();
+        _viewModel.SetFarmManager(this);
 
-        }
-
-        RequestLoadFarmDataNextFrame().Forget();
+        OnFarmPlotsSpawned?.Invoke();
     }
 
-    private async UniTask RequestLoadFarmDataNextFrame()
-    {
-        await UniTask.NextFrame();
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.RequestLoadFarmData();
-        }
+    
 
-
-    }
 
     public void Dispose()
     {
@@ -49,11 +41,6 @@ public class FarmManager
         }
     }
 
-    private void OnViewModelPropertyChanged(FarmViewModel viewModel)
-    {
-        _viewModel = viewModel;
-        _viewModel.SetFarmManager(this);
-    }
 
     private void UpdateAllPlotGrowth()
     {
@@ -191,6 +178,7 @@ public class FarmManager
 
     public void RegisterFarmPlot(int plotUniqueId, FarmPlot farmPlot)
     {
+        Debug.Log($"RegisterFarmPlot 호출됨, id: {plotUniqueId}");
         if (_viewModel.FarmPlotDictionary.ContainsKey(plotUniqueId) == false)
         {
             _viewModel.FarmPlotDictionary.Add(plotUniqueId, farmPlot);
@@ -276,10 +264,10 @@ public class FarmManager
             return false;
         }
 
-        var invenVm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
-        int harvestCount = Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount +1);
+        var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        int harvestCount = UnityEngine.Random.Range(cropData.HarvestMinCount, cropData.HarvestMaxCount +1);
         invenVm.AcquireItem(cropData.HarvestItemDataId, harvestCount);
-        int seedCount = Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
+        int seedCount = UnityEngine.Random.Range(cropData.SeedDropMinCount, cropData.SeedDropMaxCount + 1);
         invenVm.AcquireItem(cropData.SeedItemDataId, seedCount);
 
 
@@ -313,6 +301,10 @@ public class FarmManager
         }
 
         plot.IsUnlocked = true;
+        if (_viewModel.FarmPlotDictionary.ContainsKey(plot.PlotUniqueId))
+        {
+            _viewModel.FarmPlotDictionary[plot.PlotUniqueId].ActivatePlot();
+        }
 
         return true;
     }

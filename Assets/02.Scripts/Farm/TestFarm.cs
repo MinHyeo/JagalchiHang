@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class TestFarm : MonoBehaviour
 {
-    [SerializeField] private FarmPlot Plot_Test;
 
     private FarmPlotModel _testPlotModel;
     private FarmManager _farmManager;
@@ -11,37 +10,27 @@ public class TestFarm : MonoBehaviour
     private void OnEnable()
     {
 
-        SubscribeNextFrame().Forget();
-
-        //Debug.Log($"TestFarm OnEnable, NetworkManager_re.Inst: {NetworkManager_re.Inst}");
-        //if (NetworkManager_re.Inst != null)
-        //{
-        //    NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
-
-        //}
-    }
-
-    private async UniTaskVoid SubscribeNextFrame()
-    {
-        await UniTask.NextFrame();
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
-        }
+        FarmManager.OnFarmPlotsSpawned += OnFarmPlotsReady;
     }
 
     private void OnDisable()
     {
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.OnFarmSpawnDataReceived -= OnFarmViewModelReceived;
-        }
+
+        FarmManager.OnFarmPlotsSpawned -= OnFarmPlotsReady;
     }
 
-    private void OnFarmViewModelReceived(FarmViewModel viewModel)
+    private void OnFarmPlotsReady()
     {
-        _farmManager = viewModel.GetFarmManager();
-        Debug.Log($"_farmManager: {_farmManager}");
+        if (NetworkManager.Instance == null)
+        {
+            return;
+        }
+
+        _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+        if (_farmManager == null)
+        {
+            return;
+        }
 
         _testPlotModel = new FarmPlotModel();
         _testPlotModel.PlotUniqueId = 1;
@@ -49,8 +38,9 @@ public class TestFarm : MonoBehaviour
         _testPlotModel.IsPlanted = false;
 
         _farmManager.AddFarmPlot(_testPlotModel);
-        Debug.Log("밭 해금: 2/ 심기: 3/ 수확: 4");
+        Debug.Log("밭 해금:2/ 심기: 3/ 수확: 4");
     }
+
 
     private void Update()
     {
@@ -65,7 +55,6 @@ public class TestFarm : MonoBehaviour
             bool result = _farmManager.RequestUnlockPlot(_testPlotModel);
             if (result)
             {
-                Plot_Test.ActivatePlot();
                 Debug.Log("밭 해금");
             }
         }

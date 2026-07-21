@@ -7,6 +7,8 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
+    public NetworkFarmService FarmService { get; private set; }
+
 
     private string GetSaveFilePath(int slotIndex)
     {
@@ -42,6 +44,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
+        FarmService = new NetworkFarmService();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
@@ -118,4 +121,6 @@ public class NetworkManager : SingletonBase<NetworkManager>
     {
         InventoryService.AddItem(itemDataId, stackCount);
     }
+
+
 }

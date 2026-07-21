@@ -21,7 +21,12 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
 
     public async UniTask<GameObject> CreateObjectAsync(string dataId, string path, Vector3 spawnSpot)
     {
+        Debug.Log($"CreateObjectAsync 호출됨, path: {path}");
         GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>(path);
+        Debug.Log($"프리팹 로드 결과: {prefab}");
+
+
+
         if (prefab == null)
             return null;
 
@@ -40,7 +45,6 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
     {
         int generatedInstanceId = _objectInstanceKeyGenerator++;
         ISpawnable createdScript = createdObject.GetComponent<ISpawnable>();
-
         if (createdScript == null)
             return;
 

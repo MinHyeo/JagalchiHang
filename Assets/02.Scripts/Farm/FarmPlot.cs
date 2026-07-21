@@ -16,41 +16,27 @@ public class FarmPlot : MonoBehaviour
 
     private void OnEnable()
     {
-        SubscribeNextFrame().Forget();
-
-        //if (NetworkManager_re.Inst != null)
-        //{
-        //    NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
-
-        //}
-    }
-
-    
-    private async UniTaskVoid SubscribeNextFrame()
-    {
-        await UniTask.NextFrame();
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.OnFarmSpawnDataReceived += OnFarmViewModelReceived;
-        }
+        FarmManager.OnFarmPlotsSpawned += OnFarmManagerReady;
     }
 
     private void OnDisable()
     {
-        if (NetworkManager_re.Inst != null)
-        {
-            NetworkManager_re.Inst.OnFarmSpawnDataReceived -= OnFarmViewModelReceived;
-
-        }
+        FarmManager.OnFarmPlotsSpawned -= OnFarmManagerReady;
     }
 
-
-    private void OnFarmViewModelReceived(FarmViewModel viewModel)
+    private void OnFarmManagerReady()
     {
-        _farmManager = viewModel.GetFarmManager();
+        Debug.Log("OnFarmManagerReady 호출됨");
+        _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+
+        var newPlot = new FarmPlotModel();
+        newPlot.PlotUniqueId = _plotUniqueId;
+        newPlot.IsUnlocked = false;
+        newPlot.IsPlanted = false;
+        _farmManager.AddFarmPlot(newPlot);
+
         _farmManager.RegisterFarmPlot(_plotUniqueId, this);
     }
-
 
     public void ActivatePlot()
     {
@@ -73,7 +59,6 @@ public class FarmPlot : MonoBehaviour
         var cropObject = gObj.GetComponent<CropObject>();
         if (cropObject != null)
         {
-            Debug.Log($"RegisterCropObject 호출: {_plotUniqueId}");
             _farmManager.RegisterCropObject(_plotUniqueId, cropObject);
         }
 

@@ -7,10 +7,6 @@ public class WorldManager
     private MonsterManager _monsterManager;
     private FarmManager _farmManager;
     private MapManager _mapManager;
-    public FarmManager GetFarmManager()
-    {
-        return _farmManager;
-    }
 
     public void EnterWorld()
     {
