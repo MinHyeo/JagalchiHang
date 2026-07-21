@@ -8,15 +8,20 @@ public class InventoryUI : UIBase
     [SerializeField] private Transform _inventorySlot; // TODO : 생성 위치인데 수정이 필요??
     [SerializeField] private GameObject _slotPrefab; // TODO
 
-    private List<InventorySlotUI> _slotUIList = new List<InventorySlotUI>();
+    private Dictionary<int, InventorySlotUI> _slotUIList = new Dictionary<int, InventorySlotUI>();
 
     private InventoryViewModel _vm;
 
-    private void Start()
+    private void OnEnable()
     {
-        _vm = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
-        _vm.TestInventory();
+        _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        _vm.TestAddItem();
         InitInventory();
+    }
+
+    private void OnDisable()
+    {
+        ClearSlotUIList();
     }
 
     private void InitInventory()
@@ -31,9 +36,9 @@ public class InventoryUI : UIBase
             InventorySlotUI slotUI = gObj.GetComponent<InventorySlotUI>();
             if (slotUI == null) return;
 
-            slotUI.Setup(this);
+            slotUI.Setup(this, i);
             slotUI.BindViewModel(_vm.InventorySlots[i]);
-            _slotUIList.Add(slotUI);
+            _slotUIList.Add(i, slotUI);
         }
     }
 
@@ -41,11 +46,21 @@ public class InventoryUI : UIBase
     {
         foreach (var slotUI in _slotUIList)
         {
-            Destroy(slotUI.gameObject);
+            var slotUIkv = slotUI.Value;
+            Destroy(slotUIkv.gameObject);
         }
         _slotUIList.Clear();
     }
 
+    private void OnPropertyChanged_View(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == "ItemListAdded")
+        {
+            InitInventory();
+        }
+    }
+
+    // 드래그 앤 드랍 부분
     public void RequestSwap(int startIdx, int endIdx)
     {
         _vm.SwapSlots(startIdx, endIdx);
@@ -53,18 +68,12 @@ public class InventoryUI : UIBase
 
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx);
+        string currentBoxUniqueId = NetworkManager_re.Inst.FarmingService.CurrentActiveBoxUniqueId;
+        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, currentBoxUniqueId);
     }
 
     public void RequestMoveFromStorage(int storageIdx, int invenIdx)
     {
         NetworkManager_re.Inst.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
     }
-
-    // 테스트용, TODO : 게임매니저나 오브젝트 매니저로 이전
-    public bool RequestAcquireItem(string id, int count, bool isStackable, int maxCount)
-    {
-        return _vm.AcquireItem(id, count, isStackable, maxCount);
-    }
-
 }

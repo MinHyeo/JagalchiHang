@@ -72,17 +72,61 @@ public class StorageSlotViewModel : ViewModelBase
         }
     }
 
-    // TODO : 데이터 드리븐으로 받아오기
-    public void SetItem(string id, int count, bool stackable = true, int max = 99)
+    private bool _isUsable;
+    public bool IsUsable
     {
-        ItemDataId = id;
-        ItemStackCount = count;
-        IsStackable = stackable;
-        MaxCount = max;
+        get => _isUsable;
+        set
+        {
+            if (_isUsable != value)
+            {
+                _isUsable = value;
+                OnPropertyChanged(nameof(IsUsable));
+            }
+        }
+
+    }
+
+    private string _iconPath;
+    public string IconPath
+    {
+        get => _iconPath;
+        set
+        {
+            if (_iconPath != value)
+            {
+                _iconPath = value;
+                OnPropertyChanged(nameof(IconPath));
+            }
+        }
+    }
+
+    public void SetItem(string itemDataId, int stackCount)
+    {
+        if (string.IsNullOrEmpty(itemDataId) || stackCount <= 0)
+        {
+            ItemUniqueId = 0;
+            ItemDataId = null;
+            ItemStackCount = 0;
+            IsStackable = false;
+            MaxCount = 0;
+            IsUsable = false;
+            return;
+        }
+
+        var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        if (itemData == null) return;
+
+        ItemDataId = itemData.Id;
+        ItemStackCount = stackCount;
+        IsStackable = itemData.IsStackable;
+        MaxCount = itemData.MaxCount;
+        IsUsable = itemData.IsUsable;
+        IconPath = itemData.IconPath;
     }
 
     public void Clear()
     {
-        SetItem(null, 0, false, 0);
+        SetItem(null, 0);
     }
 }

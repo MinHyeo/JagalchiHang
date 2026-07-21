@@ -16,12 +16,34 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
-    public void EnterInGame(SaveModel saveModel)
+    public void EnterInGame()
     {
-        _worldManager.EnterWorld(saveModel);
+        _worldManager.EnterWorld();
 
         if (_lobbyManager == null)
             return;
         _lobbyManager.ExitLobby();
+    }
+
+    public void ExitInGame()
+    {
+
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if(UIManager.Instance.IsOpenUI(UIType.InventoryUI)) 
+            {
+                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+            }
+            else
+            {
+                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
+            }
+        }
+
+        _worldManager.WorldUpdate();
     }
 }

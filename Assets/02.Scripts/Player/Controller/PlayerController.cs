@@ -1,57 +1,60 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour, ISpawnable
+public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _rotationSmoothness = 10f;
     [SerializeField] private Animator _animator;
-    
-    private Vector2 _moveInput;
-    private Vector3 _moveDirection;   
 
-    private bool _isWalking;
-    private bool _isRuning;
+    [Header("Attack")]
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private float _attackRadius = 1f;
+    [SerializeField] private LayerMask _monsterLayer;
+    
     private bool _isAttacking;
     private bool _isPressedMouseRight;
     private bool _isDie;
     private bool _isHit;
     private bool _isPickUp;
     
-    private float _speed;
+    private Player _player;
 
-    private string _dataId;
-    private int _instanceId;
-
-    private PlayerData _playerData;
-
-    public bool IsRunning => _isRuning;
-    public bool IsWalking => _isWalking;
+    public PlayerData PlayerData => _player.PlayerData;
+    public Animator Animator => _animator;
     public bool IsAttacking => _isAttacking;
     public bool IsDie => _isDie;
-
     public bool IsHit => _isHit;
-
     public bool IsPickUp => _isPickUp;
-
-    public Animator Animator => _animator;
-
-    private PlayerStatusController _statusController;
+    public bool IsWalking => _moveController.IsWalking;
+    public bool IsRunning => _moveController.IsRunning;
 
     private ItemController _currentItem;
+    private PlayerMoveController _moveController;
 
     private StateMachine _stateMachine = new StateMachine();
 
+    public event Action<Monster> OnMonsterAttacked;
+
     private void Awake()
     {
-        _statusController = this.GetComponent<PlayerStatusController>();
+        _player = GetComponent<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("Player 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
+
+        _moveController = GetComponent<PlayerMoveController>();
+        if (_moveController == null)
+        {
+            Debug.LogError("PlayerMoveController 컴포넌트를 찾을 수 없습니다.");
+            return;
+        }
     }
 
     private void Start()
     {
-        _playerData = GameDataManager.Instance.GetData<PlayerData>(_dataId);
-
-        _statusController.InitPlayerStatus(_playerData);
-
         _stateMachine.AddState(StateType.Idle, new IdleState());
         _stateMachine.AddState(StateType.Walk, new WalkState());
         _stateMachine.AddState(StateType.Run, new RunState());
@@ -65,26 +68,18 @@ public class PlayerController : MonoBehaviour, ISpawnable
 
     private void Update()
     {
-        MoveDirection();
-
-        _speed = _isRuning ? _playerData.MoveSpeed * 3f : _playerData.MoveSpeed;
-
         _stateMachine.Update(this);
-
-        if(_isPressedMouseRight == true)
-        {
-            LookToMousePos();
-        }
-        else
-        {
-            RotateToMoveDirection();
-        }
     }
 
-    public void Init(int instanceId, string dataId)
+    private void FixedUpdate()
     {
-        _instanceId = instanceId;
-        _dataId = dataId;
+        _stateMachine.FixedUpdate(this);
+    }
+
+    // 플레이어 이동
+    public void PlayerMove()
+    {
+        _moveController.PlayerMove();
     }
 
     // 플레이어 상태 바꾸기
@@ -96,16 +91,9 @@ public class PlayerController : MonoBehaviour, ISpawnable
     // 이동 - WASD 키 입력 처리
     public void OnMove(InputAction.CallbackContext context)
     {
-        _moveInput = context.ReadValue<Vector2>();
+        Vector2 moveInput = context.ReadValue<Vector2>();
 
-        if (_moveInput.sqrMagnitude > 0.01f)
-        {
-            _isWalking = true;
-        }
-        else
-        {
-            _isWalking = false;
-        }
+        _moveController.SetMoveInput(moveInput);
     }
 
     // 달리기 - 쉬프트 키 입력 처리
@@ -114,12 +102,12 @@ public class PlayerController : MonoBehaviour, ISpawnable
         // _isRuning = context.ReadValueAsButton(); 와 같음
         if (context.started)
         {
-            _isRuning = true;
+            _moveController.SetRunning(true);
         }
 
         if(context.canceled)
         {
-            _isRuning = false;
+            _moveController.SetRunning(false);
         }
     }
 
@@ -141,6 +129,39 @@ public class PlayerController : MonoBehaviour, ISpawnable
     public void OnAttackEnd()
     {
         _isAttacking = false;
+    }
+
+    // 몬스터 공격
+    public void AttackMoster()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
+
+        HashSet<Monster> damageMonsters = new HashSet<Monster>();
+
+        foreach(Collider hitCollider in hitColliders)
+        {
+            Monster monster = hitCollider.GetComponent<Monster>();
+
+            if(monster == null)
+            {
+                continue;
+            }
+
+            if(monster.Damageable == null)
+            {
+                continue;
+            }
+
+            if(damageMonsters.Add(monster) == false)
+            {
+                continue;
+            }
+
+            monster.Damageable.TakeDamage(_player.PlayerData.AttackPower);
+            Debug.LogWarning($"플레이어가 {monster.InstanceId}번 몬스터를 공격했다!");
+
+            OnMonsterAttacked?.Invoke(monster);
+        }
     }
 
     // 사망
@@ -187,62 +208,29 @@ public class PlayerController : MonoBehaviour, ISpawnable
         _currentItem = Item;
     }
 
-    // 플레이어 이동
-    public void PlayerMove()
-    {
-        transform.position += _moveDirection * _speed * Time.deltaTime;
-    }
-
-    // 플레이어의 이동 방향 설정
-    private void MoveDirection()
-    {
-        _moveDirection = new Vector3(_moveInput.x, 0f, _moveInput.y).normalized;
-    }
-
-    // 플레이어의 이동 회전 설정
-    private void RotateToMoveDirection()
-    {
-        if (_moveDirection.sqrMagnitude > 0.01f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(_moveDirection);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
-        }
-    }
-
     // 마우스 우클릭 입력 처리
     public void OnLookToMousePos(InputAction.CallbackContext context)
     {
         if (context.started)
         {
             _isPressedMouseRight = true;
+            _moveController.SetLookingToMouse(true);
         }
 
         if(context.canceled)
         {
             _isPressedMouseRight = false;
+            _moveController.SetLookingToMouse(false);
         }
     }
 
-    // 마우스 위치를 바라보도록 회전
-    private void LookToMousePos()
+    private void OnDrawGizmosSelected()
     {
-        // 현재 마우스 위치 가져옴
-        Vector3 mousePos = Mouse.current.position.ReadValue();
-
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-
-        // 방금 만든 Ray가 어떤 Collider에 부딪하면 hit에 들어감
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (_attackPoint == null)
         {
-            Vector3 dir = hit.point - transform.position;
-            dir.y = 0f;
-
-            if(dir.sqrMagnitude > 0.01f)
-            {
-                Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
-            }
+            return;
         }
+
+        Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
     }
 }

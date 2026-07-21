@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using Cysharp.Threading.Tasks;
 
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
@@ -13,27 +14,33 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private CanvasGroup _canvasGroup;
 
     private InventorySlotViewModel _vm; // 뷰모델 멤버변수
-    private InventoryUI _inventoryUI;
+    private InventoryUI _inventoryUI; // 부모 참조 수정 필요,
     private Canvas _cachedCanvas;
 
-    public int SlotKey => transform.GetSiblingIndex();
+    private int _slotKey;
+    public int SlotKey => _slotKey;
 
-    public void Setup(InventoryUI inv)
+    private void OnDisable()
+    {
+        UnbindViewModel();
+    }
+
+    public void Setup(InventoryUI inv, int key)
     {
         _inventoryUI = inv;
+        _slotKey = key;
     }
 
     public void BindViewModel(InventorySlotViewModel vm)
     {
-        UnbindViewModel();
-
         _vm = vm;
         _vm.PropertyChanged += OnPropertyChanged_View;
+        _vm.InvokeOnceInit();
 
         UpdateUI();
     }
 
-    public void UnbindViewModel()
+    private void UnbindViewModel()
     {
         if (_vm != null)
         {
@@ -73,14 +80,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
         else
         {
+            InitImage().Forget();
             _imageIcon.gameObject.SetActive(true);
-            // TODO: 이미지 로드 필요
         }
     }
 
     private void UpdateCountText()
     {
-        if (_vm != null && _vm.ItemStackCount > 1)
+        if (_vm != null && _vm.ItemStackCount >= 1)
         {
             _countText.text = $"{_vm.ItemStackCount}";
             _countText.gameObject.SetActive(true);
@@ -91,6 +98,13 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
+    private async UniTask InitImage()
+    {
+        var iconPath = _vm.IconPath;
+        _imageIcon.sprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+    }
+
+    // 드래그 부분
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_vm == null || string.IsNullOrEmpty(_vm.ItemDataId)) return;
@@ -134,6 +148,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
 
+    // 관계 정의 필요
     public void OnDrop(PointerEventData eventData)
     {
         if (_inventoryUI == null) return;

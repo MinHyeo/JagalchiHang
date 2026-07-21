@@ -7,7 +7,7 @@ public class StorageUI : UIBase
     [SerializeField] private Transform _inventorySlot;
     [SerializeField] private GameObject _slotPrefab;
 
-    private List<StorageSlotUI> _slotUIList = new List<StorageSlotUI>();
+    private Dictionary<int, StorageSlotUI> _slotUIList = new Dictionary<int, StorageSlotUI>();
 
     private StorageViewModel _vm;
 
@@ -29,17 +29,20 @@ public class StorageUI : UIBase
             StorageSlotUI slotUI = gObj.GetComponent<StorageSlotUI>();
             if (slotUI == null) return;
 
-            slotUI.Setup(this);
+            slotUI.Setup(this, i);
             slotUI.BindViewModel(_vm.StorageSlots[i]);
-            _slotUIList.Add(slotUI);
+            _slotUIList.Add(i, slotUI);
         }
     }
 
     private void ClearSlotUIList()
     {
-        foreach (var slotUI in _slotUIList)
+        foreach (var slotUI in _slotUIList.Values)
         {
-            Destroy(slotUI.gameObject);
+            if (slotUI != null)
+            {
+                Destroy(slotUI.gameObject);
+            }
         }
         _slotUIList.Clear();
     }

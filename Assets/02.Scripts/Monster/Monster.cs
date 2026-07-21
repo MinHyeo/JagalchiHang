@@ -11,6 +11,12 @@ public class Monster : MonoBehaviour, ISpawnable
     public IMonsterStatProvider StatProvider { get; private set; }
     public IMonsterGroupBehavior Group { get; private set; }
 
+    private string _dataId;
+    private int _instanceId;
+
+    public string DataId => _dataId;
+    public int InstanceId => _instanceId;
+
     private void Awake()
     {
         StatProvider = new MonsterStats();
@@ -24,14 +30,18 @@ public class Monster : MonoBehaviour, ISpawnable
 
     private void Start() 
     {
-        StatProvider.LoadStats(_defaultMonsterId);
+        _dataId = _defaultMonsterId;
+
+        StatProvider.LoadStats(_dataId);
 
         ApplyStatsToComponents();
     }
 
     public void Init(int instanceId, string dataId)
     {
-        StatProvider.LoadStats(dataId);
+        _dataId = dataId;
+        _instanceId = instanceId;
+        StatProvider.LoadStats(_dataId);
 
         ApplyStatsToComponents();
     }

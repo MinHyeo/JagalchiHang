@@ -96,4 +96,9 @@ public class UIManager : SingletonBase<UIManager>
     {
         return GetCreatedUI(uiRootType, uiType);
     }
+
+    public bool IsOpenUI(UIType uiType)
+    {
+        return _opendUIList.Contains(uiType);
+    }
 }

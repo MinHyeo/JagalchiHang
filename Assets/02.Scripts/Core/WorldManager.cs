@@ -3,35 +3,41 @@
 public class WorldManager
 {
     private PlayerManager _playerManager;
-    private SaveModel _saveModel;
-    //private NpcManager _npcManager;
-    //private MonsterManager _monsterManager;
+    private NpcManager _npcManager;
+    private MonsterManager _monsterManager;
     private FarmManager _farmManager;
-
-
+    private MapManager _mapManager;
     public FarmManager GetFarmManager()
     {
         return _farmManager;
     }
 
-
-    public void EnterWorld(SaveModel saveModel)
+    public void EnterWorld()
     {
+        NetworkManager.Instance.InitNetworkService();
+        CreateManager();
 
-        _playerManager = new PlayerManager();
-        //_monsterManager = new MonsterManager();
-        //_npcManager = new NpcManager();
-        _farmManager = new FarmManager();
-        _farmManager.Init();
-
+        _mapManager.CreateMap();
 
         _playerManager.SpawnPlayer().Forget();
 
-        //ITargetable target = _playerManager;
+        ITargetable target = _playerManager;
 
-        //_monsterManager.Init(target);
+        _monsterManager.Init(target);
         //_npcManager.Init(target);
     }
 
+    private void CreateManager()
+    {
+        _playerManager = new PlayerManager();
+        _monsterManager = new MonsterManager();
+        _npcManager = new NpcManager();
+        _farmManager = new FarmManager();
+        _mapManager = new MapManager();
+    }
 
+    public void WorldUpdate()
+    {
+
+    }
 }
