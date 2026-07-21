@@ -13,8 +13,13 @@ public class StorageUI : UIBase
 
     private void Start()
     {
-        _vm = NetworkManager_re.Inst.StorageService.GetLocalStorageViewModel();
+        _vm = NetworkManager.Instance.StorageService.GetLocalStorageViewModel();
         InitStorage();
+    }
+
+    private void OnDisable()
+    {
+        ClearSlotUIList();
     }
 
     private void InitStorage()
@@ -44,6 +49,7 @@ public class StorageUI : UIBase
                 Destroy(slotUI.gameObject);
             }
         }
+
         _slotUIList.Clear();
     }
 
@@ -54,6 +60,6 @@ public class StorageUI : UIBase
 
     public void RequestMoveFromInventory(int invenIdx, int storageIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
+        NetworkManager.Instance.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySlotViewModel : ViewModelBase
+public class InventorySlotViewModel : ViewModelBase, ISlotViewModel
 {
     public void InvokeOnceInit()
     {
@@ -10,6 +10,7 @@ public class InventorySlotViewModel : ViewModelBase
         OnPropertyChanged(nameof(ItemStackCount));
         OnPropertyChanged(nameof(MaxCount));
         OnPropertyChanged(nameof(IsStackable));
+        OnPropertyChanged(nameof(IconPath));
     }
 
     // isEmpty 상태 추가하기
@@ -120,6 +121,7 @@ public class InventorySlotViewModel : ViewModelBase
             IsStackable = false;
             MaxCount = 0;
             IsUsable = false;
+            IconPath = null;
             return;
         }
 
