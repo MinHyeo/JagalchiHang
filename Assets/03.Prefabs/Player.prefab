@@ -896,7 +896,7 @@ MonoBehaviour:
   _groundCheckDistance: 5
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8704
   _trailSpawnPoint: {fileID: 8779031101209027556}
 --- !u!54 &7976609560303363326
 Rigidbody:
