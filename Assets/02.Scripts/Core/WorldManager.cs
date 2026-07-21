@@ -10,6 +10,7 @@ public class WorldManager
 
     public void EnterWorld()
     {
+        InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
 
@@ -21,6 +22,12 @@ public class WorldManager
 
         _monsterManager.Init(target);
         //_npcManager.Init(target);
+    }
+
+    public void ExitWorld()
+    {
+        InputManager.Instance.EnableGamePlayInput(false);
+
     }
 
     private void CreateManager()
