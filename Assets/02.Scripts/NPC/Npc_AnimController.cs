@@ -24,10 +24,10 @@ public class Npc_AnimController : MonoBehaviour
                 ResetAllAnimParameters();
                 break;
             case Npc_AnimState.Walk:
-                ResetAllAnimParameters(); 
+                Npc_Animator.SetBool("IsWalk", true);
                 break;
             case Npc_AnimState.Attack:
-                ResetAllAnimParameters();
+                Npc_Animator.SetBool("IsAttack", true);
                 break;
 
             default:

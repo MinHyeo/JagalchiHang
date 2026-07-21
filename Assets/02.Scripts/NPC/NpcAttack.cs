@@ -8,9 +8,10 @@ public class NpcAttack : MonoBehaviour
     [SerializeField] private float attackRange = 2.0f; // 진짜 데미지를 입힐 수 있는 거리
     [SerializeField] private float attackCoolTime = 1.5f; // 공격 쿨타임
     [SerializeField] private int attackDamage = 15; // 공격 데미지
-    [SerializeField] private float attackMoveSpeed = 5.0f; // 몬스터를 쫓아갈 때 속도
+    [SerializeField] private float attackMoveSpeed = 3.0f; // 몬스터를 쫓아갈 때 속도
 
     private NavMeshAgent _agent;
+    private Npc_AnimController _animController;
 
     private Transform _attackTarget; // 현재 공격할 몬스터의 위치 정보
 
@@ -21,6 +22,7 @@ public class NpcAttack : MonoBehaviour
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animController = GetComponent<Npc_AnimController>();
     }
 
     public void StartAttack(Transform targetMonster) // 전투 시작
@@ -45,6 +47,11 @@ public class NpcAttack : MonoBehaviour
         _coolTimer = 0.0f;
 
        _agent.ResetPath();
+
+        if(_animController != null) // 공격 중단 시 Idle 상태로 돌아가기
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Idle);
+        }
        
     }
 
@@ -119,6 +126,11 @@ public class NpcAttack : MonoBehaviour
         if (_attackTarget == null)
         {
             return;
+        }
+
+        if (_animController != null) 
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Attack);
         }
 
         TestMonster monster = _attackTarget.GetComponent<TestMonster>();

@@ -452,6 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8619227947552814797}
+  - component: {fileID: -1998144921017209221}
   - component: {fileID: 3123327436874307077}
   - component: {fileID: 7073435061646988896}
   - component: {fileID: 6213918589529169204}
@@ -459,7 +460,7 @@ GameObject:
   - component: {fileID: 645058058936295360}
   m_Layer: 0
   m_Name: BattleNpc
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,6 +483,19 @@ Transform:
   - {fileID: 4176395422292746864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1998144921017209221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537442388563564209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b511c0f23ec5f04981f287d5620ed12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Npc_AnimController
+  Npc_Animator: {fileID: 3123327436874307077}
 --- !u!95 &3123327436874307077
 Animator:
   serializedVersion: 7
@@ -499,7 +513,12 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'spine.006'\n\tTransform 'thigh.R'\n\tTransform
+    'thigh.L'\n\tTransform 'spine.001'\n\tTransform 'shin.L'\n\tTransform 'shoulder.L'\n\tTransform
+    'spine'\n\tTransform 'forearm.R'\n\tTransform 'toe.R'\n\tTransform 'spine.006'\n\tand
+    more ...\n\tFrom animation clip 'Npc_Attack'"
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -529,8 +548,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced3e63aae004674da78ba4dcab41d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcAttack
-  attackRange: 5
-  attackCoolTime: 1.5
+  attackRange: 10
+  attackCoolTime: 0
   attackDamage: 15
   attackMoveSpeed: 3
 --- !u!114 &9046712212350798100
@@ -1151,7 +1170,7 @@ Transform:
   m_GameObject: {fileID: 8950129504548426539}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.6151, y: 0, z: -24.40067}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

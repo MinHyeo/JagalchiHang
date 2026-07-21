@@ -236,13 +236,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2255990841448751682}
+  - component: {fileID: 7004591568128562630}
   - component: {fileID: 1164998822259196818}
   - component: {fileID: 689298404722539788}
   - component: {fileID: 5492456328930484313}
   - component: {fileID: 1106163235662720829}
   m_Layer: 0
   m_Name: BagNpc
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,6 +265,19 @@ Transform:
   - {fileID: 7383269880908858355}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7004591568128562630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2670777106370264499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b511c0f23ec5f04981f287d5620ed12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Npc_AnimController
+  Npc_Animator: {fileID: 5492456328930484313}
 --- !u!114 &1164998822259196818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +331,7 @@ Animator:
   m_GameObject: {fileID: 2670777106370264499}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c9ca8bc9e6b00fa49b9fd0591f56b8e7, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 139fd62334fab6049965eeda2cf5572c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -343,7 +357,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

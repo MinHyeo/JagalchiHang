@@ -16,10 +16,12 @@ public class BattleNpc : MonoBehaviour
 
 
     private NavMeshAgent _agent;
+    private Npc_AnimController _animController; 
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animController = GetComponent<Npc_AnimController>();
 
         //블랙보드와 연결 해주기 
         behaviorAgent.BlackboardReference.GetVariable("IsInBunker", out _isInBunker);
@@ -29,7 +31,43 @@ public class BattleNpc : MonoBehaviour
         behaviorAgent.BlackboardReference.GetVariable("CurrentBattleMode", out _currentBattleMode);
         behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
     }
+    private void Update()
+    {
+        HandleAnimation();
+    }
+    private void HandleAnimation()
+    {
+        if (_animController == null)
+        {
+            return;
+        }
 
+        if (_currentState != null && _currentState.Value == NpcState.Attack)
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Attack);
+
+            return;
+        }
+
+        bool isMoving = false;
+
+        if (_agent != null && _agent.isOnNavMesh)
+        {
+            if (_agent.velocity.sqrMagnitude > 1f)
+            {
+                isMoving = true;
+            }
+        }
+
+        if (isMoving)
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Walk);
+        }
+        else
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Idle);
+        }
+    }
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
         //Debug.Log($"[BattleNpc] {currentPlayerPosition}");
