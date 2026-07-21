@@ -10,6 +10,8 @@ public class WorldManager
 
     public void EnterWorld()
     {
+        NetworkManager.Instance.InitNetworkService();
+
         CreateManager();
 
         _mapManager.CreateMap();
