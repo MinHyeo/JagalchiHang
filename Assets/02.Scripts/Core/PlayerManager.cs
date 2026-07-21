@@ -46,7 +46,7 @@ public class PlayerManager : ITargetable
         var testPlayerStatus = SampleUIManager.Instance.GetCreatedUI(SampleUIRootType.MainUI, SampleUIType.TestPlayerStatus);
         if (testPlayerStatus == null) return;
 
-        var testPlayerStatusView = testPlayerStatus.GetComponent<TestPlayerStatusView>();
+        var testPlayerStatusView = testPlayerStatus.GetComponent<MainUI>();
         if (testPlayerStatusView == null) return;
 
         testPlayerStatusView.BindViewModel(vm);
