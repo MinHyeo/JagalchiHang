@@ -21,6 +21,7 @@ public enum UIType
     InventoryUI,
     FarmingUI,
     StorageUI,
+    NpcUI,
     TestPlayerStatus,
 }
 

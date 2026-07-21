@@ -32,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 372145505653453725}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.82, y: 1, z: -6.7}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -91,7 +91,6 @@ MonoBehaviour:
   m_Graph: {fileID: -8299888321907847663, guid: 8f9374abec0971142b8184e171b8d3a6, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 6163278557539729475
-  - rid: 6163278557539729759
   - rid: 6163278654565253285
   - rid: 6163278711196222184
   - rid: 6163278715664466208
@@ -109,14 +108,6 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 372145505653453725}
-    - rid: 6163278557539729759
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 13696434206934348707
-          m_Value1: 13290150049927136338
-        Name: PlayerTarget
-        m_Value: {fileID: 0}
     - rid: 6163278654565253285
       type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
