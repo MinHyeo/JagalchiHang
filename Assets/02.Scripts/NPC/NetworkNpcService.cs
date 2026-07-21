@@ -4,12 +4,12 @@ public class NetworkNpcService
 {
     private NpcViewModel _npcViewModel;
 
-    public NetworkNpcService()
+    public void BindInputEvents()
     {
         InputManager.Instance.OnClickNpcUI += OnOpenNpcUI;
     }
 
-    ~NetworkNpcService()
+    public void UnBindInputEvents()
     {
         InputManager.Instance.OnClickNpcUI -= OnOpenNpcUI;
     }
