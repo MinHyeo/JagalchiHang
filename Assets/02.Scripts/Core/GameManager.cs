@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -16,7 +17,7 @@ public class GameManager : SingletonBase<GameManager>
     // TODO : 저장되어 있는 파일 전달해줘야 함
     public void EnterInGame()
     {
-        _worldManager.EnterWorld();
+        _worldManager.EnterWorld().Forget();
 
         if (_lobbyManager == null)
             return;

@@ -3,7 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class NpcManager : MonoBehaviour// 벙커 로직 테스트용 
+public class NpcManager 
 {
     private GameObject _battleNpc;
     private GameObject _bagNpc;
@@ -18,8 +18,8 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
     public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
     public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
 
-    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, -6f, -3f);
-    private Vector3 _BagNPCSpawnPos = new Vector3(20f, -6f, -3f);
+    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, -5f, -3f);
+    private Vector3 _BagNPCSpawnPos = new Vector3(20f, -5f, -3f);
 
     public void Init(ITargetable target)
     {
@@ -29,30 +29,146 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
         SpawnNpc().Forget();
     }
 
-    public async UniTaskVoid SpawnNpc() {
+    public async UniTask SpawnNpc()
+    {
+        await SpawnBattleNpc();
+        await SpawnBagNpc();
+    }
+
+    public async UniTask SpawnBattleNpc() {
 
         _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("zzz", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
+        if(_battleNpc == null)
+        {
+            Debug.LogError("Battle NPC 생성 실패");
+            return;
+        }
 
         NavMeshAgent agent = _battleNpc.GetComponent<NavMeshAgent>();
+        if (agent == null) return;
+
         BehaviorGraphAgent behaviorGraphAgent = _battleNpc.GetComponent<BehaviorGraphAgent>();
+        if (behaviorGraphAgent == null) return;
+
+        agent.enabled = false;
+        behaviorGraphAgent.enabled = false;
+
+        // _BattleNPCSpawnPos 근처 2m 내에 NavMesh 없으면
+        if (TryGetNavMeshPosition(_BattleNPCSpawnPos, out Vector3 navMeshPosition, 2f) == false)
+        {
+            Debug.LogError($"Battle 생성 위치 주변에 NavMesh가 없습니다. " + $"요청 위치: {_BattleNPCSpawnPos}");
+            return;
+        }
+
+        _battleNpc.transform.position = navMeshPosition;
+
+        // Transform 위치 적용 - 새 위치 바로 인식
+        Physics.SyncTransforms();
 
         agent.enabled = true;
+
+        if (agent.isOnNavMesh == false)
+        {
+            Debug.LogError($"BattleNpc가 NavMesh 위에 배치되지 않았습니다. " + $"현재 위치: {_battleNpc.transform.position}");
+
+            return;
+        }
+
+        // Agent 위치 강제로 맞춤
+        agent.Warp(navMeshPosition);
+        // 이전 경로 삭제
+        agent.ResetPath();
+        // 현재 속도 제거
+        agent.velocity = Vector3.zero;
+        // 이동 정지
+        agent.isStopped = true;
+
+        battleNpc = _battleNpc.GetComponent<BattleNpc>();
+
+        if (battleNpc == null)
+        {
+            Debug.LogError("BattleNpc 컴포넌트가 없습니다.");
+            return;
+        }
+
+        Debug.Log(
+            $"[NpcManager] BattleNpc 생성 완료\n" +
+            $"요청 위치: {_BattleNPCSpawnPos}\n" +
+            $"NavMesh 위치: {navMeshPosition}\n" +
+            $"실제 위치: {_battleNpc.transform.position}"
+        );
+
+        // 이동 허용
+        agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
+    }
 
-        if (_battleNpc != null)
-        {
-            battleNpc = _battleNpc.GetComponent<BattleNpc>();
-            Debug.Log("[NPCManager] BattleNpc 생성 및 컴포넌트 연결 완료 ");
-        }
-
+    private async UniTask SpawnBagNpc()
+    {
         _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("yyy", "Prefab/Npc_Bag", _BagNPCSpawnPos);
-
-        if (_bagNpc != null)
+        if (_bagNpc == null)
         {
-            bagNpc = _bagNpc.GetComponent<BagNpc>();
-            Debug.Log("[NPCManager] BaNpc 생성 및 컴포넌트 연결 완료 ");
+            Debug.LogError("Bag NPC 생성 실패");
+            return;
         }
 
+        NavMeshAgent agent = _bagNpc.GetComponent<NavMeshAgent>();
+        if (agent == null) return;
+
+        BehaviorGraphAgent behaviorGraphAgent = _bagNpc.GetComponent<BehaviorGraphAgent>();
+        if (behaviorGraphAgent == null) return;
+
+        agent.enabled = false;
+        behaviorGraphAgent.enabled = false;
+
+        // _BattleNPCSpawnPos 근처 2m 내에 NavMesh 없으면
+        if (TryGetNavMeshPosition(_BagNPCSpawnPos, out Vector3 navMeshPosition, 2f) == false)
+        {
+            Debug.LogError($"BagNpc 생성 위치 주변에 NavMesh가 없습니다. " + $"요청 위치: {_BagNPCSpawnPos}");
+            return;
+        }
+
+        _bagNpc.transform.position = navMeshPosition;
+
+        // Transform 위치 적용 - 새 위치 바로 인식
+        Physics.SyncTransforms();
+
+        agent.enabled = true;
+
+        if (agent.isOnNavMesh == false)
+        {
+            Debug.LogError($"BattleNpc가 NavMesh 위에 배치되지 않았습니다. " + $"현재 위치: {_bagNpc.transform.position}");
+
+            return;
+        }
+
+        // Agent 위치 강제로 맞춤
+        agent.Warp(navMeshPosition);
+        // 이전 경로 삭제
+        agent.ResetPath();
+        // 현재 속도 제거
+        agent.velocity = Vector3.zero;
+        // 이동 정지
+        agent.isStopped = true;
+
+        bagNpc = _bagNpc.GetComponent<BagNpc>();
+
+        if (bagNpc == null)
+        {
+            Debug.LogError("BattleNpc 컴포넌트가 없습니다.");
+            return;
+        }
+
+        Debug.Log(
+            $"[NpcManager] BattleNpc 생성 완료\n" +
+            $"요청 위치: {_BagNPCSpawnPos}\n" +
+            $"NavMesh 위치: {navMeshPosition}\n" +
+            $"실제 위치: {_bagNpc.transform.position}"
+        );
+
+        // 이동 허용
+        agent.isStopped = false;
+        behaviorGraphAgent.enabled = true;
     }
 
     public void NpcUpdate()
@@ -125,5 +241,19 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
         Debug.Log($"[NPC 매니저] 벙커 탈출 ");
     }
 
+    // NavMesh 위치 찾았는지 여부 함수
+    private bool TryGetNavMeshPosition(Vector3 desiredPosition, out Vector3 navMeshPosition, float maxDistance)
+    {
+        // NavMesh 위치 찾기
+        if(NavMesh.SamplePosition(desiredPosition, out NavMeshHit hit, maxDistance, NavMesh.AllAreas))
+        {
+            navMeshPosition = hit.position;
+            Debug.DrawLine(desiredPosition, navMeshPosition, Color.red);
 
+            return true;
+        }
+
+        navMeshPosition = desiredPosition;
+        return false;
+    }
 }
