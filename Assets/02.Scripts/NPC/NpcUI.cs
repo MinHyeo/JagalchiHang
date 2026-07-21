@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcUI : MonoBehaviour
+public class NpcUI : UIBase
 {
     [SerializeField] private NpcManager npcManager;
     [SerializeField] private Toggle toggleAutoAttack;
@@ -22,6 +22,20 @@ public class NpcUI : MonoBehaviour
         toggleFollow.onValueChanged.RemoveListener(OnFollowChanged);
     }
 
+    public void OpenNpcUI()
+    {
+        if(UIManager.Instance.IsOpenUI(UIType.NpcUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.NpcUI);
+            Debug.Log("[NpcUI] N키 클릭 - UI 닫힘");
+        }
+
+        else
+        {
+            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.NpcUI);
+            Debug.Log("[NpcUI] N키 클릭 - UI 열림");
+        }
+    }
 
     private void OnAutoAttackChanged(bool isOn)  //Npc매니저로 전달
     {
