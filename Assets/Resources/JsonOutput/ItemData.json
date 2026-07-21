@@ -2,7 +2,7 @@
   {
     "Id": "Item_01",
     "ItemName": "나무 조각",
-    "IconPath": "Images/Image_WoodPiece",
+    "IconPath": "Images/Icon_Image/Image_WoodPiece",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -16,7 +16,7 @@
   {
     "Id": "Item_02",
     "ItemName": "막대기",
-    "IconPath": "Images/Image_WoodStick",
+    "IconPath": "Images/Icon_Image/Image_WoodStick",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -30,7 +30,7 @@
   {
     "Id": "Item_03",
     "ItemName": "철 조각",
-    "IconPath": "Images/Image_IronPiece",
+    "IconPath": "Images/Icon_Image/Image_IronPiece",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -44,7 +44,7 @@
   {
     "Id": "Item_04",
     "ItemName": "전자 칩",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_ChipCard",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -58,7 +58,7 @@
   {
     "Id": "Item_05",
     "ItemName": "빠루",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_Crowbar",
     "IsStackable": false,
     "MaxCount": 1,
     "IsUsable": false,
@@ -72,7 +72,7 @@
   {
     "Id": "Item_06",
     "ItemName": "괭이",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_Hoe",
     "IsStackable": false,
     "MaxCount": 1,
     "IsUsable": false,
@@ -86,7 +86,7 @@
   {
     "Id": "Item_07",
     "ItemName": "뒤짚개",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_Flipper",
     "IsStackable": false,
     "MaxCount": 1,
     "IsUsable": false,
@@ -100,7 +100,7 @@
   {
     "Id": "Item_08",
     "ItemName": "공업용 기름",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_OilTank",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -240,7 +240,7 @@
   {
     "Id": "Item_10",
     "ItemName": "통조림",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_Can",
     "IsStackable": true,
     "MaxCount": 10,
     "IsUsable": true,
@@ -254,7 +254,7 @@
   {
     "Id": "Item_11",
     "ItemName": "물",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_Water",
     "IsStackable": true,
     "MaxCount": 10,
     "IsUsable": true,
