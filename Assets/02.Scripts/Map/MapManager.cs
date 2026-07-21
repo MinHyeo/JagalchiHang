@@ -8,10 +8,10 @@ public class MapManager
 
     private string path = "Prefabs/Map/";
 
-    public void CreateMap()
+    public async UniTask CreateMap()
     {
-        SpawnMap("Map").Forget();
-        SpawnMap("ParkingGarage").Forget();
+        await SpawnMap("Map");
+        await SpawnMap("ParkingGarage");
     }
 
     private async UniTask SpawnMap(string name)

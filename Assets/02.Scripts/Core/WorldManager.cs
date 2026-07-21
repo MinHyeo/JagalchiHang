@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class WorldManager
 {
@@ -8,13 +9,13 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public void EnterWorld()
+    public async UniTask EnterWorld()
     {
+        InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
-
         CreateManager();
 
-        _mapManager.CreateMap();
+        await _mapManager.CreateMap();
 
         _playerManager.SpawnPlayer().Forget();
 
@@ -22,6 +23,12 @@ public class WorldManager
 
         _monsterManager.Init(target);
         _npcManager.Init(target);
+    }
+
+    public void ExitWorld()
+    {
+        InputManager.Instance.EnableGamePlayInput(false);
+
     }
 
     private void CreateManager()

@@ -7,6 +7,7 @@ public class NpcUI : UIBase
     [SerializeField] private Toggle toggleAutoAttack;
     [SerializeField] private Toggle toggleAssistAttack;
     [SerializeField] private Toggle toggleFollow;
+
     private void OnEnable()
     {
         toggleAutoAttack.onValueChanged.AddListener(OnAutoAttackChanged);
@@ -20,21 +21,6 @@ public class NpcUI : UIBase
         toggleAutoAttack.onValueChanged.RemoveListener(OnAutoAttackChanged);
         toggleAssistAttack.onValueChanged.RemoveListener(OnAssistAttackChanged);
         toggleFollow.onValueChanged.RemoveListener(OnFollowChanged);
-    }
-
-    public void OpenNpcUI()
-    {
-        if(UIManager.Instance.IsOpenUI(UIType.NpcUI))
-        {
-            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.NpcUI);
-            Debug.Log("[NpcUI] N키 클릭 - UI 닫힘");
-        }
-
-        else
-        {
-            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.NpcUI);
-            Debug.Log("[NpcUI] N키 클릭 - UI 열림");
-        }
     }
 
     private void OnAutoAttackChanged(bool isOn)  //Npc매니저로 전달
