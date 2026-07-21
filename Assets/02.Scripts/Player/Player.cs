@@ -42,7 +42,7 @@ public class Player : MonoBehaviour, ISpawnable
             if (component == null)
                 return;
 
-            component.Interaction();
+            component.Interaction(gameObject.transform);
         }
     }
 }

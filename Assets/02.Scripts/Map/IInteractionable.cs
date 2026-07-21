@@ -2,5 +2,5 @@
 
 public interface IInteractionable
 {
-    public void Interaction();
+    public void Interaction(Transform transform);
 }
