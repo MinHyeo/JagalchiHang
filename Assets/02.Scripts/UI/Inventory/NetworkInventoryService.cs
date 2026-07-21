@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class NetworkInventoryService
@@ -30,6 +31,22 @@ public class NetworkInventoryService
         invenVm.AcquireItem(itemDataId, addItemCount);
 
         // TODO : 저장 기능 구현 후 연동
-        // NetworkManager_re.Inst.SaveLoadService.RequestSaveData();
+        // NetworkManager.Instance.SaveLoadService.RequestSaveData();
+    }
+
+    public bool RequestUseItem(long requestUseTargetItemUniqeuId)
+    {
+        var invenVm = GetLocalInventoryViewModel();
+        invenVm.RequestUseItem(requestUseTargetItemUniqeuId);
+
+        return true;
+    }
+
+    public void RequestRemoveItem(long removeTargetUniqueId)
+    {
+        var invenVm = GetLocalInventoryViewModel();
+        invenVm.RemoveItemSlotViewModel(removeTargetUniqueId);
+
+        // TODO : 세이브 필요
     }
 }

@@ -133,11 +133,75 @@ public class InventoryViewModel : ViewModelBase
         return -1;
     }
 
+    public void TestAddItem()
+    {
+        NetworkManager.Instance.AddItemToInventory("Item_01", 5);
+        NetworkManager.Instance.AddItemToInventory("Item_02", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_03", 9);
+    }
+
+    public bool RequestUseItem(long requestUseTargetItemUniqeuId)
+    {
+        InventorySlotViewModel targetSlot = null;
+
+        foreach (var slot in InventorySlots.Values)
+        {
+            if (slot.ItemUniqueId == requestUseTargetItemUniqeuId)
+            {
+                targetSlot = slot;
+                break;
+            }
+        }
+        
+        if (targetSlot == null || !targetSlot.IsUsable) return false;
+
+        var itemData = GameDataManager.Instance.GetData<ItemData>(targetSlot.ItemDataId);
+        if (itemData == null) return false;
+
+        if (!string.IsNullOrEmpty(itemData.UseItemType))
+        {
+            UseItemFunction(itemData.UseItemType, itemData.UseItemParameterList);
+        }
+
+        targetSlot.ConsumeItem();
+
+        OnPropertyChanged("ItemUsed");
+        return true;
+    }
+
+    private void UseItemFunction(string itemUseType, List<string> useItemParamList)
+    {
+        if (useItemParamList == null || useItemParamList.Count == 0) return;
+
+        var playerVm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
+        if (itemUseType == "Hunger")
+        {
+            if (useItemParamList.Count > 0) 
+            {
+                string str = useItemParamList[0];
+                int statChangeVal = int.Parse(str);
+
+                // TODO : 관련 로직 불러오기 playerVm.
+            }
+        }
+        else if (itemUseType == "Thirsty")
+        {
+            if (useItemParamList.Count > 0)
+            {
+                string str = useItemParamList[0];
+                int statChangeVal = int.Parse(str);
+
+                // TODO : 관련 로직 불러오기 playerVm.
+            }
+        }
+    }
+
+    // 아이템 하나씩 제거, 전부 없으면 클리어
     public void RemoveItemSlotViewModel(long uniqueId)
     {
         foreach (var slot in _inventorySlots.Values)
         {
-            if (slot.ItemUniqueId == uniqueId) 
+            if (slot.ItemUniqueId == uniqueId)
             {
                 slot.Clear();
                 break;
@@ -145,12 +209,5 @@ public class InventoryViewModel : ViewModelBase
         }
 
         OnPropertyChanged("ItemListRemoved");
-    }
-
-    public void TestAddItem()
-    {
-        NetworkManager.Instance.AddItemToInventory("Item_01", 5);
-        NetworkManager.Instance.AddItemToInventory("Item_02", 7);
-        NetworkManager.Instance.AddItemToInventory("Item_03", 9);
     }
 }

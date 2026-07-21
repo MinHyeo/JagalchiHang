@@ -5,17 +5,20 @@ using TMPro;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using Cysharp.Threading.Tasks;
+using System;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [Header("등록 부분")]
     [SerializeField] private Image _imageIcon;
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    private InventorySlotViewModel _vm; // 뷰모델 멤버변수
-    private InventoryUI _inventoryUI; // 부모 참조 수정 필요,
+    private InventorySlotViewModel _vm;
+    private InventoryUI _inventoryUI;
     private Canvas _cachedCanvas;
+
+    public event Action<int, InventorySlotViewModel> OnSlotDoubleClicked;
 
     private int _slotKey;
     public int SlotKey => _slotKey;
@@ -188,6 +191,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (fromStorageSlotrUI != null)
         {
             _inventoryUI.RequestMoveFromStorage(fromStorageSlotrUI.SlotKey, this.SlotKey);
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_vm == null || string.IsNullOrEmpty(_vm.ItemDataId)) return;
+
+        if (eventData.button == PointerEventData.InputButton.Left && eventData.clickCount == 2)
+        {
+            OnSlotDoubleClicked?.Invoke(_slotKey, _vm);
         }
     }
 }
