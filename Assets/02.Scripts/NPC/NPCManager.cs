@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
+using Unity.Behavior;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.Splines;
+using UnityEngine.AI;
 
 public class NpcManager : MonoBehaviour// 벙커 로직 테스트용 
 {
@@ -18,6 +18,9 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
     public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
     public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
 
+    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, -6f, -3f);
+    private Vector3 _BagNPCSpawnPos = new Vector3(20f, -6f, -3f);
+
     public void Init(ITargetable target)
     {
         _chasePlayer = target;
@@ -27,15 +30,22 @@ public class NpcManager : MonoBehaviour// 벙커 로직 테스트용
     }
 
     public async UniTaskVoid SpawnNpc() {
-        _battleNpc = await Addressables.InstantiateAsync("Prefab/Npc_Battle");
 
-        if(_battleNpc != null)
+        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("zzz", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
+
+        NavMeshAgent agent = _battleNpc.GetComponent<NavMeshAgent>();
+        BehaviorGraphAgent behaviorGraphAgent = _battleNpc.GetComponent<BehaviorGraphAgent>();
+
+        agent.enabled = true;
+        behaviorGraphAgent.enabled = true;
+
+        if (_battleNpc != null)
         {
             battleNpc = _battleNpc.GetComponent<BattleNpc>();
             Debug.Log("[NPCManager] BattleNpc 생성 및 컴포넌트 연결 완료 ");
         }
 
-        _bagNpc = await Addressables.InstantiateAsync("Prefab/Npc_Bag");
+        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("yyy", "Prefab/Npc_Bag", _BagNPCSpawnPos);
 
         if (_bagNpc != null)
         {

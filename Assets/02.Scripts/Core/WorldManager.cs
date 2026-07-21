@@ -20,7 +20,7 @@ public class WorldManager
         ITargetable target = _playerManager;
 
         _monsterManager.Init(target);
-        //_npcManager.Init(target);
+        _npcManager.Init(target);
     }
 
     private void CreateManager()
@@ -34,6 +34,6 @@ public class WorldManager
 
     public void WorldUpdate()
     {
-
+        _npcManager.NpcUpdate();
     }
 }
