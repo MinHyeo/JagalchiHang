@@ -49,6 +49,7 @@ public class InventoryUI : UIBase
             var slotUIkv = slotUI.Value;
             Destroy(slotUIkv.gameObject);
         }
+
         _slotUIList.Clear();
     }
 
@@ -68,12 +69,12 @@ public class InventoryUI : UIBase
 
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
-        string currentBoxUniqueId = NetworkManager_re.Inst.FarmingService.CurrentActiveBoxUniqueId;
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, currentBoxUniqueId);
+        string currentBoxUniqueId = NetworkManager.Instance.FarmingService.CurrentActiveBoxUniqueId;
+        NetworkManager.Instance.RequestMoveItem_FarmingToInven(farmingIdx, invenIdx, currentBoxUniqueId);
     }
 
     public void RequestMoveFromStorage(int storageIdx, int invenIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToStorage(invenIdx, storageIdx);
+        NetworkManager.Instance.RequestMoveItem_StorageToInven(storageIdx, invenIdx);
     }
 }
