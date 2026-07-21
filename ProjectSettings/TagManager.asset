@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - NPC
+  - Collide
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Building
   - Door
   - FloorTile
-  - 
+  - Ground
   - 
   - 
   - 
