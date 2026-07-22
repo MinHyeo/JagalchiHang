@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     public event Action<Monster> OnMonsterAttacked;
 
+    private readonly HashSet<Monster> _damageMonsters = new HashSet<Monster>();
+
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -142,9 +144,9 @@ public class PlayerController : MonoBehaviour
     // 몬스터 공격
     public void AttackMoster()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
+        _damageMonsters.Clear();
 
-        HashSet<Monster> damageMonsters = new HashSet<Monster>();
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
 
         foreach(Collider hitCollider in hitColliders)
         {
@@ -160,7 +162,7 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
 
-            if(damageMonsters.Add(monster) == false)
+            if(_damageMonsters.Add(monster) == false)
             {
                 continue;
             }
@@ -168,7 +170,10 @@ public class PlayerController : MonoBehaviour
             monster.Damageable.TakeDamage(_player.PlayerData.AttackPower);
             Debug.LogWarning($"플레이어가 {monster.InstanceId}번 몬스터를 공격했다!");
 
-            OnMonsterAttacked?.Invoke(monster);
+            PlayerManager playerManager = GameUtil.GetPlayerManager();
+            if (playerManager == null) return;
+
+            playerManager.NotifyPlayerAttackedMonster(monster);
         }
     }
 
