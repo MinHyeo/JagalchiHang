@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 
-public class FarmingSlotViewModel : ViewModelBase
+public class FarmingSlotViewModel : ViewModelBase, ISlotViewModel
 {
+    public void InvokeOnceInit()
+    {
+        OnPropertyChanged(nameof(ItemUniqueId));
+        OnPropertyChanged(nameof(ItemDataId));
+        OnPropertyChanged(nameof(ItemStackCount));
+        OnPropertyChanged(nameof(MaxCount));
+        OnPropertyChanged(nameof(IsStackable));
+        OnPropertyChanged(nameof(IconPath));
+    }
+
     private long _itemUniqueId;
     public long ItemUniqueId
     {
@@ -110,6 +120,7 @@ public class FarmingSlotViewModel : ViewModelBase
             IsStackable = false;
             MaxCount = 0;
             IsUsable = false;
+            IconPath = null;
             return;
         }
 

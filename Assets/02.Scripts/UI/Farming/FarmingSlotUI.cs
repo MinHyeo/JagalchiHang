@@ -32,6 +32,7 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         _vm = vm;
         _vm.PropertyChanged += OnPropertyChanged_View;
+        _vm.InvokeOnceInit();
 
         UpdateUI();
     }
@@ -51,6 +52,10 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             case nameof(FarmingSlotViewModel.ItemDataId):
                 {
+                }
+                break;
+            case nameof(FarmingSlotViewModel.IconPath):
+                {
                     UpdateIcon();
                 }
                 break;
@@ -68,15 +73,16 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         UpdateCountText();
     }
 
-    private async Task UpdateIcon()
+    private void UpdateIcon()
     {
         if (_vm == null || string.IsNullOrEmpty(_vm?.ItemDataId))
         {
+            _imageIcon.sprite = null;
             _imageIcon.gameObject.SetActive(false);
         }
         else
         {
-            var iconPath = _vm.IconPath;
+            InitImage().Forget();
             _imageIcon.gameObject.SetActive(true);
         }
     }
@@ -92,6 +98,21 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             _countText.gameObject.SetActive(false);
         }
+    }
+
+    private async UniTask InitImage()
+    {
+        var iconPath = _vm.IconPath;
+        if (string.IsNullOrEmpty(iconPath)) return;
+
+        var cancellationToken = this.GetCancellationTokenOnDestroy();
+
+        Sprite loadecSprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+
+        if (cancellationToken.IsCancellationRequested) return;
+        if (_vm == null || _vm.IconPath != iconPath) return;
+
+        _imageIcon.sprite = loadecSprite;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -129,12 +150,17 @@ public class FarmingSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         _imageIcon.transform.SetParent(this.transform);
-        _imageIcon.rectTransform.localPosition = Vector2.zero;
+
+        RectTransform rt = _imageIcon.rectTransform;
+        rt.anchoredPosition = Vector2.zero;
+        rt.localScale = Vector3.one;
 
         if (_canvasGroup != null)
         {
             _canvasGroup.blocksRaycasts = true;
         }
+
+        UpdateUI();
     }
 
     public void OnDrop(PointerEventData eventData)

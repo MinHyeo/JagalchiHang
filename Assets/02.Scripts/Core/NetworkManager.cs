@@ -48,44 +48,74 @@ public class NetworkManager : SingletonBase<NetworkManager>
         NpcService.BindInputEvents();
     }
 
-    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx)
+    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
     {
-        var invenVm = InventoryService.GetLocalInventoryViewModel();
-        var farmingVm = FarmingService.GetFarmingViewModel();
+        var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
+        var farmingSlot = FarmingService.LoadFarmingBox(boxUniqueId).FarmingSlots[farmingIdx];
 
-        if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !farmingVm.FarmingSlots.ContainsKey(farmingIdx)) return;
+        MoveOrSwapSlots(invenSlot, farmingSlot);
+    }
 
-        var invenSlot = invenVm.InventorySlots[invenIdx];
-        var farmingSlot = farmingVm.FarmingSlots[farmingIdx];
+    public void RequestMoveItem_FarmingToInven(int farmingIdx, int invenIdx, string boxUniqueId)
+    {
+        var farmingSlot = FarmingService.LoadFarmingBox(boxUniqueId).FarmingSlots[farmingIdx];
+        var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
 
-        string tempId = invenSlot.ItemDataId;
-        int tempCount = invenSlot.ItemStackCount;
+        MoveOrSwapSlots(farmingSlot, invenSlot);
+    }
 
-        invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
-        farmingSlot.SetItem(tempId, tempCount);
+    public void RequestMoveItem_StorageToInven(int storageIdx, int invenIdx)
+    {
+        var storageSlot = StorageService.GetLocalStorageViewModel().StorageSlots[storageIdx];
+        var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
 
-        // TODO: 추후 세이브 필요
-        // RequestSaveData();
+        MoveOrSwapSlots(storageSlot, invenSlot);
     }
 
     public void RequestMoveItem_InvenToStorage(int invenIdx, int storageIdx)
     {
-        var invenVm = InventoryService.GetLocalInventoryViewModel();
-        var storageVm = StorageService.GetLocalStorageViewModel();
+        var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
+        var storageSlot = StorageService.GetLocalStorageViewModel().StorageSlots[storageIdx];
 
-        if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !storageVm.StorageSlots.ContainsKey(storageIdx)) return;
+        MoveOrSwapSlots(invenSlot, storageSlot);
+    }
 
-        var invenSlot = invenVm.InventorySlots[invenIdx];
-        var farmingSlot = storageVm.StorageSlots[storageIdx];
+    public void MoveOrSwapSlots(ISlotViewModel startSlot, ISlotViewModel endSlot)
+    {
+        if (startSlot == null || endSlot == null) return;
+        if (string.IsNullOrEmpty(startSlot.ItemDataId)) return;
 
-        string tempId = invenSlot.ItemDataId;
-        int tempCount = invenSlot.ItemStackCount;
+        if (!string.IsNullOrEmpty(endSlot.ItemDataId) &&
+            startSlot.ItemDataId == endSlot.ItemDataId &&
+            startSlot.IsStackable)
+        {
+            int maxCount = endSlot.MaxCount;
+            int slotCountLeft = maxCount - endSlot.ItemStackCount;
 
-        invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
-        farmingSlot.SetItem(tempId, tempCount);
+            if (slotCountLeft > 0)
+            {
+                int moveAmount = Mathf.Min(slotCountLeft, startSlot.ItemStackCount);
 
-        // TODO: 추후 세이브 필요
-        // RequestSaveData();
+                endSlot.ItemStackCount += moveAmount;
+                startSlot.ItemStackCount -= moveAmount;
+
+                if (startSlot.ItemStackCount <= 0)
+                {
+                    startSlot.Clear();
+                }
+                return;
+            }
+        }
+
+        long tempUniqueId = startSlot.ItemUniqueId;
+        string tempId = startSlot.ItemDataId;
+        int tempCount = startSlot.ItemStackCount;
+
+        startSlot.ItemUniqueId = endSlot.ItemUniqueId;
+        startSlot.SetItem(endSlot.ItemDataId, endSlot.ItemStackCount);
+
+        endSlot.ItemUniqueId = tempUniqueId;
+        endSlot.SetItem(tempId, tempCount);
     }
 
     public void AddItemToInventory(string itemDataId, int stackCount)
