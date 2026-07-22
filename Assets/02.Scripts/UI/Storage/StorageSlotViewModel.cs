@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 
-public class StorageSlotViewModel : ViewModelBase
+public class StorageSlotViewModel : ViewModelBase, ISlotViewModel
 {
+    public void InvokeOnceInit()
+    {
+        OnPropertyChanged(nameof(ItemUniqueId));
+        OnPropertyChanged(nameof(ItemDataId));
+        OnPropertyChanged(nameof(ItemStackCount));
+        OnPropertyChanged(nameof(MaxCount));
+        OnPropertyChanged(nameof(IsStackable));
+        OnPropertyChanged(nameof(IconPath));
+    }
+
     private long _itemUniqueId;
     public long ItemUniqueId
     {
@@ -111,6 +121,7 @@ public class StorageSlotViewModel : ViewModelBase
             IsStackable = false;
             MaxCount = 0;
             IsUsable = false;
+            IconPath = null;
             return;
         }
 
