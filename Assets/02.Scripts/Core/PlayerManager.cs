@@ -97,4 +97,14 @@ public class PlayerManager : ITargetable
 
         Debug.Log("PlayerData 로드 완료");
     }
+
+    public void NotifyPlayerAttackedMonster(Monster targetMonster)
+    {
+        if (targetMonster == null) return;
+
+        NpcManager npcManager = GameUtil.GetNpcManager();
+        if (npcManager == null) return;
+
+        npcManager.SetTargetMonster(targetMonster);
+    }
 }
