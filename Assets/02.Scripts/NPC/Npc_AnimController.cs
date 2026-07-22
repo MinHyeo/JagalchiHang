@@ -14,12 +14,19 @@ public class Npc_AnimController : MonoBehaviour
 
     private Npc_AnimState currentState;
 
-    public void SetNpcAnimState(Npc_AnimState newsate)
+    public void SetNpcAnimState(Npc_AnimState newstate)
     {
-        currentState = newsate;
+        if(currentState == newstate)
+        {
+            return;
+        }
+        currentState = newstate;
+
+        ResetAllAnimParameters();
 
         switch (currentState)
         {
+
             case Npc_AnimState.Idle:
                 ResetAllAnimParameters();
                 break;

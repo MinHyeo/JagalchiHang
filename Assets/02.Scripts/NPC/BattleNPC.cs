@@ -32,7 +32,56 @@ public class BattleNpc : MonoBehaviour
         behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
     }
 
-   
+
+    private void Update()
+    {
+        UpdateAnimation();
+    }
+
+    private  void UpdateAnimation()
+    {
+        if(_animController == null )
+        {
+            return;
+        }
+
+        bool isMoving = false;
+
+
+        if (_agent != null && _agent.isOnNavMesh)
+        {
+            if(_agent.velocity.sqrMagnitude > 0.1f)
+            {
+                isMoving = true;
+            }
+        }
+
+        if(_currentState != null && _currentState.Value == NpcState.Attack)
+        {
+            if (isMoving)
+            {
+                _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Walk);
+            }
+
+            else
+            {
+                _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Attack);
+            }
+
+            return;
+        }
+
+        if(isMoving == true)
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Walk);
+        }
+        else
+        {
+            _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Idle);
+        }
+    }
+    
+
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
         //Debug.Log($"[BattleNpc] {currentPlayerPosition}");

@@ -456,7 +456,6 @@ GameObject:
   - component: {fileID: 3123327436874307077}
   - component: {fileID: 7073435061646988896}
   - component: {fileID: 6213918589529169204}
-  - component: {fileID: 6080093388936096041}
   - component: {fileID: 9046712212350798100}
   - component: {fileID: 645058058936295360}
   m_Layer: 0
@@ -475,7 +474,7 @@ Transform:
   m_GameObject: {fileID: 4537442388563564209}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -514,12 +513,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'spine.006'\n\tTransform 'thigh.R'\n\tTransform
-    'thigh.L'\n\tTransform 'spine.001'\n\tTransform 'shin.L'\n\tTransform 'shoulder.L'\n\tTransform
-    'spine'\n\tTransform 'forearm.R'\n\tTransform 'toe.R'\n\tTransform 'spine.006'\n\tand
-    more ...\n\tFrom animation clip 'Npc_Attack'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -553,29 +547,6 @@ MonoBehaviour:
   attackCoolTime: 0
   attackDamage: 15
   attackMoveSpeed: 3
---- !u!136 &6080093388936096041
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537442388563564209}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9046712212350798100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,13 +586,13 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6.5
-  m_Acceleration: 50
+  m_Speed: 10
+  m_Acceleration: 60
   avoidancePriority: 50
-  m_AngularSpeed: 1000
-  m_StoppingDistance: 3
+  m_AngularSpeed: 2000
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -1232,7 +1203,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 8
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3552812878224806074
 Rigidbody:

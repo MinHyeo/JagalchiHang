@@ -24,11 +24,11 @@ public class EnemySensor : MonoBehaviour
 
         monsters.Add(other.gameObject);
 
-        TestMonster monster = other.GetComponent<TestMonster>();
+        IMonsterDamageable monster = other.GetComponent<IMonsterDamageable>();
 
         if (monster != null) 
         {
-            monster.OnDead += OnMonsterDead;
+            monster.OnDied += OnMonsterDead;
         }
 
         if (isAutoDetect == true)
@@ -45,11 +45,11 @@ public class EnemySensor : MonoBehaviour
         }
         monsters.Remove(other.gameObject);
 
-        TestMonster monster = other.GetComponent<TestMonster>();
+        IMonsterDamageable monster = other.GetComponent<IMonsterDamageable>();
 
         if (monster != null)
         {
-            monster.OnDead -= OnMonsterDead;
+            monster.OnDied -= OnMonsterDead;
         }
 
         if (isAutoDetect == true)
@@ -91,14 +91,8 @@ public class EnemySensor : MonoBehaviour
     }
 
     //몬스터가 죽었을 때 호출 되는 함수(이벤트로 사용)
-    private void OnMonsterDead(TestMonster monster) 
-    {
-        monsters.Remove(monster.gameObject);
-
-        if(CurrentTarget == monster.gameObject)
-        {
-            CurrentTarget = null;
-        }
+    private void OnMonsterDead()
+    { 
 
         if (isAutoDetect == true) 
         {
