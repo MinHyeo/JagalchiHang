@@ -16,10 +16,10 @@ public class MapManager
 
     private string path = "Prefabs/Map/";
 
-    public void CreateMap()
+    public async UniTask CreateMap()
     {
-        SpawnMap(MapType.ParmingMap, true).Forget();
-        SpawnMap(MapType.ParkingGarage, false).Forget();
+        await SpawnMap(MapType.ParmingMap, true);
+        await SpawnMap(MapType.ParkingGarage, false);
 
         _currnetMapType = MapType.ParmingMap;
         //_mapList[_currnetMapType].gameObject.SetActive(true);
