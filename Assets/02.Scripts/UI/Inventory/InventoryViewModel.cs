@@ -19,31 +19,6 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    public void SubcribeInventoryEvent()
-    {
-        InputManager.Instance.OnClickInventory += OnOpenInventory;
-    }
-
-    public void DisposeInventoryEvent()
-    { 
-        InputManager.Instance.OnClickInventory -= OnOpenInventory;
-    }
-
-    private void OnOpenInventory()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
-            {
-                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
-            else
-            {
-                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
-        }
-    }
-
     public void AddInventorySlotViewModel()
     {
         _inventorySlots.Clear();

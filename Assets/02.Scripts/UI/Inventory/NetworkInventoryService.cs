@@ -49,4 +49,30 @@ public class NetworkInventoryService
 
         // TODO : 세이브 필요
     }
+
+    public void BindInventoryInputEvent()
+    {
+        InputManager.Instance.OnClickInventory += OnOpenInventoryUI;
+    }
+
+    public void UnBindInventoryInputEvent()
+    {
+        InputManager.Instance.OnClickInventory -= OnOpenInventoryUI;
+    }
+
+    private void OnOpenInventoryUI()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
+            {
+                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+            }
+            else
+            {
+                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
+            }
+        }
+    }
+
 }

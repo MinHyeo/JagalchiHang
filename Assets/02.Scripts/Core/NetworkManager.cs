@@ -44,6 +44,10 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
+        CraftService = new NetworkCraftService();
+        NpcService = new NetworkNpcService();
+
+        InventoryService.BindInventoryInputEvent();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
