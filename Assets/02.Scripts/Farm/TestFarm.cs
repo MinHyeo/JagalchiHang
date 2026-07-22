@@ -52,7 +52,7 @@ public class TestFarm : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            bool result = _farmManager.RequestUnlockPlot(_testPlotModel);
+            bool result = _farmManager.RequestUnlockNextPlot();
             if (result)
             {
                 Debug.Log("밭 해금");

@@ -322,6 +322,19 @@ public class FarmManager
         return true;
     }
 
+    public bool RequestUnlockNextPlot()
+    {
+        for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
+        {
+            if (_viewModel.FarmPlotList[i].IsUnlocked == false)
+            {
+                return RequestUnlockPlot(_viewModel.FarmPlotList[i]);
+            }
+        }
+        Debug.LogWarning("해금할 밭이 없습니다.");
+        return false;
+    }
+
     public void OnMapChanged()
     {
         OnFarmPlotsSpawned?.Invoke();
