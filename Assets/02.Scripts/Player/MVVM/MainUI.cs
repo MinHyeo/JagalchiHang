@@ -15,7 +15,6 @@ public class MainUI : UIBase
 
     private PlayerViewModel _vm;
 
-    // [나라]TODO : 플레이어 생성될 때 호출해주기
     public void BindViewModel(PlayerViewModel vm)
     {
         _vm = vm;

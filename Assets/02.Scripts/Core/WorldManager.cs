@@ -23,6 +23,8 @@ public class WorldManager
 
         _monsterManager.Init(target);
         _npcManager.Init(target);
+
+        UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
     }
 
     public void TransMap(MapType mapType)
