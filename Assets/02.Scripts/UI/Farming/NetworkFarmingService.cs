@@ -20,9 +20,10 @@ public class NetworkFarmingService
 
     private FarmingViewModel CreateLocalFarmingViewModel()
     {
+        GameDataManager.Instance.LoadData<ItemData>();
         var farmingVm = new FarmingViewModel();
-        farmingVm.AddFarmingSlotViewModel();
         _localFarmingViewModel = farmingVm;
+        farmingVm.AddFarmingSlotViewModel();
         return farmingVm;
     }
 

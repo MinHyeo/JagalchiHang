@@ -23,7 +23,7 @@ public class FarmingUI : UIBase
 
         ClearAllFarmingSlot();
 
-        _vm = NetworkManager_re.Inst.FarmingService.LoadFarmingBox(boxId);
+        _vm = NetworkManager.Instance.FarmingService.LoadFarmingBox(boxId);
 
         InitFarmingSlot();
     }
@@ -65,6 +65,6 @@ public class FarmingUI : UIBase
 
     public void RequestMoveFromInventory(int invenIdx, int farmingIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, _boxtUniqueId);
+        NetworkManager.Instance.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, _boxtUniqueId);
     }
 }

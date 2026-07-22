@@ -1,16 +1,17 @@
 ﻿using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestPlayerStatusView : UIBase
+public class MainUI : UIBase
 {
     [SerializeField] private Slider _sliderHp;
     [SerializeField] private Slider _sliderHunger;
     [SerializeField] private Slider _sliderThirst;
 
-    [SerializeField] private Text _textHp;
-    [SerializeField] private Text _textHunger;
-    [SerializeField] private Text _textThirst;
+    [SerializeField] private TextMeshProUGUI _textHp;
+    [SerializeField] private TextMeshProUGUI _textHunger;
+    [SerializeField] private TextMeshProUGUI _textThirst;
 
     private PlayerViewModel _vm;
 
