@@ -20,8 +20,8 @@ public class NpcManager
     public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
     public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
 
-    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0f, -3f);
-    private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0f, -3f);
+    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0.5f, -3f);
+    private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0.5f, -3f);
 
     public void Init(ITargetable target)
     {

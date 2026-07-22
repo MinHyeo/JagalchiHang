@@ -32,10 +32,9 @@ public partial class BT_AttackMonster : Action
             return Status.Failure;
         }
 
-        if (_attacker.isAttack == false)
-        {
+
             _attacker.StartAttack(EnemyTarget.Value.transform); // 타겟이 된 몬스터 위치 정보 주고 공격 시작 명령 전달
-        }
+        
 
         return Status.Running;
     }
@@ -53,6 +52,14 @@ public partial class BT_AttackMonster : Action
         }
         return Status.Running;
 
+    }
+
+    protected override void OnEnd()
+    {
+        if(_attacker != null)
+        {
+            _attacker.StopAttack();
+        }
     }
 
 

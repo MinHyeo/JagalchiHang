@@ -3,8 +3,23 @@ using UnityEngine;
 
 public class InventoryViewModel : ViewModelBase
 {
-    private const int _slotCount = 36; // const를 빼거나 변경 가능
+    private int _slotCount = 36; // const를 빼거나 변경 가능
 
+    public int SlotCount
+    {
+        get => _slotCount;
+        set
+        {
+            if(_slotCount != value)
+            {
+                _slotCount = value;
+                OnPropertyChanged(nameof(SlotCount));
+
+            }
+        }
+        
+    }
+    
     private Dictionary<int, InventorySlotViewModel> _inventorySlots = new Dictionary<int, InventorySlotViewModel>();
     public Dictionary<int, InventorySlotViewModel> InventorySlots
     {
