@@ -38,6 +38,10 @@ public class WorldManager
         // Farm 상태 갱신
 
         // Npc 상태 갱신
+
+        // 몬스터 갱신
+        bool isBunker = (mapType == MapType.ParkingGarage) ? true : false;
+
     }
 
     public void ExitWorld()
@@ -58,5 +62,30 @@ public class WorldManager
     public void WorldUpdate()
     {
 
+    }
+
+    public PlayerManager GetPlayerManager()
+    {
+        return _playerManager;
+    }
+
+    public MonsterManager GetMonsterManager()
+    {
+        return _monsterManager;
+    }
+
+    public NpcManager GetNpcManager()
+    {
+        return _npcManager;
+    }
+
+    public FarmManager GetFarmManager()
+    {
+        return _farmManager;
+    }
+
+    public MapManager GetMapManager()
+    {
+        return _mapManager;
     }
 }
