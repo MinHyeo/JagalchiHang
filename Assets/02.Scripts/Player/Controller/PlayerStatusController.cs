@@ -150,25 +150,4 @@ public class PlayerStatusController : MonoBehaviour
             DecreaseHp(DamageType.Thirst);
         }
     }
-
-    private void IncreaseStatus()
-    {
-        List<ItemData> itemDatas = GameDataManager.Instance.GetAllData<ItemData>();
-        if (itemDatas == null) return;
-
-        foreach (var item in itemDatas)
-        {
-            if (item.IsUsable == true)
-            {
-                if (item.UseItemType == "Hunger")
-                {
-                    _vm.CurrentHunger = Math.Max(0, _vm.CurrentHunger + int.Parse(item.UseItemParameterList[0]));
-                }
-                else if (item.UseItemType == "Thirsty")
-                {
-                    _vm.CurrentThirst = Math.Max(0, _vm.CurrentThirst + int.Parse(item.UseItemParameterList[0]));
-                }
-            }
-        }
-    }
 }

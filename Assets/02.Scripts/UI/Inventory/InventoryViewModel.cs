@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryViewModel : ViewModelBase
@@ -181,6 +182,8 @@ public class InventoryViewModel : ViewModelBase
                 int statChangeVal = int.Parse(str);
 
                 // TODO : 관련 로직 불러오기 playerVm.
+                playerVm.CurrentHunger = Math.Min(0, playerVm.CurrentHunger + statChangeVal);
+                Debug.LogWarning($"플레이어의 허기가 {statChangeVal}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
             }
         }
         else if (itemUseType == "Thirsty")
@@ -191,6 +194,8 @@ public class InventoryViewModel : ViewModelBase
                 int statChangeVal = int.Parse(str);
 
                 // TODO : 관련 로직 불러오기 playerVm.
+                playerVm.CurrentThirst = Math.Min(0, playerVm.CurrentThirst + statChangeVal);
+                Debug.LogWarning($"플레이어의 목마름이 {statChangeVal}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
             }
         }
     }
