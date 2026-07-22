@@ -21,7 +21,8 @@ public enum UIType
     InventoryUI,
     FarmingUI,
     StorageUI,
-    TestPlayerStatus,
+    NpcUI,
+    MainUI,
 }
 
 public static class UIManagerExtension
