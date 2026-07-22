@@ -33,4 +33,16 @@ public class Player : MonoBehaviour, ISpawnable
 
         _statusController.InitPlayerStatus(_playerData);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interaction"))
+        {
+            var component = other.GetComponent<IInteractionable>();
+            if (component == null)
+                return;
+
+            component.Interaction(gameObject.transform);
+        }
+    }
 }
