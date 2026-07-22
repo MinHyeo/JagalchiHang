@@ -7,6 +7,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
+    public NetworkCraftService CraftService { get; private set; }
 
     private string GetSaveFilePath(int slotIndex)
     {
@@ -42,6 +43,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
+        CraftService = new NetworkCraftService();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
