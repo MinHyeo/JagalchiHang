@@ -1,6 +1,6 @@
 [
   {
-    "Id": "Item_01",
+    "Id": "Item_Drop_01",
     "ItemName": "나무 조각",
     "IconPath": "Images/Icon_Image/Image_WoodPiece",
     "IsStackable": true,
@@ -14,7 +14,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_02",
+    "Id": "Item_Drop_02",
     "ItemName": "막대기",
     "IconPath": "Images/Icon_Image/Image_WoodStick",
     "IsStackable": true,
@@ -28,7 +28,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_03",
+    "Id": "Item_Drop_03",
     "ItemName": "철 조각",
     "IconPath": "Images/Icon_Image/Image_IronPiece",
     "IsStackable": true,
@@ -42,7 +42,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_04",
+    "Id": "Item_Drop_04",
     "ItemName": "전자 칩",
     "IconPath": "Images/Icon_Image/Image_ChipCard",
     "IsStackable": true,
@@ -56,7 +56,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_05",
+    "Id": "Item_Drop_05",
     "ItemName": "빠루",
     "IconPath": "Images/Icon_Image/Image_Crowbar",
     "IsStackable": false,
@@ -70,7 +70,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_06",
+    "Id": "Item_Drop_06",
     "ItemName": "괭이",
     "IconPath": "Images/Icon_Image/Image_Hoe",
     "IsStackable": false,
@@ -84,7 +84,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_07",
+    "Id": "Item_Drop_07",
     "ItemName": "뒤짚개",
     "IconPath": "Images/Icon_Image/Image_Flipper",
     "IsStackable": false,
@@ -98,7 +98,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_08",
+    "Id": "Item_Drop_08",
     "ItemName": "공업용 기름",
     "IconPath": "Images/Icon_Image/Image_OilTank",
     "IsStackable": true,
@@ -112,9 +112,9 @@
     "MaxDropCount": 4
   },
   {
-    "Id": "Item_09",
+    "Id": "Item_Craft_01",
     "ItemName": "식물성 기름",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/Image_VegetableOil",
     "IsStackable": true,
     "MaxCount": 30,
     "IsUsable": false,
@@ -128,7 +128,7 @@
   {
     "Id": "Crop_Carrot",
     "ItemName": "당근",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Carrot",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -142,7 +142,7 @@
   {
     "Id": "Crop_Corn",
     "ItemName": "옥수수",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Corn",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -156,7 +156,7 @@
   {
     "Id": "Crop_Onion",
     "ItemName": "양파",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Onion",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -170,7 +170,7 @@
   {
     "Id": "Crop_Pea",
     "ItemName": "완두콩",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Pea",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -184,7 +184,7 @@
   {
     "Id": "Crop_Potato",
     "ItemName": "감자",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Potato",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -198,7 +198,7 @@
   {
     "Id": "Crop_Pumpkin",
     "ItemName": "호박",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Pumpkin",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -212,7 +212,7 @@
   {
     "Id": "Crop_Tomato",
     "ItemName": "토마토",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Tomato",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -226,7 +226,7 @@
   {
     "Id": "Crop_Wheat",
     "ItemName": "밀",
-    "IconPath": null,
+    "IconPath": "Images/Icon_Image/lmage_Wheat",
     "IsStackable": true,
     "MaxCount": 50,
     "IsUsable": false,
@@ -238,7 +238,7 @@
     "MaxDropCount": null
   },
   {
-    "Id": "Item_10",
+    "Id": "Item_Drop_09",
     "ItemName": "통조림",
     "IconPath": "Images/Icon_Image/Image_Can",
     "IsStackable": true,
@@ -252,7 +252,7 @@
     "MaxDropCount": 4
   },
   {
-    "Id": "Item_11",
+    "Id": "Item_Drop_10",
     "ItemName": "물",
     "IconPath": "Images/Icon_Image/Image_Water",
     "IsStackable": true,
@@ -264,5 +264,187 @@
     "DropWeight": 2,
     "MinDropCount": 2,
     "MaxDropCount": 4
+  },
+  {
+    "Id": "Item_Seed_Carrot",
+    "ItemName": "당근 씨앗",
+    "IconPath": "Images/Icon_Image/Image_CarrotSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Corn",
+    "ItemName": "옥수수 씨앗",
+    "IconPath": "Images/Icon_Image/Image_CornSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Onion",
+    "ItemName": "양파 씨앗",
+    "IconPath": "Images/Icon_Image/Image_OnionSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Pea",
+    "ItemName": "완두콩 씨앗",
+    "IconPath": "Images/Icon_Image/Image_PeaSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Potato",
+    "ItemName": "감자 씨앗",
+    "IconPath": "Images/Icon_Image/Image_PotatoSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Pumpkin",
+    "ItemName": "호박 씨앗",
+    "IconPath": "Images/Icon_Image/Image_PumpkinSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Tomato",
+    "ItemName": "토마토 씨앗",
+    "IconPath": "Images/Icon_Image/Image_TomatoSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Seed_Wheat",
+    "ItemName": "밀 씨앗",
+    "IconPath": "Images/Icon_Image/Image_WheatSeed",
+    "IsStackable": true,
+    "MaxCount": 100,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Craft_02",
+    "ItemName": "감자전",
+    "IconPath": "Images/Icon_Image/Imgae_Gamjajeon",
+    "IsStackable": true,
+    "MaxCount": 10,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "20",
+    "UseItemDescription": "허기를 20 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Craft_03",
+    "ItemName": "콩떡",
+    "IconPath": "Images/Icon_Image/Image_KongTteog",
+    "IsStackable": true,
+    "MaxCount": 15,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "10",
+    "UseItemDescription": "허기를 10 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Craft_04",
+    "ItemName": "된장찌개",
+    "IconPath": "Images/Icon_Image/Image_Doenjangjjigae",
+    "IsStackable": true,
+    "MaxCount": 1,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "50",
+    "UseItemDescription": "허기를 50 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Craft_05",
+    "ItemName": "감자 고로케",
+    "IconPath": "Images/Icon_Image/Image_GamjaGoloke",
+    "IsStackable": true,
+    "MaxCount": 5,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "30",
+    "UseItemDescription": "허기를 30 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Craft_06",
+    "ItemName": "칼국수",
+    "IconPath": "Images/Icon_Image/Image_Kalgugsu",
+    "IsStackable": true,
+    "MaxCount": 1,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "100",
+    "UseItemDescription": "허기를 100 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
   }
 ]

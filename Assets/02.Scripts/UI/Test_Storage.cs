@@ -11,6 +11,13 @@ public class Test_Storage : MonoBehaviour
 
     private void OnClickOpenStorage()
     {
-        UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.StorageUI);
+        if (UIManager.Instance.IsOpenUI(UIType.StorageUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.StorageUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.StorageUI);
+        }
     }
 }

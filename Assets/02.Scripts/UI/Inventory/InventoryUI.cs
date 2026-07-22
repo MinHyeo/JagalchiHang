@@ -15,7 +15,8 @@ public class InventoryUI : UIBase
     private void OnEnable()
     {
         _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
-        _vm.TestAddItem();
+        _vm.PropertyChanged += OnPropertyChanged_View;
+        _vm.AddInventorySlotViewModel();
         InitInventory();
     }
 
@@ -38,16 +39,26 @@ public class InventoryUI : UIBase
 
             slotUI.Setup(this, i);
             slotUI.BindViewModel(_vm.InventorySlots[i]);
+
+            slotUI.OnSlotDoubleClicked += OnSlotUseRequested;
             _slotUIList.Add(i, slotUI);
         }
     }
 
     private void ClearSlotUIList()
     {
-        foreach (var slotUI in _slotUIList)
+        if(_vm != null)
         {
-            var slotUIkv = slotUI.Value;
-            Destroy(slotUIkv.gameObject);
+            _vm.PropertyChanged -= OnPropertyChanged_View;
+        }
+
+        foreach (var slotUI in _slotUIList.Values)
+        {
+            if (slotUI != null)
+            {
+                slotUI.OnSlotDoubleClicked -= OnSlotUseRequested;
+                Destroy(slotUI.gameObject);
+            }
         }
 
         _slotUIList.Clear();
@@ -59,6 +70,13 @@ public class InventoryUI : UIBase
         {
             InitInventory();
         }
+    }
+
+    private void OnSlotUseRequested(int slotKey, InventorySlotViewModel slotVM)
+    {
+        if (slotVM == null) return;
+
+        _vm.RequestUseItem(slotVM.ItemUniqueId);
     }
 
     // 드래그 앤 드랍 부분

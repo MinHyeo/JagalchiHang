@@ -23,6 +23,7 @@ public enum UIType
     StorageUI,
     NpcUI,
     MainUI,
+    CraftUI,
 }
 
 public static class UIManagerExtension
