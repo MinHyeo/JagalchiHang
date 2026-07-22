@@ -774,6 +774,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1799879465}
   - component: {fileID: 1799879466}
+  - component: {fileID: 1799879467}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -811,6 +812,28 @@ MonoBehaviour:
   _maxActiveMonsterCount: 10
   _dynamicSpawnInterval: 5
   _isSpawningEnabled: 1
+--- !u!114 &1799879467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799879464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76ab7d508fb93fe4084fc2dfc9836a22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RingSpawnAlgorithm
+  _minSpawnDistance: 10
+  _maxSpawnDistance: 15
+  _maxAttemptCount: 5
+  _navMeshSnapRadius: 3
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 4096
+  _maxGroundHeightDifference: 0.3
+  _maxLevelHeightDifference: 3
+  _maxRecentSpawnHistory: 20
 --- !u!1 &1988287694
 GameObject:
   m_ObjectHideFlags: 0

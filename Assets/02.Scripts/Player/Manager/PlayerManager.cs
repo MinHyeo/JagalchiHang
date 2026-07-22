@@ -8,7 +8,7 @@ public class PlayerManager : ITargetable
     private GameObject _player;
 
     //[나라]TODO 
-    private Vector3 _playerSpawnPos = new Vector3(20f, 0f, -3f);
+    private Vector3 _playerSpawnPos = new Vector3(20f, 1f, -3f);
     private PlayerController _playerController;
 
     public event Action<Monster> MonsterAttacked;
