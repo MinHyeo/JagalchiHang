@@ -245,8 +245,8 @@
     "MaxCount": 10,
     "IsUsable": true,
     "UseItemType": "Hunger",
-    "UseItemParameterList": 30,
-    "UseItemDescription": "허기를 30 채워준다",
+    "UseItemParameterList": 20,
+    "UseItemDescription": "허기를 20 채워준다",
     "DropWeight": 2,
     "MinDropCount": 2,
     "MaxDropCount": 4
@@ -259,8 +259,8 @@
     "MaxCount": 10,
     "IsUsable": true,
     "UseItemType": "Thirsty",
-    "UseItemParameterList": 50,
-    "UseItemDescription": "갈증을 50 채워준다",
+    "UseItemParameterList": 20,
+    "UseItemDescription": "갈증을 20 채워준다",
     "DropWeight": 2,
     "MinDropCount": 2,
     "MaxDropCount": 4

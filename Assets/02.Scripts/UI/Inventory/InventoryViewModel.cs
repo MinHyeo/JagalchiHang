@@ -176,15 +176,13 @@ public class InventoryViewModel : ViewModelBase
         var playerVm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         if (itemUseType == "Hunger")
         {
-            // TODO : 관련 로직 불러오기 playerVm.
-            playerVm.CurrentHunger = Math.Min(0, playerVm.CurrentHunger + useItemParamList);
-            Debug.LogWarning($"플레이어의 허기가 {useItemParamList}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
+            playerVm.CurrentHunger = Math.Min(playerVm.CurrentHunger + useItemParamList, playerVm.MaxHunger);
+            Debug.Log($"플레이어의 허기가 {useItemParamList}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
         }
         else if (itemUseType == "Thirsty")
         {
-            // TODO : 관련 로직 불러오기 playerVm.
-            playerVm.CurrentThirst = Math.Min(0, playerVm.CurrentThirst + useItemParamList);
-            Debug.LogWarning($"플레이어의 목마름이 {useItemParamList}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
+            playerVm.CurrentThirst = Math.Min(playerVm.CurrentThirst + useItemParamList, playerVm.MaxThirst);
+            Debug.Log($"플레이어의 목마름이 {useItemParamList}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
         }
     }
 
