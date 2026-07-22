@@ -7,7 +7,7 @@ public class MonsterManager : SingletonBase<MonsterManager>
         get { return MonsterRegistry.ActiveCount; }
     }
 
-    /* 월드 매니저 추가시 추가예정
+    // 월드 매니저 추가시 추가예정
     public void Init(ITargetable target)
     {
         if (SpawnManager.Instance == null)
@@ -17,7 +17,7 @@ public class MonsterManager : SingletonBase<MonsterManager>
         }
 
         SpawnManager.Instance.SetPlayerTarget(target);
-    }  */
+    }
 
     public void SetSpawningEnabled(bool isEnabled)
     {

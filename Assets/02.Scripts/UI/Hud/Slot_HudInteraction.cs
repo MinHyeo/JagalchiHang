@@ -43,6 +43,8 @@ public class Slot_HudInteraction : MonoBehaviour
 
         slotOffsetX = -240;
         slotOffsetY = 115;
+
+        _onClickCallback = onClickCallback;
     }
 
     private void Update()
@@ -55,7 +57,7 @@ public class Slot_HudInteraction : MonoBehaviour
             if (rectTransform != null)
             {
                 Vector2 finalScreenPos = new Vector2(screenPos.x + slotOffsetX, screenPos.y + slotOffsetY);
-                rectTransform.anchoredPosition = finalScreenPos;
+                rectTransform.position = finalScreenPos;
             }
         }
     }

@@ -27,4 +27,14 @@ public class GameManager : SingletonBase<GameManager>
     {
 
     }
+
+    public void RequestMapChange(MapType mapType)
+    {
+        _worldManager.TransMap(mapType);
+    }
+
+    private void Update()
+    {
+        _worldManager.WorldUpdate();
+    }
 }

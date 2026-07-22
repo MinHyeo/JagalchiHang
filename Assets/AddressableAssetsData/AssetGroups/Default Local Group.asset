@@ -35,13 +35,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 541799363d8fca0478ed4586b06852db
+    m_Address: Prefabs/Npc/BagNpc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 638a002a0c42fca49b721cf5284c17f4
     m_Address: Prefab/Monster
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64759d2bfa2981d4b80548269cac537c
+    m_Address: Prefab/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79444fed240e31f40b258c31c7021266
+    m_Address: Prefabs/Map/ParmingMap
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ae1ec6f90e86bf46ac6e77f420cef65
+    m_Address: Prefabs/Npc/BattleNpc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
     m_Address: Prefab/Dog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d91759134e74842469299a253b569c00
+    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

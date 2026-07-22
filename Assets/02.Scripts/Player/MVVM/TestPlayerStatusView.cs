@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TestPlayerStatusView : ViewBase
+public class TestPlayerStatusView : UIBase
 {
     [SerializeField] private Slider _sliderHp;
     [SerializeField] private Slider _sliderHunger;

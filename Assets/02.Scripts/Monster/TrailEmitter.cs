@@ -49,9 +49,8 @@ public class TrailEmitter : MonoBehaviour
         }
 
         Vector3 trailspawnPos = _trailSpawnPoint.position;
-        trailspawnPos.y = 0f;
 
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, _groundCheckDistance, _groundLayer))
+        if (Physics.Raycast(trailspawnPos, Vector3.down, out RaycastHit hit, _groundCheckDistance, _groundLayer))
         {
             trailspawnPos = hit.point;
         }

@@ -125,4 +125,11 @@ public class InventoryViewModel : ViewModelBase
 
         OnPropertyChanged("ItemListRemoved");
     }
+
+    public void TestAddItem()
+    {
+        NetworkManager.Instance.AddItemToInventory("Item_01", 5);
+        NetworkManager.Instance.AddItemToInventory("Item_02", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_03", 9);
+    }
 }
