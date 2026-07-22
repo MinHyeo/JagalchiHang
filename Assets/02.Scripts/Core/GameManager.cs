@@ -29,6 +29,16 @@ public class GameManager : SingletonBase<GameManager>
 
     }
 
+    public LobbyManager GetLobbyManager()
+    {
+        return _lobbyManager;
+    }
+
+    public WorldManager GetWorldManager()
+    {
+        return _worldManager;
+    }
+
     public void RequestMapChange(MapType mapType)
     {
         _worldManager.TransMap(mapType);

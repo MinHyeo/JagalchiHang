@@ -19,7 +19,7 @@ public class MapManager
     public async UniTask CreateMap()
     {
         await SpawnMap(MapType.ParmingMap, true);
-       await SpawnMap(MapType.ParkingGarage, false);
+        await SpawnMap(MapType.ParkingGarage, false);
 
         _currnetMapType = MapType.ParmingMap;
         //_mapList[_currnetMapType].gameObject.SetActive(true);

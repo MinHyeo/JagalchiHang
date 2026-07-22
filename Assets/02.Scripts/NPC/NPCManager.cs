@@ -15,6 +15,8 @@ public class NpcManager
 
     private ITargetable _chasePlayer;
 
+    private Monster _targetMonster;
+
     public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
     public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
 
@@ -255,5 +257,19 @@ public class NpcManager
 
         navMeshPosition = desiredPosition;
         return false;
+    }
+
+    // 플레이어가 공격한 몬스터 객체 세팅
+    public void SetTargetMonster(Monster targetMonster)
+    {
+        if (targetMonster == null) return;
+
+        _targetMonster = targetMonster;
+    }
+
+    // 타겟 몬스터 객체 반환
+    public Monster GetTargetMonster()
+    {
+        return _targetMonster;
     }
 }
