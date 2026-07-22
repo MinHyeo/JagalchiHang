@@ -45,8 +45,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64759d2bfa2981d4b80548269cac537c
+    m_Address: Prefab/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 79444fed240e31f40b258c31c7021266
-    m_Address: Prefabs/Map/Map
+    m_Address: Prefabs/Map/ParmingMap
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -57,6 +62,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
     m_Address: Prefab/Dog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d91759134e74842469299a253b569c00
+    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
