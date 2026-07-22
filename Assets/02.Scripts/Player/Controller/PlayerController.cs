@@ -175,6 +175,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void UseItem()
+    {
+
+    }
+
     // 사망
     public void Die()
     {

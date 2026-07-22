@@ -135,9 +135,8 @@ public class InventoryViewModel : ViewModelBase
 
     public void TestAddItem()
     {
-        NetworkManager.Instance.AddItemToInventory("Item_01", 5);
-        NetworkManager.Instance.AddItemToInventory("Item_02", 7);
-        NetworkManager.Instance.AddItemToInventory("Item_03", 9);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_09", 5);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_10", 7);
     }
 
     public bool RequestUseItem(long requestUseTargetItemUniqeuId)

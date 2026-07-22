@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum DamageType
@@ -96,7 +97,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHp(DamageType damageType)
+    private void DecreaseHp(DamageType damageType)
     {
         int decreaseValue = 0;
 
@@ -128,7 +129,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHunger()
+    private void DecreaseHunger()
     {
         _vm.CurrentHunger = Mathf.Max(0, _vm.CurrentHunger - _hungerDecrease);
         Debug.Log($"플레이어의 Hunger가 {_hungerDecrease}만큼 감소했다.    현재 Hunger : {_vm.CurrentHunger}");
@@ -139,7 +140,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseThirst()
+    private void DecreaseThirst()
     {
         _vm.CurrentThirst = Mathf.Max(0, _vm.CurrentThirst - _thirstDecrease);
         Debug.Log($"플레이어의 Thirst가 {_thirstDecrease}만큼 감소했다.    현재 Thirst  : {_vm.CurrentThirst}");
@@ -147,6 +148,27 @@ public class PlayerStatusController : MonoBehaviour
         if (_vm.CurrentThirst <= 0)
         {
             DecreaseHp(DamageType.Thirst);
+        }
+    }
+
+    private void IncreaseStatus()
+    {
+        List<ItemData> itemDatas = GameDataManager.Instance.GetAllData<ItemData>();
+        if (itemDatas == null) return;
+
+        foreach (var item in itemDatas)
+        {
+            if (item.IsUsable == true)
+            {
+                if (item.UseItemType == "Hunger")
+                {
+                    _vm.CurrentHunger = Math.Max(0, _vm.CurrentHunger + int.Parse(item.UseItemParameterList[0]));
+                }
+                else if (item.UseItemType == "Thirsty")
+                {
+                    _vm.CurrentThirst = Math.Max(0, _vm.CurrentThirst + int.Parse(item.UseItemParameterList[0]));
+                }
+            }
         }
     }
 }

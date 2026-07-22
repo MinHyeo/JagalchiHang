@@ -18,6 +18,9 @@ public class InventoryUI : UIBase
         _vm.PropertyChanged += OnPropertyChanged_View;
         _vm.AddInventorySlotViewModel();
         InitInventory();
+
+        // 테스트용 
+        _vm.TestAddItem();
     }
 
     private void OnDisable()
