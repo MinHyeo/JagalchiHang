@@ -1,0 +1,38 @@
+﻿using UnityEngine;
+using System;
+using Unity.Behavior;
+using Unity.Properties;
+
+[Serializable, GeneratePropertyBag]
+[Condition(
+    name : "Is Alerted",
+    story : "[Agent]가 동료로부터 경보를 받았는가",
+    category : "Conditions",
+    id : "f60718293a4b5c6d7e8f90a1b2c3d4e5")]
+
+public partial class IsAlertedCondition : Condition
+{
+    [SerializeReference] public BlackboardVariable<GameObject> Agent;
+
+    private IMonsterGroupBehavior _group;
+
+    public override void OnStart()
+    {
+
+    }
+
+    public override bool IsTrue()
+    {
+        if (_group == null)
+        {
+            _group = Agent.Value.GetComponent<Monster>().Group;
+        }
+
+        return _group.IsAlerted;
+    }
+
+    public override void OnEnd()
+    {
+        
+    }
+}

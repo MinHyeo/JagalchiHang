@@ -1,0 +1,122 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemySensor : MonoBehaviour
+{
+    private List<GameObject> monsters = new List<GameObject>(); // 감지 범위 내에 들어온 몬스터들 담을 리스트 
+
+    public GameObject CurrentTarget { get; private set; }
+
+    public bool isAutoDetect = true; // 자동탐색을 제어하기 위함
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Monster")) // 몬스터 레이어가 아니면 무시
+        {
+            return;
+        }
+
+        if (monsters.Contains(other.gameObject)) // 중복 체크
+        {
+            return;
+        }
+
+        monsters.Add(other.gameObject);
+
+        TestMonster monster = other.GetComponent<TestMonster>();
+
+        if (monster != null) 
+        {
+            monster.OnDead += OnMonsterDead;
+        }
+
+        if (isAutoDetect == true)
+        {
+            UpdateCurrentTarget();
+        }
+    }
+
+    private void OnTriggerExit(Collider other) //감지범위 벗어났을 때 
+    {
+        if (other.gameObject.layer != LayerMask.NameToLayer("Monster")) // 몬스터 레이어가 아니면 무시
+        {
+            return;
+        }
+        monsters.Remove(other.gameObject);
+
+        TestMonster monster = other.GetComponent<TestMonster>();
+
+        if (monster != null)
+        {
+            monster.OnDead -= OnMonsterDead;
+        }
+
+        if (isAutoDetect == true)
+        {
+            UpdateCurrentTarget();
+        }
+    }
+
+    public void ClearTarget() // 타겟을 완전히 비우고 센서 초기화 
+    {
+        CurrentTarget = null;
+        monsters.Clear();
+    }
+
+    private void UpdateCurrentTarget()
+    {
+        CurrentTarget = null; //매번 다시 계산하기 위해 초기화시킴
+
+        //처음에는 가장 가까운 거리를 무한대로 설정(그래야 처음 찾은 몬스터가 가장 가까운 몬스터가 된다.)
+        float closeDistance = Mathf.Infinity; 
+
+        for (int i = 0; i < monsters.Count; i++)
+        {
+            if (monsters[i] == null)
+            {
+                monsters.RemoveAt(i);
+                i--;
+                continue;
+            }
+
+            float distance = Vector3.Distance(transform.position, monsters[i].transform.position); //BattleNPC와 몬스터 사이 거리 계산
+
+            if (distance < closeDistance)  //현재 몬스터가 더 가깝다면
+            {
+                closeDistance = distance;
+                CurrentTarget = monsters[i];
+            }
+        }
+    }
+
+    //몬스터가 죽었을 때 호출 되는 함수(이벤트로 사용)
+    private void OnMonsterDead(TestMonster monster) 
+    {
+        monsters.Remove(monster.gameObject);
+
+        if(CurrentTarget == monster.gameObject)
+        {
+            CurrentTarget = null;
+        }
+
+        if (isAutoDetect == true) 
+        {
+            UpdateCurrentTarget(); // 범위에서 벗어나지 않았을 경우를 대비해서 다시 감지
+        }
+    }
+
+    private void OnDrawGizmosSelected() // 범위 그리기 
+    {
+        SphereCollider sphre = GetComponent<SphereCollider>();
+
+        if (sphre == null)
+        {
+            return;
+        }
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, sphre.radius);
+    }
+
+}

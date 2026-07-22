@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Default Local Group
+  m_GUID: 13f035feed29ed246ba1a825e93415c4
+  m_SerializeEntries:
+  - m_GUID: 0c1fc64c70affa4418da81c4bbbc731a
+    m_Address: Prefab/OilTrail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22fb9cfb5fd19c840bd24a7c6f720051
+    m_Address: Prefab/Trail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b8b8cc6a46132140b18eafe82bc10dc
+    m_Address: Prefab/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3da1af30b22b3344a84269b28bc9b462
+    m_Address: Prefab/Player
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 541799363d8fca0478ed4586b06852db
+    m_Address: Prefabs/Npc/BagNpc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 638a002a0c42fca49b721cf5284c17f4
+    m_Address: Prefab/Monster
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64759d2bfa2981d4b80548269cac537c
+    m_Address: Prefab/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 79444fed240e31f40b258c31c7021266
+    m_Address: Prefabs/Map/ParmingMap
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9ae1ec6f90e86bf46ac6e77f420cef65
+    m_Address: Prefabs/Npc/BattleNpc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
+    m_Address: Prefab/Dog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d91759134e74842469299a253b569c00
+    m_Address: Prefabs/Map/ParkingGarage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d1e9ef7c354e227479738996816d53c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 88cd92b1d92a18a409e4ff19cdaa640a, type: 2}
+    - {fileID: 11400000, guid: ea624ace6fdd793488c0c8a1ae687c87, type: 2}
