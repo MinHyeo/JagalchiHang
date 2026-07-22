@@ -14,7 +14,32 @@ public class InventoryViewModel : ViewModelBase
             if (_inventorySlots != value)
             {
                 _inventorySlots = value;
-                OnPropertyChanged(nameof(_inventorySlots));
+                OnPropertyChanged(nameof(InventorySlots));
+            }
+        }
+    }
+
+    public void SubcribeInventoryEvent()
+    {
+        InputManager.Instance.OnClickInventory += OnOpenInventory;
+    }
+
+    public void DisposeInventoryEvent()
+    { 
+        InputManager.Instance.OnClickInventory -= OnOpenInventory;
+    }
+
+    private void OnOpenInventory()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
+            {
+                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+            }
+            else
+            {
+                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
             }
         }
     }

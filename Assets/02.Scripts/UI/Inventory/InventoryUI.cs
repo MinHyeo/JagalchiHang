@@ -16,7 +16,7 @@ public class InventoryUI : UIBase
     {
         _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
         _vm.PropertyChanged += OnPropertyChanged_View;
-        _vm.TestAddItem();
+        _vm.AddInventorySlotViewModel();
         InitInventory();
     }
 

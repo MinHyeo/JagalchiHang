@@ -30,18 +30,6 @@ public class GameManager : SingletonBase<GameManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            if(UIManager.Instance.IsOpenUI(UIType.InventoryUI)) 
-            {
-                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
-            else
-            {
-                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
-        }
-
         _worldManager.WorldUpdate();
     }
 }

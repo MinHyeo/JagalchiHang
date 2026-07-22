@@ -1,6 +1,6 @@
 [
   {
-    "Id": "Item_01",
+    "Id": "Item_Drop_01",
     "ItemName": "나무 조각",
     "IconPath": "Images/Icon_Image/Image_WoodPiece",
     "IsStackable": true,
@@ -14,7 +14,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_02",
+    "Id": "Item_Drop_02",
     "ItemName": "막대기",
     "IconPath": "Images/Icon_Image/Image_WoodStick",
     "IsStackable": true,
@@ -28,7 +28,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_03",
+    "Id": "Item_Drop_03",
     "ItemName": "철 조각",
     "IconPath": "Images/Icon_Image/Image_IronPiece",
     "IsStackable": true,
@@ -42,7 +42,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_04",
+    "Id": "Item_Drop_04",
     "ItemName": "전자 칩",
     "IconPath": "Images/Icon_Image/Image_ChipCard",
     "IsStackable": true,
@@ -56,7 +56,7 @@
     "MaxDropCount": 5
   },
   {
-    "Id": "Item_05",
+    "Id": "Item_Drop_05",
     "ItemName": "빠루",
     "IconPath": "Images/Icon_Image/Image_Crowbar",
     "IsStackable": false,
@@ -70,7 +70,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_06",
+    "Id": "Item_Drop_06",
     "ItemName": "괭이",
     "IconPath": "Images/Icon_Image/Image_Hoe",
     "IsStackable": false,
@@ -84,7 +84,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_07",
+    "Id": "Item_Drop_07",
     "ItemName": "뒤짚개",
     "IconPath": "Images/Icon_Image/Image_Flipper",
     "IsStackable": false,
@@ -98,7 +98,7 @@
     "MaxDropCount": 2
   },
   {
-    "Id": "Item_08",
+    "Id": "Item_Drop_08",
     "ItemName": "공업용 기름",
     "IconPath": "Images/Icon_Image/Image_OilTank",
     "IsStackable": true,
@@ -112,7 +112,7 @@
     "MaxDropCount": 4
   },
   {
-    "Id": "Item_09",
+    "Id": "Item_Drop_09",
     "ItemName": "식물성 기름",
     "IconPath": null,
     "IsStackable": true,
@@ -238,7 +238,7 @@
     "MaxDropCount": null
   },
   {
-    "Id": "Item_10",
+    "Id": "Item_Drop_10",
     "ItemName": "통조림",
     "IconPath": "Images/Icon_Image/Image_Can",
     "IsStackable": true,
@@ -252,7 +252,7 @@
     "MaxDropCount": 4
   },
   {
-    "Id": "Item_11",
+    "Id": "Item_Drop_11",
     "ItemName": "물",
     "IconPath": "Images/Icon_Image/Image_Water",
     "IsStackable": true,
@@ -264,5 +264,187 @@
     "DropWeight": 2,
     "MinDropCount": 2,
     "MaxDropCount": 4
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": null,
+    "ItemName": null,
+    "IconPath": null,
+    "IsStackable": null,
+    "MaxCount": null,
+    "IsUsable": null,
+    "UseItemType": null,
+    "UseItemParameterList": null,
+    "UseItemDescription": null,
+    "DropWeight": null,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Food_01",
+    "ItemName": "감자전",
+    "IconPath": null,
+    "IsStackable": true,
+    "MaxCount": 10,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "20",
+    "UseItemDescription": "허기를 20 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Food_02",
+    "ItemName": "콩떡",
+    "IconPath": null,
+    "IsStackable": true,
+    "MaxCount": 15,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "10",
+    "UseItemDescription": "허기를 10 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Food_03",
+    "ItemName": "된장찌개",
+    "IconPath": null,
+    "IsStackable": false,
+    "MaxCount": 1,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "50",
+    "UseItemDescription": "허기를 50 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Food_04",
+    "ItemName": "감자 고로케",
+    "IconPath": null,
+    "IsStackable": true,
+    "MaxCount": 5,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "30",
+    "UseItemDescription": "허기를 30 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Food_05",
+    "ItemName": "칼국수",
+    "IconPath": null,
+    "IsStackable": false,
+    "MaxCount": 1,
+    "IsUsable": true,
+    "UseItemType": "Hunger",
+    "UseItemParameterList": "100",
+    "UseItemDescription": "허기를 100 채워준다",
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
   }
 ]
