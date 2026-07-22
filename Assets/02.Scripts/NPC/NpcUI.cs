@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcUI : MonoBehaviour
+public class NpcUI : UIBase
 {
     [SerializeField] private NpcManager npcManager;
     [SerializeField] private Toggle toggleAutoAttack;
     [SerializeField] private Toggle toggleAssistAttack;
     [SerializeField] private Toggle toggleFollow;
+
     private void OnEnable()
     {
         toggleAutoAttack.onValueChanged.AddListener(OnAutoAttackChanged);
@@ -21,7 +22,6 @@ public class NpcUI : MonoBehaviour
         toggleAssistAttack.onValueChanged.RemoveListener(OnAssistAttackChanged);
         toggleFollow.onValueChanged.RemoveListener(OnFollowChanged);
     }
-
 
     private void OnAutoAttackChanged(bool isOn)  //Npc매니저로 전달
     {

@@ -32,6 +32,7 @@ public class BattleNpc : MonoBehaviour
 
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
+        //Debug.Log($"[BattleNpc] {currentPlayerPosition}");
         if (_playerPosition != null)
         {
             _playerPosition.Value = currentPlayerPosition;
