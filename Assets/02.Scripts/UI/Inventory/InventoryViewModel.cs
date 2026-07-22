@@ -152,7 +152,7 @@ public class InventoryViewModel : ViewModelBase
                 break;
             }
         }
-        
+
         if (targetSlot == null || !targetSlot.IsUsable) return false;
 
         var itemData = GameDataManager.Instance.GetData<ItemData>(targetSlot.ItemDataId);
@@ -169,34 +169,22 @@ public class InventoryViewModel : ViewModelBase
         return true;
     }
 
-    private void UseItemFunction(string itemUseType, List<string> useItemParamList)
+    private void UseItemFunction(string itemUseType, int useItemParamList)
     {
-        if (useItemParamList == null || useItemParamList.Count == 0) return;
+        if (useItemParamList == 0) return;
 
         var playerVm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         if (itemUseType == "Hunger")
         {
-            if (useItemParamList.Count > 0) 
-            {
-                string str = useItemParamList[0];
-                int statChangeVal = int.Parse(str);
-
-                // TODO : 관련 로직 불러오기 playerVm.
-                playerVm.CurrentHunger = Math.Min(0, playerVm.CurrentHunger + statChangeVal);
-                Debug.LogWarning($"플레이어의 허기가 {statChangeVal}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
-            }
+            // TODO : 관련 로직 불러오기 playerVm.
+            playerVm.CurrentHunger = Math.Min(0, playerVm.CurrentHunger + useItemParamList);
+            Debug.LogWarning($"플레이어의 허기가 {useItemParamList}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
         }
         else if (itemUseType == "Thirsty")
         {
-            if (useItemParamList.Count > 0)
-            {
-                string str = useItemParamList[0];
-                int statChangeVal = int.Parse(str);
-
-                // TODO : 관련 로직 불러오기 playerVm.
-                playerVm.CurrentThirst = Math.Min(0, playerVm.CurrentThirst + statChangeVal);
-                Debug.LogWarning($"플레이어의 목마름이 {statChangeVal}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
-            }
+            // TODO : 관련 로직 불러오기 playerVm.
+            playerVm.CurrentThirst = Math.Min(0, playerVm.CurrentThirst + useItemParamList);
+            Debug.LogWarning($"플레이어의 목마름이 {useItemParamList}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
         }
     }
 
