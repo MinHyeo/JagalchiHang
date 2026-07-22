@@ -32,6 +32,11 @@ public class PlayerManager : ITargetable
         BindPlayerStatusView();
     }
 
+    public void TransPlayerPosition(Vector3 transPosition)
+    {
+        _player.transform.position = transPosition;
+    }
+
     // 생성된 플레이어를 카메라의 추적 대상으로 설정
     private void UpdateCameraTarget()
     {
