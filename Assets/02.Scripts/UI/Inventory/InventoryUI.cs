@@ -90,7 +90,7 @@ public class InventoryUI : UIBase
 
     public void RequestMoveFromFarming(int farmingIdx, int invenIdx)
     {
-        string currentBoxUniqueId = NetworkManager.Instance.FarmingService.CurrentActiveBoxUniqueId;
+        int currentBoxUniqueId = NetworkManager.Instance.FarmingService.CurrentActiveBoxUniqueId;
         NetworkManager.Instance.RequestMoveItem_FarmingToInven(farmingIdx, invenIdx, currentBoxUniqueId);
     }
 

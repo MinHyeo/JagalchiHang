@@ -45,12 +45,13 @@ public class NetworkManager : SingletonBase<NetworkManager>
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
         NpcService = new NetworkNpcService();
+        CraftService = new NetworkCraftService();
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
     }
 
-    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, string boxUniqueId)
+    public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
     {
         var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
         var farmingSlot = FarmingService.LoadFarmingBox(boxUniqueId).FarmingSlots[farmingIdx];
@@ -58,7 +59,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         MoveOrSwapSlots(invenSlot, farmingSlot);
     }
 
-    public void RequestMoveItem_FarmingToInven(int farmingIdx, int invenIdx, string boxUniqueId)
+    public void RequestMoveItem_FarmingToInven(int farmingIdx, int invenIdx, int boxUniqueId)
     {
         var farmingSlot = FarmingService.LoadFarmingBox(boxUniqueId).FarmingSlots[farmingIdx];
         var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
