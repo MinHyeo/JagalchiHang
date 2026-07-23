@@ -7,6 +7,7 @@ public class CraftCategorySlotViewModel : ViewModelBase
         OnPropertyChanged(nameof(RecipeId));
         OnPropertyChanged(nameof(IconPath));
         OnPropertyChanged(nameof(IsSelected));
+        OnPropertyChanged(nameof(ItemName));
     }
 
     private string _recipeId;
@@ -51,6 +52,20 @@ public class CraftCategorySlotViewModel : ViewModelBase
         }
     }
 
+    private string _itemName;
+    public string ItemName
+    {
+        get => _itemName;
+        set
+        {
+            if (_itemName != value)
+            {
+                _itemName = value;
+                OnPropertyChanged(nameof(ItemName));
+            }
+        }
+    }
+
     public void SetSlotInfo(RecipeData recipeData)
     {
         if (recipeData == null)
@@ -58,6 +73,7 @@ public class CraftCategorySlotViewModel : ViewModelBase
             RecipeId = null;
             IconPath = null;
             IsSelected = false;
+            ItemName = null;
             return;
         }
 
@@ -67,6 +83,7 @@ public class CraftCategorySlotViewModel : ViewModelBase
         if (resultItemData != null)
         {
             IconPath = resultItemData.IconPath;
+            ItemName = resultItemData.ItemName;
         }
         else
         {
