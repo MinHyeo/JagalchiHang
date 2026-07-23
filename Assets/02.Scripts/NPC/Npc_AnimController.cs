@@ -14,20 +14,27 @@ public class Npc_AnimController : MonoBehaviour
 
     private Npc_AnimState currentState;
 
-    public void SetNpcAnimState(Npc_AnimState newsate)
+    public void SetNpcAnimState(Npc_AnimState newstate)
     {
-        currentState = newsate;
+        if(currentState == newstate)
+        {
+            return;
+        }
+        currentState = newstate;
+
+        ResetAllAnimParameters();
 
         switch (currentState)
         {
+
             case Npc_AnimState.Idle:
                 ResetAllAnimParameters();
                 break;
             case Npc_AnimState.Walk:
-                ResetAllAnimParameters(); 
+                Npc_Animator.SetBool("IsWalk", true);
                 break;
             case Npc_AnimState.Attack:
-                ResetAllAnimParameters();
+                Npc_Animator.SetBool("IsAttack", true);
                 break;
 
             default:

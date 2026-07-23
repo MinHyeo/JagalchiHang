@@ -438,7 +438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e811cf59935c2e04d87d8f3136694202, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcUI
-  npcManager: {fileID: 0}
   toggleAutoAttack: {fileID: 8367594618279543585}
   toggleAssistAttack: {fileID: 8514614882885914144}
   toggleFollow: {fileID: 6460522262172176988}
