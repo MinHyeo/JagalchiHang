@@ -9,7 +9,7 @@ public enum DamageType
     Thirst
 }
 
-public class PlayerStatusController : MonoBehaviour
+public class PlayerStatusController : MonoBehaviour, IPlayerDamageable
 {
     private int _hungerInterval;
     private int _thirstInterval;
@@ -25,6 +25,10 @@ public class PlayerStatusController : MonoBehaviour
     {
         _vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         _playerController = GetComponent<PlayerController>();
+
+        var player = this.GetComponentInParent<Player>();
+        if (player == null) return;
+
     }
 
     private void OnEnable()
@@ -36,11 +40,6 @@ public class PlayerStatusController : MonoBehaviour
         }
 
         return;
-    }
-
-    private void Update()
-    {
-        TestStatusDecrease();
     }
 
     public void InitPlayerStatus(PlayerData playerData)
@@ -63,12 +62,9 @@ public class PlayerStatusController : MonoBehaviour
         _vm.CurrentThirst = _vm.MaxThirst;
     }
 
-    private void TestStatusDecrease()
+    public void TakeDamage(int attackPower)
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            DecreaseHp(DamageType.Monster);
-        }
+        DecreaseHp(DamageType.Monster, attackPower);
     }
 
     private void OnHungerChanged()
@@ -97,14 +93,14 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    private void DecreaseHp(DamageType damageType)
+    private void DecreaseHp(DamageType damageType, int damageAmount)
     {
         int decreaseValue = 0;
 
         switch(damageType)
         {
             case DamageType.Monster:
-                decreaseValue = 10;
+                decreaseValue = damageAmount;
                 break;
             case DamageType.Hunger:
                 decreaseValue = _hungerDamage;
@@ -136,7 +132,7 @@ public class PlayerStatusController : MonoBehaviour
 
         if(_vm.CurrentHunger <= 0)
         {
-            DecreaseHp(DamageType.Hunger);
+            DecreaseHp(DamageType.Hunger, _hungerDamage);
         }
     }
 
@@ -147,7 +143,7 @@ public class PlayerStatusController : MonoBehaviour
 
         if (_vm.CurrentThirst <= 0)
         {
-            DecreaseHp(DamageType.Thirst);
+            DecreaseHp(DamageType.Thirst, _thirstDamage);
         }
     }
 }

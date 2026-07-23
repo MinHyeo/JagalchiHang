@@ -5,7 +5,7 @@ public interface IMonsterCombatable
     bool IsAttacking { get; }
     float AttackRange { get; }
 
-    float AttackPower { get; }
+    int AttackPower { get; }
 
     event Action OnAttackStarted;
     event Action OnAttackEnded;
