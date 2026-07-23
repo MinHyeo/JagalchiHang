@@ -17,7 +17,7 @@ public class Box : MonoBehaviour, IInteractionable
 
     private void OpenBoxUI(string dd)
     {
-        UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.FarmingUI);
+        UIManager.Instance.OpenFarmingUI(_uniqueId);
         UIManager.Instance.RemoveSlotHudInteraction(_uniqueId);
     }
 }

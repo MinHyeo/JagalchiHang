@@ -10,14 +10,14 @@ public class FarmingUI : UIBase
 
     private Dictionary<int, FarmingSlotUI> _slotUIList = new Dictionary<int, FarmingSlotUI>();
     private FarmingViewModel _vm;
-    private string _boxtUniqueId;
+    private int _boxtUniqueId;
 
     private void OnDisable()
     {
         ClearAllFarmingSlot();
     }
 
-    public void Init(string boxId)
+    public void Init(int boxId)
     {
         _boxtUniqueId = boxId;
 
