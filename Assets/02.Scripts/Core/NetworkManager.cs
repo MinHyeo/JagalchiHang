@@ -45,6 +45,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
         NpcService = new NetworkNpcService();
+        CraftService = new NetworkCraftService();
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();

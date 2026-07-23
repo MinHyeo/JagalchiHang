@@ -1,13 +1,15 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.ComponentModel;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CraftCategorySlot : MonoBehaviour
 {
-    [SerializeField] Image _imageIcon;
-    [SerializeField] UIButton _buttonChoose;
+    [SerializeField] private Image _imageIcon;
+    [SerializeField] private UIButton _buttonChoose;
+    [SerializeField] private TextMeshProUGUI _textName;
 
     private CraftCategorySlotViewModel _vm;
     public event Action<string> OnSlotClicked;
@@ -25,6 +27,7 @@ public class CraftCategorySlot : MonoBehaviour
         _vm.PropertyChanged += OnPropertyChanged_View;
 
         UpdateIcon();
+        UpdateText();
 
         _buttonChoose.BindOnClickButtonEvent(OnClickSlot);
     }
@@ -42,6 +45,21 @@ public class CraftCategorySlot : MonoBehaviour
             _imageIcon.gameObject.SetActive(true);
         }
     }
+
+    private void UpdateText()
+    {
+        if (_vm == null || string.IsNullOrEmpty(_vm.ItemName))
+        {
+            _textName.text = null;
+            _imageIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            _textName.text = _vm.ItemName;
+            _imageIcon.gameObject.SetActive(true);
+        }
+    }
+
     private async UniTask InitImage()
     {
         var iconPath = _vm.IconPath;

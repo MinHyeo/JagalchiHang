@@ -30,7 +30,6 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    // 유니크 아이디가 생기면 교환 로직 수정
     public void SwapSlots(int startIdx, int endIdx)
     {
         if (!_inventorySlots.ContainsKey(startIdx) || !_inventorySlots.ContainsKey(endIdx)) return;
@@ -138,6 +137,22 @@ public class InventoryViewModel : ViewModelBase
     {
         NetworkManager.Instance.AddItemToInventory("Item_Drop_09", 5);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_10", 7);
+        NetworkManager.Instance.AddItemToInventory("Crop_Carrot", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Corn", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Onion", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Pea", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Potato", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Pumpkin", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Tomato", 10);
+        NetworkManager.Instance.AddItemToInventory("Crop_Wheat", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Carrot", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Corn", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Onion", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Pea", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Potato", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Pumpkin", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Tomato", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Seed_Wheat", 7);
     }
 
     public bool RequestUseItem(long requestUseTargetItemUniqeuId)
@@ -160,7 +175,7 @@ public class InventoryViewModel : ViewModelBase
 
         if (!string.IsNullOrEmpty(itemData.UseItemType))
         {
-            UseItemFunction(itemData.UseItemType, itemData.UseItemParameterList);
+            UseItemFunction(itemData.UseItemType, itemData.UseItemEffect);
         }
 
         targetSlot.ConsumeItem();
@@ -169,24 +184,23 @@ public class InventoryViewModel : ViewModelBase
         return true;
     }
 
-    private void UseItemFunction(string itemUseType, int useItemParamList)
-    {
-        if (useItemParamList == 0) return;
+    private void UseItemFunction(string itemUseType, int useItemEffect) 
+    { 
+        if (useItemEffect == 0) return;
 
         var playerVm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         if (itemUseType == "Hunger")
         {
-            playerVm.CurrentHunger = Math.Min(playerVm.CurrentHunger + useItemParamList, playerVm.MaxHunger);
-            Debug.Log($"플레이어의 허기가 {useItemParamList}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
+            playerVm.CurrentHunger = Math.Min(playerVm.CurrentHunger + useItemEffect, playerVm.MaxHunger);
+            Debug.Log($"플레이어의 허기가 {useItemEffect}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
         }
         else if (itemUseType == "Thirsty")
         {
-            playerVm.CurrentThirst = Math.Min(playerVm.CurrentThirst + useItemParamList, playerVm.MaxThirst);
-            Debug.Log($"플레이어의 목마름이 {useItemParamList}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
+            playerVm.CurrentThirst = Math.Min(playerVm.CurrentThirst + useItemEffect, playerVm.MaxThirst);
+            Debug.Log($"플레이어의 목마름이 {useItemEffect}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
         }
     }
 
-    // 아이템 하나씩 제거, 전부 없으면 클리어
     public void RemoveItemSlotViewModel(long uniqueId)
     {
         foreach (var slot in _inventorySlots.Values)
