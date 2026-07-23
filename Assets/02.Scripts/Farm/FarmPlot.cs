@@ -4,7 +4,7 @@ using UnityEngine;
 public class FarmPlot : MonoBehaviour
 {
     [SerializeField] private GameObject Object_PlotSet;
-    [SerializeField] private Transform Transform_CropSpawnPoint;
+    [SerializeField] private Transform[] Transform_CropSpawnPoints;
     [SerializeField] private int _plotUniqueId;
 
     private FarmManager _farmManager;
@@ -45,22 +45,30 @@ public class FarmPlot : MonoBehaviour
 
     public Vector3 GetSpawnPosition()
     {
-        return Transform_CropSpawnPoint.position;
+        return Transform_CropSpawnPoints[0].position;
     }
 
     public async UniTask ChangeCropModel(string prefabPath, string cropDataId)
     {
-        var gObj = await GameObjectManager.Instance.CreateObjectAsync(cropDataId, prefabPath, Transform_CropSpawnPoint.position);
-        if (gObj == null)
+        Debug.Log($"ChangeCropModel 호출됨, path: {prefabPath}");
+
+        for (int i = 0; i < Transform_CropSpawnPoints.Length; i++)
         {
-            return;
+            var gObj = await GameObjectManager.Instance.CreateObjectAsync(cropDataId, prefabPath, Transform_CropSpawnPoints[i].position);
+            Debug.Log($"생성된 오브젝트: {gObj}");
+            if (gObj == null)
+            {
+                return;
+            }
+
+            var cropObject = gObj.GetComponent<CropObject>();
+            if (cropObject != null)
+            {
+                _farmManager.RegisterCropObject(_plotUniqueId, cropObject);
+            }
         }
 
-        var cropObject = gObj.GetComponent<CropObject>();
-        if (cropObject != null)
-        {
-            _farmManager.RegisterCropObject(_plotUniqueId, cropObject);
-        }
+       
 
     }
 

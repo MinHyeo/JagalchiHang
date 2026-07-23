@@ -7,7 +7,7 @@ public class FarmManager
 {
     private FarmViewModel _viewModel;
     //private List<FarmPlotModel> _farmPlotList = new List<FarmPlotModel>();
-    private Dictionary<int, CropObject> _cropObjectDictionary = new Dictionary<int, CropObject>();
+    private Dictionary<int, List<CropObject>> _cropObjectDictionary = new Dictionary<int, List<CropObject>>();
 
     public static event Action OnFarmPlotsSpawned;
     public FarmManager()
@@ -87,6 +87,9 @@ public class FarmManager
 
     private async UniTask OnPlotGrowthChanged(FarmPlotModel plot)
     {
+        Debug.Log($"OnPlotGrowthChanged 호출됨, plotId: {plot.PlotUniqueId}, stage: {plot.CurrentGrowthStage}");
+
+
         var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
         if (cropData == null)
         {
@@ -109,7 +112,11 @@ public class FarmManager
 
         if (_cropObjectDictionary.ContainsKey(plot.PlotUniqueId))
         {
-            _cropObjectDictionary[plot.PlotUniqueId].RequestDestroySelf();
+            var cropObjects = _cropObjectDictionary[plot.PlotUniqueId];
+            for (int i = 0; i < cropObjects.Count; i++)
+            {
+                cropObjects[i].RequestDestroySelf();
+            }
             UnregisterCropObject(plot.PlotUniqueId);
         }
 
@@ -164,8 +171,10 @@ public class FarmManager
     {
         if (_cropObjectDictionary.ContainsKey(plotUniqueId) == false)
         {
-            _cropObjectDictionary.Add(plotUniqueId, cropObject);
+            _cropObjectDictionary.Add(plotUniqueId, new List<CropObject>());
         }
+        _cropObjectDictionary[plotUniqueId].Add(cropObject);
+
     }
 
     public void UnregisterCropObject(int plotUniqueId)
@@ -278,7 +287,11 @@ public class FarmManager
 
         if (_cropObjectDictionary.ContainsKey(plot.PlotUniqueId))
         {
-            _cropObjectDictionary[plot.PlotUniqueId].RequestDestroySelf();
+            var cropObjects = _cropObjectDictionary[plot.PlotUniqueId];
+            for (int i = 0; i < cropObjects.Count; i++)
+            {
+                cropObjects[i].RequestDestroySelf();
+            }
             UnregisterCropObject(plot.PlotUniqueId);
         }
 
@@ -307,6 +320,24 @@ public class FarmManager
         }
 
         return true;
+    }
+
+    public bool RequestUnlockNextPlot()
+    {
+        for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
+        {
+            if (_viewModel.FarmPlotList[i].IsUnlocked == false)
+            {
+                return RequestUnlockPlot(_viewModel.FarmPlotList[i]);
+            }
+        }
+        Debug.LogWarning("해금할 밭이 없습니다.");
+        return false;
+    }
+
+    public void OnMapChanged()
+    {
+        OnFarmPlotsSpawned?.Invoke();
     }
 
 
