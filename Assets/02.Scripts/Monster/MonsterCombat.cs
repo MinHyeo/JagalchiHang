@@ -4,12 +4,18 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 {
-    [SerializeField] private float _attackCooldown = 1.5f;
+    [Header("Attack")]
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private LayerMask _playerLayer;
+
+    [SerializeField] private float _attackCooldown = 2.5f;
     [SerializeField] private float _attackDuration = 0.6f;
     [SerializeField] private float _corpseLingerDuration = 5f;
 
     private IMonsterDamageable _damageable;
     private IMonsterStatProvider _statProvider;
+    private IMonsterMoveable _moveable;
+    private Unity.Behavior.BehaviorGraphAgent _behaviorGraphAgent;
     private Collider _collider;
     private bool _isAttacking;
     private float _lastAttackTime;
@@ -24,7 +30,7 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         get { return _statProvider.AttackRange; }
     }
 
-    public float AttackPower
+    public int AttackPower
     {
         get { return _statProvider.AttackPower; }
     }
@@ -35,6 +41,8 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
     private void Awake()
     {
         _damageable = GetComponent<IMonsterDamageable>();
+        _moveable = GetComponent<IMonsterMoveable>();
+        _behaviorGraphAgent = GetComponent<Unity.Behavior.BehaviorGraphAgent>();
         _collider = GetComponent<Collider>();
         _damageable.OnDied += HandleDied;
     }
@@ -55,12 +63,18 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
     private void OnEnable()
     {
         _isAttacking = false;
+        _lastAttackTime = 0f;
 
         CancelInvoke(nameof(ReturnToPool));
 
         if (_collider != null)
         {
             _collider.enabled = true;
+        }
+
+        if (_behaviorGraphAgent != null)
+        {
+            _behaviorGraphAgent.enabled = true;
         }
     }
 
@@ -84,6 +98,7 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         return true;
     }
     
+    // 공격 시작
     public void Attack()
     {
         if (!CanAttack())
@@ -100,8 +115,23 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 
         CancelInvoke(nameof(EndAttack));
         Invoke(nameof(EndAttack), _attackDuration);
+    }
 
-        // 추후 애니메이션 생기면 수정예정
+    // 타격 판정
+    public void AttackHit()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, AttackRange, _playerLayer);
+
+        foreach(var hitCollider in hitColliders)
+        {
+            Player player = hitCollider.GetComponent<Player>();
+            if (player == null) continue;
+
+            var damageable = player.Damageable;
+            if (damageable == null) continue;
+
+            damageable.TakeDamage(AttackPower);
+        }
     }
 
     public void EndAttack()
@@ -118,6 +148,13 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         Debug.Log($"{name} : 사망");
 
         _collider.enabled = false;
+        _moveable.Stop();
+
+        if (_behaviorGraphAgent != null)
+        {
+            _behaviorGraphAgent.enabled = false;
+        }
+
         Invoke(nameof(ReturnToPool), _corpseLingerDuration);
     }
 

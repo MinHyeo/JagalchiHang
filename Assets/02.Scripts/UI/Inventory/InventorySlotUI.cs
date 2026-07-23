@@ -5,17 +5,20 @@ using TMPro;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using Cysharp.Threading.Tasks;
+using System;
 
-public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     [Header("등록 부분")]
     [SerializeField] private Image _imageIcon;
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private CanvasGroup _canvasGroup;
 
-    private InventorySlotViewModel _vm; // 뷰모델 멤버변수
-    private InventoryUI _inventoryUI; // 부모 참조 수정 필요,
+    private InventorySlotViewModel _vm;
+    private InventoryUI _inventoryUI;
     private Canvas _cachedCanvas;
+
+    public event Action<int, InventorySlotViewModel> OnSlotDoubleClicked;
 
     private int _slotKey;
     public int SlotKey => _slotKey;
@@ -25,10 +28,10 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         UnbindViewModel();
     }
 
-    public void Setup(InventoryUI inv, int key)
+    public void Setup(InventoryUI inventory, int slotKey)
     {
-        _inventoryUI = inv;
-        _slotKey = key;
+        _inventoryUI = inventory;
+        _slotKey = slotKey;
     }
 
     public void BindViewModel(InventorySlotViewModel vm)
@@ -55,9 +58,13 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             case nameof(InventorySlotViewModel.ItemDataId):
                 {
-                    UpdateIcon();
                 }
                 break;
+            case nameof(InventorySlotViewModel.IconPath):
+                {
+                    UpdateIcon();
+                }
+                break ;
             case nameof(InventorySlotViewModel.ItemStackCount):
                 {
                     UpdateCountText();
@@ -74,8 +81,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void UpdateIcon()
     {
-        if (string.IsNullOrEmpty(_vm?.ItemDataId))
+        if (_vm == null || string.IsNullOrEmpty(_vm?.ItemDataId))
         {
+            _imageIcon.sprite = null;
             _imageIcon.gameObject.SetActive(false);
         }
         else
@@ -101,7 +109,16 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private async UniTask InitImage()
     {
         var iconPath = _vm.IconPath;
-        _imageIcon.sprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+        if (string.IsNullOrEmpty(iconPath)) return;
+
+        var cancellationToken = this.GetCancellationTokenOnDestroy();
+
+        Sprite loadecSprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+
+        if (cancellationToken.IsCancellationRequested) return;
+        if (_vm == null || _vm.IconPath != iconPath) return;
+
+        _imageIcon.sprite = loadecSprite;
     }
 
     // 드래그 부분
@@ -140,15 +157,19 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public void OnEndDrag(PointerEventData eventData)
     {
         _imageIcon.transform.SetParent(this.transform);
-        _imageIcon.rectTransform.localPosition = Vector2.zero;
+
+        RectTransform rt = _imageIcon.rectTransform;
+        rt.anchoredPosition = Vector2.zero;
+        rt.localScale = Vector3.one;
 
         if (_canvasGroup != null)
         {
             _canvasGroup.blocksRaycasts = true;
         }
+
+        UpdateUI();
     }
 
-    // 관계 정의 필요
     public void OnDrop(PointerEventData eventData)
     {
         if (_inventoryUI == null) return;
@@ -170,6 +191,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (fromStorageSlotrUI != null)
         {
             _inventoryUI.RequestMoveFromStorage(fromStorageSlotrUI.SlotKey, this.SlotKey);
+        }
+    }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_vm == null || string.IsNullOrEmpty(_vm.ItemDataId)) return;
+
+        if (eventData.button == PointerEventData.InputButton.Left && eventData.clickCount == 2)
+        {
+            OnSlotDoubleClicked?.Invoke(_slotKey, _vm);
         }
     }
 }

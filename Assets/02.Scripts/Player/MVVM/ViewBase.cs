@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ViewBase : SampleUIBase
+public class ViewBase : UIBase
 {
     
 }

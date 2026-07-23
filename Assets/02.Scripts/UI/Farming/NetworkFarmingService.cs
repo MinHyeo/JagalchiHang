@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class NetworkFarmingService
 {
-    private Dictionary<string, FarmingViewModel> _activeFarmingBoxList = new Dictionary<string, FarmingViewModel>();
+    private Dictionary<int, FarmingViewModel> _activeFarmingBoxList = new Dictionary<int, FarmingViewModel>();
     private FarmingViewModel _localFarmingViewModel;
 
-    private string _currentActiveBoxUniqueId = string.Empty;
-    public string CurrentActiveBoxUniqueId => _currentActiveBoxUniqueId;
+    private int _currentActiveBoxUniqueId;
+    public int CurrentActiveBoxUniqueId => _currentActiveBoxUniqueId;
 
     public FarmingViewModel GetFarmingViewModel()
     {
@@ -20,13 +20,14 @@ public class NetworkFarmingService
 
     private FarmingViewModel CreateLocalFarmingViewModel()
     {
+        GameDataManager.Instance.LoadData<ItemData>();
         var farmingVm = new FarmingViewModel();
-        farmingVm.AddFarmingSlotViewModel();
         _localFarmingViewModel = farmingVm;
+        farmingVm.AddFarmingSlotViewModel();
         return farmingVm;
     }
 
-    public FarmingViewModel LoadFarmingBox(string boxUniqueId)
+    public FarmingViewModel LoadFarmingBox(int boxUniqueId)
     {
         _currentActiveBoxUniqueId = boxUniqueId;
 

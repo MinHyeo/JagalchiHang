@@ -8,7 +8,7 @@ public class PlayerManager : ITargetable
     private GameObject _player;
 
     //[나라]TODO 
-    private Vector3 _playerSpawnPos = new Vector3(20f, 0f, -3f);
+    private Vector3 _playerSpawnPos = new Vector3(20f, 1f, -3f);
     private PlayerController _playerController;
 
     public event Action<Monster> MonsterAttacked;
@@ -29,7 +29,7 @@ public class PlayerManager : ITargetable
         _playerController.OnMonsterAttacked += OnMonsterAttacked;
 
         UpdateCameraTarget();
-        BindPlayerStatusView();
+        BindMainUIView();
     }
 
     public void TransPlayerPosition(Vector3 transPosition)
@@ -43,18 +43,18 @@ public class PlayerManager : ITargetable
         CameraController.SetTrackingTarget(_player.transform);
     }
 
-    private void BindPlayerStatusView()
+    private void BindMainUIView()
     {
-        var vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
+        var vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         if (vm == null) return;
 
-        var testPlayerStatus = SampleUIManager.Instance.GetCreatedUI(SampleUIRootType.MainUI, SampleUIType.TestPlayerStatus);
-        if (testPlayerStatus == null) return;
+        var mainUI = UIManager.Instance.GetOpenUI(UIRootType.MainUI, UIType.MainUI);
+        if (mainUI == null) return;
 
-        var testPlayerStatusView = testPlayerStatus.GetComponent<TestPlayerStatusView>();
-        if (testPlayerStatusView == null) return;
+        var mainUIComponent = mainUI.GetComponent<MainUI>();
+        if (mainUIComponent == null) return;
 
-        testPlayerStatusView.BindViewModel(vm);
+        mainUIComponent.BindViewModel(vm);
     }
 
     private void OnMonsterAttacked(Monster monster)

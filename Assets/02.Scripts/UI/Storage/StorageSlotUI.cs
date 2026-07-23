@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Cysharp.Threading.Tasks;
+using System.ComponentModel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,10 +24,10 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         UnbindViewModel();
     }
 
-    public void Setup(StorageUI inv, int key)
+    public void Setup(StorageUI storage, int slotKey)
     {
-        _storageUI = inv;
-        _slotKey = key;
+        _storageUI = storage;
+        _slotKey = slotKey;
     }
 
     public void BindViewModel(StorageSlotViewModel vm)
@@ -35,6 +36,7 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         _vm = vm;
         _vm.PropertyChanged += OnPropertyChanged_View;
+        _vm.InvokeOnceInit();
 
         UpdateUI();
     }
@@ -52,12 +54,16 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         switch (e.PropertyName)
         {
-            case nameof(StorageSlotViewModel.ItemDataId):
+            case nameof(FarmingSlotViewModel.ItemDataId):
+                {
+                }
+                break;
+            case nameof(FarmingSlotViewModel.IconPath):
                 {
                     UpdateIcon();
                 }
                 break;
-            case nameof(StorageSlotViewModel.ItemStackCount):
+            case nameof(FarmingSlotViewModel.ItemStackCount):
                 {
                     UpdateCountText();
                 }
@@ -79,8 +85,8 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         else
         {
+            InitImage().Forget();
             _imageIcon.gameObject.SetActive(true);
-            // TODO: 이미지 로드 필요
         }
     }
 
@@ -95,6 +101,21 @@ public class StorageSlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             _countText.gameObject.SetActive(false);
         }
+    }
+
+    private async UniTask InitImage()
+    {
+        var iconPath = _vm.IconPath;
+        if (string.IsNullOrEmpty(iconPath)) return;
+
+        var cancellationToken = this.GetCancellationTokenOnDestroy();
+
+        Sprite loadecSprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+
+        if (cancellationToken.IsCancellationRequested) return;
+        if (_vm == null || _vm.IconPath != iconPath) return;
+
+        _imageIcon.sprite = loadecSprite;
     }
 
     public void OnBeginDrag(PointerEventData eventData)

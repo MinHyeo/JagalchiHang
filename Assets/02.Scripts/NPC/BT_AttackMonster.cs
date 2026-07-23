@@ -103,6 +103,9 @@ public partial class BT_AttackMonster : Action
         {
             _attacker.StopAttack();
 
+            _npcManager.ClearTargetMonster();
+
+
             CurrentState.Value = NpcState.Chase;
 
             return true;
