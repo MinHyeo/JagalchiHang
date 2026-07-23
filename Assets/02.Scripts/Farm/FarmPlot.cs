@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class FarmPlot : MonoBehaviour
+public class FarmPlot : MonoBehaviour, IInteractionable
 {
     [SerializeField] private GameObject Object_PlotSet;
     [SerializeField] private Transform[] Transform_CropSpawnPoints;
@@ -42,6 +42,32 @@ public class FarmPlot : MonoBehaviour
     {
         Object_PlotSet.SetActive(true);
     }
+
+
+    public void Interaction(Transform transform)
+    {
+        Debug.Log($"FarmPlot Interaction 호출됨");
+        var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+        if (plot == null)
+        {
+            return;
+        }
+
+        if (plot.IsUnlocked == false)
+        {
+            _farmManager.RequestUnlockNextPlot();
+            return;
+        }
+
+        if (plot.IsPlanted == true)
+        {
+            _farmManager.RequestHarvestCrop(plot);
+            return;
+        }
+
+        // UIManager.Instance.OpenFarmUI();
+    }
+
 
     public Vector3 GetSpawnPosition()
     {

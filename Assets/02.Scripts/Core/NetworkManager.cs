@@ -9,6 +9,8 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkStorageService StorageService { get; private set; }
     public NetworkNpcService NpcService { get; private set; }
 
+    public NetworkFarmService FarmService { get; private set; }
+
 
     private string GetSaveFilePath(int slotIndex)
     {

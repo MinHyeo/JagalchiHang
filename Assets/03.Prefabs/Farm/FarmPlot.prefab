@@ -225,9 +225,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7966381267212972688}
   - component: {fileID: 6345010784807997740}
+  - component: {fileID: -1214765895799924443}
   m_Layer: 0
   m_Name: FarmPlot
-  m_TagString: Untagged
+  m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,6 +280,27 @@ MonoBehaviour:
   - {fileID: 4325395948232486832}
   - {fileID: 988122491362234917}
   _plotUniqueId: 1
+--- !u!65 &-1214765895799924443
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2454035133420708245}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 8.012966, y: 0.2616358, z: 1}
+  m_Center: {x: -3.506483, y: 0.07964423, z: 0}
 --- !u!1 &2550577916177204638
 GameObject:
   m_ObjectHideFlags: 0
