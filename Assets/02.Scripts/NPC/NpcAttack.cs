@@ -58,12 +58,16 @@ public class NpcAttack : MonoBehaviour
         isAttack = false;
         _coolTimer = 0.0f;
 
-       _agent.ResetPath();
+        if (_agent != null && _agent.enabled && _agent.isOnNavMesh)
+        {
+            _agent.ResetPath();
+        }
        
     }
 
     private void Update()
     {
+
         if (isAttack == false || _attackTarget == null)
         {
             return;

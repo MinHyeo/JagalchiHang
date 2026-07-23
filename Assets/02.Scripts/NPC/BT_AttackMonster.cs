@@ -19,6 +19,7 @@ public partial class BT_AttackMonster : Action
 
     private NpcAttack _attacker;
     private NavMeshAgent _agent;
+    private NpcManager _npcManager;
     protected override Status OnStart()
     {
         if (_attacker == null)
@@ -27,21 +28,25 @@ public partial class BT_AttackMonster : Action
             _agent = Self.Value.GetComponent<NavMeshAgent>();
         }
 
+        if(_npcManager == null)
+        {
+            _npcManager = GameUtil.GetNpcManager();
+        }
+
         if (EnemyTarget.Value == null)
         {
             return Status.Failure;
         }
 
-
-            _attacker.StartAttack(EnemyTarget.Value.transform); // 타겟이 된 몬스터 위치 정보 주고 공격 시작 명령 전달
-        
+       _attacker.StartAttack(EnemyTarget.Value.transform); // 타겟이 된 몬스터 위치 정보 주고 공격 시작 명령 전달
 
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        if(CheckPlayerDistance() == true)
+        Debug.Log($"EnemyTarget : {(EnemyTarget.Value == null ? "NULL" : EnemyTarget.Value.name)}");
+        if (CheckPlayerDistance() == true)
         {
             return Status.Success;
         }
@@ -56,12 +61,12 @@ public partial class BT_AttackMonster : Action
 
     protected override void OnEnd()
     {
-        if(_attacker != null)
+
+        if (_attacker != null)
         {
             _attacker.StopAttack();
         }
     }
-
 
     private bool CheckPlayerDistance()
     {

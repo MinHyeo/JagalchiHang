@@ -259,6 +259,11 @@ public class NpcManager
         return false;
     }
 
+    public void ClearTargetMonster()
+    {
+        _targetMonster = null;
+    }
+
     // 플레이어가 공격한 몬스터 객체 세팅
     public void SetTargetMonster(Monster targetMonster)
     {
@@ -272,4 +277,6 @@ public class NpcManager
     {
         return _targetMonster;
     }
+
+
 }
