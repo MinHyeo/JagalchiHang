@@ -140,4 +140,16 @@ public class InventorySlotViewModel : ViewModelBase, ISlotViewModel
     {
         SetItem(null, 0);
     }
+
+    public void ConsumeItem()
+    {
+        if (ItemStackCount > 0)
+        {
+            ItemStackCount--;
+            if (ItemStackCount <= 0)
+            {
+                Clear();
+            }
+        }
+    }
 }

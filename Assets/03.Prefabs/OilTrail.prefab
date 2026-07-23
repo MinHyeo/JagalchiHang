@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8701627397995452849}
   - component: {fileID: 7520968938591931191}
   - component: {fileID: 3786769415066879817}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: OilTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

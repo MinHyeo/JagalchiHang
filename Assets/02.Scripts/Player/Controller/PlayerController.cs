@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour
 
     public event Action<Monster> OnMonsterAttacked;
 
+    private readonly HashSet<Monster> _damageMonsters = new HashSet<Monster>();
+
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -66,6 +68,24 @@ public class PlayerController : MonoBehaviour
         _stateMachine.SetState(StateType.Idle, this);
     }
 
+    private void OnEnable()
+    {
+        InputManager.Instance.OnMoveEvent += OnMove;
+        InputManager.Instance.OnRunEvent += OnRun;
+        InputManager.Instance.OnAttackEvent += OnAttack;
+        InputManager.Instance.OnLookAtEvent += OnLookToMousePos;
+        InputManager.Instance.OnPickUpEvent += OnPickUp;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.OnMoveEvent -= OnMove;
+        InputManager.Instance.OnRunEvent -= OnRun;
+        InputManager.Instance.OnAttackEvent -= OnAttack;
+        InputManager.Instance.OnLookAtEvent -= OnLookToMousePos;
+        InputManager.Instance.OnPickUpEvent -= OnPickUp;
+    }
+
     private void Update()
     {
         _stateMachine.Update(this);
@@ -89,32 +109,20 @@ public class PlayerController : MonoBehaviour
     }
 
     // 이동 - WASD 키 입력 처리
-    public void OnMove(InputAction.CallbackContext context)
+    private void OnMove(Vector2 moveInput)
     {
-        Vector2 moveInput = context.ReadValue<Vector2>();
-
         _moveController.SetMoveInput(moveInput);
     }
 
     // 달리기 - 쉬프트 키 입력 처리
-    public void OnRun(InputAction.CallbackContext context)
+    public void OnRun(bool isPress)
     {
-        // _isRuning = context.ReadValueAsButton(); 와 같음
-        if (context.started)
-        {
-            _moveController.SetRunning(true);
-        }
-
-        if(context.canceled)
-        {
-            _moveController.SetRunning(false);
-        }
+        _moveController.SetRunning(isPress);
     }
 
     // 공격 - 마우스 좌클릭 입력 처리
-    public void OnAttack(InputAction.CallbackContext context)
+    public void OnAttack()
     {
-        if (context.performed == false) return;
         if (_isAttacking == true) return;
 
         if(_isPressedMouseRight == true)
@@ -134,9 +142,9 @@ public class PlayerController : MonoBehaviour
     // 몬스터 공격
     public void AttackMoster()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
+        _damageMonsters.Clear();
 
-        HashSet<Monster> damageMonsters = new HashSet<Monster>();
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, _attackRadius, _monsterLayer);
 
         foreach(Collider hitCollider in hitColliders)
         {
@@ -152,7 +160,7 @@ public class PlayerController : MonoBehaviour
                 continue;
             }
 
-            if(damageMonsters.Add(monster) == false)
+            if(_damageMonsters.Add(monster) == false)
             {
                 continue;
             }
@@ -160,7 +168,10 @@ public class PlayerController : MonoBehaviour
             monster.Damageable.TakeDamage(_player.PlayerData.AttackPower);
             Debug.LogWarning($"플레이어가 {monster.InstanceId}번 몬스터를 공격했다!");
 
-            OnMonsterAttacked?.Invoke(monster);
+            PlayerManager playerManager = GameUtil.GetPlayerManager();
+            if (playerManager == null) return;
+
+            playerManager.NotifyPlayerAttackedMonster(monster);
         }
     }
 
@@ -185,10 +196,9 @@ public class PlayerController : MonoBehaviour
         _isHit = false;
     }
 
-    public void OnPickUp(InputAction.CallbackContext context)
+    public void OnPickUp()
     {
         if (_currentItem == null) return;
-        if (context.performed == false) return;
         if (_isPickUp == true) return;
 
         _isPickUp = true;
@@ -209,19 +219,10 @@ public class PlayerController : MonoBehaviour
     }
 
     // 마우스 우클릭 입력 처리
-    public void OnLookToMousePos(InputAction.CallbackContext context)
+    public void OnLookToMousePos(bool isPress)
     {
-        if (context.started)
-        {
-            _isPressedMouseRight = true;
-            _moveController.SetLookingToMouse(true);
-        }
-
-        if(context.canceled)
-        {
-            _isPressedMouseRight = false;
-            _moveController.SetLookingToMouse(false);
-        }
+        _isPressedMouseRight = isPress;
+        _moveController.SetLookingToMouse(_isPressedMouseRight);
     }
 
     private void OnDrawGizmosSelected()

@@ -3,10 +3,10 @@ using UnityEngine.AI;
 
 public class RingSpawnAlgorithm : MonoBehaviour, IMonsterSpawnAlgorithm
 {
-    [SerializeField] private float _minSpawnDistance = 15f;
-    [SerializeField] private float _maxSpawnDistance = 25f;
+    [SerializeField] private float _minSpawnDistance = 10f;
+    [SerializeField] private float _maxSpawnDistance = 15f;
     [SerializeField] private int _maxAttemptCount = 10;
-    [SerializeField] private float _navMeshSnapRadius = 2f;
+    [SerializeField] private float _navMeshSnapRadius = 1f;
 
     public bool TryGetSpawnPosition(Vector3 playerPosition, out Vector3 spawnPosition)
     {

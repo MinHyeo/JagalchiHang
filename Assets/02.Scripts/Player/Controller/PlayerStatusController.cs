@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum DamageType
@@ -22,7 +23,7 @@ public class PlayerStatusController : MonoBehaviour
 
     private void Awake()
     {
-        //_vm = NetworkManager_re.Inst.PlayerService.GetPlayerViewModel();
+        _vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         _playerController = GetComponent<PlayerController>();
     }
 
@@ -96,7 +97,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHp(DamageType damageType)
+    private void DecreaseHp(DamageType damageType)
     {
         int decreaseValue = 0;
 
@@ -128,7 +129,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHunger()
+    private void DecreaseHunger()
     {
         _vm.CurrentHunger = Mathf.Max(0, _vm.CurrentHunger - _hungerDecrease);
         Debug.Log($"플레이어의 Hunger가 {_hungerDecrease}만큼 감소했다.    현재 Hunger : {_vm.CurrentHunger}");
@@ -139,7 +140,7 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseThirst()
+    private void DecreaseThirst()
     {
         _vm.CurrentThirst = Mathf.Max(0, _vm.CurrentThirst - _thirstDecrease);
         Debug.Log($"플레이어의 Thirst가 {_thirstDecrease}만큼 감소했다.    현재 Thirst  : {_vm.CurrentThirst}");

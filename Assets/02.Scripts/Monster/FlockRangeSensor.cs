@@ -11,7 +11,6 @@ public class FlockRangeSensor : MonoBehaviour
     [SerializeField] private float _cohesionWeight = 1f;
     [SerializeField] private float _separationDistance = 2f;
     [SerializeField] private float _obstacleAvoidDistance = 1.5f;
-    [SerializeField] private float _obstacleAvoidWeight = 3f;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private float _obstacleCheckInterval = 0.1f;
@@ -90,13 +89,16 @@ public class FlockRangeSensor : MonoBehaviour
         Vector3 alignment = CalculateAlignment();
         Vector3 cohesion = CalculateCohesion();
 
-        Vector3 combinedDirection = (separation * _separationWeight) + (alignment * _alignmentWeight) + (cohesion * _cohesionWeight);
+        Vector3 boidDirection = (separation * _separationWeight) + (alignment * _alignmentWeight) + (cohesion * _cohesionWeight);
 
-        _lastMoveDirection = combinedDirection;
+        _lastMoveDirection = boidDirection;
 
-        combinedDirection += _cachedObstacleAvoidance * _obstacleAvoidWeight;
+        if (_cachedObstacleAvoidance != Vector3.zero)
+        {
+            return _cachedObstacleAvoidance;
+        }
 
-        return combinedDirection;
+        return boidDirection;
     }
 
     private Vector3 CalculateSeparation()
