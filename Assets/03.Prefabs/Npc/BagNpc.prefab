@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 2670777106370264499}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -307,6 +307,7 @@ MonoBehaviour:
   m_Graph: {fileID: -1665126217808811635, guid: 6dd9cbdd9483a1a4b865c3f400925d77, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 6163278824173469697
+  - rid: 6163278870753837314
   m_OriginalGraph: {fileID: -1665126217808811635, guid: 6dd9cbdd9483a1a4b865c3f400925d77, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -321,6 +322,14 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 2670777106370264499}
+    - rid: 6163278870753837314
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11494552623608034845
+          m_Value1: 12216301716953138442
+        Name: HomePosition
+        m_Value: {x: 3.6, y: -1.495, z: 5.6}
 --- !u!95 &5492456328930484313
 Animator:
   serializedVersion: 7

@@ -562,6 +562,7 @@ MonoBehaviour:
   m_Graph: {fileID: -8299888321907847663, guid: 8f9374abec0971142b8184e171b8d3a6, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 6163278824173469696
+  - rid: 6163278874021724232
   m_OriginalGraph: {fileID: -8299888321907847663, guid: 8f9374abec0971142b8184e171b8d3a6, type: 2}
   m_IsInitialised: 0
   m_IsStarted: 0
@@ -576,6 +577,14 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 4537442388563564209}
+    - rid: 6163278874021724232
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Vector3, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16061956987989249595
+          m_Value1: 15043235892433519376
+        Name: HomePosition
+        m_Value: {x: -2.4, y: -1.505, z: 5.75}
 --- !u!195 &645058058936295360
 NavMeshAgent:
   m_ObjectHideFlags: 0
