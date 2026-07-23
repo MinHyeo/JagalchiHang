@@ -6,6 +6,7 @@ TagManager:
   tags:
   - NPC
   - Collide
+  - Interaction
   layers:
   - Default
   - TransparentFX

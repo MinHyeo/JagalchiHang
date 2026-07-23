@@ -16,4 +16,5 @@ public interface IMonsterMoveable
 
     void Stop();
     void ApplySpeed(float speed);
+    void WarpToCurrentPosition();
 }
