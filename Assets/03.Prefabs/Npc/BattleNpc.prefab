@@ -543,8 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced3e63aae004674da78ba4dcab41d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NpcAttack
-  attackRange: 10
-  attackCoolTime: 0
+  attackRange: 1.5
+  attackCoolTime: 1.5
   attackDamage: 15
   attackMoveSpeed: 3
 --- !u!114 &9046712212350798100
@@ -1212,7 +1212,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &3552812878224806074
 Rigidbody:

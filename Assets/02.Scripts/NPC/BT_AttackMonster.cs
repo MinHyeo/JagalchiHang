@@ -45,13 +45,12 @@ public partial class BT_AttackMonster : Action
 
     protected override Status OnUpdate()
     {
-        Debug.Log($"EnemyTarget : {(EnemyTarget.Value == null ? "NULL" : EnemyTarget.Value.name)}");
-        if (CheckPlayerDistance() == true)
+        if (CheckPlayerDistance() == true) //플레이어와 너무 멀어졌을 경우
         {
             return Status.Success;
         }
 
-        if(CheckEnemyDead() == true)
+        if(CheckEnemyDead() == true) //타겟이 죽었을 경우
         {
             return Status.Success;
         }
@@ -97,9 +96,9 @@ public partial class BT_AttackMonster : Action
         return false;
     }
 
-    private bool CheckEnemyDead()
+    private bool CheckEnemyDead() // 사망 체크
     {
-        if (EnemyTarget.Value == null) 
+        if (EnemyTarget.Value == null)  
         {
             _attacker.StopAttack();
 
@@ -108,6 +107,17 @@ public partial class BT_AttackMonster : Action
 
             CurrentState.Value = NpcState.Chase;
 
+            return true;
+        }
+
+        MonsterHealth monsterHealth = EnemyTarget.Value.GetComponentInParent<MonsterHealth>();
+
+        if (monsterHealth != null && monsterHealth.IsDead) //타겟 오브젝트가 파괴전이라도 죽었으면 즉시 죽음 처리
+        {
+            _attacker.StopAttack();
+            _npcManager.ClearTargetMonster();
+            CurrentState.Value = NpcState.Chase;
+            EnemyTarget.Value = null;
             return true;
         }
         return false;

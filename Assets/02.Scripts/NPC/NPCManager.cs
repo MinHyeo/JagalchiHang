@@ -35,7 +35,7 @@ public class NpcManager
 
     public async UniTask SpawnBattleNpc() {
 
-        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("zzz", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
+        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("1", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
         if(_battleNpc == null)
         {
             Debug.LogError("Battle NPC 생성 실패");
@@ -103,7 +103,7 @@ public class NpcManager
 
     private async UniTask SpawnBagNpc()
     {
-        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("yyy", "Prefab/Npc_Bag", _BagNPCSpawnPos);
+        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("2", "Prefab/Npc_Bag", _BagNPCSpawnPos);
         if (_bagNpc == null)
         {
             Debug.LogError("Bag NPC 생성 실패");
