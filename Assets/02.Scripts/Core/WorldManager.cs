@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class WorldManager
 {
@@ -8,20 +9,22 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public void EnterWorld()
+    public async UniTask EnterWorld()
     {
         InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
 
-        _mapManager.CreateMap();
+        await _mapManager.CreateMap();
 
         _playerManager.SpawnPlayer().Forget();
 
         ITargetable target = _playerManager;
 
         _monsterManager.Init(target);
-        //_npcManager.Init(target);
+        _npcManager.Init(target);
+
+        UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
     }
 
     public void TransMap(MapType mapType)
@@ -39,6 +42,10 @@ public class WorldManager
         _farmManager.OnMapChanged();
 
         // Npc 상태 갱신
+
+        // 몬스터 갱신
+        bool isBunker = (mapType == MapType.ParkingGarage) ? true : false;
+
     }
 
     public void ExitWorld()
@@ -58,6 +65,31 @@ public class WorldManager
 
     public void WorldUpdate()
     {
+        _npcManager.NpcUpdate();
+    }
 
+    public PlayerManager GetPlayerManager()
+    {
+        return _playerManager;
+    }
+
+    public MonsterManager GetMonsterManager()
+    {
+        return _monsterManager;
+    }
+
+    public NpcManager GetNpcManager()
+    {
+        return _npcManager;
+    }
+
+    public FarmManager GetFarmManager()
+    {
+        return _farmManager;
+    }
+
+    public MapManager GetMapManager()
+    {
+        return _mapManager;
     }
 }

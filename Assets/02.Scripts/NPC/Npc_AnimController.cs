@@ -1,0 +1,45 @@
+﻿using UnityEngine;
+
+public class Npc_AnimController : MonoBehaviour
+{
+    public enum Npc_AnimState
+    {
+        None = 0,
+        Idle = 1,
+        Walk = 2,
+        Attack =4
+    }
+
+    [SerializeField] private Animator Npc_Animator;
+
+    private Npc_AnimState currentState;
+
+    public void SetNpcAnimState(Npc_AnimState newsate)
+    {
+        currentState = newsate;
+
+        switch (currentState)
+        {
+            case Npc_AnimState.Idle:
+                ResetAllAnimParameters();
+                break;
+            case Npc_AnimState.Walk:
+                ResetAllAnimParameters(); 
+                break;
+            case Npc_AnimState.Attack:
+                ResetAllAnimParameters();
+                break;
+
+            default:
+                ResetAllAnimParameters();
+                Debug.LogWarning("올바르지 않은 상태입니다.");
+                break;
+        }
+    }
+
+    private void ResetAllAnimParameters()
+    {
+        Npc_Animator.SetBool("IsWalk", false);
+        Npc_Animator.SetBool("IsAttack", false);
+    }
+}

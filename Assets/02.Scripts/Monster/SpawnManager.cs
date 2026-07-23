@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(RingSpawnAlgorithm))]
@@ -14,6 +14,7 @@ public class SpawnManager : SingletonBase<SpawnManager>
     private ITargetable _playerTarget;
 
     private readonly List<string> _dynamicMonsterIds = new List<string>();
+    private readonly List<GameObject> _dynamicallySpawnedMonsters = new List<GameObject>();
 
     public void SetSpawningEnabled(bool isEnabled)
     {
@@ -23,11 +24,33 @@ public class SpawnManager : SingletonBase<SpawnManager>
     public void SetPlayerTarget(ITargetable playerTarget)
     {
         _playerTarget = playerTarget;
-    } 
+    }
+
+    public void DespawnAllDynamicMonsters()
+    {
+        if (GameObjectManager.Instance == null)
+        {
+            Debug.LogWarning("SpawnManager : GameObjectManager.Instance가 null이라 동적 몬스터 제거를 건너뜁니다.");
+            return;
+        }
+
+        foreach (GameObject monster in _dynamicallySpawnedMonsters)
+        {
+            if (monster == null || !monster.activeInHierarchy)
+            {
+                continue;
+            }
+
+            GameObjectManager.Instance.RequestDestroyObject(monster); 
+        }
+
+        _dynamicallySpawnedMonsters.Clear();
+
+        Debug.Log("SpawnManager : 동적 생성 몬스터 전부 제거 완료");
+    }
 
     private void Start()
     {
-        _spawnAlgorithm = GetComponent<IMonsterSpawnAlgorithm>();
         _spawnAlgorithm = GetComponent<IMonsterSpawnAlgorithm>();
         LoadDynamicSpawnTable();
         SpawnAllManualSpawnPoints();
@@ -134,12 +157,33 @@ public class SpawnManager : SingletonBase<SpawnManager>
         }
 
         string randomMonsterId = _dynamicMonsterIds[UnityEngine.Random.Range(0, _dynamicMonsterIds.Count)];
-        SpawnMonsterAt(spawnPosition, randomMonsterId);
+        SpawnDynamicMonsterAsync(spawnPosition, randomMonsterId).Forget();
+    }
+
+    private async UniTaskVoid SpawnDynamicMonsterAsync(Vector3 position, string monsterId)
+    {
+        if (!TryGetPrefabPath(monsterId, out string prefabPath))
+        {
+            return;
+        }
+
+        if (GameObjectManager.Instance == null)
+        {
+            Debug.LogWarning("SpawnManager : GameObjectManager.Instance가 null입니다. 씬에 GameObjectManager가 있는지 확인해주세요.");
+            return;
+        }
+
+        GameObject spawnedMonster = await GameObjectManager.Instance.CreateObjectAsync(monsterId, prefabPath, position);
+
+        if (spawnedMonster != null) 
+        {
+            _dynamicallySpawnedMonsters.Add(spawnedMonster);
+        }
     }
 
     private void SpawnMonsterAt(Vector3 position, string monsterId)
     {
-        if (string.IsNullOrEmpty(monsterId))
+        if (!TryGetPrefabPath(monsterId, out string prefabPath))
         {
             return;
         }
@@ -150,21 +194,34 @@ public class SpawnManager : SingletonBase<SpawnManager>
             return;
         }
 
-        MonsterData data = GameDataManager.Instance.GetData<MonsterData>(monsterId);
+        GameObjectManager.Instance.CreateObject(monsterId, prefabPath, position);
+    }
+
+    private bool TryGetPrefabPath(string monsterId, out string prefabPath)
+    {
+        prefabPath = string.Empty;
+
+        if (string.IsNullOrEmpty(monsterId))
+        {
+            return false;
+        }
+
+        if (GameDataManager.Instance == null)
+        {
+            Debug.LogWarning("SpawnManager : GameDataManager.Instance가 null이라 프리팹 경로를 조회할 수 없습니다.");
+            return false;
+        }
+
+        MonsterData data = GameDataManager.Instance.GetData<MonsterData>(monsterId); 
 
         if (data == null || string.IsNullOrEmpty(data.PrefabPath))
         {
             Debug.LogWarning($"SpawnManager : {monsterId}에 대한 PrefabPath를 찾을 수 없습니다.");
-            return;
+            return false;
         }
 
-        if (GameObjectManager.Instance == null)
-        {
-            Debug.LogWarning("SpawnManager : GameObjectManager.Instance가 null입니다. 씬에 GameObjectManager가 있는지 확인요망.");
-            return;
-        }
-
-        GameObjectManager.Instance.CreateObject(monsterId, data.PrefabPath, position);
+        prefabPath = data.PrefabPath;
+        return true;
     }
 
     private int GetActiveMonsterCount()
