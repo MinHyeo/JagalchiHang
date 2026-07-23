@@ -5,7 +5,7 @@ using UnityEngine;
 public class RecipeData : GameDataBase
 {
     public string ItemName;
-    public List<string> Category;
+    public string CraftType;
     public string Ingredients;
     public string ResultId;
     public int ResultCount;

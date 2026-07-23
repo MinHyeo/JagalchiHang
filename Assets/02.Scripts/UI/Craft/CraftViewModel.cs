@@ -160,12 +160,26 @@ public class CraftViewModel : ViewModelBase
     {
         if (_selectedRecipe == null || _ingredientSlots.Count == 0) return false;
 
-        foreach (var ingVm in _ingredientSlots)
+        if (_selectedRecipe.CraftType == "Any")
         {
-            if (ingVm.HasEnough == false) return false;
-        }
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough) return true;
+            }
 
-        return true;
+            return false;
+        }
+        else
+        {
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public bool RequestCraft()
@@ -174,20 +188,27 @@ public class CraftViewModel : ViewModelBase
 
         var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
 
-        foreach (var ingVm in _ingredientSlots)
+        if (_selectedRecipe.CraftType == "Any")
         {
-            int remainToRemove = ingVm.RequireCount;
-            foreach (var slot in invenVm.InventorySlots.Values)
+            CraftIngredientSlotViewModel targetIngredient = null;
+            for(int i = 0; i < _ingredientSlots.Count; i++)
             {
-                if (slot.ItemDataId == ingVm.ItemId && slot.ItemStackCount > 0)
+                if (_ingredientSlots [i].HasEnough)
                 {
-                    int removeAmount = Mathf.Min(slot.ItemStackCount, remainToRemove);
-                    slot.ItemStackCount -= removeAmount;
-                    remainToRemove -= removeAmount;
-
-                    if (slot.ItemStackCount <= 0) slot.Clear();
-                    if (remainToRemove <= 0) break;
+                    targetIngredient = _ingredientSlots [i];
+                    break;
                 }
+            }
+
+            if (targetIngredient == null) return false;
+
+            ReduceIngredient(invenVm, targetIngredient);
+        }
+        else
+        {
+            for (int j = 0; j < _ingredientSlots.Count; j++)
+            {
+                ReduceIngredient(invenVm, _ingredientSlots[j]);
             }
         }
 
@@ -198,4 +219,20 @@ public class CraftViewModel : ViewModelBase
         return true;
     }
 
+    private void ReduceIngredient(InventoryViewModel invenVm, CraftIngredientSlotViewModel ingVm)
+    {
+        int remainToRemove = ingVm.RequireCount;
+        foreach (var slot in invenVm.InventorySlots.Values)
+        {
+            if (slot.ItemDataId == ingVm.ItemId && slot.ItemStackCount > 0)
+            {
+                int removeAmount = Mathf.Min(slot.ItemStackCount, remainToRemove);
+                slot.ItemStackCount -= removeAmount;
+                remainToRemove -= removeAmount;
+
+                if (slot.ItemStackCount <= 0) slot.Clear();
+                if (remainToRemove <= 0) break;
+            }
+        }
+    }
 }
