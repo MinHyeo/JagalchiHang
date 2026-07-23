@@ -37,6 +37,16 @@ public class MonsterMovement : MonoBehaviour, IMonsterMoveable
         _agent.speed = speed;
     }
 
+    public void WarpToCurrentPosition()
+    {
+        if (_agent == null)
+        {
+            return;
+        }
+
+        _agent.Warp(transform.position);
+    }
+
     private void OnEnable()
     {
         _isMoving = false;
