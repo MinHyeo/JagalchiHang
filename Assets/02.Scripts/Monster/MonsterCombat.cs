@@ -4,6 +4,10 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 {
+    [Header("Attack")]
+    [SerializeField] private Transform _attackPoint;
+    [SerializeField] private LayerMask _playerLayer;
+
     [SerializeField] private float _attackCooldown = 2.5f;
     [SerializeField] private float _attackDuration = 0.6f;
     [SerializeField] private float _corpseLingerDuration = 5f;
@@ -26,7 +30,7 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         get { return _statProvider.AttackRange; }
     }
 
-    public float AttackPower
+    public int AttackPower
     {
         get { return _statProvider.AttackPower; }
     }
@@ -94,6 +98,7 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
         return true;
     }
     
+    // 공격 시작
     public void Attack()
     {
         if (!CanAttack())
@@ -110,6 +115,23 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 
         CancelInvoke(nameof(EndAttack));
         Invoke(nameof(EndAttack), _attackDuration);
+    }
+
+    // 타격 판정
+    public void AttackHit()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(_attackPoint.position, AttackRange, _playerLayer);
+
+        foreach(var hitCollider in hitColliders)
+        {
+            Player player = hitCollider.GetComponent<Player>();
+            if (player == null) continue;
+
+            var damageable = player.Damageable;
+            if (damageable == null) continue;
+
+            damageable.TakeDamage(AttackPower);
+        }
     }
 
     public void EndAttack()

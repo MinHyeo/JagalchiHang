@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum DamageType
@@ -8,7 +9,7 @@ public enum DamageType
     Thirst
 }
 
-public class PlayerStatusController : MonoBehaviour
+public class PlayerStatusController : MonoBehaviour, IPlayerDamageable
 {
     private int _hungerInterval;
     private int _thirstInterval;
@@ -24,6 +25,10 @@ public class PlayerStatusController : MonoBehaviour
     {
         _vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
         _playerController = GetComponent<PlayerController>();
+
+        var player = this.GetComponentInParent<Player>();
+        if (player == null) return;
+
     }
 
     private void OnEnable()
@@ -35,11 +40,6 @@ public class PlayerStatusController : MonoBehaviour
         }
 
         return;
-    }
-
-    private void Update()
-    {
-        TestStatusDecrease();
     }
 
     public void InitPlayerStatus(PlayerData playerData)
@@ -62,12 +62,9 @@ public class PlayerStatusController : MonoBehaviour
         _vm.CurrentThirst = _vm.MaxThirst;
     }
 
-    private void TestStatusDecrease()
+    public void TakeDamage(int attackPower)
     {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            DecreaseHp(DamageType.Monster);
-        }
+        DecreaseHp(DamageType.Monster, attackPower);
     }
 
     private void OnHungerChanged()
@@ -96,14 +93,14 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHp(DamageType damageType)
+    private void DecreaseHp(DamageType damageType, int damageAmount)
     {
         int decreaseValue = 0;
 
         switch(damageType)
         {
             case DamageType.Monster:
-                decreaseValue = 10;
+                decreaseValue = damageAmount;
                 break;
             case DamageType.Hunger:
                 decreaseValue = _hungerDamage;
@@ -128,25 +125,25 @@ public class PlayerStatusController : MonoBehaviour
         }
     }
 
-    public void DecreaseHunger()
+    private void DecreaseHunger()
     {
         _vm.CurrentHunger = Mathf.Max(0, _vm.CurrentHunger - _hungerDecrease);
         Debug.Log($"플레이어의 Hunger가 {_hungerDecrease}만큼 감소했다.    현재 Hunger : {_vm.CurrentHunger}");
 
         if(_vm.CurrentHunger <= 0)
         {
-            DecreaseHp(DamageType.Hunger);
+            DecreaseHp(DamageType.Hunger, _hungerDamage);
         }
     }
 
-    public void DecreaseThirst()
+    private void DecreaseThirst()
     {
         _vm.CurrentThirst = Mathf.Max(0, _vm.CurrentThirst - _thirstDecrease);
         Debug.Log($"플레이어의 Thirst가 {_thirstDecrease}만큼 감소했다.    현재 Thirst  : {_vm.CurrentThirst}");
 
         if (_vm.CurrentThirst <= 0)
         {
-            DecreaseHp(DamageType.Thirst);
+            DecreaseHp(DamageType.Thirst, _thirstDamage);
         }
     }
 }

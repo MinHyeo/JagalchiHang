@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryViewModel : ViewModelBase
@@ -14,7 +15,7 @@ public class InventoryViewModel : ViewModelBase
             if (_inventorySlots != value)
             {
                 _inventorySlots = value;
-                OnPropertyChanged(nameof(_inventorySlots));
+                OnPropertyChanged(nameof(InventorySlots));
             }
         }
     }
@@ -133,11 +134,64 @@ public class InventoryViewModel : ViewModelBase
         return -1;
     }
 
+    public void TestAddItem()
+    {
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_09", 5);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_10", 7);
+    }
+
+    public bool RequestUseItem(long requestUseTargetItemUniqeuId)
+    {
+        InventorySlotViewModel targetSlot = null;
+
+        foreach (var slot in InventorySlots.Values)
+        {
+            if (slot.ItemUniqueId == requestUseTargetItemUniqeuId)
+            {
+                targetSlot = slot;
+                break;
+            }
+        }
+
+        if (targetSlot == null || !targetSlot.IsUsable) return false;
+
+        var itemData = GameDataManager.Instance.GetData<ItemData>(targetSlot.ItemDataId);
+        if (itemData == null) return false;
+
+        if (!string.IsNullOrEmpty(itemData.UseItemType))
+        {
+            UseItemFunction(itemData.UseItemType, itemData.UseItemParameterList);
+        }
+
+        targetSlot.ConsumeItem();
+
+        OnPropertyChanged("ItemUsed");
+        return true;
+    }
+
+    private void UseItemFunction(string itemUseType, int useItemParamList)
+    {
+        if (useItemParamList == 0) return;
+
+        var playerVm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
+        if (itemUseType == "Hunger")
+        {
+            playerVm.CurrentHunger = Math.Min(playerVm.CurrentHunger + useItemParamList, playerVm.MaxHunger);
+            Debug.Log($"플레이어의 허기가 {useItemParamList}만큼 증가했다.     허기: {playerVm.CurrentHunger}");
+        }
+        else if (itemUseType == "Thirsty")
+        {
+            playerVm.CurrentThirst = Math.Min(playerVm.CurrentThirst + useItemParamList, playerVm.MaxThirst);
+            Debug.Log($"플레이어의 목마름이 {useItemParamList}만큼 증가했다.     목마름: {playerVm.CurrentThirst}");
+        }
+    }
+
+    // 아이템 하나씩 제거, 전부 없으면 클리어
     public void RemoveItemSlotViewModel(long uniqueId)
     {
         foreach (var slot in _inventorySlots.Values)
         {
-            if (slot.ItemUniqueId == uniqueId) 
+            if (slot.ItemUniqueId == uniqueId)
             {
                 slot.Clear();
                 break;
@@ -145,12 +199,5 @@ public class InventoryViewModel : ViewModelBase
         }
 
         OnPropertyChanged("ItemListRemoved");
-    }
-
-    public void TestAddItem()
-    {
-        NetworkManager.Instance.AddItemToInventory("Item_01", 5);
-        NetworkManager.Instance.AddItemToInventory("Item_02", 7);
-        NetworkManager.Instance.AddItemToInventory("Item_03", 9);
     }
 }
