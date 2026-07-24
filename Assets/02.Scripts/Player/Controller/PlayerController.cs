@@ -34,8 +34,6 @@ public class PlayerController : MonoBehaviour
 
     private StateMachine _stateMachine = new StateMachine();
 
-    public event Action<Monster> OnMonsterAttacked;
-
     private readonly HashSet<Monster> _damageMonsters = new HashSet<Monster>();
 
     private void Awake()
