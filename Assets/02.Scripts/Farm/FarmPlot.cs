@@ -65,9 +65,17 @@ public class FarmPlot : MonoBehaviour, IInteractionable
             return;
         }
 
-        // UIManager.Instance.OpenFarmUI();
+         UIManager.Instance.OpenFarmSeedSelectUI(_plotUniqueId);
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+        }
+
+    }
 
     public Vector3 GetSpawnPosition()
     {

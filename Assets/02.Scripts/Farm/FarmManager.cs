@@ -204,6 +204,7 @@ public class FarmManager
 
     public bool  RequestPlantCrop(FarmPlotModel plot, string cropDataId)
     {
+        Debug.Log($"IsUnlocked: {plot.IsUnlocked}, PlotUniqueId: {plot.PlotUniqueId}");
         if (plot == null)
         {
             Debug.LogWarning("존재하지 않는 밭입니다.");
