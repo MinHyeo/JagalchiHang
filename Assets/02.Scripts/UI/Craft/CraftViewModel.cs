@@ -212,7 +212,27 @@ public class CraftViewModel : ViewModelBase
             }
         }
 
-        invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        string resultId = _selectedRecipe.ResultId;
+        var npcManager = GameUtil.GetNpcManager();
+        if (resultId.StartsWith("Npc"))
+        {
+            if (resultId.Contains("Battle"))
+            {
+                npcManager.SpawnBattleNpc(resultId).Forget();
+            }
+            else if (resultId.Contains("Bag"))
+            {
+                npcManager.SpawnBagNpc(resultId).Forget();
+            }
+            else
+            {
+                Debug.LogWarning($"잘못된 NPC{resultId}");
+            }
+        }
+        else
+        {
+            invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        }
 
         SelectRecipe(_selectedRecipe.Id);
 
