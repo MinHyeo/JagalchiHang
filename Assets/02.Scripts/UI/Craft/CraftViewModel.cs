@@ -212,7 +212,15 @@ public class CraftViewModel : ViewModelBase
             }
         }
 
-        invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        string resultId = _selectedRecipe.ResultId;
+        if (resultId.StartsWith("Npc"))
+        {
+            // TODO : 소환 기능 연동
+        }
+        else
+        {
+            invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        }
 
         SelectRecipe(_selectedRecipe.Id);
 
