@@ -60,11 +60,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
-    m_Address: Prefab/Dog
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d91759134e74842469299a253b569c00
     m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
