@@ -18,6 +18,11 @@ public class SettingUI : UIBase
     [SerializeField] private Slider _sliderSFX;
     [SerializeField] private UIButton _buttonClose;
 
+    private void Awake()
+    {
+        
+    }
+
     private void OnEnable()
     {
         TimeManager.Instance.StopTime();
@@ -28,12 +33,20 @@ public class SettingUI : UIBase
         _buttonMainMenu.BindOnClickButtonEvent(OnClickMainMenu);
         _buttonClose.BindOnClickButtonEvent(OnClickCloseSoundSetting);
 
+        _sliderBGM.onValueChanged.AddListener(OnChangedBGMVolume);
+        _sliderSFX.onValueChanged.AddListener(OnChangedSFXVolume);
+
+        CurrentSoundVolume();
+
+        _layoutButton.SetActive(true);
         _layoutSoundSetting.SetActive(false);
     }
 
     private void OnDisable()
     {
         TimeManager.Instance.RestartTime();
+        _sliderBGM.onValueChanged.RemoveListener(OnChangedBGMVolume);
+        _sliderSFX.onValueChanged.RemoveListener(OnChangedSFXVolume);
     }
 
     private void OnClickResume()
@@ -65,21 +78,22 @@ public class SettingUI : UIBase
         GameManager.Instance.ExitInGame();
     }
 
-    //private void CurrentSoundVolume()
-    //{
-    //    if (SoundManager.Instance != null)
-    //    {
-    //        Slider_BGMSound.value = SoundManager.Instance.BGMVolume;
-    //        Slider_SFXSound.value = SoundManager.Instance.SFXVolume;
-    //    }
-    //}
+    private void CurrentSoundVolume()
+    {
+        if (SoundManager.Instance != null)
+        {
+            _sliderBGM.value = SoundManager.Instance.BgmVolume;
+            _sliderSFX.value = SoundManager.Instance.SfxVolume;
+        }
+    }
 
-    //private void OnChangedBGMVolume(float value)
-    //{
-    //    SoundManager.Instance.SetBGMVolume(value);
-    //}
-    //private void OnChangedSFXVolume(float value)
-    //{
-    //    SoundManager.Instance.SetSFXVolume(value);
-    //}
+    private void OnChangedBGMVolume(float value)
+    {
+        SoundManager.Instance.SetBgmVolume(value);
+    }
+
+    private void OnChangedSFXVolume(float value)
+    {
+        SoundManager.Instance.SetSfxVolume(value);
+    }
 }
