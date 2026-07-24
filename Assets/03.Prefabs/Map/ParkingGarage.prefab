@@ -81,11 +81,11 @@ Transform:
   m_GameObject: {fileID: 7596421663743259502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4934898602575299346}
+  - {fileID: 4063940588879222356}
   - {fileID: 8000031217848442510}
   - {fileID: 2468909308939627617}
   m_Father: {fileID: 0}
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: 8ea8f3d097aab8244a607f598da822a7, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 8c4dc1935d15eef4580c037e3e9951c2, type: 2}
   m_BuildHeightMesh: 0
 --- !u!1 &8980703813351230196
 GameObject:
@@ -214,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapPortal
   _transMapType: 1
---- !u!1001 &4897367037278414073
+--- !u!1001 &4606264405692084671
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -224,15 +224,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.92948
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.43153
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -271,8 +271,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
---- !u!4 &4934898602575299346 stripped
+--- !u!4 &4063940588879222356 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7f83e89946c817a43b749f7f0fa2f5cd, type: 3}
-  m_PrefabInstance: {fileID: 4897367037278414073}
+  m_PrefabInstance: {fileID: 4606264405692084671}
   m_PrefabAsset: {fileID: 0}
