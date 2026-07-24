@@ -221,17 +221,27 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    public void RemoveItemSlotViewModel(long uniqueId)
+    public void RemoveItem(long uniqueId, int reduceCount)
     {
+        if (reduceCount <= 0) return;
+
         foreach (var slot in _inventorySlots.Values)
         {
             if (slot.ItemUniqueId == uniqueId)
             {
-                slot.Clear();
+                if (slot.ItemStackCount > reduceCount)
+                {
+                    slot.ItemStackCount -= reduceCount;
+                }
+                else
+                {
+                    slot.Clear();
+                }
+
                 break;
             }
         }
 
-        OnPropertyChanged("ItemListRemoved");
+        OnPropertyChanged("ItemRemoved");
     }
 }
