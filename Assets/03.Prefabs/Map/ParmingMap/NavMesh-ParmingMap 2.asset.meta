@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/03.Prefabs/Map/ParmingMap/NavMesh-ParmingMap 2.asset.meta
 guid: b5ba674ffb07cfa42b1c09649176d3f6
 NativeFormatImporter:
+========
+guid: 4acc987900fd97a448e3061118d93b76
+folderAsset: yes
+DefaultImporter:
+>>>>>>>> main:Assets/03.Prefabs/Map/ParkingGarage.meta
   externalObjects: {}
   mainObjectFileID: 23800000
   userData: 

@@ -11,17 +11,13 @@ public class NpcManager
     [SerializeField] private BattleNpc battleNpc; 
     [SerializeField] private BagNpc bagNpc;
 
-   // [SerializeField] private Vector3 playerTransform;
 
     private ITargetable _chasePlayer;
 
     private Monster _targetMonster;
 
-    public Vector3 BunkerSpawnPos = new Vector3(7, 1, -9); // 테스트용 코드 (게임매니저에서 관리할것)
-    public Vector3 ReturnPos = new Vector3(7, 1, -8.5f); // 돌아갈 좌표 
-
-    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0f, -3f);
-    private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0f, -3f);
+    private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0.5f, -3f);
+    private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0.5f, -3f);
 
     public void Init(ITargetable target)
     {
@@ -39,7 +35,7 @@ public class NpcManager
 
     public async UniTask SpawnBattleNpc() {
 
-        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("zzz", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
+        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("1", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
         if(_battleNpc == null)
         {
             Debug.LogError("Battle NPC 생성 실패");
@@ -107,7 +103,7 @@ public class NpcManager
 
     private async UniTask SpawnBagNpc()
     {
-        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("yyy", "Prefab/Npc_Bag", _BagNPCSpawnPos);
+        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("2", "Prefab/Npc_Bag", _BagNPCSpawnPos);
         if (_bagNpc == null)
         {
             Debug.LogError("Bag NPC 생성 실패");
@@ -190,15 +186,7 @@ public class NpcManager
         {
             bagNpc.UpdatePlayerPosition(_chasePlayer.GetPosition());
         }
-        if (Input.GetKeyDown(KeyCode.F)) // 테스트용 코드
-        {
-            OnBunkerEnterData(true, BunkerSpawnPos);
-        }
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            OnBunkerExitData(false, ReturnPos);
-        }
     }
 
     public void ChangeBattleMode(BattleMode battleMode) //BattleNpc로 전달
@@ -209,39 +197,39 @@ public class NpcManager
             Debug.Log($"[NpcManager] 배틀 Npc에게 새로운 전투 모드 {battleMode} 전달 ");
         }
     }
-    public void OnBunkerEnterData(bool isInBunker,  Vector3 bunkerPos) // 게임매니저한테 추후 전달 받을 곳 
+    public void OnBunkerData(bool isInBunker) // 게임매니저한테 추후 전달 받을 곳 
     {
-
-       if(battleNpc != null)
+        if (_chasePlayer == null)
         {
-            battleNpc.EnterBunker(isInBunker, bunkerPos);
-            Debug.Log($"[NPC 매니저] Battle Npc벙커 진입");
+            return;
         }
 
-       if(bagNpc != null)
-        {
-            bagNpc.EnterBunker(isInBunker, bunkerPos);
-            Debug.Log($"[NPC 매니저] Bag Npc벙커 진입");
-        }
+        Vector3 playerPos = _chasePlayer.GetPosition();
 
-        Debug.Log($"[NPC 매니저] 벙커 진입");
-    }
+        Vector3 battleNpcPos = playerPos + new Vector3(1.0f, 0f, 1.0f);
+        Vector3 bagNpcPos = playerPos + new Vector3(-1.0f, 0f, 1.0f);
+        
+        /*NPC를 순간 이동 시키기 전에 순간 이동할 곳이 NavMesh 바닥 위가 맞는지 검사하고 
+        안전한 위치로 보정해서 옮겨주는 함수(가고싶은 위치, 보정되어 나올 위치, 검색반경)*/
+        
+        TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, (3.0f));
+        TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, (3.0f));
 
-    public void OnBunkerExitData(bool isInBunker, Vector3 returnPos)
-    {
-        if (battleNpc != null)
+        if(battleNpc != null)
         {
-            battleNpc.ExitBunker(isInBunker, returnPos);
+            battleNpc.InOutBunkerData(isInBunker, battleNpcPos);
         }
 
         if(bagNpc != null)
         {
-            bagNpc.ExitBunker(isInBunker, returnPos);
+            bagNpc.InOutBunkerData(isInBunker, bagNpcPos);
         }
+  
 
-
-        Debug.Log($"[NPC 매니저] 벙커 탈출 ");
+        Debug.Log($"[NPC 매니저] 벙커 진입");
     }
+
+
 
     // NavMesh 위치 찾았는지 여부 함수
     private bool TryGetNavMeshPosition(Vector3 desiredPosition, out Vector3 navMeshPosition, float maxDistance)
@@ -259,6 +247,11 @@ public class NpcManager
         return false;
     }
 
+    public void ClearTargetMonster()
+    {
+        _targetMonster = null;
+    }
+
     // 플레이어가 공격한 몬스터 객체 세팅
     public void SetTargetMonster(Monster targetMonster)
     {
@@ -272,4 +265,6 @@ public class NpcManager
     {
         return _targetMonster;
     }
+
+
 }
