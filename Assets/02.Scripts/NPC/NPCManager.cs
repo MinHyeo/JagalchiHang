@@ -24,149 +24,70 @@ public class NpcManager
         _chasePlayer = target;
         Debug.Log($"{_chasePlayer}");
 
-        SpawnNpc().Forget();
     }
 
-    public async UniTask SpawnNpc()
+    public void RegisterBattleNpc(GameObject obj, BattleNpc component)
     {
-        await SpawnBattleNpc();
-        await SpawnBagNpc();
+        _battleNpc = obj;
+        battleNpc = component;
     }
 
-    public async UniTask SpawnBattleNpc() {
 
-        _battleNpc = await GameObjectManager.Instance.CreateObjectAsync("1", "Prefab/Npc_Battle", _BattleNPCSpawnPos);
-        if(_battleNpc == null)
-        {
-            Debug.LogError("Battle NPC 생성 실패");
-            return;
-        }
-
-        NavMeshAgent agent = _battleNpc.GetComponent<NavMeshAgent>();
-        if (agent == null) return;
-
-        BehaviorGraphAgent behaviorGraphAgent = _battleNpc.GetComponent<BehaviorGraphAgent>();
-        if (behaviorGraphAgent == null) return;
-
-        agent.enabled = false;
-        behaviorGraphAgent.enabled = false;
-
-        // _BattleNPCSpawnPos 근처 2m 내에 NavMesh 없으면
-        if (TryGetNavMeshPosition(_BattleNPCSpawnPos, out Vector3 navMeshPosition, 2f) == false)
-        {
-            Debug.LogError($"Battle 생성 위치 주변에 NavMesh가 없습니다. " + $"요청 위치: {_BattleNPCSpawnPos}");
-            return;
-        }
-
-        _battleNpc.transform.position = navMeshPosition;
-
-        // Transform 위치 적용 - 새 위치 바로 인식
-        Physics.SyncTransforms();
-
-        agent.enabled = true;
-
-        if (agent.isOnNavMesh == false)
-        {
-            Debug.LogError($"BattleNpc가 NavMesh 위에 배치되지 않았습니다. " + $"현재 위치: {_battleNpc.transform.position}");
-
-            return;
-        }
-
-        // Agent 위치 강제로 맞춤
-        agent.Warp(navMeshPosition);
-        // 이전 경로 삭제
-        agent.ResetPath();
-        // 현재 속도 제거
-        agent.velocity = Vector3.zero;
-        // 이동 정지
-        agent.isStopped = true;
-
-        battleNpc = _battleNpc.GetComponent<BattleNpc>();
-
-        if (battleNpc == null)
-        {
-            Debug.LogError("BattleNpc 컴포넌트가 없습니다.");
-            return;
-        }
-
-        Debug.Log(
-            $"[NpcManager] BattleNpc 생성 완료\n" +
-            $"요청 위치: {_BattleNPCSpawnPos}\n" +
-            $"NavMesh 위치: {navMeshPosition}\n" +
-            $"실제 위치: {_battleNpc.transform.position}"
-        );
-
-        // 이동 허용
-        agent.isStopped = false;
-        behaviorGraphAgent.enabled = true;
-    }
-
-    private async UniTask SpawnBagNpc()
+    public void RegisterBagNpc(GameObject obj, BagNpc component)
     {
-        _bagNpc = await GameObjectManager.Instance.CreateObjectAsync("2", "Prefab/Npc_Bag", _BagNPCSpawnPos);
-        if (_bagNpc == null)
+        _bagNpc = obj;
+        bagNpc = component;
+    }
+
+
+    public void SpawnBattleNpc()
+    {
+        if (_battleNpc != null)
         {
-            Debug.LogError("Bag NPC 생성 실패");
-            return;
-        }
-
-        NavMeshAgent agent = _bagNpc.GetComponent<NavMeshAgent>();
-        if (agent == null) return;
-
-        BehaviorGraphAgent behaviorGraphAgent = _bagNpc.GetComponent<BehaviorGraphAgent>();
-        if (behaviorGraphAgent == null) return;
-
-        agent.enabled = false;
-        behaviorGraphAgent.enabled = false;
-
-        // _BattleNPCSpawnPos 근처 2m 내에 NavMesh 없으면
-        if (TryGetNavMeshPosition(_BagNPCSpawnPos, out Vector3 navMeshPosition, 2f) == false)
-        {
-            Debug.LogError($"BagNpc 생성 위치 주변에 NavMesh가 없습니다. " + $"요청 위치: {_BagNPCSpawnPos}");
-            return;
-        }
-
-        _bagNpc.transform.position = navMeshPosition;
-
-        // Transform 위치 적용 - 새 위치 바로 인식
-        Physics.SyncTransforms();
-
-        agent.enabled = true;
-
-        if (agent.isOnNavMesh == false)
-        {
-            Debug.LogError($"BattleNpc가 NavMesh 위에 배치되지 않았습니다. " + $"현재 위치: {_bagNpc.transform.position}");
+            Debug.Log("[NpcManager] BattleNpc가 이미 존재합니다.");
 
             return;
         }
 
-        // Agent 위치 강제로 맞춤
-        agent.Warp(navMeshPosition);
-        // 이전 경로 삭제
-        agent.ResetPath();
-        // 현재 속도 제거
-        agent.velocity = Vector3.zero;
-        // 이동 정지
-        agent.isStopped = true;
+        Vector3 spawnPos = _BattleNPCSpawnPos;
 
-        bagNpc = _bagNpc.GetComponent<BagNpc>();
+        if (_chasePlayer != null){
+            spawnPos = _chasePlayer.GetPosition() + new Vector3(1.0f, 0f, 0f);
+        }
 
-        if (bagNpc == null)
+        if(TryGetNavMeshPosition(spawnPos, out Vector3 navMeshPosition, 3f))
         {
-            Debug.LogError("BattleNpc 컴포넌트가 없습니다.");
+            spawnPos = navMeshPosition;
+        }
+        GameObjectManager.Instance.CreateObject("1", "Prefab/Npc_Battle", spawnPos);
+
+        Debug.Log($"[NpcManager] BattleNpc 생성 요청 완료");
+    }
+
+    public void SpawnBagNpc()
+    {
+        if(_bagNpc != null)
+        {
+            Debug.Log("[NpcManager] BagNpc가 이미 존재합니다.");
             return;
         }
 
-        Debug.Log(
-            $"[NpcManager] BattleNpc 생성 완료\n" +
-            $"요청 위치: {_BagNPCSpawnPos}\n" +
-            $"NavMesh 위치: {navMeshPosition}\n" +
-            $"실제 위치: {_bagNpc.transform.position}"
-        );
+        Vector3 spawnPos = _BagNPCSpawnPos;
 
-        // 이동 허용
-        agent.isStopped = false;
-        behaviorGraphAgent.enabled = true;
+        if (_chasePlayer != null) 
+        {
+            spawnPos = _chasePlayer.GetPosition() + new Vector3(-1.0f, 0f, 0f);
+        }
+
+        if(TryGetNavMeshPosition(spawnPos, out Vector3 navMeshPosition, 3f))
+        {
+            spawnPos = navMeshPosition;
+        }
+
+        GameObjectManager.Instance.CreateObject("2", "Prefab/Npc_Bag", spawnPos);
+
+        Debug.Log($"[NpcManager] BagNpc 생성 요청 완료");
+     
     }
 
     public void NpcUpdate()

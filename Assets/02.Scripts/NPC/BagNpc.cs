@@ -35,6 +35,13 @@ public class BagNpc : MonoBehaviour
 
     private void Start()
     {
+        NpcManager npcManager = GameUtil.GetNpcManager();
+
+        if (npcManager != null)
+        {
+            npcManager.RegisterBagNpc(gameObject, this);
+        }
+
         AddInventorySlot(bonusSlotCount);
     }
 
