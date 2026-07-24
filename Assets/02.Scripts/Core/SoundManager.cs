@@ -6,6 +6,9 @@ public class SoundManager : SingletonBase<SoundManager>
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private AudioSource _bgmSource;
 
+    public float SfxVolume => _sfxSource.volume;
+    public float BgmVolume => _bgmSource.volume;
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);

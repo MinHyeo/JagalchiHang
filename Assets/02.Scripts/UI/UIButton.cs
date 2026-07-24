@@ -16,10 +16,10 @@ public class UIButton : MonoBehaviour
         InitUIButton();
     }
 
-    private void OnDisable()
-    {
-        Button_Base.onClick.RemoveAllListeners();
-    }
+    //private void OnDisable()
+    //{
+    //    Button_Base.onClick.RemoveAllListeners();
+    //}
 
     private void InitUIButton()
     {
