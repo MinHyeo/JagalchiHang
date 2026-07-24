@@ -49,4 +49,18 @@ public class Player : MonoBehaviour, ISpawnable
             component.Interaction(gameObject.transform);
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Interaction"))
+        {
+            var component = other.GetComponent<IInteractionable>();
+            if (component == null)
+                return;
+
+            int uniqueId = component.UniqueId;
+            UIManager.Instance.RemoveSlotHudInteraction(uniqueId);
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);
+        }
+    }
 }
