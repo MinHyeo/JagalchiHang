@@ -218,11 +218,11 @@ public class CraftViewModel : ViewModelBase
         {
             if (resultId.Contains("Battle"))
             {
-                npcManager.SpawnBattleNpc(resultId);
+                npcManager.SpawnBattleNpc(resultId).Forget();
             }
             else if (resultId.Contains("Bag"))
             {
-                npcManager.SpawnBagNpc(resultId);
+                npcManager.SpawnBagNpc(resultId).Forget();
             }
             else
             {
