@@ -40,7 +40,7 @@ public class NpcManager
     }
 
 
-    public void SpawnBattleNpc()
+    public void SpawnBattleNpc(string npcdataId)
     {
         if (_battleNpc != null)
         {
@@ -59,12 +59,12 @@ public class NpcManager
         {
             spawnPos = navMeshPosition;
         }
-        GameObjectManager.Instance.CreateObject("1", "Prefab/Npc_Battle", spawnPos);
+        GameObjectManager.Instance.CreateObject(npcdataId, "Prefab/Npc_Battle", spawnPos);
 
         Debug.Log($"[NpcManager] BattleNpc 생성 요청 완료");
     }
 
-    public void SpawnBagNpc()
+    public void SpawnBagNpc(string npcdataId)
     {
         if(_bagNpc != null)
         {
@@ -84,7 +84,7 @@ public class NpcManager
             spawnPos = navMeshPosition;
         }
 
-        GameObjectManager.Instance.CreateObject("2", "Prefab/Npc_Bag", spawnPos);
+        GameObjectManager.Instance.CreateObject(npcdataId, "Prefab/Npc_Bag", spawnPos);
 
         Debug.Log($"[NpcManager] BagNpc 생성 요청 완료");
      

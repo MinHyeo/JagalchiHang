@@ -40,4 +40,5 @@ public class NetworkNpcService
 
         return _npcViewModel;
     }
+
 }

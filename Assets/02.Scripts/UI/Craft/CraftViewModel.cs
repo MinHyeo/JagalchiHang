@@ -213,9 +213,21 @@ public class CraftViewModel : ViewModelBase
         }
 
         string resultId = _selectedRecipe.ResultId;
+        var npcManager = GameUtil.GetNpcManager();
         if (resultId.StartsWith("Npc"))
         {
-            // TODO : 소환 기능 연동
+            if (resultId.Contains("Battle"))
+            {
+                npcManager.SpawnBattleNpc(resultId);
+            }
+            else if (resultId.Contains("Bag"))
+            {
+                npcManager.SpawnBagNpc(resultId);
+            }
+            else
+            {
+                Debug.LogWarning($"잘못된 NPC{resultId}");
+            }
         }
         else
         {
