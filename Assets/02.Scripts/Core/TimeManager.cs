@@ -101,4 +101,14 @@ public class TimeManager : SingletonBase<TimeManager>
             lightObject.SetActive(true);
         }
     }
+
+    public void RestartTime()
+    {
+        Time.timeScale = 1.0f;
+    }
+
+    public void StopTime()
+    {
+        Time.timeScale = 0f;
+    }
 }

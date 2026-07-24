@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "Recipe_01",
+    "ItemName": "감자전 레시피",
+    "CraftType": "All",
+    "Ingredients": "Crop_Potato:1,Crop_Wheat:1",
+    "ResultId": "Item_Craft_02",
+    "ResultCount": 2
+  },
+  {
+    "Id": "Recipe_02",
+    "ItemName": "콩떡 레시피",
+    "CraftType": "All",
+    "Ingredients": "Crop_Pea:1,Crop_Wheat:2",
+    "ResultId": "Item_Craft_03",
+    "ResultCount": 3
+  },
+  {
+    "Id": "Recipe_03",
+    "ItemName": "된장찌개 레시피",
+    "CraftType": "All",
+    "Ingredients": "Crop_Potato:1,Crop_Onion:1,Crop_Pumpkin:1",
+    "ResultId": "Item_Craft_04",
+    "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_04",
+    "ItemName": "감자 고로케 레시피",
+    "CraftType": "All",
+    "Ingredients": "Crop_Potato:2,Crop_Carrot:1,Crop_Wheat:1",
+    "ResultId": "Item_Craft_05",
+    "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_05",
+    "ItemName": "칼국수 레시피",
+    "CraftType": "All",
+    "Ingredients": "Crop_Potato:1,Crop_Onion:1,Crop_Carrot:1,Crop_Wheat:2",
+    "ResultId": "Item_Craft_06",
+    "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_06",
+    "ItemName": "식물성 기름 레시피",
+    "CraftType": "Any",
+    "Ingredients": "Item_Seed_Carrot:1,Item_Seed_Corn:2,Item_Seed_Pumpkin:3,Item_Seed_Tomato:4,Item_Seed_Wheat:5",
+    "ResultId": "Item_Craft_01",
+    "ResultCount": 1
+  }
+]

@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 321e3814549559f4e9fddb57d5b3f6a7
+    m_Address: Prefab/Npc_Bag
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b8b8cc6a46132140b18eafe82bc10dc
     m_Address: Prefab/Player
     m_ReadOnly: 0
@@ -32,11 +37,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3da1af30b22b3344a84269b28bc9b462
     m_Address: Prefab/Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 541799363d8fca0478ed4586b06852db
-    m_Address: Prefab/Npc_Bag
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -50,13 +50,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 79444fed240e31f40b258c31c7021266
-    m_Address: Prefabs/Map/ParmingMap
+  - m_GUID: 779e4540b975d4941b97c13348cf8dbe
+    m_Address: Prefab/Npc_Battle
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9ae1ec6f90e86bf46ac6e77f420cef65
-    m_Address: Prefab/Npc_Battle
+  - m_GUID: 79444fed240e31f40b258c31c7021266
+    m_Address: Prefabs/Map/ParmingMap
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

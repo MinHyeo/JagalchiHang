@@ -2,6 +2,8 @@
 
 public class Player : MonoBehaviour, ISpawnable
 {
+    public IPlayerDamageable Damageable { get; private set; }
+
     private string _dataId;
     private int _instanceId;
 
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour, ISpawnable
     {
         _statusController = GetComponent<PlayerStatusController>();
         _controller = GetComponent<PlayerController>();
+
+        Damageable = GetComponent<IPlayerDamageable>();
     }
 
     public void Init(int instanceId, string dataId)

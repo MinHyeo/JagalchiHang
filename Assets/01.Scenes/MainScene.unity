@@ -705,7 +705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5566617769781634389, guid: 0d5519e6444584a40af830cb0a9fb9eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.97065
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5566617769781634389, guid: 0d5519e6444584a40af830cb0a9fb9eb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -713,7 +713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5566617769781634389, guid: 0d5519e6444584a40af830cb0a9fb9eb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.75485
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5566617769781634389, guid: 0d5519e6444584a40af830cb0a9fb9eb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -828,12 +828,6 @@ MonoBehaviour:
   _maxSpawnDistance: 15
   _maxAttemptCount: 5
   _navMeshSnapRadius: 3
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 4096
-  _maxGroundHeightDifference: 0.3
-  _maxLevelHeightDifference: 3
-  _maxRecentSpawnHistory: 20
 --- !u!1 &1988287694
 GameObject:
   m_ObjectHideFlags: 0

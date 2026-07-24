@@ -42,6 +42,9 @@ public class WorldManager
         _farmManager.OnMapChanged();
 
         // Npc 상태 갱신
+        bool isinBunker = (mapType == MapType.ParkingGarage) ? true : false;
+        _npcManager.OnBunkerData(isinBunker);
+
 
         // 몬스터 갱신
         bool isBunker = (mapType == MapType.ParkingGarage) ? true : false;

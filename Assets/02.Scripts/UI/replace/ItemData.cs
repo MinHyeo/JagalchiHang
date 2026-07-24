@@ -10,7 +10,7 @@ public class ItemData : GameDataBase
     public int MaxCount;
     public bool IsUsable;
     public string UseItemType;
-    public List<string> UseItemParameterList;
+    public int UseItemEffect;
     public string UseItemDescription;
     public int DropWeight;
     public int MinDropCount;
