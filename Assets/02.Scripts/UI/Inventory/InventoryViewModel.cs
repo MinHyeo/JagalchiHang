@@ -168,6 +168,11 @@ public class InventoryViewModel : ViewModelBase
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Pumpkin", 7);
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Tomato", 7);
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Wheat", 7);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_01", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_02", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_03", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_04", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_05", 10);
     }
 
     public bool RequestUseItem(long requestUseTargetItemUniqeuId)

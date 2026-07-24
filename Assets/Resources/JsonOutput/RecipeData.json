@@ -46,5 +46,21 @@
     "Ingredients": "Item_Seed_Carrot:1,Item_Seed_Corn:2,Item_Seed_Pumpkin:3,Item_Seed_Tomato:4,Item_Seed_Wheat:5",
     "ResultId": "Item_Craft_01",
     "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_07",
+    "ItemName": "전투 NPC 레시피",
+    "CraftType": "All",
+    "Ingredients": "Item_Drop_01:3,Item_Drop_02:3,Item_Drop_03:5,Item_Drop_04:2,Item_Drop_05:1",
+    "ResultId": "Npc_Battle_01",
+    "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_08",
+    "ItemName": "가방 NPC 레시피",
+    "CraftType": "All",
+    "Ingredients": "Item_Drop_01:5,Item_Drop_02:5,Item_Drop_03:5,Item_Drop_04:1,",
+    "ResultId": "Npc_Bag_01",
+    "ResultCount": 1
   }
 ]
