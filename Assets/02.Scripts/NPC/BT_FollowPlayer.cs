@@ -21,6 +21,7 @@ public partial class BT_FollowPlayer : Action
 
     private NavMeshAgent _agent;
     private EnemySensor _sensor;
+    private NpcManager _npcManager;
 
 
     protected override Status OnStart()
@@ -36,6 +37,7 @@ public partial class BT_FollowPlayer : Action
         {
             _sensor.ClearTarget();
         }
+
         _agent.speed = 5.0f; //NPC 이동속도 
         return Status.Running; //실행중
 
@@ -160,17 +162,16 @@ public partial class BT_FollowPlayer : Action
 
     private bool AssistAttackMode()
     {
+        _npcManager = GameUtil.GetNpcManager();
 
-        TestPlayer testPlayer = PlayerTarget.Value.GetComponent<TestPlayer>();
-
-        if (testPlayer != null && _sensor != null)
+        if (_npcManager != null )
         {
-            GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
+            Monster playerTargetMonster = _npcManager.GetTargetMonster();
 
 
             if (playerTargetMonster != null)
             {
-                EnemyTarget.Value = playerTargetMonster;
+                EnemyTarget.Value = playerTargetMonster.gameObject;
 
                 CurrentState.Value = NpcState.Attack;
 
