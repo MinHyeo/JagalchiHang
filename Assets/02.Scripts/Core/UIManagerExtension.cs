@@ -21,7 +21,9 @@ public enum UIType
     InventoryUI,
     FarmingUI,
     StorageUI,
-    TestPlayerStatus,
+    NpcUI,
+    MainUI,
+    CraftUI,
 }
 
 public static class UIManagerExtension
@@ -106,7 +108,7 @@ public static class UIManagerExtension
         }
     }
 
-    public static void OpenFarmingUI(this UIManager uiManager, string boxUniqueId)
+    public static void OpenFarmingUI(this UIManager uiManager, int boxUniqueId)
     {
         UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.FarmingUI);
         if (uiBase == null) return;

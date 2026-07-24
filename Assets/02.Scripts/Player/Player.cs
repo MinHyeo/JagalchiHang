@@ -2,6 +2,8 @@
 
 public class Player : MonoBehaviour, ISpawnable
 {
+    public IPlayerDamageable Damageable { get; private set; }
+
     private string _dataId;
     private int _instanceId;
 
@@ -16,6 +18,8 @@ public class Player : MonoBehaviour, ISpawnable
     {
         _statusController = GetComponent<PlayerStatusController>();
         _controller = GetComponent<PlayerController>();
+
+        Damageable = GetComponent<IPlayerDamageable>();
     }
 
     public void Init(int instanceId, string dataId)
@@ -32,5 +36,17 @@ public class Player : MonoBehaviour, ISpawnable
         }
 
         _statusController.InitPlayerStatus(_playerData);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Interaction"))
+        {
+            var component = other.GetComponent<IInteractionable>();
+            if (component == null)
+                return;
+
+            component.Interaction(gameObject.transform);
+        }
     }
 }

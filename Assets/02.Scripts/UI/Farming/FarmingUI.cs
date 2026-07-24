@@ -10,20 +10,20 @@ public class FarmingUI : UIBase
 
     private Dictionary<int, FarmingSlotUI> _slotUIList = new Dictionary<int, FarmingSlotUI>();
     private FarmingViewModel _vm;
-    private string _boxtUniqueId;
+    private int _boxtUniqueId;
 
     private void OnDisable()
     {
         ClearAllFarmingSlot();
     }
 
-    public void Init(string boxId)
+    public void Init(int boxId)
     {
         _boxtUniqueId = boxId;
 
         ClearAllFarmingSlot();
 
-        _vm = NetworkManager_re.Inst.FarmingService.LoadFarmingBox(boxId);
+        _vm = NetworkManager.Instance.FarmingService.LoadFarmingBox(boxId);
 
         InitFarmingSlot();
     }
@@ -65,6 +65,6 @@ public class FarmingUI : UIBase
 
     public void RequestMoveFromInventory(int invenIdx, int farmingIdx)
     {
-        NetworkManager_re.Inst.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, _boxtUniqueId);
+        NetworkManager.Instance.RequestMoveItem_InvenToFarming(invenIdx, farmingIdx, _boxtUniqueId);
     }
 }

@@ -3,7 +3,7 @@
     "Id": "Monster_1",
     "Name": "monster_1",
     "MaxHp": 30,
-    "Basic Attack": 8,
+    "BasicAttack": 8,
     "BasicAttackRange": 1.2,
     "BasicSpeed": 1.3,
     "MonsterDescription": "로봇",

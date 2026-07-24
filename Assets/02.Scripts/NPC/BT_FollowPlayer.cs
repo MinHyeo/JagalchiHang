@@ -10,6 +10,7 @@ using UnityEngine.AI;
 public partial class BT_FollowPlayer : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
+    [SerializeReference] public BlackboardVariable<GameObject> PlayerTarget;
     [SerializeReference] public BlackboardVariable<Vector3> PlayerPosition;
     [SerializeReference] public BlackboardVariable<GameObject> EnemyTarget;
     [SerializeReference] public BlackboardVariable<NpcState> CurrentState;
@@ -20,6 +21,7 @@ public partial class BT_FollowPlayer : Action
 
     private NavMeshAgent _agent;
     private EnemySensor _sensor;
+    private NpcManager _npcManager;
 
 
     protected override Status OnStart()
@@ -35,6 +37,7 @@ public partial class BT_FollowPlayer : Action
         {
             _sensor.ClearTarget();
         }
+
         _agent.speed = 5.0f; //NPC 이동속도 
         return Status.Running; //실행중
 
@@ -59,6 +62,7 @@ public partial class BT_FollowPlayer : Action
         {
             return Status.Success;
         }
+
 
         _agent.SetDestination(PlayerPosition.Value);
 
@@ -158,25 +162,24 @@ public partial class BT_FollowPlayer : Action
 
     private bool AssistAttackMode()
     {
+        _npcManager = GameUtil.GetNpcManager();
 
-        //TestPlayer testPlayer = PlayerPosition.Value.GetComponent<TestPlayer>();
-
-        //if (testPlayer != null && _sensor != null)
-        //{
-        //    GameObject playerTargetMonster = testPlayer.GetPlayerTarget();
+        if (_npcManager != null )
+        {
+            Monster playerTargetMonster = _npcManager.GetTargetMonster();
 
 
-        //    if (playerTargetMonster != null)
-        //    {
-        //        EnemyTarget.Value = playerTargetMonster;
+            if (playerTargetMonster != null)
+            {
+                EnemyTarget.Value = playerTargetMonster.gameObject;
 
-        //        CurrentState.Value = NpcState.Attack;
+                CurrentState.Value = NpcState.Attack;
 
-        //        Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
+                Debug.Log("[BT_FollowPlayer] 협동 공격모드 시작");
 
-        //        return true;
-        //    }
-        //}
+                return true;
+            }
+        }
         return false;
     }
 }

@@ -16,9 +16,10 @@ public class NetworkStorageService
 
     private StorageViewModel CreateLocalStorageViewModel()
     {
+        GameDataManager.Instance.LoadData<ItemData>();
         var storageVm = new StorageViewModel();
-        _localStorageViewModel = storageVm;
         storageVm.AddStorageSlotViewModel();
+        _localStorageViewModel = storageVm;
         return storageVm;
     }
 }

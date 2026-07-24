@@ -20,7 +20,7 @@ public class Test_FarmingOpen : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.OpenFarmingUI("1번 상자");
+            UIManager.Instance.OpenFarmingUI(1);
         }
     }
 
@@ -32,7 +32,7 @@ public class Test_FarmingOpen : MonoBehaviour
         }
         else
         {
-            UIManager.Instance.OpenFarmingUI("2번 상자");
+            UIManager.Instance.OpenFarmingUI(2);
         }
     }
 }

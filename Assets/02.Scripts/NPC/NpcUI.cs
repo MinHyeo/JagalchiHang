@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class NpcUI : MonoBehaviour
+public class NpcUI : UIBase
 {
-    [SerializeField] private NpcManager npcManager;
     [SerializeField] private Toggle toggleAutoAttack;
     [SerializeField] private Toggle toggleAssistAttack;
     [SerializeField] private Toggle toggleFollow;
+
     private void OnEnable()
     {
         toggleAutoAttack.onValueChanged.AddListener(OnAutoAttackChanged);
@@ -22,11 +22,12 @@ public class NpcUI : MonoBehaviour
         toggleFollow.onValueChanged.RemoveListener(OnFollowChanged);
     }
 
-
     private void OnAutoAttackChanged(bool isOn)  //Npc매니저로 전달
     {
-        if( isOn && npcManager != null)
+        if( isOn == true)
         {
+            NpcManager npcManager = GameUtil.GetNpcManager();
+
             npcManager.ChangeBattleMode(BattleMode.AutoAttack);
             Debug.Log("[NpcUI] 자동 전투 모드로 변경");
         }
@@ -34,8 +35,10 @@ public class NpcUI : MonoBehaviour
 
     private void OnAssistAttackChanged(bool isOn)
     {
-        if (isOn && npcManager != null)
+        if (isOn == true)
         {
+            NpcManager npcManager = GameUtil.GetNpcManager();
+
             npcManager.ChangeBattleMode(BattleMode.AssistAttack);
             Debug.Log("[NpcUI] 협동 공격모드로 변경 ");
         }
@@ -43,8 +46,11 @@ public class NpcUI : MonoBehaviour
 
     private void OnFollowChanged(bool isOn)
     {
-        if (isOn && npcManager != null)
+        if (isOn == true)
         {
+
+            NpcManager npcManager = GameUtil.GetNpcManager();
+
             npcManager.ChangeBattleMode(BattleMode.FollowOnly);
             Debug.Log("[NpcUI] 동행 전용모드로 변경 ");
         }
