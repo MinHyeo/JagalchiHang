@@ -47,10 +47,9 @@ public class BuildingVisibility : MonoBehaviour
         }
     }
 
-    public void SetPlayerInside(bool isInSide, int currentFloor)
+    public void SetPlayerInside(bool isInSide)
     {
         _playerInside = isInSide;
-        _currentPlayerFloor = currentFloor;
 
         if (_playerInside == true)
         {
@@ -62,6 +61,12 @@ public class BuildingVisibility : MonoBehaviour
 
     public void SetPlayerFloor(int playerFloor)
     {
+        if(playerFloor == 0)
+        {
+            HideRenderers();
+            return;
+        }
+
         foreach (var floor in _floors)
         {
             if (floor.FloorNumber > playerFloor)
@@ -75,7 +80,7 @@ public class BuildingVisibility : MonoBehaviour
         }
     }
 
-    // 건물 숨기기
+    // 건물 숨기기 - 플레이어가 건물 내부에 있을 경우에는 건물을 숨기지 않음
     public void Hide()
     {
         if (_playerInside == true)
@@ -83,6 +88,12 @@ public class BuildingVisibility : MonoBehaviour
             return;
         }
 
+        HideRenderers();
+    }
+
+    // _playerInside 상태를 확인하지 않고 건물을 강제로 숨김
+    private void HideRenderers()
+    {
         foreach (var targetRenderer in _renderers)
         {
             // ShadowsOnly: 오브젝트 메시는 화면에 안 보이고 그림자는 보임
