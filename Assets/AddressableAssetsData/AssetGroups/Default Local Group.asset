@@ -15,8 +15,23 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 13f035feed29ed246ba1a825e93415c4
   m_SerializeEntries:
+  - m_GUID: 01a96ccfa64287c488c5ee36c3d4ed06
+    m_Address: Images/Icon_Image/Image_VegetableOil
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06ac350fc6e8df94da06a86444066aca
+    m_Address: Images/Icon_Image/Image_OnionSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0c1fc64c70affa4418da81c4bbbc731a
     m_Address: Prefab/OilTrail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15af2506b05157a4280d001f8d9eb08c
+    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -25,8 +40,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 27c01446d0833814a9cb4fc88e746611
+    m_Address: Images/Icon_Image/lmage_Potato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 321e3814549559f4e9fddb57d5b3f6a7
     m_Address: Prefab/Npc_Bag
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32c0cf521b2348c42a8c71f4fc2319f1
+    m_Address: Images/Icon_Image/Image_GamjaGoloke
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -40,6 +65,26 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c74d942269bc874e8fec922edbc4891
+    m_Address: Images/Icon_Image/Image_Crowbar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5040602e083f4d94cbcdade4d55136f3
+    m_Address: Images/Icon_Image/Image_TomatoSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59fdb3d26f05fe34282f4c90e8d6b0f7
+    m_Address: Images/Icon_Image/Image_ChipCard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61f3a2538ba94714180a84285f337fa8
+    m_Address: Images/Icon_Image/Image_WoodStick
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 638a002a0c42fca49b721cf5284c17f4
     m_Address: Prefab/Monster
     m_ReadOnly: 0
@@ -47,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64759d2bfa2981d4b80548269cac537c
     m_Address: Prefab/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 66ee22a9a8d17a94ba15d5f971272001
+    m_Address: Images/Icon_Image/lmage_Tomato
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -60,13 +110,123 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 833f603da9fa5704b9709fa20f872fdc
+    m_Address: Images/Icon_Image/lmage_Corn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 869d60d7a080ef94192bdb9d2e3e38e3
+    m_Address: Images/Icon_Image/Image_WheatSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87dcdeb321f30744190f8f308372ba23
+    m_Address: Images/Icon_Image/Image_Water
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88626427f28ab374e834f8160fd37377
+    m_Address: Images/Icon_Image/Image_Kalgugsu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9077efdffa7d71643b2e1787999e5239
+    m_Address: Images/Icon_Image/Image_PeaSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 907bd4dd2975a064e820033b8ada408a
+    m_Address: Images/Icon_Image/Image_IronPiece
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9c180c2c1e7bf2946b14b61c09e81ca3
+    m_Address: Images/Icon_Image/lmage_Pumpkin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4c410ab29624994abfe3244bd901d56
+    m_Address: Images/Icon_Image/Image_Can
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6294dc52eb759841a3656f955d532c9
+    m_Address: Images/Icon_Image/Image_WoodPiece
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
     m_Address: Prefab/Dog
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d91759134e74842469299a253b569c00
-    m_Address: Prefabs/Map/ParkingGarage
+  - m_GUID: ac5f3a71099a0d64fb6544c3b30ea5e6
+    m_Address: Images/Icon_Image/lmage_Pea
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ade55d0030099544eb0ff27d9121ec16
+    m_Address: Images/Icon_Image/Imgae_Gamjajeon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4756d6d3ca7b7044b50001dc9b4d37a
+    m_Address: Images/Icon_Image/Image_PumpkinSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2aecd373bc54444daf814933947e093
+    m_Address: Images/Icon_Image/Image_Hoe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0e29c410858de240a9ba6482495d771
+    m_Address: Images/Icon_Image/Image_CarrotSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d21ef518cc64657408fd7ecb348ff80f
+    m_Address: Images/Icon_Image/Image_Flipper
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d4099c969ff9ac5419225ebc2ebb4dcf
+    m_Address: Images/Icon_Image/lmage_Onion
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d5e7b3c5adf412d46a86738a8ada944b
+    m_Address: Images/Icon_Image/Image_OilTank
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd6279838cfef164e80178eb71af3571
+    m_Address: Images/Icon_Image/lmage_Carrot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0bb29ca88b0e7f4db1cc139527c701e
+    m_Address: Images/Icon_Image/Image_Doenjangjjigae
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e55883995c160814ca5bb3f16428cb4e
+    m_Address: Images/Icon_Image/lmage_Wheat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e64b8bf0e6249a14d85aa7ab01fd9fd9
+    m_Address: Images/Icon_Image/Image_KongTteog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7ff1b4ebac4b6940aa6048767438577
+    m_Address: Images/Icon_Image/Image_PotatoSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eedf4d44c99df1a4aa52db1956a9eb22
+    m_Address: Images/Icon_Image/Image_CornSeed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

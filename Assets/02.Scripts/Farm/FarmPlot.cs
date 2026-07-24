@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class FarmPlot : MonoBehaviour, IInteractionable
 {
+    public int UniqueId { get; }
+
     [SerializeField] private GameObject Object_PlotSet;
     [SerializeField] private Transform[] Transform_CropSpawnPoints;
     [SerializeField] private int _plotUniqueId;
@@ -76,6 +78,7 @@ public class FarmPlot : MonoBehaviour, IInteractionable
         }
 
     }
+
 
     public Vector3 GetSpawnPosition()
     {

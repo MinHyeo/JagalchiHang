@@ -14,6 +14,7 @@ public class CropData : GameDataBase
     public string IconPath;
     public string PrefabPath;
     public string GrowthStageMinutesList;
+    public int RequiredSeedCount;
 
     public List<int> GetGrowthStageMinutes()
     {

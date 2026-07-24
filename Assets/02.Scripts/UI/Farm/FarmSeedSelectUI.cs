@@ -14,6 +14,7 @@ public class FarmSeedSelectUI : UIBase
 
     private void OnEnable()
     {
+        Debug.Log($"FarmSeedSelectUI OnEnable, _isInitialized: {_isInitialized}");
         Button_Close.BindOnClickButtonEvent(OnClick_Close);
         if (_isInitialized == false)
         {
@@ -30,29 +31,51 @@ public class FarmSeedSelectUI : UIBase
 
     private void CreateSlots()
     {
-        var cropDataList = GameDataManager.Instance.GetAllDataId<CropData>();
-        if (cropDataList == null) return;
+        Debug.Log("CreateSlots 호출됨");
+        var allItemData = GameDataManager.Instance.GetAllData<ItemData>();
+        Debug.Log($"ItemData 개수: {allItemData?.Count}");
+        if (allItemData == null) return;
 
-        for (int i = 0; i < cropDataList.Count; i++)
+        for (int i = 0; i < allItemData.Count; i++)
         {
+            Debug.Log($"ItemData Id: {allItemData[i].Id}");
+            if (allItemData[i].Id.StartsWith("Item_Seed_") == false) continue;
+            Debug.Log($"필터 통과:{allItemData[i].Id}");
+
+            Debug.Log($"Instantiate 시도: {Prefab_SeedSlot}");
             var gObj = Instantiate(Prefab_SeedSlot, Transform_SlotRoot);
+            Debug.Log($"슬롯 생성됨: {gObj}");
             var slotUI = gObj.GetComponent<FarmSeedSlotUI>();
-            if (slotUI = null) continue;
+            if (slotUI == null) continue;
+            if (slotUI == null) continue;
             _slotList.Add(slotUI);
         }
+
     }
 
     private void RefreshSlots()
     {
-        var cropDataList = GameDataManager.Instance.GetAllDataId<CropData>();
-        if (cropDataList == null) return;
+        Debug.Log("RefreshSlots 호출됨");
+
+        var allItemData = GameDataManager.Instance.GetAllData<ItemData>();
+        if (allItemData == null) return;
 
         var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        if (invenVm == null) return;
 
-        for (int i = 0;  i < _slotList.Count; i++)
+
+        int slotIndex = 0;
+        for (int i = 0;  i < allItemData.Count; i++)
         {
-            var cropData = GameDataManager.Instance.GetData<CropData>(cropDataList[i]);
-            _slotList[i].Init(cropData,_plotUniqueId, invenVm);
+            if (allItemData[i].Id.StartsWith("Item_Seed_") == false) continue;
+            if (slotIndex  >= _slotList.Count) break;
+
+            string cropDataId = allItemData[i].Id.Replace("Item_Seed_", "Crop_");
+            var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
+            if (cropData == null) continue;
+
+            _slotList[slotIndex].Init(cropData, _plotUniqueId, invenVm);
+            slotIndex++;
         }
     }
 

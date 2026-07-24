@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Cysharp.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,23 +24,43 @@ public class FarmSeedSlotUI : MonoBehaviour
         _plotUniqueId = plotUniqueId;
 
         int seedCount = GetSeedCount(cropData.SeedItemDataId, invenVm);
+        Debug.Log($"씨앗 개수: {seedCount}, SeedItemDataId: {cropData.SeedItemDataId}");
 
-        if (seedCount <= 0)
+        if (seedCount < cropData.RequiredSeedCount)
         {
             gameObject.SetActive(false);
             return;
         }
 
         gameObject.SetActive(true);
-        Text_SeedCount.text = $"{seedCount}";
-        //Image_Icon.sprite
+        Text_SeedCount.text = $"{seedCount} / {cropData.RequiredSeedCount}";
+
+        var itemData = GameDataManager.Instance.GetData<ItemData>(cropData.SeedItemDataId);
+        if (itemData != null && string.IsNullOrEmpty(itemData.IconPath) == false)
+        {
+            LoadIcon(itemData.IconPath).Forget();
+        }
+    
+    }
+
+    private async UniTaskVoid LoadIcon(string iconPath)
+    {
+        Sprite sprite = await ResourceManager.Instance.LoadAsset<Sprite>(iconPath);
+        if (sprite != null)
+        {
+            Image_Icon.sprite = sprite;
+        }
     }
 
     private int GetSeedCount(string seedItemDataId, InventoryViewModel invenVm)
     {
         int totalCount = 0;
+        Debug.Log($"인벤토리 슬롯 개수: {invenVm.InventorySlots.Count}");
+        Debug.Log($"GetSeedCount 호출됨, seedItemDataId: {seedItemDataId}");
         for (int i = 0; i < invenVm.InventorySlots.Count; i++)
         {
+            Debug.Log($"슬롯 {i} 아이디: {invenVm.InventorySlots[i].ItemDataId}");
+
             if (invenVm.InventorySlots[i].ItemDataId == seedItemDataId)
             {
                 totalCount += invenVm.InventorySlots[i].ItemStackCount;

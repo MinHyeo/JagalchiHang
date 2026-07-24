@@ -17,6 +17,9 @@ public class FarmManager
         if (GameDataManager.Instance != null)
         {
             GameDataManager.Instance.LoadData<CropData>();
+            GameDataManager.Instance.LoadData<ItemData>();
+
+            NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
         }
 
         if (TimeManager.Instance != null)
@@ -236,6 +239,37 @@ public class FarmManager
             return false;
         }
 
+        var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        Debug.Log($"씨앗 차감, SeedItemDataId: {cropData.SeedItemDataId}, RequiredCount: {cropData.RequiredSeedCount}");
+        int remaining = cropData.RequiredSeedCount;
+
+        for (int i = 0; i < invenVm.InventorySlots.Count; i++)
+        {
+            var slot = invenVm.InventorySlots[i];
+            Debug.Log($"슬롯 {i}: {slot.ItemDataId}, 개수: {slot.ItemStackCount}");
+
+            if (slot.ItemDataId == cropData.SeedItemDataId && slot.ItemStackCount > 0)
+            {
+                if (slot.ItemStackCount >= remaining)
+                {
+                    slot.ItemStackCount -= remaining;
+                    if (slot.ItemStackCount == 0) slot.Clear();
+                    remaining = 0;
+                    break;
+                }
+                else
+                {
+                    remaining -= slot.ItemStackCount;
+                    slot.Clear();
+                }
+            }
+        }
+
+        if (remaining > 0)
+        {
+            Debug.LogWarning("씨앗이 부족합니다.");
+            return false;
+        }
 
         plot.CropDataId = cropDataId;
         plot.IsPlanted = true;
