@@ -9,7 +9,7 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public async UniTask EnterWorld()
+    public async UniTask EnterWorld(SaveModel saveModel)
     {
         InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();

@@ -49,18 +49,18 @@ public class SaveDataSlot : MonoBehaviour
 
         _saveModel = new SaveModel();
         NetworkManager.Instance.SaveGame(_slotIndex, _saveModel);
-        GameManager.Instance.EnterInGame();
+        GameManager.Instance.EnterInGame(_saveModel);
     }
 
     private void LoadGame()
     {
         if(_saveModel == null)
         {
-            Debug.LogWarning("데이커가 없습니다.");
+            Debug.LogWarning("데이터가 없습니다.");
             return;
         }
 
         Debug.Log("기존 게임 시작");
-        GameManager.Instance.EnterInGame();
+        GameManager.Instance.EnterInGame(_saveModel);
     }
 }
