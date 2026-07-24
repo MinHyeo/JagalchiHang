@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryViewModel : ViewModelBase
 {
-    private int _slotCount = 36; // const를 빼거나 변경 가능
+    private int _slotCount = 24; // const를 빼거나 변경 가능
 
     public int SlotCount
     {
@@ -172,7 +172,7 @@ public class InventoryViewModel : ViewModelBase
         NetworkManager.Instance.AddItemToInventory("Item_Drop_02", 10);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_03", 10);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_04", 10);
-        NetworkManager.Instance.AddItemToInventory("Item_Drop_05", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_05", 1);
     }
 
     public bool RequestUseItem(long requestUseTargetItemUniqeuId)
