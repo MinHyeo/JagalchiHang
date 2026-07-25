@@ -9,6 +9,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkStorageService StorageService { get; private set; }
     public NetworkCraftService CraftService { get; private set; }
     public NetworkNpcService NpcService { get; private set; }
+    public NetworkGeneratorService GeneratorService { get; private set; }
 
     private string GetSaveFilePath(int slotIndex)
     {
@@ -46,6 +47,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         StorageService = new NetworkStorageService();
         NpcService = new NetworkNpcService();
         CraftService = new NetworkCraftService();
+        GeneratorService = new NetworkGeneratorService();
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
