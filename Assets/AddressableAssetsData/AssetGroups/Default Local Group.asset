@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -110,6 +110,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 580c56be9629094498ac94d5d70711c4
+    m_Address: Image/Loading_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 588942777a6ebed4484220734d449e3c
     m_Address: Images/Icon_Image/lmage_Tomato
     m_ReadOnly: 0
@@ -122,6 +127,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 64759d2bfa2981d4b80548269cac537c
     m_Address: Prefab/Weapon
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 776e7c6fb24b63f45a54c5346f0db260
+    m_Address: Assets/04.Images/UI/Loading_2.png
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -170,18 +180,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c47c5c40c5dd02a44b4432ee7cc7f5a8
-    m_Address: Images/Icon_Image/Image_PeaSeed
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b3ac98a2249ca4947afa2d166019c209
     m_Address: Image/Loading_4
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c47c5c40c5dd02a44b4432ee7cc7f5a8
+    m_Address: Images/Icon_Image/Image_PeaSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d91759134e74842469299a253b569c00
     m_Address: Prefabs/Map/ParkingGarage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4fbfaf9e794f644b874b922dd03c407
+    m_Address: Image/Loading_3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -202,11 +217,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f762221dc2c40394b856f6ea9ca86376
     m_Address: Images/Icon_Image/Image_OnionSeed
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e4fbfaf9e794f644b874b922dd03c407
-    m_Address: Image/Loading_3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -33,7 +33,7 @@ public class LoadingUI : UIBase
             LoadAndSetTexture(RawImage_LoadingImg, texturePath).Forget(); 
         }
 
-        StartLoadingResource(0.5f).Forget();
+        StartLoadingResource(2f).Forget();
     }
 
     private static async UniTaskVoid LoadAndSetTexture(RawImage rawImage, string texturePath)
