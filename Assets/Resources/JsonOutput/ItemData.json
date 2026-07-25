@@ -474,5 +474,19 @@
     "DropWeight": 0,
     "MinDropCount": null,
     "MaxDropCount": null
+  },
+  {
+    "Id": "Item_Electricity",
+    "ItemName": "전기",
+    "IconPath": "Images/Icon_Image/Image_Electricity",
+    "IsStackable": false,
+    "MaxCount": 0,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemEffect": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
   }
 ]

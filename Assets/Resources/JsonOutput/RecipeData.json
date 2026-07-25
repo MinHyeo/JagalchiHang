@@ -62,5 +62,13 @@
     "Ingredients": "Item_Drop_01:5,Item_Drop_02:5,Item_Drop_03:5,Item_Drop_04:1,",
     "ResultId": "Npc_Bag_01",
     "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_09",
+    "ItemName": "물 레시피",
+    "CraftType": "All",
+    "Ingredients": "Item_Electricity:10",
+    "ResultId": "Item_Drop_10",
+    "ResultCount": 1
   }
 ]

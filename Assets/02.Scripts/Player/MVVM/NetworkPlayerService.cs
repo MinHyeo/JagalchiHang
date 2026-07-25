@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class NetworkPlayerService
 {
@@ -32,5 +33,47 @@ public class NetworkPlayerService
         vm.CurrentHp = curHp;
         vm.CurrentHunger = curHunger;
         vm.CurrentThirst = curThirst;
+    }
+
+    public PlayerSaveModel GetSaveData()
+    {
+        var saveModel = new PlayerSaveModel();
+        var playerVm = GetPlayerViewModel();
+
+        saveModel.CurrentHp = playerVm.CurrentHp;
+        saveModel.CurrentHunger = playerVm.CurrentHunger;
+        saveModel.CurrentThirst = playerVm.CurrentThirst;
+
+        // TODO : 위치, 맵 정보 받아와야 함
+
+        var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        saveModel.MaxInventorySlotCount = invenVm.SlotCount;
+
+        return saveModel;
+    }
+
+    public void LoadSaveData(PlayerSaveModel saveModel)
+    {
+        if (saveModel == null) return;
+
+        var playerVm = GetPlayerViewModel();
+
+        playerVm.CurrentHp = saveModel.CurrentHp;
+        playerVm.CurrentHunger = saveModel.CurrentHunger;
+        playerVm.CurrentThirst = saveModel.CurrentThirst;
+
+        var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        if (invenVm != null && saveModel.MaxInventorySlotCount > 0)
+        {
+            invenVm.SlotCount = saveModel.MaxInventorySlotCount;
+
+            while (invenVm.InventorySlots.Count < invenVm.SlotCount)
+            {
+                int nextIdx = invenVm.InventorySlots.Count;
+                invenVm.InventorySlots.Add(nextIdx, new InventorySlotViewModel());
+            }
+
+            invenVm.NotifySlotCountChanged();
+        }
     }
 }

@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -125,26 +125,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 657a6786d6da7b5439a3813decc7f952
-    m_Address: Images/Icon_Image/Image_Can
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 669ba4ac96290904b884a48b4a4d4e40
-    m_Address: Images/Icon_Image/Image_ChipCard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 66c866d803daf034b9d7864c90f1866a
-    m_Address: Images/Icon_Image/Image_OilTank
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 749e7cc9fd227c946be67039cd3760bf
-    m_Address: Images/Icon_Image/Image_Hoe
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 779e4540b975d4941b97c13348cf8dbe
     m_Address: Prefab/Npc_Battle
     m_ReadOnly: 0
@@ -195,6 +175,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3ac98a2249ca4947afa2d166019c209
+    m_Address: Image/Loading_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d91759134e74842469299a253b569c00
     m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
@@ -217,6 +202,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f762221dc2c40394b856f6ea9ca86376
     m_Address: Images/Icon_Image/Image_OnionSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4fbfaf9e794f644b874b922dd03c407
+    m_Address: Image/Loading_3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
