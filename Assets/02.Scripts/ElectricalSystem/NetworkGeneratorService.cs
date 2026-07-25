@@ -4,7 +4,7 @@ public class NetworkGeneratorService
 {
     private GeneratorViewModel _generatorViewModel;
 
-    public GeneratorViewModel GeneratorViewModel()
+    public GeneratorViewModel GetGeneratorViewModel()
     {
         if (_generatorViewModel == null)
         {
@@ -67,6 +67,11 @@ public class NetworkGeneratorService
     public void ReChargePower(int amount)
     {
         if (_generatorViewModel == null)
+        {
+            return;
+        }
+
+        if(_generatorViewModel.CurrentPower >= _generatorViewModel.MaxPower)
         {
             return;
         }

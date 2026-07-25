@@ -26,6 +26,7 @@ public enum UIType
     CraftUI,
     SettingUI,
     LoadingUI,
+    GeneratorUI,
 }
 
 public static class UIManagerExtension

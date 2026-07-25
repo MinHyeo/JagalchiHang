@@ -17,7 +17,7 @@ public class GeneratorTest : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("ddd", 20);
+        Invoke("ddd", 10);
     }
 
     private void ddd()
@@ -30,6 +30,6 @@ public class GeneratorTest : MonoBehaviour
             NetworkManager.Instance.GeneratorService.UsePower(useAmount);
         });
         _fullGeneratorButton.onClick.AddListener(() => NetworkManager.Instance.GeneratorService.ReChargePower(fullAmount));
-        _fixGeneratorButton.onClick.AddListener(NetworkManager.Instance.GeneratorService.FixGenerator);
+        _fixGeneratorButton.onClick.AddListener(() => UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.GeneratorUI));
     }
 }

@@ -21,7 +21,7 @@ public class ElectricGenerator : MonoBehaviour
 
     private void OnEnable()
     {
-        _vm = NetworkManager.Instance.GeneratorService.GeneratorViewModel();
+        _vm = NetworkManager.Instance.GeneratorService.GetGeneratorViewModel();
         _vm.PropertyChanged += OnPropertyChanged;
 
         _vm.InvokeOnceOnInit();
