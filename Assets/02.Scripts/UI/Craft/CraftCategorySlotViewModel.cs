@@ -8,6 +8,7 @@ public class CraftCategorySlotViewModel : ViewModelBase
         OnPropertyChanged(nameof(IconPath));
         OnPropertyChanged(nameof(IsSelected));
         OnPropertyChanged(nameof(ItemName));
+        OnPropertyChanged(nameof(IsLocked));
     }
 
     private string _recipeId;
@@ -62,6 +63,20 @@ public class CraftCategorySlotViewModel : ViewModelBase
             {
                 _itemName = value;
                 OnPropertyChanged(nameof(ItemName));
+            }
+        }
+    }
+
+    private bool _isLocked;
+    public bool IsLocked
+    {
+        get => _isLocked;
+        set
+        {
+            if (_isLocked != value)
+            {
+                _isLocked = value;
+                OnPropertyChanged(nameof(IsLocked));
             }
         }
     }
