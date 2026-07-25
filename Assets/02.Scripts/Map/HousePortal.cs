@@ -5,11 +5,12 @@ public class HousePortal : MonoBehaviour, IInteractionable
     [SerializeField] private Transform TeleportPos;
 
     private int _uniqueId;
-    public int UniqueId { get; }
+    public int UniqueId => _uniqueId;
 
     private void Start()
     {
         _uniqueId = (int)GameUtil.GenerateUniqueId();
+        Debug.Log($"Name : {gameObject.name}, Unique Id : {_uniqueId}");
     }
 
     public void Interaction(Transform transform)

@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMoveController : MonoBehaviour
 {
-    [SerializeField] private float _rotationSmoothness = 10f;
+    [SerializeField] private float _rotationSmoothness = 20f;
 
     private Player _player;
 
@@ -78,28 +78,29 @@ public class PlayerMoveController : MonoBehaviour
         {
             Quaternion targetRotation = Quaternion.LookRotation(_moveDirection);
 
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
+            _rigid.rotation = Quaternion.Slerp(_rigid.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
         }
     }
 
     // 마우스 위치를 바라보도록 회전
     private void LookToMousePos()
     {
-        // 현재 마우스 위치 가져옴
         Vector3 mousePos = Mouse.current.position.ReadValue();
 
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-        // 방금 만든 Ray가 어떤 Collider에 부딪하면 hit에 들어감
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        Plane groundPlane = new Plane(Vector3.up, _rigid.position);
+
+        if (groundPlane.Raycast(ray, out float distance))
         {
-            Vector3 dir = hit.point - transform.position;
+            Vector3 mouseWorldPos = ray.GetPoint(distance);
+            Vector3 dir = mouseWorldPos - _rigid.position;
             dir.y = 0f;
 
             if (dir.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(dir);
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
+                _rigid.rotation = Quaternion.Slerp(_rigid.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
             }
         }
     }

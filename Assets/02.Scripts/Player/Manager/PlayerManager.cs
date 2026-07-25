@@ -1,6 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System;
-using System.Security;
 using UnityEngine;
 
 public class PlayerManager : ITargetable
@@ -10,8 +8,6 @@ public class PlayerManager : ITargetable
     //[나라]TODO 
     private Vector3 _playerSpawnPos = new Vector3(20f, 1f, -3f);
     private PlayerController _playerController;
-
-    public event Action<Monster> MonsterAttacked;
 
     // 플레이어 동적 생성
     public async UniTaskVoid SpawnPlayer()
@@ -25,8 +21,6 @@ public class PlayerManager : ITargetable
 
         _playerController = _player.GetComponent<PlayerController>();
         if (_playerController == null) return;
-
-        _playerController.OnMonsterAttacked += OnMonsterAttacked;
 
         UpdateCameraTarget();
         BindMainUIView();
@@ -55,16 +49,6 @@ public class PlayerManager : ITargetable
         if (mainUIComponent == null) return;
 
         mainUIComponent.BindViewModel(vm);
-    }
-
-    private void OnMonsterAttacked(Monster monster)
-    {
-        if (monster == null)
-        {
-            return;
-        }
-
-        MonsterAttacked?.Invoke(monster);
     }
 
     public Vector3 GetPosition()

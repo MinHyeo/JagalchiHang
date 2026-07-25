@@ -17,9 +17,9 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
-    public void EnterInGame()
+    public void EnterInGame(SaveModel saveModel, int slotIndex)
     {
-        _worldManager.EnterWorld().Forget();
+        _worldManager.EnterWorld(saveModel, slotIndex).Forget();
 
         if (_lobbyManager == null)
             return;

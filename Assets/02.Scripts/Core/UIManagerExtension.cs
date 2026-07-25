@@ -26,6 +26,7 @@ public enum UIType
     FarmSeedSelectUI,
     CraftUI,
     SettingUI,
+    LoadingUI,
 }
 
 public static class UIManagerExtension

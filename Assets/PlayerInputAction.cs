@@ -177,7 +177,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -213,6 +213,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""name"": ""NpcUI"",
                     ""type"": ""Button"",
                     ""id"": ""519b7fe3-899e-4df1-ab8d-0cc766e6257e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SettingUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""d161d8c5-ed2d-48fc-a85a-627fbb988540"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -602,6 +611,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""NpcUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""20161f58-58c8-4621-81c6-dc305b2cefef"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""SettingUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1203,6 +1223,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Pickup = m_Player.FindAction("Pickup", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_NpcUI = m_Player.FindAction("NpcUI", throwIfNotFound: true);
+        m_Player_SettingUI = m_Player.FindAction("SettingUI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1310,6 +1331,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pickup;
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_NpcUI;
+    private readonly InputAction m_Player_SettingUI;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1378,6 +1400,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @NpcUI => m_Wrapper.m_Player_NpcUI;
         /// <summary>
+        /// Provides access to the underlying input action "Player/SettingUI".
+        /// </summary>
+        public InputAction @SettingUI => m_Wrapper.m_Player_SettingUI;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1445,6 +1471,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @NpcUI.started += instance.OnNpcUI;
             @NpcUI.performed += instance.OnNpcUI;
             @NpcUI.canceled += instance.OnNpcUI;
+            @SettingUI.started += instance.OnSettingUI;
+            @SettingUI.performed += instance.OnSettingUI;
+            @SettingUI.canceled += instance.OnSettingUI;
         }
 
         /// <summary>
@@ -1498,6 +1527,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @NpcUI.started -= instance.OnNpcUI;
             @NpcUI.performed -= instance.OnNpcUI;
             @NpcUI.canceled -= instance.OnNpcUI;
+            @SettingUI.started -= instance.OnSettingUI;
+            @SettingUI.performed -= instance.OnSettingUI;
+            @SettingUI.canceled -= instance.OnSettingUI;
         }
 
         /// <summary>
@@ -1896,6 +1928,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnNpcUI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SettingUI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSettingUI(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

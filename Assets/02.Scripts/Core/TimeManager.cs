@@ -20,6 +20,8 @@ public class TimeManager : SingletonBase<TimeManager>
     [SerializeField] private AnimationCurve _lightingIntensityMultiplier;
     [SerializeField] private AnimationCurve _reflectionIntensityMultiplier;
 
+    private DNSkyBoxSwitcher _skyBoxSwitcher;
+
     public int Day => _day;
     public int Hour => (int)(_time * 24f) ;
     public int Minute => (int)((_time * 1440f) % 60f);
@@ -36,9 +38,14 @@ public class TimeManager : SingletonBase<TimeManager>
 
     private void OnEnable()
     {
+        _skyBoxSwitcher = GetComponentInChildren<DNSkyBoxSwitcher>();
+
         _day = 0;
         _timeRate = 1.0f / _fullDayTime;
         _time = _startTime;
+
+        OnHourChanged += HandleHourChanged;
+        HandleHourChanged();
     }
 
     private void Update()
@@ -110,5 +117,27 @@ public class TimeManager : SingletonBase<TimeManager>
     public void StopTime()
     {
         Time.timeScale = 0f;
+    }
+
+    private void HandleHourChanged()
+    {
+        int currentHour = Hour;
+
+        if (currentHour >= 6 && currentHour < 10)
+        {
+            _skyBoxSwitcher.ChangeSkybox(DNSkyboxType.Morning);
+        }
+        else if (currentHour >= 10 && currentHour < 17)
+        {
+            _skyBoxSwitcher.ChangeSkybox(DNSkyboxType.Day);
+        }
+        else if (currentHour >= 17 && currentHour < 20)
+        {
+            _skyBoxSwitcher.ChangeSkybox(DNSkyboxType.Dusk);
+        }
+        else
+        {
+            _skyBoxSwitcher.ChangeSkybox(DNSkyboxType.Night);
+        }
     }
 }

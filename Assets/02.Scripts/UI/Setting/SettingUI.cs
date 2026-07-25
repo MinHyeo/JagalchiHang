@@ -25,8 +25,6 @@ public class SettingUI : UIBase
 
     private void OnEnable()
     {
-        TimeManager.Instance.StopTime();
-
         _buttonResume.BindOnClickButtonEvent(OnClickResume);
         _buttonSave.BindOnClickButtonEvent(OnClickSave);
         _buttonSoundSetting.BindOnClickButtonEvent(OnClickSoundSetting);
@@ -44,7 +42,6 @@ public class SettingUI : UIBase
 
     private void OnDisable()
     {
-        TimeManager.Instance.RestartTime();
         _sliderBGM.onValueChanged.RemoveListener(OnChangedBGMVolume);
         _sliderSFX.onValueChanged.RemoveListener(OnChangedSFXVolume);
     }
@@ -56,8 +53,7 @@ public class SettingUI : UIBase
 
     private void OnClickSave()
     {
-        // TODO : 세이브 창 열기
-        // UIManager.Instance.OpenUI();
+        UIManager.Instance.OpenLoadGameUI(LoadGameUIType.SaveGame);
     }
 
     private void OnClickSoundSetting()
