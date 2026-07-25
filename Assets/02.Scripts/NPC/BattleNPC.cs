@@ -14,7 +14,7 @@ public class BattleNpc : MonoBehaviour
 
 
     private NavMeshAgent _agent;
-    private Npc_AnimController _animController; 
+    private Npc_AnimController _animController;
 
     private void Awake()
     {

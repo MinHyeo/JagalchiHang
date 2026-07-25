@@ -446,5 +446,33 @@
     "DropWeight": 0,
     "MinDropCount": null,
     "MaxDropCount": null
+  },
+  {
+    "Id": "Npc_Battle_01",
+    "ItemName": "전투 Npc",
+    "IconPath": "Images/Icon_Image/Image_BattleNpc",
+    "IsStackable": false,
+    "MaxCount": 0,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemEffect": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
+  },
+  {
+    "Id": "Npc_Bag_01",
+    "ItemName": "가방 Npc",
+    "IconPath": "Images/Icon_Image/Image_BagNpc",
+    "IsStackable": false,
+    "MaxCount": 0,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemEffect": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
   }
 ]
