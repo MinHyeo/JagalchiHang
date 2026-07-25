@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerViewModel : ViewModelBase
 {
     // [나라]TODO : 수정 필요
-    private PlayerModel _model = new PlayerModel();
+    private PlayerSaveModel _model = new PlayerSaveModel();
 
     public int MaxHp { get; set; }
     public int MaxHunger { get; set; }
