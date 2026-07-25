@@ -75,4 +75,9 @@ public class NetworkInventoryService
         }
     }
 
+    public void TestItem()
+    {
+        var invenVem = GetLocalInventoryViewModel();
+        invenVem.TestAddItem();
+    }
 }

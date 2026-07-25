@@ -28,6 +28,11 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         UnbindViewModel();
     }
 
+    private void OnDestroy()
+    {
+        UnbindViewModel();
+    }
+
     public void Setup(InventoryUI inventory, int slotKey)
     {
         _inventoryUI = inventory;
@@ -95,6 +100,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private void UpdateCountText()
     {
+        if (this == null || _countText == null) return;
+
         if (_vm != null && _vm.ItemStackCount >= 1)
         {
             _countText.text = $"{_vm.ItemStackCount}";

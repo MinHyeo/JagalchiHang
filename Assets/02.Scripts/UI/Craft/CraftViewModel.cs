@@ -160,26 +160,62 @@ public class CraftViewModel : ViewModelBase
     {
         if (_selectedRecipe == null || _ingredientSlots.Count == 0) return false;
 
-        if (_selectedRecipe.CraftType == "Any")
-        {
-            for (int i = 0; i < _ingredientSlots.Count; i++)
-            {
-                if (_ingredientSlots[i].HasEnough) return true;
-            }
+        string resultId = _selectedRecipe.ResultId;
 
-            return false;
-        }
-        else
+        if (!string.IsNullOrEmpty(resultId) && resultId.StartsWith("Npc"))
         {
-            for (int i = 0; i < _ingredientSlots.Count; i++)
+            var npcManager = GameUtil.GetNpcManager();
+            if (npcManager != null)
             {
-                if (_ingredientSlots[i].HasEnough == false)
+                if (resultId.Contains("Bag") && npcManager.HasBagNpc)
+                {
+                    return false;
+                }
+                if (resultId.Contains("Battle") && npcManager.HasBattleNpc)
                 {
                     return false;
                 }
             }
-            return true;
         }
+
+        if (!string.IsNullOrEmpty(resultId) && !resultId.StartsWith("Npc"))
+        {
+            var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+
+            if (invenVm.IsEnoughSpace(resultId, _selectedRecipe.ResultCount) == false)
+            {
+                return false;
+            }
+        }
+
+
+        bool isEnoughIngredients = false;
+
+        if (_selectedRecipe.CraftType == "Any")
+        {
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough) 
+                {
+                    isEnoughIngredients = true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            isEnoughIngredients = true;
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough == false)
+                {
+                    isEnoughIngredients = false;
+                    return false;
+                }
+            }
+        }
+        
+        return isEnoughIngredients;
     }
 
     public bool RequestCraft()
@@ -213,9 +249,9 @@ public class CraftViewModel : ViewModelBase
         }
 
         string resultId = _selectedRecipe.ResultId;
-        var npcManager = GameUtil.GetNpcManager();
         if (resultId.StartsWith("Npc"))
         {
+            var npcManager = GameUtil.GetNpcManager();
             if (resultId.Contains("Battle"))
             {
                 npcManager.SpawnBattleNpc(resultId);
@@ -227,6 +263,15 @@ public class CraftViewModel : ViewModelBase
             else
             {
                 Debug.LogWarning($"잘못된 NPC{resultId}");
+            }
+
+            for (int i = 0; i< _categorySlots.Count; i++)
+            {
+                if (_categorySlots[i].RecipeId == _selectedRecipe.Id)
+                {
+                    _categorySlots[i].IsLocked = true;
+                    break;
+                }
             }
         }
         else

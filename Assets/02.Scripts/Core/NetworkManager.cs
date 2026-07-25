@@ -49,6 +49,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
+        InventoryService.TestItem();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
