@@ -167,6 +167,13 @@ public class FarmManager
         {
             _viewModel = new FarmViewModel();
         }
+        for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
+        {
+            if (_viewModel.FarmPlotList[i].PlotUniqueId == newPlot.PlotUniqueId)
+            {
+                return;
+            }
+        }
         _viewModel.FarmPlotList.Add(newPlot);
     }
 
@@ -250,18 +257,9 @@ public class FarmManager
 
             if (slot.ItemDataId == cropData.SeedItemDataId && slot.ItemStackCount > 0)
             {
-                if (slot.ItemStackCount >= remaining)
-                {
-                    slot.ItemStackCount -= remaining;
-                    if (slot.ItemStackCount == 0) slot.Clear();
-                    remaining = 0;
-                    break;
-                }
-                else
-                {
-                    remaining -= slot.ItemStackCount;
-                    slot.Clear();
-                }
+                NetworkManager.Instance.InventoryService.RequestRemoveItem(slot.ItemUniqueId, cropData.RequiredSeedCount);
+                remaining = 0;
+                break;
             }
         }
 
@@ -359,6 +357,7 @@ public class FarmManager
 
     public bool RequestUnlockNextPlot()
     {
+        Debug.Log($"RequestUnlockNextPlot 호출됨, 밭 개수: {_viewModel.FarmPlotList.Count}");
         for (int i = 0; i < _viewModel.FarmPlotList.Count; i++)
         {
             if (_viewModel.FarmPlotList[i].IsUnlocked == false)

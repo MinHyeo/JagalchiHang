@@ -48,6 +48,7 @@ public class FarmPlot : MonoBehaviour, IInteractionable
 
     public void Interaction(Transform transform)
     {
+        if (_farmManager == null) return;
         Debug.Log($"FarmPlot Interaction 호출됨");
         var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
         if (plot == null)
