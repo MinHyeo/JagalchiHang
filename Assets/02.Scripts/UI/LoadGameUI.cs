@@ -7,6 +7,7 @@ public enum LoadGameUIType
     None,
     NewGame,
     LoadGame,
+    SaveGame,
 }
 
 public class LoadGameUI : UIBase
@@ -41,6 +42,8 @@ public class LoadGameUI : UIBase
 
     public void Init(LoadGameUIType loadGameUIType)
     {
+        _loadGameUIType = loadGameUIType;
+
         int listCount = _createdSaveSlotList.Count;
 
         if (listCount == 0)
@@ -63,7 +66,7 @@ public class LoadGameUI : UIBase
             return;
 
         _loadGameUIType = loadGameUIType;
-        _createdSaveSlotList[index].Init(index);
+        _createdSaveSlotList[index].Init(index, loadGameUIType);
     }
 
     private void CreateSaveDataSlot()
@@ -73,7 +76,6 @@ public class LoadGameUI : UIBase
             GameObject slotObject = Instantiate(_saveDataSlotPrefab, _saveDataRoot);
             SaveDataSlot slotComponent = slotObject.GetComponent<SaveDataSlot>();
 
-            slotComponent.Init(index);
             _createdSaveSlotList.Add(slotComponent);
         }
     }

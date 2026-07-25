@@ -91,7 +91,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -127,6 +127,15 @@
                     "name": "NpcUI",
                     "type": "Button",
                     "id": "519b7fe3-899e-4df1-ab8d-0cc766e6257e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SettingUI",
+                    "type": "Button",
+                    "id": "d161d8c5-ed2d-48fc-a85a-627fbb988540",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -516,6 +525,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "NpcUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "20161f58-58c8-4621-81c6-dc305b2cefef",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "SettingUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

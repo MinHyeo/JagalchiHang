@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3078889154668733122}
   - component: {fileID: 1001794146059745993}
-  - component: {fileID: 7641647094244800563}
   m_Layer: 5
   m_Name: Slot_Category
   m_TagString: Untagged
@@ -129,19 +128,6 @@ MonoBehaviour:
   _imageIcon: {fileID: 4552385750334095468}
   _buttonChoose: {fileID: 165202091978522366}
   _textName: {fileID: 3639680633904028248}
-  _canvasGroup: {fileID: 7641647094244800563}
---- !u!225 &7641647094244800563
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1757045630092375760}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &2191402588409296817
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +196,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8cd314382975cfb47acdd8def08c0a6e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5bc4f0a8504c46419db3eb21ddc9944, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -347,8 +333,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Button
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 4b28519c8617db84a983a59c620e10de, type: 2}
-  m_sharedMaterial: {fileID: 9557364735277523, guid: 4b28519c8617db84a983a59c620e10de, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
