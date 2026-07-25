@@ -15,46 +15,50 @@ public class InventoryUI : UIBase
     private void OnEnable()
     {
         _vm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
-        _vm.PropertyChanged += OnPropertyChanged_View;
-        _vm.AddInventorySlotViewModel();
-        InitInventory();
 
-        // 테스트용 
-        _vm.TestAddItem();
+        _vm.PropertyChanged -= OnPropertyChanged_View;
+        _vm.PropertyChanged += OnPropertyChanged_View;
+
+        InitInventory();
     }
 
     private void OnDisable()
     {
-        ClearSlotUIList();
+        if (_vm != null)
+        {
+            _vm.PropertyChanged -= OnPropertyChanged_View;
+        }
     }
 
     private void InitInventory()
     {
-        ClearSlotUIList();
+        if (_vm == null || _vm.InventorySlots == null) return;
 
-        for (int i = 0; i < _vm.InventorySlots.Count; i++)
+        int targetSlotCount = _vm.InventorySlots.Count;
+
+        for (int i = 0; i < targetSlotCount; i++)
         {
-            GameObject gObj = Instantiate(_slotPrefab, _inventorySlot);
-            if (gObj == null) return;
+            if (!_slotUIList.ContainsKey(i))
+            {
+                GameObject gObj = Instantiate(_slotPrefab, _inventorySlot);
+                if (gObj == null) return;
 
-            InventorySlotUI slotUI = gObj.GetComponent<InventorySlotUI>();
-            if (slotUI == null) return;
+                InventorySlotUI slotUI = gObj.GetComponent<InventorySlotUI>();
+                if (slotUI == null) return;
 
-            slotUI.Setup(this, i);
-            slotUI.BindViewModel(_vm.InventorySlots[i]);
+                slotUI.Setup(this, i);
+                slotUI.BindViewModel(_vm.InventorySlots[i]);
 
-            slotUI.OnSlotDoubleClicked += OnSlotUseRequested;
-            _slotUIList.Add(i, slotUI);
+                slotUI.OnSlotDoubleClicked += OnSlotUseRequested;
+                _slotUIList.Add(i, slotUI);
+            }
+
+            _slotUIList[i].BindViewModel(_vm.InventorySlots[i]);
         }
     }
 
     private void ClearSlotUIList()
     {
-        if(_vm != null)
-        {
-            _vm.PropertyChanged -= OnPropertyChanged_View;
-        }
-
         foreach (var slotUI in _slotUIList.Values)
         {
             if (slotUI != null)
@@ -69,7 +73,7 @@ public class InventoryUI : UIBase
 
     private void OnPropertyChanged_View(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == "ItemListAdded")
+        if (e.PropertyName == "ItemListAdded" || e.PropertyName == nameof(InventoryViewModel.SlotCount) || e.PropertyName == "ItemRemoved")
         {
             InitInventory();
         }

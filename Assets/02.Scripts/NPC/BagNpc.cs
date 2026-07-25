@@ -14,9 +14,7 @@ public class BagNpc : MonoBehaviour
     private NavMeshAgent _agent;
     private Npc_AnimController _animController;
 
-
-    [Header("인벤토리 확장 설정")]
-    [SerializeField] private int bonusSlotCount = 6; //임시 설정 
+    private int bonusSlotCount = 12; //임시 설정 
 
 
     private void Awake()
@@ -35,6 +33,13 @@ public class BagNpc : MonoBehaviour
 
     private void Start()
     {
+        NpcManager npcManager = GameUtil.GetNpcManager();
+
+        if (npcManager != null)
+        {
+            npcManager.RegisterBagNpc(gameObject, this);
+        }
+
         AddInventorySlot(bonusSlotCount);
     }
 
@@ -75,7 +80,7 @@ public class BagNpc : MonoBehaviour
     private void AddInventorySlot(int count)
     {
         //인벤토리 뷰 모델 주소 가져오기 
-        InventoryViewModel inventoryVM = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+        InventoryViewModel inventoryVM = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
 
         if (inventoryVM != null && inventoryVM.InventorySlots != null)
         {
@@ -95,6 +100,8 @@ public class BagNpc : MonoBehaviour
                 //새 key값을 넣고 키 값에 맞는 새 슬롯을 만들어준다
                 inventoryVM.InventorySlots.Add(nextSlotIndex, new InventorySlotViewModel());
             }
+
+            inventoryVM.NotifySlotCountChanged();
 
             Debug.Log($"[BagNpc] 추가 인벤토리 칸 연동 완료 총 인벤토리 칸: {inventoryVM.SlotCount} ");
         }
