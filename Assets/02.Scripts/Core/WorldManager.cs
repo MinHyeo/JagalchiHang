@@ -72,7 +72,10 @@ public class WorldManager
 
     public void WorldUpdate()
     {
-        _npcManager.NpcUpdate();
+        if (_npcManager != null)
+        {
+            _npcManager.NpcUpdate();
+        }
     }
 
     public PlayerManager GetPlayerManager()
