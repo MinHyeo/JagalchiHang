@@ -143,6 +143,16 @@ public class CraftViewModel : ViewModelBase
 
     private int GetInventoryItemCount(InventoryViewModel invenVm, string itemId)
     {
+        //if (itemId == "Item_Electricity")
+        //{
+        //    var generatorVm = NetworkManager.Instance.GeneratorService.GetLocalGeneratorViewModel;
+        //    if (generatorVm != null)
+        //    {
+        //        return generatorVm.CurrentPower;
+        //    }
+        //    return 0;
+        //}
+
         int count = 0;
         if (invenVm?.InventorySlots == null) return count;
 
@@ -244,7 +254,20 @@ public class CraftViewModel : ViewModelBase
         {
             for (int j = 0; j < _ingredientSlots.Count; j++)
             {
-                invenVm.RemoveItem(_ingredientSlots[j].ItemId, _ingredientSlots[j].RequireCount);
+                var ingredient = _ingredientSlots [j];
+
+                if (ingredient.ItemId == "Item_Electricity")
+                {
+                    //var generatorVm = NetworkManager.Instance.GetLocalGeneratorViewModel;
+                    //if (generatorVm != null)
+                    //{
+                    //    generatorVm.ConsumePower(ingredient.RequireCount);
+                    //}
+                }
+                else
+                {
+                    invenVm.RemoveItem(_ingredientSlots[j].ItemId, _ingredientSlots[j].RequireCount);
+                }
             }
         }
 
