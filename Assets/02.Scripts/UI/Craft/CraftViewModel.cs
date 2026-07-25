@@ -160,26 +160,62 @@ public class CraftViewModel : ViewModelBase
     {
         if (_selectedRecipe == null || _ingredientSlots.Count == 0) return false;
 
-        if (_selectedRecipe.CraftType == "Any")
-        {
-            for (int i = 0; i < _ingredientSlots.Count; i++)
-            {
-                if (_ingredientSlots[i].HasEnough) return true;
-            }
+        string resultId = _selectedRecipe.ResultId;
 
-            return false;
-        }
-        else
+        if (!string.IsNullOrEmpty(resultId) && resultId.StartsWith("Npc"))
         {
-            for (int i = 0; i < _ingredientSlots.Count; i++)
+            var npcManager = GameUtil.GetNpcManager();
+            if (npcManager != null)
             {
-                if (_ingredientSlots[i].HasEnough == false)
+                if (resultId.Contains("Bag") && npcManager.HasBagNpc)
+                {
+                    return false;
+                }
+                if (resultId.Contains("Battle") && npcManager.HasBattleNpc)
                 {
                     return false;
                 }
             }
-            return true;
         }
+
+        if (!string.IsNullOrEmpty(resultId) && !resultId.StartsWith("Npc"))
+        {
+            var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+
+            if (invenVm.IsEnoughSpace(resultId, _selectedRecipe.ResultCount) == false)
+            {
+                return false;
+            }
+        }
+
+
+        bool isEnoughIngredients = false;
+
+        if (_selectedRecipe.CraftType == "Any")
+        {
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough) 
+                {
+                    isEnoughIngredients = true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            isEnoughIngredients = true;
+            for (int i = 0; i < _ingredientSlots.Count; i++)
+            {
+                if (_ingredientSlots[i].HasEnough == false)
+                {
+                    isEnoughIngredients = false;
+                    return false;
+                }
+            }
+        }
+        
+        return isEnoughIngredients;
     }
 
     public bool RequestCraft()
@@ -202,37 +238,49 @@ public class CraftViewModel : ViewModelBase
 
             if (targetIngredient == null) return false;
 
-            ReduceIngredient(invenVm, targetIngredient);
+            invenVm.RemoveItem(targetIngredient.ItemId, targetIngredient.RequireCount);
         }
         else
         {
             for (int j = 0; j < _ingredientSlots.Count; j++)
             {
-                ReduceIngredient(invenVm, _ingredientSlots[j]);
+                invenVm.RemoveItem(_ingredientSlots[j].ItemId, _ingredientSlots[j].RequireCount);
             }
         }
 
-        invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        string resultId = _selectedRecipe.ResultId;
+        if (resultId.StartsWith("Npc"))
+        {
+            var npcManager = GameUtil.GetNpcManager();
+            if (resultId.Contains("Battle"))
+            {
+                npcManager.SpawnBattleNpc(resultId);
+            }
+            else if (resultId.Contains("Bag"))
+            {
+                npcManager.SpawnBagNpc(resultId);
+            }
+            else
+            {
+                Debug.LogWarning($"잘못된 NPC{resultId}");
+            }
+
+            for (int i = 0; i< _categorySlots.Count; i++)
+            {
+                if (_categorySlots[i].RecipeId == _selectedRecipe.Id)
+                {
+                    _categorySlots[i].IsLocked = true;
+                    break;
+                }
+            }
+        }
+        else
+        {
+            invenVm.AcquireItem(_selectedRecipe.ResultId, _selectedRecipe.ResultCount);
+        }
 
         SelectRecipe(_selectedRecipe.Id);
 
         return true;
-    }
-
-    private void ReduceIngredient(InventoryViewModel invenVm, CraftIngredientSlotViewModel ingVm)
-    {
-        int remainToRemove = ingVm.RequireCount;
-        foreach (var slot in invenVm.InventorySlots.Values)
-        {
-            if (slot.ItemDataId == ingVm.ItemId && slot.ItemStackCount > 0)
-            {
-                int removeAmount = Mathf.Min(slot.ItemStackCount, remainToRemove);
-                slot.ItemStackCount -= removeAmount;
-                remainToRemove -= removeAmount;
-
-                if (slot.ItemStackCount <= 0) slot.Clear();
-                if (remainToRemove <= 0) break;
-            }
-        }
     }
 }

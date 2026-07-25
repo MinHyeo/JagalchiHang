@@ -30,6 +30,16 @@ public class BattleNpc : MonoBehaviour
         behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
     }
 
+    private void Start()
+    {
+        NpcManager npcManager = GameUtil.GetNpcManager();
+
+        if(npcManager != null)
+        {
+            npcManager.RegisterBattleNpc(gameObject, this);
+        }
+    }
+
 
     private void Update()
     {

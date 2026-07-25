@@ -11,6 +11,8 @@ public class PlayerMoveController : MonoBehaviour
     private Vector2 _moveInput;
     private Vector3 _moveDirection;
 
+    private Rigidbody _rigid;
+
     private bool _isRunning;
     private bool _isLookingToMouse;
 
@@ -19,6 +21,7 @@ public class PlayerMoveController : MonoBehaviour
 
     private void Awake()
     {
+        _rigid= GetComponent<Rigidbody>();
         _player = GetComponent<Player>();
         if (_player == null) return;
     }
@@ -57,7 +60,9 @@ public class PlayerMoveController : MonoBehaviour
     {
         float speed = _isRunning ? _player.PlayerData.MoveSpeed * 3f : _player.PlayerData.MoveSpeed;
 
-        transform.position += _moveDirection * speed * Time.deltaTime;
+        //transform.position += _moveDirection * speed * Time.deltaTime;
+        Vector3 nextPosition = _rigid.position + _moveDirection * speed * Time.fixedDeltaTime;
+        _rigid.MovePosition(nextPosition);
     }
 
     // 플레이어의 이동 방향 설정

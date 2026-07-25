@@ -42,10 +42,10 @@ public class NetworkInventoryService
         return true;
     }
 
-    public void RequestRemoveItem(long removeTargetUniqueId)
+    public void RequestRemoveItem(string removeTargetDataId, int reduceCount)
     {
         var invenVm = GetLocalInventoryViewModel();
-        invenVm.RemoveItemSlotViewModel(removeTargetUniqueId);
+        invenVm.RemoveItem(removeTargetDataId, reduceCount);
 
         // TODO : 세이브 필요
     }
@@ -75,4 +75,9 @@ public class NetworkInventoryService
         }
     }
 
+    public void TestItem()
+    {
+        var invenVem = GetLocalInventoryViewModel();
+        invenVem.TestAddItem();
+    }
 }
