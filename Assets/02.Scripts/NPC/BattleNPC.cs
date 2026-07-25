@@ -11,23 +11,26 @@ public class BattleNpc : MonoBehaviour
     private BlackboardVariable<Vector3> _bunkerSpawnPosition; // 벙커 스폰위치
     private BlackboardVariable<Vector3> _playerPosition; //플레이어 위치  
     private BlackboardVariable<BattleMode> _currentBattleMode;
+    private BlackboardVariable<GameObject> _enemyTarget;
 
 
     private NavMeshAgent _agent;
     private Npc_AnimController _animController;
+    private EnemySensor _sensor;
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animController = GetComponent<Npc_AnimController>();
+        _sensor = GetComponent<EnemySensor>();
 
         //블랙보드와 연결 해주기 
         behaviorAgent.BlackboardReference.GetVariable("IsInBunker", out _isInBunker);
         behaviorAgent.BlackboardReference.GetVariable("CurrentState", out _currentState);
         behaviorAgent.BlackboardReference.GetVariable("BunkerSpawnPosition", out _bunkerSpawnPosition);
-
         behaviorAgent.BlackboardReference.GetVariable("CurrentBattleMode", out _currentBattleMode);
         behaviorAgent.BlackboardReference.GetVariable("PlayerPosition", out _playerPosition);
+        behaviorAgent.BlackboardReference.GetVariable("EnemyTarget", out _enemyTarget);
     }
 
 
@@ -82,7 +85,6 @@ public class BattleNpc : MonoBehaviour
 
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
-        //Debug.Log($"[BattleNpc] {currentPlayerPosition}");
         if (_playerPosition != null)
         {
             _playerPosition.Value = currentPlayerPosition;
@@ -94,6 +96,28 @@ public class BattleNpc : MonoBehaviour
         {
             _currentBattleMode.Value = battleMode;
             Debug.Log($"[BattleNpc] 블랙보드 CurrentBattleMode 값을 {battleMode}로 변경");
+        }
+
+        if(_enemyTarget != null)
+        {
+            _enemyTarget.Value = null;
+        }
+
+        if(_sensor != null)
+        {
+            _sensor.ClearTarget();
+        }
+
+        if(_currentState != null)
+        {
+            _currentState.Value = NpcState.Chase;
+        }
+
+        if(_agent != null && _agent.isOnNavMesh)
+        {
+            _agent.ResetPath();
+
+            _agent.SetDestination(_playerPosition.Value); 
         }
     }
     public void InOutBunkerData(bool isInBunker, Vector3 targetSpawnPos)
@@ -137,7 +161,6 @@ public class BattleNpc : MonoBehaviour
                 _currentState.Value = NpcState.Chase;
             }
         }
-        _currentState.Value = NpcState.Idle;
 
         if(behaviorAgent != null)
         {
