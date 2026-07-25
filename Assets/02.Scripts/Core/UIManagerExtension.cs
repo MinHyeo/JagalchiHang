@@ -27,6 +27,7 @@ public enum UIType
     SettingUI,
     LoadingUI,
     GeneratorUI,
+    LobbyBackgroundUI,
 }
 
 public static class UIManagerExtension
