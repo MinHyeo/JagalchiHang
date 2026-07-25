@@ -49,7 +49,6 @@ public class FarmPlot : MonoBehaviour, IInteractionable
     public void Interaction(Transform transform)
     {
         if (_farmManager == null) return;
-        Debug.Log($"FarmPlot Interaction 호출됨");
         var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
         if (plot == null)
         {
@@ -64,7 +63,7 @@ public class FarmPlot : MonoBehaviour, IInteractionable
 
         if (plot.IsPlanted == true)
         {
-            _farmManager.RequestHarvestCrop(plot);
+            UIManager.Instance.OpenFarmPlotStatusUI(_plotUniqueId);
             return;
         }
 
@@ -76,6 +75,8 @@ public class FarmPlot : MonoBehaviour, IInteractionable
         if (other.CompareTag("Player"))
         {
             UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+
         }
 
     }

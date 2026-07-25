@@ -27,6 +27,7 @@ public enum UIType
     CraftUI,
     SettingUI,
     LoadingUI,
+    FarmPlotStatusUI,
 }
 
 public static class UIManagerExtension
@@ -130,6 +131,16 @@ public static class UIManagerExtension
         if (uiBase is FarmSeedSelectUI farmUI)
         {
             farmUI.Init(plotUniqueId);
+        }
+    }
+
+    public static void OpenFarmPlotStatusUI(this UIManager uiManager, int plotUniqueId)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+        if (uiBase == null) return;
+        if (uiBase is FarmPlotStatusUI farmPlotStatusUI)
+        {
+            farmPlotStatusUI.Init(plotUniqueId);
         }
     }
 }
