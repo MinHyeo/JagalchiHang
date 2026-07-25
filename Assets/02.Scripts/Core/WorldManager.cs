@@ -9,11 +9,16 @@ public class WorldManager
     private FarmManager _farmManager;
     private MapManager _mapManager;
 
-    public async UniTask EnterWorld(SaveModel saveModel)
+    public async UniTask EnterWorld(SaveModel saveModel, int slotIndex)
     {
         InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
+
+        if (saveModel != null)
+        {
+            NetworkManager.Instance.RequestLoadGame(slotIndex);
+        }
 
         await _mapManager.CreateMap();
 

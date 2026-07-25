@@ -62,16 +62,13 @@ public class NetworkInventoryService
 
     private void OnOpenInventoryUI()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
         {
-            if (UIManager.Instance.IsOpenUI(UIType.InventoryUI))
-            {
-                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
-            else
-            {
-                UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
-            }
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.InventoryUI);
         }
     }
 
@@ -79,5 +76,57 @@ public class NetworkInventoryService
     {
         var invenVem = GetLocalInventoryViewModel();
         invenVem.TestAddItem();
+    }
+
+    public List<ItemSaveModel> GetSaveData()
+    {
+        var saveList = new List<ItemSaveModel>();
+        var invenVm = GetLocalInventoryViewModel();
+
+        foreach (var pair in invenVm.InventorySlots)
+        {
+            var slotVm = pair.Value;
+            if (!string.IsNullOrEmpty(slotVm.ItemDataId))
+            {
+                saveList.Add(new ItemSaveModel
+                {
+                    ItemUniqueId = slotVm.ItemUniqueId,
+                    ItemDataId = slotVm.ItemDataId,
+                    ItemStackCount = slotVm.ItemStackCount,
+                    Location = ItemLocationType.Inventory,
+                    SlotIndex = pair.Key
+                });
+            }
+        }
+
+        return saveList;
+    }
+
+    public void LoadSaveData(List<ItemSaveModel> itemSaveList)
+    {
+        var invenVm = GetLocalInventoryViewModel();
+        if (invenVm == null || itemSaveList == null) return;
+
+        foreach (var slot in invenVm.InventorySlots.Values)
+        {
+            slot.Clear();
+        }
+
+        foreach (var itemSave in itemSaveList)
+        {
+            if (itemSave.Location == ItemLocationType.Inventory)
+            {
+                int slotIdx = itemSave.SlotIndex;
+
+                if (invenVm.InventorySlots.ContainsKey(slotIdx))
+                {
+                    var slot = invenVm.InventorySlots[slotIdx];
+                    slot.ItemUniqueId = itemSave.ItemUniqueId;
+                    slot.SetItem(itemSave.ItemDataId, itemSave.ItemStackCount);
+                }
+            }
+        }
+
+        invenVm.NotifySlotCountChanged();
     }
 }

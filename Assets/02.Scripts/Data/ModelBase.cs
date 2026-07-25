@@ -1,4 +1,6 @@
-﻿public class ModelBase
+﻿using System.Collections.Generic;
+
+public class ModelBase
 {
     public int modelId;
 }
@@ -14,12 +16,20 @@ public enum ItemLocationType
 public class SaveModel : ModelBase
 {
     public PlayerSaveModel PlayerSaveModel;
-    public ItemSaveModel ItemSaveModel;
+    public List<ItemSaveModel> ItemSaveModel;
 }
 
 public class PlayerSaveModel
 {
-    public int currentHp;
+    public int CurrentHp;
+    public int CurrentHunger;
+    public int CurrentThirst;
+    public float PositionX;
+    public float PositionY;
+    public float PositionZ;
+    public MapType CurrentMapType;
+
+    public int MaxInventorySlotCount;
 }
 
 public class ItemSaveModel 
