@@ -88,7 +88,6 @@ playground.xcworkspace
 /[Mm]emory[Cc]aptures/
 /[Aa]ssets/[00]5.Models
 /[Aa]ssets/[00]4.Images
-/[Aa]ssets/[00]8.Fonts
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta

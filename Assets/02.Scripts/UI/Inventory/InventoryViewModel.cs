@@ -39,7 +39,7 @@ public class InventoryViewModel : ViewModelBase
     {
         _inventorySlots.Clear();
 
-        for (int i = 0; i < _slotCount; i++)
+        for (int i = 0; i < SlotCount; i++)
         {
             _inventorySlots.Add(i, new InventorySlotViewModel());
         }
@@ -95,7 +95,7 @@ public class InventoryViewModel : ViewModelBase
 
         if (isStackable)
         {
-            for (int i = 0; i < _slotCount; i++)
+            for (int i = 0; i < SlotCount; i++)
             {
                 if (InventorySlots[i].ItemDataId == itemDataId && _inventorySlots[i].ItemStackCount < maxCount)
                 {
@@ -138,7 +138,7 @@ public class InventoryViewModel : ViewModelBase
 
     private int GetEmptySlotIndex()
     {
-        for (int i = 0; i < _slotCount; i++)
+        for (int i = 0; i < _inventorySlots.Count; i++)
         {
             if (string.IsNullOrEmpty(_inventorySlots[i].ItemDataId))
             {
@@ -221,17 +221,80 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    public void RemoveItemSlotViewModel(long uniqueId)
+    public void RemoveItem(string itemdDataId, int reduceCount)
     {
+        if (reduceCount <= 0 || string.IsNullOrEmpty(itemdDataId)) return;
+
+        int remainToRemove = reduceCount;
+
         foreach (var slot in _inventorySlots.Values)
         {
-            if (slot.ItemUniqueId == uniqueId)
+            if (slot.ItemDataId == itemdDataId && slot.ItemStackCount > 0)
             {
-                slot.Clear();
-                break;
+                int removeAmount = Math.Min(slot.ItemStackCount, remainToRemove);
+
+                slot.ItemStackCount -= removeAmount;
+                remainToRemove -= removeAmount;
+
+                if (slot.ItemStackCount <= 0)
+                {
+                    slot.Clear();
+                }
+                
+                if (remainToRemove <= 0)
+                {
+                    break;
+                }
             }
         }
 
-        OnPropertyChanged("ItemListRemoved");
+        OnPropertyChanged("ItemRemoved");
+    }
+
+    public bool IsEnoughSpace(string itemDataId, int count, int freedSlotCount = 0)
+    {
+        if (count <= 0) return true;
+
+        var itemData = GameDataManager.Instance.GetData<ItemData>(itemDataId);
+        if (itemData == null) return false;
+
+        bool isStackable = itemData.IsStackable;
+        int maxCount = itemData.MaxCount;
+
+        if (isStackable)
+        {
+            for (int i = 0; i < SlotCount; i++)
+            {
+                if (_inventorySlots.ContainsKey(i) &&
+                _inventorySlots[i].ItemDataId == itemDataId &&
+                _inventorySlots[i].ItemStackCount < maxCount)
+                {
+                    int spaceLeft = maxCount - _inventorySlots[i].ItemStackCount;
+                    count -= spaceLeft;
+
+                    if (count <= 0) return true;
+                }
+            }
+        }
+
+        int requiredEmptySlots = isStackable ? Mathf.CeilToInt((float)count / maxCount) : count;
+
+        int currentEmptySlots = 0;
+        for (int j = 0; j < SlotCount; j++)
+        {
+            if (_inventorySlots.ContainsKey(j) && string.IsNullOrEmpty(_inventorySlots[j].ItemDataId))
+            {
+                currentEmptySlots++;
+            }
+        }
+
+        return (currentEmptySlots + freedSlotCount) >= requiredEmptySlots;
+    }
+
+    public void NotifySlotCountChanged()
+    {
+        OnPropertyChanged("ItemListAdded");
+        OnPropertyChanged(nameof(SlotCount));
+        OnPropertyChanged(nameof(InventorySlots));
     }
 }

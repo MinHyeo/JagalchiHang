@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class NetworkManager : SingletonBase<NetworkManager>
@@ -10,6 +12,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkCraftService CraftService { get; private set; }
     public NetworkNpcService NpcService { get; private set; }
     public NetworkGeneratorService GeneratorService { get; private set; }
+    public NetworkSettingService SettingService { get; private set; }
 
     private string GetSaveFilePath(int slotIndex)
     {
@@ -38,6 +41,36 @@ public class NetworkManager : SingletonBase<NetworkManager>
         return saveModel;
     }
 
+    public void RequestSaveGame(int slotIndex)
+    {
+        SaveModel currentSaveData = new SaveModel();
+        currentSaveData.ItemSaveModel = new List<ItemSaveModel>();
+
+        if (PlayerService != null) currentSaveData.PlayerSaveModel = PlayerService.GetSaveData();
+        if (InventoryService != null)
+        {
+            var invenData = InventoryService.GetSaveData();
+            currentSaveData.ItemSaveModel.AddRange(invenData);
+        }
+        if (StorageService != null)
+        {
+            var storageData = StorageService.GetSaveData();
+            currentSaveData.ItemSaveModel.AddRange(storageData);
+        }
+
+        SaveGame(slotIndex, currentSaveData);
+    }
+
+    public void RequestLoadGame(int slotIndex)
+    {
+        SaveModel saveModel = LoadGame(slotIndex);
+        if (saveModel == null) return;
+
+        PlayerService.LoadSaveData(saveModel.PlayerSaveModel);
+        InventoryService.LoadSaveData(saveModel.ItemSaveModel);
+        StorageService.LoadSaveData(saveModel.ItemSaveModel);
+    }
+
     public void InitNetworkService()
     {
         // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
@@ -48,9 +81,12 @@ public class NetworkManager : SingletonBase<NetworkManager>
         NpcService = new NetworkNpcService();
         CraftService = new NetworkCraftService();
         GeneratorService = new NetworkGeneratorService();
+        SettingService = new NetworkSettingService();
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
+        SettingService.BindSettingInputEvent();
+        InventoryService.TestItem();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)

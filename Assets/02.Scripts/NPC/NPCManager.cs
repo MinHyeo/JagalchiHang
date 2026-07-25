@@ -11,6 +11,8 @@ public class NpcManager
     [SerializeField] private BattleNpc battleNpc; 
     [SerializeField] private BagNpc bagNpc;
 
+    public bool HasBattleNpc => _battleNpc != null || battleNpc != null;
+    public bool HasBagNpc => _bagNpc != null || bagNpc != null;
 
     private ITargetable _chasePlayer;
 
