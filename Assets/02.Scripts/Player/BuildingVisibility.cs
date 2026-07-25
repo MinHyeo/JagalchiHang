@@ -4,13 +4,23 @@ using UnityEngine.Rendering;
 
 public class BuildingVisibility : MonoBehaviour
 {
-    [SerializeField]
-    private LayerMask _excludeLayer;     // 제외할 오브젝트 레이어
+    [SerializeField] private LayerMask _excludeLayer;     // 제외할 오브젝트 레이어
 
     private List<Renderer> _renderers = new List<Renderer>();          // Renderer들을 저장하는 List
     private ShadowCastingMode[] _originalShadowModes;                  // 어떤 Shadow Mode였는지 저장하는 배열
 
+    private bool _playerInside;
+    private int _currentPlayerFloor;
+
+    private BuildingFloorVisibility[] _floors;
+
     private void Awake()
+    {
+        InitRenderers();
+        _floors = GetComponentsInChildren<BuildingFloorVisibility>(true);
+    }
+
+    private void InitRenderers()
     {
         // 모든 자식 오브젝트에서 Renderer를 찾아 배열로 반환
         Renderer[] childRenderers = GetComponentsInChildren<Renderer>(true);
@@ -30,17 +40,50 @@ public class BuildingVisibility : MonoBehaviour
         // Renderer 개수만큼 ShadowMode 배열 생성
         _originalShadowModes = new ShadowCastingMode[_renderers.Count];
 
-        for(int i = 0; i < _renderers.Count; i++)
+        for (int i = 0; i < _renderers.Count; i++)
         {
             // 현재 Renderer의 ShadowMode 저장
             _originalShadowModes[i] = _renderers[i].shadowCastingMode;
         }
     }
 
+    public void SetPlayerInside(bool isInSide, int currentFloor)
+    {
+        _playerInside = isInSide;
+        _currentPlayerFloor = currentFloor;
+
+        if (_playerInside == true)
+        {
+            Show();
+
+            SetPlayerFloor(_currentPlayerFloor);
+        }
+    }
+
+    public void SetPlayerFloor(int playerFloor)
+    {
+        foreach (var floor in _floors)
+        {
+            if (floor.FloorNumber > playerFloor)
+            {
+                floor.Hide();
+            }
+            else
+            {
+                floor.Show();
+            }
+        }
+    }
+
     // 건물 숨기기
     public void Hide()
     {
-        foreach(var targetRenderer in _renderers)
+        if (_playerInside == true)
+        {
+            return;
+        }
+
+        foreach (var targetRenderer in _renderers)
         {
             // ShadowsOnly: 오브젝트 메시는 화면에 안 보이고 그림자는 보임
             targetRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
@@ -50,14 +93,15 @@ public class BuildingVisibility : MonoBehaviour
     // 건물 보여주기
     public void Show()
     {
-        for(int i = 0; i < _renderers.Count; i++)
+        for (int i = 0; i < _renderers.Count; i++)
         {
             // 처음에 저장해뒀던 값 다시 넣기
             _renderers[i].shadowCastingMode = _originalShadowModes[i];
         }
+
     }
 
-    // 특정 레이어가 LayerMask에 포함돼있는지 확인
+    //특정 레이어가 LayerMask에 포함돼있는지 확인
     private bool IsInLayerMask(int layer, LayerMask layerMask)
     {
         return (layerMask.value & (1 << layer)) != 0;
