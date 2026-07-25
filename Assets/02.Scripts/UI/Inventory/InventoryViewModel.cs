@@ -221,24 +221,30 @@ public class InventoryViewModel : ViewModelBase
         }
     }
 
-    public void RemoveItem(long uniqueId, int reduceCount)
+    public void RemoveItem(string itemdDataId, int reduceCount)
     {
-        if (reduceCount <= 0) return;
+        if (reduceCount <= 0 || string.IsNullOrEmpty(itemdDataId)) return;
+
+        int remainToRemove = reduceCount;
 
         foreach (var slot in _inventorySlots.Values)
         {
-            if (slot.ItemUniqueId == uniqueId)
+            if (slot.ItemDataId == itemdDataId && slot.ItemStackCount > 0)
             {
-                if (slot.ItemStackCount > reduceCount)
-                {
-                    slot.ItemStackCount -= reduceCount;
-                }
-                else
+                int removeAmount = Math.Min(slot.ItemStackCount, remainToRemove);
+
+                slot.ItemStackCount -= removeAmount;
+                remainToRemove -= removeAmount;
+
+                if (slot.ItemStackCount <= 0)
                 {
                     slot.Clear();
                 }
-
-                break;
+                
+                if (remainToRemove <= 0)
+                {
+                    break;
+                }
             }
         }
 
