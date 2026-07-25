@@ -16,7 +16,7 @@ public class BagNpc : MonoBehaviour
 
 
     [Header("인벤토리 확장 설정")]
-    [SerializeField] private int bonusSlotCount = 6; //임시 설정 
+    [SerializeField] private int bonusSlotCount = 12; //임시 설정 
 
 
     private void Awake()
@@ -75,7 +75,7 @@ public class BagNpc : MonoBehaviour
     private void AddInventorySlot(int count)
     {
         //인벤토리 뷰 모델 주소 가져오기 
-        InventoryViewModel inventoryVM = NetworkManager_re.Inst.InventoryService.GetLocalInventoryViewModel();
+        InventoryViewModel inventoryVM = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
 
         if (inventoryVM != null && inventoryVM.InventorySlots != null)
         {

@@ -45,6 +45,13 @@ public partial class BT_AttackMonster : Action
 
     protected override Status OnUpdate()
     {
+        if (EnemyTarget.Value == null)// 모드 변경으로 타겟이 사라졌을 경우 공격 중단 후 플레이어한테 복귀
+        {
+            StopAttackReturn();
+
+            return Status.Success;
+        }
+
         if (CheckPlayerDistance() == true) //플레이어와 너무 멀어졌을 경우
         {
             return Status.Success;
@@ -64,6 +71,22 @@ public partial class BT_AttackMonster : Action
         if (_attacker != null)
         {
             _attacker.StopAttack();
+        }
+    }
+
+
+    private void StopAttackReturn()
+    {
+        if(_attacker != null)
+        {
+            _attacker.StopAttack();
+        }
+
+        CurrentState.Value = NpcState.Chase;
+
+        if(_agent != null && _agent.isOnNavMesh)
+        {
+            _agent.ResetPath();
         }
     }
 
