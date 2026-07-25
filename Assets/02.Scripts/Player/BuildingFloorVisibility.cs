@@ -41,9 +41,6 @@ public class BuildingFloorVisibility : MonoBehaviour
         foreach (var targetRenderer in _renderers)
         {
             targetRenderer.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
-            Debug.Log(
-            $"{gameObject.name} / {targetRenderer.name} 숨김 / " +
-            $"{targetRenderer.shadowCastingMode}");
         }
     }
 
@@ -53,11 +50,6 @@ public class BuildingFloorVisibility : MonoBehaviour
         {
             // 처음에 저장해뒀던 값 다시 넣기
             _renderers[i].shadowCastingMode = _originalShadowModes[i];
-
-            Debug.Log(
-            $"{gameObject.name} / {_renderers[i].name} 보임 / " +
-            $"{_renderers[i].shadowCastingMode}"
-        );
         }
     }
 }
