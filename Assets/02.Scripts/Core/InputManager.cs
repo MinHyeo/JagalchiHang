@@ -15,6 +15,7 @@ public class InputManager : SingletonBase<InputManager>
 
     public event Action OnClickInventory;
     public event Action OnClickNpcUI;
+    public event Action OnClickSettingUI;
 
     private void Start()
     {
@@ -73,6 +74,7 @@ public class InputManager : SingletonBase<InputManager>
 
         _inputAction.Player.Inventory.started += OnInventory;
         _inputAction.Player.NpcUI.started += OnNpcUI;
+        _inputAction.Player.SettingUI.started += OnSettingUI;
     }
 
     private void OnMove(InputAction.CallbackContext callback)
@@ -124,5 +126,10 @@ public class InputManager : SingletonBase<InputManager>
     private void OnNpcUI(InputAction.CallbackContext callback)
     {
         OnClickNpcUI?.Invoke();
+    }
+
+    private void OnSettingUI(InputAction.CallbackContext callback)
+    {
+        OnClickSettingUI?.Invoke();
     }
 }

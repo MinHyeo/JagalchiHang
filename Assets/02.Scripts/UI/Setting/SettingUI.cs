@@ -56,8 +56,7 @@ public class SettingUI : UIBase
 
     private void OnClickSave()
     {
-        // TODO : 세이브 창 열기
-        // UIManager.Instance.OpenUI();
+        UIManager.Instance.OpenLoadGameUI(LoadGameUIType.SaveGame);
     }
 
     private void OnClickSoundSetting()
