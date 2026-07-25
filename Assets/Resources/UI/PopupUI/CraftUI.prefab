@@ -104,8 +104,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe44d35d37330eb478c14ea2986bd7d5, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 8c90a88e2161f2d4bbf4b947efa5fe83, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -179,8 +179,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fe44d35d37330eb478c14ea2986bd7d5, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 8c90a88e2161f2d4bbf4b947efa5fe83, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -329,17 +329,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Craft
+  m_text: "\uC81C\uC791"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4b28519c8617db84a983a59c620e10de, type: 2}
+  m_sharedMaterial: {fileID: 9557364735277523, guid: 4b28519c8617db84a983a59c620e10de, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -491,6 +491,7 @@ GameObject:
   - component: {fileID: 8588376155317112975}
   - component: {fileID: 3693383529249877971}
   - component: {fileID: 7660340775170816703}
+  - component: {fileID: 9150608213425367417}
   m_Layer: 5
   m_Name: Button_Craft
   m_TagString: Untagged
@@ -546,7 +547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f1caa347aa0f664498c7a05899b91dbd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8cd314382975cfb47acdd8def08c0a6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -616,6 +617,18 @@ MonoBehaviour:
   Text_Base: {fileID: 8305169915425496059}
   Image_Base: {fileID: 8588376155317112975}
   Image_Select: {fileID: 8588376155317112975}
+--- !u!225 &9150608213425367417
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3866403273559804752}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7282626808396375590
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,6 +685,7 @@ MonoBehaviour:
   _prefabSlotIngredient: {fileID: 632142560534229162, guid: 86087ce1d1af2dc488c60dbc709683a0, type: 3}
   _ingredientRoot: {fileID: 2554347237660840428}
   _buttonCraft: {fileID: 7660340775170816703}
+  _craftButtonCanvasGroup: {fileID: 9150608213425367417}
 --- !u!1 &7951008767210876086
 GameObject:
   m_ObjectHideFlags: 0

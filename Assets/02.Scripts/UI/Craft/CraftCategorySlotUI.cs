@@ -10,6 +10,7 @@ public class CraftCategorySlot : MonoBehaviour
     [SerializeField] private Image _imageIcon;
     [SerializeField] private UIButton _buttonChoose;
     [SerializeField] private TextMeshProUGUI _textName;
+    [SerializeField] private CanvasGroup _canvasGroup;
 
     private CraftCategorySlotViewModel _vm;
     public event Action<string> OnSlotClicked;
@@ -51,12 +52,12 @@ public class CraftCategorySlot : MonoBehaviour
         if (_vm == null || string.IsNullOrEmpty(_vm.ItemName))
         {
             _textName.text = null;
-            _imageIcon.gameObject.SetActive(false);
+            _textName.gameObject.SetActive(false);
         }
         else
         {
             _textName.text = _vm.ItemName;
-            _imageIcon.gameObject.SetActive(true);
+            _textName.gameObject.SetActive(true);
         }
     }
 
@@ -86,9 +87,23 @@ public class CraftCategorySlot : MonoBehaviour
 
     private void OnPropertyChanged_View(object sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(CraftCategorySlotViewModel.IsSelected))
+        if (e.PropertyName == nameof(CraftCategorySlotViewModel.IsLocked))
         {
-            
+            if (_buttonChoose != null)
+            {
+                UpdateLockState();
+            }
+        }
+    }
+
+    private void UpdateLockState()
+    {
+        if (_vm == null) return;
+
+        if (_canvasGroup != null)
+        {
+            _canvasGroup.blocksRaycasts = !_vm.IsLocked;
+            _canvasGroup.alpha = _vm.IsLocked ? 0.4f : 1.0f;
         }
     }
 

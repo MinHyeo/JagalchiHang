@@ -15,6 +15,7 @@ public class CraftUI : UIBase
     [SerializeField] private GameObject _prefabSlotIngredient;
     [SerializeField] private Transform _ingredientRoot;
     [SerializeField] private UIButton _buttonCraft;
+    [SerializeField] private CanvasGroup _craftButtonCanvasGroup;
 
     private CraftViewModel _vm;
     private List<CraftCategorySlot> _categorySlotList = new List<CraftCategorySlot>();
@@ -110,6 +111,13 @@ public class CraftUI : UIBase
             ingUI.BindViewModel(ingVm);
             _ingredientSlotList.Add(ingUI);
         }
+
+        if (_buttonCraft != null && _vm != null)
+        {
+            bool canCraft = _vm.CanCraft();
+            _craftButtonCanvasGroup.blocksRaycasts = canCraft;
+            _craftButtonCanvasGroup.alpha = canCraft ? 1.0f : 0.4f;
+        }
     }
 
     private void ClearIngredientList()
@@ -135,7 +143,7 @@ public class CraftUI : UIBase
         {
             InitCategoryList();
         }
-        else if (e.PropertyName == nameof(CraftViewModel.SelectedRecipe))
+        else if (e.PropertyName == nameof(CraftViewModel.SelectedRecipe) || e.PropertyName == "IngredientSlots")
         {
             UpdateCraftingDetail();
         }
@@ -155,5 +163,4 @@ public class CraftUI : UIBase
 
         _imageResultIcon.sprite = loadecSprite;
     }
-
 }
