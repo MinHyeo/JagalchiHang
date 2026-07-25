@@ -131,7 +131,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 776e7c6fb24b63f45a54c5346f0db260
-    m_Address: Assets/04.Images/UI/Loading_2.png
+    m_Address: Image/Loading_2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
