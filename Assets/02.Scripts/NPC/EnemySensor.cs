@@ -12,7 +12,7 @@ public class EnemySensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Monster")) // 몬스터 레이어가 아니면 무시
+        if (!other.CompareTag("Monster")) // 몬스터 레이어가 아니면 무시
         {
             return;
         }
@@ -39,7 +39,7 @@ public class EnemySensor : MonoBehaviour
 
     private void OnTriggerExit(Collider other) //감지범위 벗어났을 때 
     {
-        if (other.gameObject.layer != LayerMask.NameToLayer("Monster")) // 몬스터 레이어가 아니면 무시
+        if (!other.CompareTag("Monster")) // 몬스터 레이어가 아니면 무시
         {
             return;
         }

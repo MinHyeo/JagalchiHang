@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
+using Unity.AppUI.UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class NpcManager 
 {
@@ -108,6 +110,20 @@ public class NpcManager
         // 이동 허용
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
+    }
+
+    public void TransNpcPosition(Vector3 transPosition)
+    {
+
+        Vector3 battleNpcPos = transPosition + new Vector3(1.0f, 0f, 0f);
+        Vector3 bagNpcPos = transPosition + new Vector3(-1.0f, 0f, 0f);
+
+        TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, 3.0f);
+        TryGetNavMeshPosition(bagNpcPos, out battleNpcPos, 3.0f);
+
+        battleNpc.ChangeNpcPosition(transPosition);
+        bagNpc.ChangeNpcPosition(transPosition);
+
     }
 
     public async UniTaskVoid SpawnBagNpc(string npcdataId)

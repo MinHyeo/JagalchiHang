@@ -107,21 +107,10 @@ public class BagNpc : MonoBehaviour
         }
     }
 
-    public void InOutBunkerData(bool isInBunker, Vector3 targetSpawnPos)
+    public void ChangeNpcPosition(Vector3 targetSpawnPos)
     {
-
-        if (behaviorAgent != null)
-        {
-            behaviorAgent.enabled = false;
-        }
-
-
-        _isInBunker.Value = isInBunker; //블랙보드로 값 넣어주기 
-
-        _bunkerSpawnPosition.Value = targetSpawnPos;
-
         /*NavMeshAgent를 켜놓은 상태로 BattleNPC를 위치 이동시키는 건 충돌을 일으키기 때문에
-         * NavMeshAgent를 끄고 이동시킨 후 다시 켜야한다.*/
+        * NavMeshAgent를 끄고 이동시킨 후 다시 켜야한다.*/
 
         if (_agent != null)
         {
@@ -136,6 +125,22 @@ public class BagNpc : MonoBehaviour
         {
             transform.position = targetSpawnPos;
         }
+    }
+
+    public void InOutBunkerData(bool isInBunker, Vector3 targetSpawnPos)
+    {
+
+        if (behaviorAgent != null)
+        {
+            behaviorAgent.enabled = false;
+        }
+
+
+        _isInBunker.Value = isInBunker; //블랙보드로 값 넣어주기 
+
+        _bunkerSpawnPosition.Value = targetSpawnPos;
+
+        ChangeNpcPosition(targetSpawnPos);
 
         if (_currentState != null)
         {
