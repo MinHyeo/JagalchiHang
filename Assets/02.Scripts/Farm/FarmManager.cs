@@ -109,6 +109,11 @@ public class FarmManager
 
         if (plot.CurrentGrowthStage >= growthStageMinutes.Count)
         {
+            string lastPrefabPath = cropData.PrefabPath + "_" + plot.CurrentGrowthStage;
+
+            Debug.Log($"마지막 단계 prefabPath: {lastPrefabPath}, stage: {plot.CurrentGrowthStage}");
+
+            await farmPlot.ChangeCropModel(lastPrefabPath, plot.CropDataId);
             Debug.Log($"밭 {plot.PlotUniqueId} 수확가능");
             return;
         }
@@ -257,7 +262,7 @@ public class FarmManager
 
             if (slot.ItemDataId == cropData.SeedItemDataId && slot.ItemStackCount > 0)
             {
-                NetworkManager.Instance.InventoryService.RequestRemoveItem(slot.ItemUniqueId, cropData.RequiredSeedCount);
+                NetworkManager.Instance.InventoryService.RequestRemoveItem(cropData.SeedItemDataId, cropData.RequiredSeedCount);
                 remaining = 0;
                 break;
             }
