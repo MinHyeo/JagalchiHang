@@ -128,6 +128,8 @@ public class PlayerController : MonoBehaviour
             _isAttacking = true;
 
             SetState(StateType.Attack);
+
+            Debug.Log($"공격 버튼    Hit:{_isHit}   Attack : {_isAttacking}    Die : {_isDie}");
         }
     }
 
@@ -184,6 +186,7 @@ public class PlayerController : MonoBehaviour
     // 피격
     public void Hit()
     {
+        _isAttacking = false;
         _isHit = true;
         SetState(StateType.Hit);
     }
