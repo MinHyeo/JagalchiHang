@@ -26,7 +26,7 @@ public class WorldManager
 
         NetworkManager.Instance.RequestLoadGame(saveModel);
 
-        NetworkManager.Instance.InventoryService.TestItem();
+        //NetworkManager.Instance.InventoryService.TestItem();
 
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
@@ -55,6 +55,7 @@ public class WorldManager
         // 몬스터 갱신
         bool isBunker = (mapType == MapType.ParkingGarage) ? true : false;
 
+        NetworkManager.Instance.FarmingService.OnExitMap();
     }
 
     public void ExitWorld()
