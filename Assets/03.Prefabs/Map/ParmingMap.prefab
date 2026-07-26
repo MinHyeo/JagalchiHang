@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1 &12672191401672780
 GameObject:
@@ -3001,7 +3001,7 @@ Terrain:
   m_GameObject: {fileID: 1383931776371981539}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 969292a3ae9f5ab4ba4541e57aba197e, type: 2}
+  m_TerrainData: {fileID: 0}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -3050,7 +3050,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: 969292a3ae9f5ab4ba4541e57aba197e, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: ff8d5360214479049a27b4a81fb57128, type: 2}
   m_EnableTreeColliders: 1
 --- !u!1 &1485927999858999694
 GameObject:
