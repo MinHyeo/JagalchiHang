@@ -263,6 +263,8 @@ public class NpcManager
         // 이동 허용
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
+
+        BunkerStateBagNpc(); //스폰 시점에 벙커 상태 반영
     }
 
     public void NpcUpdate()
