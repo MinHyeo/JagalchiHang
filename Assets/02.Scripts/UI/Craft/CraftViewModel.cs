@@ -70,6 +70,7 @@ public class CraftViewModel : ViewModelBase
         if (recipeData == null) return;
 
         var npcManager = GameUtil.GetNpcManager();
+        var farmManager = GameUtil.GetFarmManager();
 
         for (int i = 0; i < recipeData.Count; i++)
         {
@@ -88,6 +89,30 @@ public class CraftViewModel : ViewModelBase
                         slotVm.IsLocked = true;
                     }
                     else if (recipe.ResultId.Contains("Battle") && npcManager.HasBattleNpc)
+                    {
+                        slotVm.IsLocked = true;
+                    }
+                }
+            }
+            else if (recipe.ResultId == "Item_FarmPlot")
+            {
+                if (farmManager != null)
+                {
+                    bool hasUnlockablePlot = false;
+                    var plotList = farmManager.GetFarmPlotList();
+                    if (plotList != null)
+                    {
+                        for (int p = 0; p < plotList.Count; p++)
+                        {
+                            if (!plotList[p].IsUnlocked)
+                            {
+                                hasUnlockablePlot = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!hasUnlockablePlot)
                     {
                         slotVm.IsLocked = true;
                     }
@@ -193,8 +218,29 @@ public class CraftViewModel : ViewModelBase
                 }
             }
         }
+        else if (resultId == "Item_FarmPlot")
+        {
+            var farmManager = GameUtil.GetFarmManager();
+            if (farmManager != null)
+            {
+                bool hasUnlockablePlot = false;
+                var plotList = farmManager.GetFarmPlotList();
+                if (plotList != null)
+                {
+                    for (int i = 0; i < plotList.Count; i++)
+                    {
+                        if (!plotList[i].IsUnlocked)
+                        {
+                            hasUnlockablePlot = true;
+                            break;
+                        }
+                    }
+                }
 
-        if (!string.IsNullOrEmpty(resultId) && !resultId.StartsWith("Npc"))
+                if (!hasUnlockablePlot) return false;
+            }
+        }
+        else
         {
             var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
 
@@ -204,9 +250,7 @@ public class CraftViewModel : ViewModelBase
             }
         }
 
-
         bool isEnoughIngredients = false;
-
         if (_selectedRecipe.CraftType == "Any")
         {
             for (int i = 0; i < _ingredientSlots.Count; i++)
@@ -300,6 +344,40 @@ public class CraftViewModel : ViewModelBase
                 {
                     _categorySlots[i].IsLocked = true;
                     break;
+                }
+            }
+        }
+        else if (resultId == "Item_FarmPlot") 
+        {
+            var farmManager = GameUtil.GetFarmManager();
+            if (farmManager != null)
+            {
+                farmManager.RequestUnlockNextPlot();
+
+                bool hasUnlockablePlot = false;
+                var plotList = farmManager.GetFarmPlotList();
+                if (plotList != null)
+                {
+                    for (int i = 0; i < plotList.Count; i++)
+                    {
+                        if (!plotList[i].IsUnlocked)
+                        {
+                            hasUnlockablePlot = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!hasUnlockablePlot)
+                {
+                    for (int i = 0; i < _categorySlots.Count; i++)
+                    {
+                        if (_categorySlots[i].RecipeId == _selectedRecipe.Id)
+                        {
+                            _categorySlots[i].IsLocked = true;
+                            break;
+                        }
+                    }
                 }
             }
         }

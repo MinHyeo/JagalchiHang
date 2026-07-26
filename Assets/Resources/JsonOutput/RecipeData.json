@@ -70,5 +70,13 @@
     "Ingredients": "Item_Electricity:10",
     "ResultId": "Item_Drop_10",
     "ResultCount": 1
+  },
+  {
+    "Id": "Recipe_10",
+    "ItemName": "밭 증축",
+    "CraftType": "All",
+    "Ingredients": "Item_Drop_01:3,Item_Drop_02:3,Item_Drop_06:1",
+    "ResultId": "Item_FarmPlot",
+    "ResultCount": 1
   }
 ]
