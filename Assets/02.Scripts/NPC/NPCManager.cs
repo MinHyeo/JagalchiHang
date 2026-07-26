@@ -170,8 +170,8 @@ public class NpcManager
     public void TransNpcPosition(Vector3 transPosition)
     {
 
-        Vector3 battleNpcPos = transPosition + new Vector3(1.0f, 0f, 0f);
-        Vector3 bagNpcPos = transPosition + new Vector3(-1.0f, 0f, 0f);
+        Vector3 battleNpcPos = transPosition + new Vector3(0f, 0f, 2.0f);
+        Vector3 bagNpcPos = transPosition + new Vector3(0f, 0f, 1.0f);
 
         TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, 3.0f);
         TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, 3.0f);
