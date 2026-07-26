@@ -98,10 +98,10 @@ public class CraftViewModel : ViewModelBase
             {
                 if (farmManager != null)
                 {
-                    bool hasUnlockablePlot = false;
                     var plotList = farmManager.GetFarmPlotList();
-                    if (plotList != null)
+                    if (plotList != null && plotList.Count > 0)
                     {
+                        bool hasUnlockablePlot = false;
                         for (int p = 0; p < plotList.Count; p++)
                         {
                             if (!plotList[p].IsUnlocked)
@@ -110,11 +110,10 @@ public class CraftViewModel : ViewModelBase
                                 break;
                             }
                         }
-                    }
-
-                    if (!hasUnlockablePlot)
-                    {
-                        slotVm.IsLocked = true;
+                        if (!hasUnlockablePlot)
+                        {
+                            slotVm.IsLocked = true;
+                        }
                     }
                 }
             }
@@ -223,10 +222,10 @@ public class CraftViewModel : ViewModelBase
             var farmManager = GameUtil.GetFarmManager();
             if (farmManager != null)
             {
-                bool hasUnlockablePlot = false;
                 var plotList = farmManager.GetFarmPlotList();
-                if (plotList != null)
+                if (plotList != null && plotList.Count > 0)
                 {
+                    bool hasUnlockablePlot = false;
                     for (int i = 0; i < plotList.Count; i++)
                     {
                         if (!plotList[i].IsUnlocked)
@@ -235,9 +234,8 @@ public class CraftViewModel : ViewModelBase
                             break;
                         }
                     }
+                    if (!hasUnlockablePlot) return false;
                 }
-
-                if (!hasUnlockablePlot) return false;
             }
         }
         else
