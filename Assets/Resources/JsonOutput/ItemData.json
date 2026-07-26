@@ -93,7 +93,7 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 1,
+    "DropWeight": 0,
     "MinDropCount": 1,
     "MaxDropCount": 2
   },
