@@ -80,6 +80,12 @@ public class NetworkManager : SingletonBase<NetworkManager>
         currentSaveData.NpcSaveModel = new NpcSaveModel();
         currentSaveData.NpcSaveModel.UnlockedNpcIds = unlockedNpcIds.ToList<string>();
 
+        currentSaveData.GeneratorSaveModel = new GeneratorSaveModel();
+        var generatorViewModel = GeneratorService.GetGeneratorViewModel();
+        currentSaveData.GeneratorSaveModel.Power = generatorViewModel.CurrentPower;
+        currentSaveData.GeneratorSaveModel.TroublePower = generatorViewModel.CurrentTroublePower;
+        currentSaveData.GeneratorSaveModel.IsStop = generatorViewModel.IsStoped;
+
         SaveGame(slotIndex, currentSaveData);
 
         return currentSaveData;
@@ -91,6 +97,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService.LoadSaveData(saveModel.ItemSaveModel);
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
         NpcService.LoadSaveData(saveModel.NpcSaveModel);
+        GeneratorService.LoadSaveData(saveModel.GeneratorSaveModel);
         TimeManager.Instance.SetTime(saveModel.Day, saveModel.Time);
         TimeManager.Instance.RestartTime();
 
