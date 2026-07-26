@@ -15,7 +15,7 @@ public class MapPortal : MonoBehaviour, IInteractionable
     public void Interaction(Transform transform)
     {
         Debug.Log("맵 이동");
-        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "입장하기", "I", transform, RequestMapChange);
+        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "입장하기", "Click", transform, RequestMapChange);
     }
 
     private void RequestMapChange(string a)

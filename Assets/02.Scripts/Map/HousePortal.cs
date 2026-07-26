@@ -15,7 +15,7 @@ public class HousePortal : MonoBehaviour, IInteractionable
 
     public void Interaction(Transform transform)
     {
-        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "입장하기", "I", transform, RequestHouseInOut);
+        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "입장하기", "Click", transform, RequestHouseInOut);
     }
 
     private void RequestHouseInOut(string a)

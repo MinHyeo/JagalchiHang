@@ -12,7 +12,7 @@ public class Box : MonoBehaviour, IInteractionable
 
     public void Interaction(Transform transform)
     {
-        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "열기", "I", transform, OpenBoxUI);
+        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "열기", "Click", transform, OpenBoxUI);
     }
 
     private void OpenBoxUI(string dd)

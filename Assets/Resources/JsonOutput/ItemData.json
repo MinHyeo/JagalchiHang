@@ -275,9 +275,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Corn",
@@ -289,9 +289,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Onion",
@@ -303,9 +303,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Pea",
@@ -317,9 +317,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Potato",
@@ -331,9 +331,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Pumpkin",
@@ -345,9 +345,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Tomato",
@@ -359,9 +359,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Seed_Wheat",
@@ -373,9 +373,9 @@
     "UseItemType": null,
     "UseItemEffect": null,
     "UseItemDescription": null,
-    "DropWeight": 0,
-    "MinDropCount": null,
-    "MaxDropCount": null
+    "DropWeight": 1,
+    "MinDropCount": 1,
+    "MaxDropCount": 2
   },
   {
     "Id": "Item_Craft_02",

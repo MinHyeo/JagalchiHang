@@ -12,7 +12,7 @@ public class GeneratorInteration : MonoBehaviour, IInteractionable
 
     public void Interaction(Transform transform)
     {
-        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "발전기", "I", transform, OpenBoxUI);
+        UIManager.Instance.AddSlotHudInteraction(_uniqueId, "발전기", "Click", transform, OpenBoxUI);
     }
 
     private void OpenBoxUI(string text)
