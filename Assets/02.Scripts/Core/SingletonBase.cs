@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditorInternal;
+using UnityEngine;
 
 public class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
 {

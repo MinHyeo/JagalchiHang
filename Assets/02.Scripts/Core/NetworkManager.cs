@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NetworkManager : SingletonBase<NetworkManager>
 {
+    public NetworkSaveLoadService SaveLoadService;
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
@@ -13,6 +14,9 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkNpcService NpcService { get; private set; }
     public NetworkGeneratorService GeneratorService { get; private set; }
     public NetworkSettingService SettingService { get; private set; }
+
+    public NetworkFarmService FarmService { get; private set; }
+
 
     private string GetSaveFilePath(int slotIndex)
     {
@@ -71,6 +75,11 @@ public class NetworkManager : SingletonBase<NetworkManager>
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
     }
 
+    public void InitSaveLoadService()
+    {
+        SaveLoadService = new NetworkSaveLoadService();
+    }
+
     public void InitNetworkService()
     {
         // 앞으로 네트워크 매니저에서 사용할 다양한 서비스를 생성
@@ -87,6 +96,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService.BindInventoryInputEvent();
         SettingService.BindSettingInputEvent();
         InventoryService.TestItem();
+        FarmService = new NetworkFarmService();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
@@ -163,4 +173,6 @@ public class NetworkManager : SingletonBase<NetworkManager>
     {
         InventoryService.AddItem(itemDataId, stackCount);
     }
+
+
 }

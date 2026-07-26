@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Crops
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Crops
+  m_GUID: 7e85532b652d742459445f55f0d9f34a
+  m_SerializeEntries:
+  - m_GUID: 059bb3fa9af1f134794484b5d76062bb
+    m_Address: Crop_Pumpkin_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2545296eef5194e40b19fb6acb666df9
+    m_Address: Crop_Pea_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 263006a4a772e594e99663c026d7a582
+    m_Address: Crop_Tomato_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39d1e58a97a5c004e82adfa2e1d57942
+    m_Address: Crop_Wheat_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4bbb49df749509d4aa584b305251f909
+    m_Address: Crop_Tomato_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4cf3b3ed56ebf5846b4d3372ede810a0
+    m_Address: Crop_Pea_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5ae32b2c8144dc54ab21be2135242e74
+    m_Address: Crop_Carrot_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7341b75c52841a44097355c3a85a7cae
+    m_Address: Crop_Pumpkin_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7cb1c72bfcdb7714bb37b9fc8552e8ec
+    m_Address: Crop_Tomato_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7ed6d78504bce8f4e9bf7b7781deb94a
+    m_Address: Crop_Pea_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bb254ec77dde164780e4d3502e95ba1
+    m_Address: Crop_Onion_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9bf8e059594b3814a89a27edd2722b79
+    m_Address: Crop_Onion_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ae7ad11aff763e847b544117522c64e4
+    m_Address: Crop_Potato_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3b3d78c32b2cfb40b62fe7274a7c5bc
+    m_Address: Crop_Pumpkin_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c6a7180a73a23154aa9993973f2c4665
+    m_Address: Crop_Corn_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce57ea6af0817bc44b79190a1ce7820b
+    m_Address: Crop_Carrot_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dbacd60d3752e484dbb2f60fc303d576
+    m_Address: Crop_Wheat_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4a5b21184401994d96dac3cdb2856db
+    m_Address: Crop_Corn_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eebe1e54a4ce08544ad4f82c5861b382
+    m_Address: Crop_Carrot_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f51f948f2bb0e984a96cc98447875faf
+    m_Address: Crop_Potato_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5e4d8d74c14e534c96ac147d77b8fe0
+    m_Address: Crop_Potato_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fa50064cb9593cb4baad35716f87be79
+    m_Address: Crop_Tomato_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d1e9ef7c354e227479738996816d53c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: acf70f2daa2e4f640a20f15e17754daf, type: 2}
+    - {fileID: 11400000, guid: 8efb1fbc34ca44a409090a3f1b1faeaf, type: 2}

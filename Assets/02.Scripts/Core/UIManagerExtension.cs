@@ -23,9 +23,11 @@ public enum UIType
     StorageUI,
     NpcUI,
     MainUI,
+    FarmSeedSelectUI,
     CraftUI,
     SettingUI,
     LoadingUI,
+    FarmPlotStatusUI,
     GeneratorUI,
     LobbyBackgroundUI,
 }
@@ -120,6 +122,27 @@ public static class UIManagerExtension
         if (uiBase is FarmingUI farmingUI)
         {
             farmingUI.Init(boxUniqueId);
+        }
+    }
+
+    public static void OpenFarmSeedSelectUI(this UIManager uiManager, int plotUniqueId)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+        if (uiBase == null) return;
+        
+        if (uiBase is FarmSeedSelectUI farmUI)
+        {
+            farmUI.Init(plotUniqueId);
+        }
+    }
+
+    public static void OpenFarmPlotStatusUI(this UIManager uiManager, int plotUniqueId)
+    {
+        UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+        if (uiBase == null) return;
+        if (uiBase is FarmPlotStatusUI farmPlotStatusUI)
+        {
+            farmPlotStatusUI.Init(plotUniqueId);
         }
     }
 }

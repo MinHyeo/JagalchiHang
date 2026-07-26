@@ -913,6 +913,7 @@ GameObject:
   - component: {fileID: 6242886715014429473}
   - component: {fileID: 3638470175821341018}
   - component: {fileID: 4341486927060472385}
+  - component: {fileID: 6354920622329078377}
   m_Layer: 5
   m_Name: Fix Button
   m_TagString: Untagged
@@ -1022,6 +1023,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6354920622329078377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3576080211005950232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82a987d190303a74cabd6f8dbe8d8927, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  Button_Base: {fileID: 4341486927060472385}
+  Text_Base: {fileID: 0}
+  Image_Base: {fileID: 0}
+  Image_Select: {fileID: 0}
 --- !u!1 &3684278146190537730
 GameObject:
   m_ObjectHideFlags: 0
@@ -1492,6 +1509,8 @@ MonoBehaviour:
   - {fileID: 4846533237718762759}
   _rechargeValueText: {fileID: 3654502588008351729}
   _rechargeButton: {fileID: 3270628069962173630}
+  _fixValueText: {fileID: 7243752363268926517}
+  _fixButton: {fileID: 6354920622329078377}
 --- !u!1 &4447233668723029877
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,6 +44,7 @@ public class WorldManager
         _playerManager.TransPlayerPosition(spawnPosition);
 
         // Farm 상태 갱신
+        _farmManager.OnMapChanged();
 
         // Npc 상태 갱신
         bool isinBunker = (mapType == MapType.ParkingGarage) ? true : false;

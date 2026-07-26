@@ -150,16 +150,7 @@ public class InventoryViewModel : ViewModelBase
 
     public void TestAddItem()
     {
-        NetworkManager.Instance.AddItemToInventory("Item_Drop_09", 5);
-        NetworkManager.Instance.AddItemToInventory("Item_Drop_10", 7);
-        NetworkManager.Instance.AddItemToInventory("Crop_Carrot", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Corn", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Onion", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Pea", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Potato", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Pumpkin", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Tomato", 10);
-        NetworkManager.Instance.AddItemToInventory("Crop_Wheat", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_06", 5);
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Carrot", 7);
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Corn", 7);
         NetworkManager.Instance.AddItemToInventory("Item_Seed_Onion", 7);
@@ -172,6 +163,7 @@ public class InventoryViewModel : ViewModelBase
         NetworkManager.Instance.AddItemToInventory("Item_Drop_02", 10);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_03", 10);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_04", 10);
+        NetworkManager.Instance.AddItemToInventory("Item_Drop_05", 1);
         NetworkManager.Instance.AddItemToInventory("Item_Drop_05", 1);
     }
 
@@ -289,6 +281,22 @@ public class InventoryViewModel : ViewModelBase
         }
 
         return (currentEmptySlots + freedSlotCount) >= requiredEmptySlots;
+    }
+
+    public int GetItemCount(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId) || InventorySlots == null) return 0;
+
+        int totalCount = 0;
+        foreach (var slot in InventorySlots.Values)
+        {
+            if (slot.ItemDataId == itemId)
+            {
+                totalCount += slot.ItemStackCount;
+            }
+        }
+
+        return totalCount;
     }
 
     public void NotifySlotCountChanged()

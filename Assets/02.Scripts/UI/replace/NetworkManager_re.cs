@@ -7,16 +7,18 @@ using UnityEngine;
 public class NetworkManager_re : MonoBehaviour
 {
     public static NetworkManager_re Inst { get; set; }
+
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
     public NetworkStorageService StorageService { get; private set; }
-    public NetworkNpcService NpcService { get; private set; }
+    public NetworkFarmService FarmService { get; private set; }
 
-    public event Action<NpcViewModel> OnNpcSpawnDataReceived;
+    public event Action<FarmViewModel> OnFarmSpawnDataReceived;
 
     private void Awake()
     {
+        Debug.Log("NetworkManager_re Awake");
         Inst = this;
         InitNetworkService();
     }
@@ -28,7 +30,7 @@ public class NetworkManager_re : MonoBehaviour
         InventoryService = new NetworkInventoryService();
         FarmingService = new NetworkFarmingService();
         StorageService = new NetworkStorageService();
-        NpcService = new NetworkNpcService();
+        FarmService = new NetworkFarmService();
     }
 
     public void RequestCreateLocalPlayer()
@@ -88,45 +90,24 @@ public class NetworkManager_re : MonoBehaviour
     //    return newPlayerData;
     //}
 
+
+    //public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx);
+
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
+
     {
         var invenVm = InventoryService.GetLocalInventoryViewModel();
-        var farmingVm = FarmingService.LoadFarmingBox(boxUniqueId);
+        var farmingVm = FarmingService.GetFarmingViewModel();
 
         if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !farmingVm.FarmingSlots.ContainsKey(farmingIdx)) return;
 
         var invenSlot = invenVm.InventorySlots[invenIdx];
         var farmingSlot = farmingVm.FarmingSlots[farmingIdx];
 
-        if (invenSlot.ItemDataId == farmingSlot.ItemDataId && invenSlot.IsStackable)
-        {
-            int maxCount = invenSlot.MaxCount;
-            int remainCount = maxCount - invenSlot.ItemStackCount;
-
-            if (remainCount > 0) 
-            {
-                int moveAmount = Mathf.Min(remainCount, farmingSlot.ItemStackCount);
-
-                invenSlot.ItemStackCount += moveAmount;
-                farmingSlot.ItemStackCount -= moveAmount;
-
-                if (farmingSlot.ItemStackCount < 0)
-                {
-                    farmingSlot.Clear();
-                }
-
-                return;
-            }
-        }
-
-        long tempUniqueId = invenSlot.ItemUniqueId;
         string tempId = invenSlot.ItemDataId;
         int tempCount = invenSlot.ItemStackCount;
 
-        invenSlot.ItemUniqueId = farmingSlot.ItemUniqueId;
         invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
-
-        farmingSlot.ItemUniqueId = tempUniqueId;
         farmingSlot.SetItem(tempId, tempCount);
 
         // TODO: 추후 세이브 필요
@@ -141,48 +122,28 @@ public class NetworkManager_re : MonoBehaviour
         if (!invenVm.InventorySlots.ContainsKey(invenIdx) || !storageVm.StorageSlots.ContainsKey(storageIdx)) return;
 
         var invenSlot = invenVm.InventorySlots[invenIdx];
-        var StoragegSlot = storageVm.StorageSlots[storageIdx];
+        var farmingSlot = storageVm.StorageSlots[storageIdx];
 
-        if (invenSlot.ItemDataId == StoragegSlot.ItemDataId && invenSlot.IsStackable)
-        {
-            int maxCount = invenSlot.MaxCount;
-            int remainCount = maxCount - invenSlot.ItemStackCount;
-
-            if (remainCount > 0)
-            {
-                int moveAmount = Mathf.Min(remainCount, StoragegSlot.ItemStackCount);
-
-                invenSlot.ItemStackCount += moveAmount;
-                StoragegSlot.ItemStackCount -= moveAmount;
-
-                if (StoragegSlot.ItemStackCount < 0)
-                {
-                    StoragegSlot.Clear();
-                }
-
-                return;
-            }
-        }
-
-        long tempUniqueId = invenSlot.ItemUniqueId;
         string tempId = invenSlot.ItemDataId;
         int tempCount = invenSlot.ItemStackCount;
 
-        invenSlot.ItemUniqueId = StoragegSlot.ItemUniqueId;
-        invenSlot.SetItem(StoragegSlot.ItemDataId, StoragegSlot.ItemStackCount);
-
-        StoragegSlot.ItemUniqueId = tempUniqueId;
-        StoragegSlot.SetItem(tempId, tempCount);
+        invenSlot.SetItem(farmingSlot.ItemDataId, farmingSlot.ItemStackCount);
+        farmingSlot.SetItem(tempId, tempCount);
 
         // TODO: 추후 세이브 필요
         // RequestSaveData();
     }
 
-    public void RequestLoadNpcData()
+    public void RequestLoadFarmData()
     {
-        //SaveData saveData = new SaveData();
-        NpcViewModel npcViewModel = NpcService.GetNpcViewModel();
+        Debug.Log("RequestLoadFarmData 호출됨");
 
-        OnNpcSpawnDataReceived?.Invoke(npcViewModel);
+        // 추후 세이브 데이터 불러옴
+        FarmPlotModel model = new FarmPlotModel();
+
+        FarmViewModel farmViewModel = FarmService.GetFarmViewModel();
+        //farmViewModel.GrowthMinutes = 10;
+
+        OnFarmSpawnDataReceived?.Invoke(farmViewModel);
     }
 }

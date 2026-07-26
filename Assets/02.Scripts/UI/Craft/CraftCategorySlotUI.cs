@@ -29,6 +29,7 @@ public class CraftCategorySlot : MonoBehaviour
 
         UpdateIcon();
         UpdateText();
+        UpdateLockState();
 
         _buttonChoose.BindOnClickButtonEvent(OnClickSlot);
     }

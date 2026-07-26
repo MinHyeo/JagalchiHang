@@ -1,21 +1,63 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-public class FarmPlot : MonoBehaviour
+public class FarmPlot : MonoBehaviour, IInteractionable
 {
-    [SerializeField] private GameObject Object_PlotSet;
-    [SerializeField] private Transform Transform_CropSpawnPoint;
+    public int UniqueId { get; }
 
-    private int _plotUniqueId;
-    private GameObject _currentCropObject;
+    [SerializeField] private GameObject Object_PlotSet;
+    [SerializeField] private Transform[] Transform_CropSpawnPoints;
+    [SerializeField] private int _plotUniqueId;
+
+    private FarmManager _farmManager;
 
     private void Awake()
     {
         Object_PlotSet.SetActive(false);
     }
 
-    public void InitPlot(int plotUniqueId)
+    private void OnEnable()
     {
-        _plotUniqueId = plotUniqueId;
+        FarmManager.OnFarmPlotsSpawned += OnFarmManagerReady;
+    }
+
+    private void OnDisable()
+    {
+        FarmManager.OnFarmPlotsSpawned -= OnFarmManagerReady;
+    }
+
+    private void OnFarmManagerReady()
+    {
+        if (_farmManager != null) return;
+
+        _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+        var newPlot = new FarmPlotModel();
+        newPlot.PlotUniqueId = _plotUniqueId;
+        newPlot.IsUnlocked = false;
+        newPlot.IsPlanted = false;
+        _farmManager.AddFarmPlot(newPlot);
+        _farmManager.RegisterFarmPlot(_plotUniqueId, this);
+
+        var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+        if (plot != null && plot.IsPlanted == true)
+        {
+            ActivatePlot();
+            var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+            if (cropData != null)
+            {
+                string prefabPath = cropData.PrefabPath + "_" + (plot.CurrentGrowthStage + 1);
+            }
+        }
+
+        //_farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+
+        //var newPlot = new FarmPlotModel();
+        //newPlot.PlotUniqueId = _plotUniqueId;
+        //newPlot.IsUnlocked = false;
+        //newPlot.IsPlanted = false;
+        //_farmManager.AddFarmPlot(newPlot);
+
+        //_farmManager.RegisterFarmPlot(_plotUniqueId, this);
     }
 
     public void ActivatePlot()
@@ -23,24 +65,71 @@ public class FarmPlot : MonoBehaviour
         Object_PlotSet.SetActive(true);
     }
 
-    public void SpawnCropObject(GameObject cropPrefab)
+
+    public void Interaction(Transform transform)
     {
-        if (_currentCropObject != null)
+        if (_farmManager == null) return;
+        var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+        if (plot == null)
         {
-            Destroy(_currentCropObject);
+            return;
         }
 
-        _currentCropObject = Instantiate(cropPrefab, Transform_CropSpawnPoint);
+        if (plot.IsUnlocked == false)
+        {
+            _farmManager.RequestUnlockNextPlot();
+            return;
+        }
+
+        if (plot.IsPlanted == true)
+        {
+            UIManager.Instance.OpenFarmPlotStatusUI(_plotUniqueId);
+            return;
+        }
+
+         UIManager.Instance.OpenFarmSeedSelectUI(_plotUniqueId);
     }
 
-    public void RemoveCropObject()
+    private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"RemoveCropObject 호출, _currentCropObject: {_currentCropObject}");
-        if (_currentCropObject != null)
+        if (other.CompareTag("Player"))
         {
-            Destroy(_currentCropObject);
-            _currentCropObject = null;
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+
         }
+
     }
+
+
+    public Vector3 GetSpawnPosition()
+    {
+        return Transform_CropSpawnPoints[0].position;
+    }
+
+    public async UniTask ChangeCropModel(string prefabPath, string cropDataId)
+    {
+        Debug.Log($"ChangeCropModel 호출됨, path: {prefabPath}");
+
+        for (int i = 0; i < Transform_CropSpawnPoints.Length; i++)
+        {
+            var gObj = await GameObjectManager.Instance.CreateObjectAsync(cropDataId, prefabPath, Transform_CropSpawnPoints[i].position);
+            Debug.Log($"생성된 오브젝트: {gObj}");
+            if (gObj == null)
+            {
+                return;
+            }
+
+            var cropObject = gObj.GetComponent<CropObject>();
+            if (cropObject != null)
+            {
+                _farmManager.RegisterCropObject(_plotUniqueId, cropObject);
+            }
+        }
+
+       
+
+    }
+
 
 }

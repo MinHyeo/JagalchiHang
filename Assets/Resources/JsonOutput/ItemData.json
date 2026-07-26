@@ -488,5 +488,19 @@
     "DropWeight": 0,
     "MinDropCount": null,
     "MaxDropCount": null
+  },
+  {
+    "Id": "Item_FarmPlot",
+    "ItemName": "밭 증축",
+    "IconPath": "Icon_Image/Image_FarmPlot",
+    "IsStackable": false,
+    "MaxCount": 0,
+    "IsUsable": false,
+    "UseItemType": null,
+    "UseItemEffect": null,
+    "UseItemDescription": null,
+    "DropWeight": 0,
+    "MinDropCount": null,
+    "MaxDropCount": null
   }
 ]

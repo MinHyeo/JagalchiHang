@@ -15,10 +15,12 @@ public enum ItemLocationType
 [System.Serializable]
 public class SaveModel : ModelBase
 {
+    public int day = 1;
     public PlayerSaveModel PlayerSaveModel;
     public List<ItemSaveModel> ItemSaveModel;
 }
 
+[System.Serializable]
 public class PlayerSaveModel
 {
     public int CurrentHp;
@@ -32,6 +34,7 @@ public class PlayerSaveModel
     public int MaxInventorySlotCount;
 }
 
+[System.Serializable]
 public class ItemSaveModel 
 {
     public long ItemUniqueId;

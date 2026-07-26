@@ -67,7 +67,6 @@ public class InventoryUI : UIBase
                 Destroy(slotUI.gameObject);
             }
         }
-
         _slotUIList.Clear();
     }
 

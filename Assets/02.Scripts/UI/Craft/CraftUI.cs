@@ -28,9 +28,12 @@ public class CraftUI : UIBase
 
         _buttonCraft.BindOnClickButtonEvent(OnClickCraft);
 
-        _vm.InitCraftRecipes();
-        InitCategoryList();
+        if (_vm.CategorySlots == null || _vm.CategorySlots.Count == 0)
+        {
+            _vm.InitCraftRecipes();
+        }
 
+        InitCategoryList();
         UpdateCraftingDetail();
     }
 
@@ -143,7 +146,7 @@ public class CraftUI : UIBase
         {
             InitCategoryList();
         }
-        else if (e.PropertyName == nameof(CraftViewModel.SelectedRecipe) || e.PropertyName == "IngredientSlots")
+        if (e.PropertyName == nameof(CraftViewModel.SelectedRecipe) || e.PropertyName == "IngredientSlots")
         {
             UpdateCraftingDetail();
         }
