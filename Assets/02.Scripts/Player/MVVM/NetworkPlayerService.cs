@@ -51,7 +51,7 @@ public class NetworkPlayerService
         saveModel.PositionY = playerPos.y;
         saveModel.PositionZ = playerPos.z;
 
-        // TODO[민형] : 맵 정보 받아와야 함
+        var mapManager = GameUtil.GetMapManager();
 
         var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
         saveModel.MaxInventorySlotCount = invenVm.SlotCount;
@@ -69,11 +69,9 @@ public class NetworkPlayerService
         playerVm.CurrentHunger = saveModel.CurrentHunger;
         playerVm.CurrentThirst = saveModel.CurrentThirst;
 
-        // TODO[민형] : 위치, 맵 정보 넣어주기
-        //saveModel.PositionX;
-        //saveModel.PositionY;
-        //saveModel.PositionZ;
-
+        var playerManager = GameUtil.GetPlayerManager();
+        Vector3 playerSpawnPos = new Vector3(saveModel.PositionX, saveModel.PositionY, saveModel.PositionZ);
+        playerManager.PlayerSpawnPos = playerSpawnPos;
 
         var invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
         if (invenVm != null && saveModel.MaxInventorySlotCount > 0)

@@ -116,6 +116,24 @@ public class NetworkManager : SingletonBase<NetworkManager>
         CraftService.BindCraftInputEvent();
     }
 
+    public void DestroyNetworkService()
+    {
+        NpcService.UnBindInputEvents();
+        InventoryService.UnBindInventoryInputEvent();
+        SettingService.UnBindSettingInputEvent();
+        CraftService.UnBindCraftInputEvent();
+
+        PlayerService = null;
+        InventoryService = null;
+        FarmingService = null;
+        StorageService = null;
+        NpcService = null;
+        CraftService = null;
+        GeneratorService = null;
+        SettingService = null;
+        FarmService = null;
+    }
+
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
     {
         var invenSlot = InventoryService.GetLocalInventoryViewModel().InventorySlots[invenIdx];
