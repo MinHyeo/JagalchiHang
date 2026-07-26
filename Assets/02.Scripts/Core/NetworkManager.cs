@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class NetworkManager : SingletonBase<NetworkManager>
 {
+    public NetworkSaveLoadService SaveLoadService;
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
@@ -72,6 +73,11 @@ public class NetworkManager : SingletonBase<NetworkManager>
         PlayerService.LoadSaveData(saveModel.PlayerSaveModel);
         InventoryService.LoadSaveData(saveModel.ItemSaveModel);
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
+    }
+
+    public void InitSaveLoadService()
+    {
+        SaveLoadService = new NetworkSaveLoadService();
     }
 
     public void InitNetworkService()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -17,7 +18,6 @@ public class LoadGameUI : UIBase
 
     [Header("세이브 데이터 생성")]
     [SerializeField] private Transform _saveDataRoot;
-    [SerializeField] private int _saveDataLength = 10;
 
     [Header("버튼 등록")]
     [SerializeField] private UIButton _exitButton;
@@ -25,14 +25,30 @@ public class LoadGameUI : UIBase
     private LoadGameUIType _loadGameUIType;
     private List<SaveDataSlot> _createdSaveSlotList = new List<SaveDataSlot>();
 
+    private SaveLoadViewModel _saveLoadViewModel;
+
     private void OnEnable()
     {
+        _saveLoadViewModel = NetworkManager.Instance.SaveLoadService.GetSaveLoadViewModel();
+
         _exitButton.BindOnClickButtonEvent(OnClickExitButton);
+        _saveLoadViewModel.PropertyChanged += OnPropertyChanged;
     }
 
     private void OnDisable()
     {
         _exitButton.UnBindOnClickButtonEvent(OnClickExitButton);
+        _saveLoadViewModel.PropertyChanged -= OnPropertyChanged;
+    }
+
+    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(SaveLoadViewModel.PropertyChanged):
+                Init(_loadGameUIType);
+                break;
+        }
     }
 
     private void OnClickExitButton()
@@ -42,8 +58,6 @@ public class LoadGameUI : UIBase
 
     public void Init(LoadGameUIType loadGameUIType)
     {
-        _loadGameUIType = loadGameUIType;
-
         int listCount = _createdSaveSlotList.Count;
 
         if (listCount == 0)
@@ -60,18 +74,34 @@ public class LoadGameUI : UIBase
 
     private void SlotInit(int index, LoadGameUIType loadGameUIType)
     {
-        _createdSaveSlotList[index].BindOnClickButtonEvent(loadGameUIType);
-
-        if (_loadGameUIType == loadGameUIType)
-            return;
+        //if (_loadGameUIType == loadGameUIType)
+        //    return;
 
         _loadGameUIType = loadGameUIType;
-        _createdSaveSlotList[index].Init(index, loadGameUIType);
+        var saveModel = _saveLoadViewModel.SaveModelList[index];
+        _createdSaveSlotList[index].Init(index, 0, OnSlotClick);
+    }
+
+    private void OnSlotClick(int clickedIndex)
+    {
+        switch (_loadGameUIType)
+        {
+            case LoadGameUIType.NewGame:
+                NetworkManager.Instance.SaveLoadService.StartNewGame(clickedIndex);
+                break;
+            case LoadGameUIType.LoadGame:
+                NetworkManager.Instance.SaveLoadService.StartGame(clickedIndex);
+                break;
+            case LoadGameUIType.SaveGame:
+                NetworkManager.Instance.SaveLoadService.SaveGame(clickedIndex);
+                break;
+        }
     }
 
     private void CreateSaveDataSlot()
     {
-        for(int index = 0; index < _saveDataLength; index++)
+        int listSize = _saveLoadViewModel.SaveCount;
+        for(int index = 0; index < listSize; index++)
         {
             GameObject slotObject = Instantiate(_saveDataSlotPrefab, _saveDataRoot);
             SaveDataSlot slotComponent = slotObject.GetComponent<SaveDataSlot>();

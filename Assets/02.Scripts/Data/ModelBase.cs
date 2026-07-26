@@ -15,6 +15,7 @@ public enum ItemLocationType
 [System.Serializable]
 public class SaveModel : ModelBase
 {
+    public int day = 1;
     public PlayerSaveModel PlayerSaveModel;
     public List<ItemSaveModel> ItemSaveModel;
 }

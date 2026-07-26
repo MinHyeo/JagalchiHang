@@ -14,6 +14,7 @@ public class GameManager : SingletonBase<GameManager>
         _lobbyManager.EnterLobby();
         //_worldManager.EnterWorld(); //테스트용
 
+        NetworkManager.Instance.InitNetworkService();
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
@@ -40,11 +41,6 @@ public class GameManager : SingletonBase<GameManager>
     public WorldManager GetWorldManager()
     {
         return _worldManager;
-    }
-
-    public void RequestMapChange(MapType mapType)
-    {
-        _worldManager.TransMap(mapType);
     }
 
     private void Update()
