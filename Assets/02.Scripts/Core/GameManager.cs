@@ -14,7 +14,7 @@ public class GameManager : SingletonBase<GameManager>
         _lobbyManager.EnterLobby();
         //_worldManager.EnterWorld(); //테스트용
 
-        NetworkManager.Instance.InitNetworkService();
+        NetworkManager.Instance.InitSaveLoadService();
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
