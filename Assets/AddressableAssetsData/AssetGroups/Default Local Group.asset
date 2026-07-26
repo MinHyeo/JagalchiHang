@@ -360,6 +360,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4fbfaf9e794f644b874b922dd03c407
+    m_Address: Image/Loading_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e55883995c160814ca5bb3f16428cb4e
     m_Address: Images/Icon_Image/lmage_Wheat
     m_ReadOnly: 0
