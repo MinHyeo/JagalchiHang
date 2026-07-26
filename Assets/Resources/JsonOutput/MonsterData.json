@@ -2,7 +2,7 @@
   {
     "Id": "Monster_1",
     "Name": "monster_1",
-    "MaxHp": 30,
+    "MaxHp": 90,
     "BasicAttack": 8,
     "BasicAttackRange": 1.2,
     "BasicSpeed": 1.3,
