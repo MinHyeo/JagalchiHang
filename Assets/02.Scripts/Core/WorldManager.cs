@@ -29,6 +29,8 @@ public class WorldManager
         _monsterManager.Init(target);
         _npcManager.Init(target);
 
+        NetworkManager.Instance.InventoryService.TestItem();
+
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
     }
 

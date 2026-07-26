@@ -125,6 +125,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aae927ced454d554a96d8c68e7180bee
+    m_Address: Icon_Image/Image_FarmPlot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: abc5bf4aae79e6847a0a46c6ba09d436
     m_Address: Icon_Image/Image_KongTteog
     m_ReadOnly: 0
@@ -162,6 +167,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e0b79689f6b265d46adcd58c54c7a416
     m_Address: Icon_Image/Image_CarrotSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e76436c3cfd6aa7479ebe314d3261dad
+    m_Address: 'Icon_Image/Image_Electricity '
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -91,12 +91,11 @@ public class NetworkManager : SingletonBase<NetworkManager>
         CraftService = new NetworkCraftService();
         GeneratorService = new NetworkGeneratorService();
         SettingService = new NetworkSettingService();
+        FarmService = new NetworkFarmService();
 
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
         SettingService.BindSettingInputEvent();
-        InventoryService.TestItem();
-        FarmService = new NetworkFarmService();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
