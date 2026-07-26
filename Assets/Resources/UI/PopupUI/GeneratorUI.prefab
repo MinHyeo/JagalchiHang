@@ -666,6 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f52cd201267830479b7843d6f54d6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialSlot
+  _itemId: Item_Drop_08
   _outline: {fileID: 228068896992039065}
   _itemCountText: {fileID: 3647034280208928243}
   _amount: 50
@@ -1880,6 +1881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f52cd201267830479b7843d6f54d6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MaterialSlot
+  _itemId: Item_Craft_01
   _outline: {fileID: 8979619214862130944}
   _itemCountText: {fileID: 606757050462426738}
   _amount: 20
@@ -2574,7 +2576,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100<color=green>(+50)</color>/ 200
+  m_text: '100<color=green>(+50)</color> / 200
+
+    <input type=toggle> '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4b28519c8617db84a983a59c620e10de, type: 2}
   m_sharedMaterial: {fileID: 9557364735277523, guid: 4b28519c8617db84a983a59c620e10de, type: 2}

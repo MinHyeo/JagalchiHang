@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class TrailEmitter : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class TrailEmitter : MonoBehaviour
 
     private IMonsterMoveable _moveable;
     private float _timeSinceLastSpawn;
+
+    private List<GameObject> _trailMarkerList = new();
 
     private void Awake()
     {
@@ -23,19 +27,29 @@ public class TrailEmitter : MonoBehaviour
         //    return;
         //}
 
-        _timeSinceLastSpawn += Time.deltaTime;
+        var mapManager =  GameUtil.GetMapManager();
+        if (mapManager == null) return;
 
-        if (_timeSinceLastSpawn < _spawnInterval)
+        if (mapManager.CurrentMapType == MapType.ParmingMap)
         {
+            _timeSinceLastSpawn += Time.deltaTime;
+
+            if (_timeSinceLastSpawn < _spawnInterval)
+            {
+                return;
+            }
+
+            _timeSinceLastSpawn = 0f;
+            SpawnTrailMarker().Forget();
+        }
+        else if (mapManager.CurrentMapType == MapType.ParkingGarage)
+        {
+            ClearTrailMarkerList();
             return;
         }
-
-        SpawnTrailMarker();
-
-        _timeSinceLastSpawn = 0f;
     }
 
-    private void SpawnTrailMarker()
+    private async UniTaskVoid SpawnTrailMarker()
     {
         if (string.IsNullOrEmpty(_trailMarkerPrefabPath))
         {
@@ -56,6 +70,22 @@ public class TrailEmitter : MonoBehaviour
         }
 
         // 추후 _tralilMarkerPrefabPath에 Addressables 주소 넣기추가
-        GameObjectManager.Instance.CreateObject("sss", _trailMarkerPrefabPath, trailspawnPos);
+        GameObject trailMarker = await GameObjectManager.Instance.CreateObjectAsync("sss", _trailMarkerPrefabPath, trailspawnPos);
+        if (trailMarker == null) return;
+
+        _trailMarkerList.Add(trailMarker);
+    }
+
+    private void ClearTrailMarkerList()
+    {
+        foreach(var trailMarker in _trailMarkerList)
+        {
+            if(trailMarker != null)
+            {
+                DestroyImmediate(trailMarker);
+            }
+        }
+
+        _trailMarkerList.Clear();
     }
 }
