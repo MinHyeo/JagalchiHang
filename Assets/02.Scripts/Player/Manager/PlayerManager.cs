@@ -30,6 +30,29 @@ public class PlayerManager : ITargetable
         UpdateCameraTarget();
     }
 
+    // 플레이어 부활
+    public async UniTaskVoid RespawnPlayer()
+    {
+        // 현재 실행을 잠시 멈추고 다음 프레임에 이어서 실행
+        await UniTask.Yield();
+        await UniTask.Delay(3000);
+
+        var mapManager =  GameUtil.GetMapManager();
+        if(mapManager == null) return;
+
+        var respawnPos = mapManager.GetMapSpawnPosition();
+        if (respawnPos == null) return;
+
+        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", respawnPos);
+        if(_player == null) return;
+
+        _playerController = _player.GetComponent<PlayerController>();
+        if(_playerController == null) return;
+
+        _playerController.ResetPlayerState();
+        UpdateCameraTarget();
+    }
+
     public void TransPlayerPosition(Vector3 transPosition)
     {
         _player.transform.position = transPosition;

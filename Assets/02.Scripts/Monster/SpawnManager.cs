@@ -16,6 +16,8 @@ public class SpawnManager : SingletonBase<SpawnManager>
     private readonly List<string> _dynamicMonsterIds = new List<string>();
     private readonly List<GameObject> _dynamicallySpawnedMonsters = new List<GameObject>();
 
+    public ITargetable PlayerTarger => _playerTarget;
+
     public void SetSpawningEnabled(bool isEnabled)
     {
         _isSpawningEnabled = isEnabled;
