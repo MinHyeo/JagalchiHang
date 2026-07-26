@@ -1369,7 +1369,7 @@ MonoBehaviour:
   _maxZoomFOV: 80
   _buildingLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 99328
 --- !u!114 &1448173543
 MonoBehaviour:
   m_ObjectHideFlags: 0

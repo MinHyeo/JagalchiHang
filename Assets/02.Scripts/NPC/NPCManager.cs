@@ -1,7 +1,9 @@
 ﻿using Cysharp.Threading.Tasks;
+using Unity.AppUI.UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class NpcManager 
 {
@@ -21,6 +23,12 @@ public class NpcManager
     private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0.5f, -3f);
     private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0.5f, -3f);
 
+    private bool _isInBunker = false;
+    private int _energyUse= 1; //파밍 맵에서 10분당 NPC 소모 에너지 
+    private int _energyCharge = 2; // 벙커 안에서 10분당 NPC 충전 에너지 
+
+    private int _minuteCount = 0; //10분 측정하기 위한 
+
     private NpcViewModel _viewModel;
 
     public void Init(ITargetable target)
@@ -28,7 +36,53 @@ public class NpcManager
         _chasePlayer = target;
         Debug.Log($"{_chasePlayer}");
 
+        if(TimeManager.Instance != null)
+        {
+            TimeManager.Instance.OnMinuteChanged += HandleMinuteChange;
+        }
         _viewModel = NetworkManager.Instance.NpcService.GetNpcViewModel();
+    }
+
+    private void HandleMinuteChange()
+    {
+        _minuteCount = _minuteCount + 1;
+
+        if(_minuteCount < 10)
+        {
+            return;
+        }
+
+
+    }
+
+        _minuteCount = 0; 
+
+        if (_isInBunker == true)
+        {
+            if (battleNpc != null)
+            {
+                battleNpc.ChargeEnergy(_energyCharge);
+            }
+
+            if (bagNpc != null)
+            {
+                bagNpc.ChargeEnergy(_energyCharge);
+            }
+        }
+
+        else
+        {
+            if (battleNpc != null) 
+            {
+                battleNpc.UseEnergy(_energyUse);
+               
+            }
+
+            if( bagNpc != null)
+            {
+                bagNpc.UseEnergy(_energyUse);
+            }
+        }
     }
 
     public async UniTaskVoid SpawnBattleNpc(string npcdataId) {
@@ -114,6 +168,20 @@ public class NpcManager
         behaviorGraphAgent.enabled = true;
 
         _viewModel.UnlockedNpcIds.Add(npcdataId);
+    }
+
+    public void TransNpcPosition(Vector3 transPosition)
+    {
+
+        Vector3 battleNpcPos = transPosition + new Vector3(1.0f, 0f, 0f);
+        Vector3 bagNpcPos = transPosition + new Vector3(-1.0f, 0f, 0f);
+
+        TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, 3.0f);
+        TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, 3.0f);
+
+        battleNpc.ChangeNpcPosition(transPosition);
+        bagNpc.ChangeNpcPosition(transPosition);
+
     }
 
     public async UniTaskVoid SpawnBagNpc(string npcdataId)
@@ -232,6 +300,8 @@ public class NpcManager
     }
     public void OnBunkerData(bool isInBunker) // 게임매니저한테 추후 전달 받을 곳 
     {
+        _isInBunker = isInBunker;
+
         if (_chasePlayer == null)
         {
             return;
