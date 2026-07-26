@@ -17,8 +17,19 @@ public class GeneratorTest : MonoBehaviour
 
     private void OnEnable()
     {
-        _useGeneratorButton.onClick.AddListener(() => _electricalSystem.UseGenerator(useAmount));
-        _fullGeneratorButton.onClick.AddListener(() => _electricalSystem.ReCharageGenerator(fullAmount));
-        _fixGeneratorButton.onClick.AddListener(_electricalSystem.FixGenerator);
+        Invoke("ddd", 10);
+    }
+
+    private void ddd()
+    {
+        _useGeneratorButton.onClick.AddListener(() =>
+        {
+            if (NetworkManager.Instance.GeneratorService.CanUsePower(useAmount) == false)
+                return;
+
+            NetworkManager.Instance.GeneratorService.UsePower(useAmount);
+        });
+        _fullGeneratorButton.onClick.AddListener(() => NetworkManager.Instance.GeneratorService.ReChargePower(fullAmount));
+        _fixGeneratorButton.onClick.AddListener(() => UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.GeneratorUI));
     }
 }
