@@ -36,6 +36,10 @@ public class PlayerController : MonoBehaviour
 
     private readonly HashSet<Monster> _damageMonsters = new HashSet<Monster>();
 
+    private float _walkFootstepInterval = 0.54f;
+    private float _runFootstepInterval = 0.33f;
+    private float _footstepTimer;
+    
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -98,6 +102,14 @@ public class PlayerController : MonoBehaviour
     public void PlayerMove()
     {
         _moveController.PlayerMove();
+
+        float currentInterval = IsRunning ? _runFootstepInterval : _walkFootstepInterval;
+        _footstepTimer += Time.deltaTime;
+        if (_footstepTimer > currentInterval)
+        {
+            SoundManager.Instance.PlaySFX("Sounds/Walk");
+            _footstepTimer = 0f;
+        }
     }
 
     // 플레이어 상태 바꾸기
@@ -189,12 +201,14 @@ public class PlayerController : MonoBehaviour
         _isAttacking = false;
         _isHit = true;
         SetState(StateType.Hit);
+        SoundManager.Instance.PlaySFX("Sounds/Hit");
     }
 
     // 피격 애니메이션이 종료되면 피격 상태 해제
     public void OnHitEnd()
     {
         _isHit = false;
+        SoundManager.Instance.StopSFX();
     }
 
     public void OnPickUp()

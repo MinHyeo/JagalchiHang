@@ -31,7 +31,9 @@ public class WorldManager
 
         NetworkManager.Instance.InventoryService.TestItem();
 
+        SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
+        SoundManager.Instance.PlayBGM("Sounds/InGame");
     }
 
     public void TransMap(MapType mapType)

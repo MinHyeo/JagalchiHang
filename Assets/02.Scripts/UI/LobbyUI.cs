@@ -11,6 +11,7 @@ public class LobbyUI : UIBase
         _newStartButton.BindOnClickButtonEvent(OnClickNewStart);
         _loadStartButton.BindOnClickButtonEvent(OnClickLoadStart);
         _exitButton.BindOnClickButtonEvent(OnClickExitButton);
+        SoundManager.Instance.PlayBGM("Sounds/Lobe");
     }
 
     private void OnDisable()
