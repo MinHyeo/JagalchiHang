@@ -18,13 +18,13 @@ public class MapManager
 
     public MapType CurrentMapType => _currnetMapType;
 
-    public async UniTask CreateMap()
+    public async UniTask CreateMap(MapType mapType)
     {
-        await SpawnMap(MapType.ParmingMap, true);
+        await SpawnMap(MapType.ParmingMap, false);
         await SpawnMap(MapType.ParkingGarage, false);
 
-        _currnetMapType = MapType.ParmingMap;
-        //_mapList[_currnetMapType].gameObject.SetActive(true);
+        _currnetMapType = mapType;
+        _mapList[_currnetMapType].gameObject.SetActive(true);
     }
 
     private async UniTask SpawnMap(MapType mapType, bool isActive)

@@ -15,12 +15,9 @@ public class WorldManager
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
 
-        if (saveModel != null)
-        {
-            NetworkManager.Instance.RequestLoadGame(slotIndex);
-        }
+        NetworkManager.Instance.RequestLoadGame(saveModel);
 
-        await _mapManager.CreateMap();
+        await _mapManager.CreateMap(saveModel.MapType);
 
         _playerManager.SpawnPlayer().Forget();
 

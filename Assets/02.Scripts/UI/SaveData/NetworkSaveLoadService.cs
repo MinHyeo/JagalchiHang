@@ -38,8 +38,6 @@ public class NetworkSaveLoadService
         Debug.Log("새 게임 시작");
         var saveModel = _saveLoadViewModel.SaveModelList[index];
         saveModel = new SaveModel();
-
-        NetworkManager.Instance.SaveGame(index, saveModel);
         GameManager.Instance.EnterInGame(saveModel, index);
     }
 
