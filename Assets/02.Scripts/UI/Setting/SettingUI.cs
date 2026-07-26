@@ -18,18 +18,9 @@ public class SettingUI : UIBase
     [SerializeField] private Slider _sliderSFX;
     [SerializeField] private UIButton _buttonClose;
 
-    private void Awake()
-    {
-        
-    }
-
     private void OnEnable()
     {
-        _buttonResume.BindOnClickButtonEvent(OnClickResume);
-        _buttonSave.BindOnClickButtonEvent(OnClickSave);
-        _buttonSoundSetting.BindOnClickButtonEvent(OnClickSoundSetting);
-        _buttonMainMenu.BindOnClickButtonEvent(OnClickMainMenu);
-        _buttonClose.BindOnClickButtonEvent(OnClickCloseSoundSetting);
+        BindButtonEvents();
 
         _sliderBGM.onValueChanged.AddListener(OnChangedBGMVolume);
         _sliderSFX.onValueChanged.AddListener(OnChangedSFXVolume);
@@ -44,6 +35,15 @@ public class SettingUI : UIBase
     {
         _sliderBGM.onValueChanged.RemoveListener(OnChangedBGMVolume);
         _sliderSFX.onValueChanged.RemoveListener(OnChangedSFXVolume);
+    }
+
+    private void BindButtonEvents()
+    {
+        _buttonResume.BindOnClickButtonEvent(OnClickResume);
+        _buttonSave.BindOnClickButtonEvent(OnClickSave);
+        _buttonSoundSetting.BindOnClickButtonEvent(OnClickSoundSetting);
+        _buttonMainMenu.BindOnClickButtonEvent(OnClickMainMenu);
+        _buttonClose.BindOnClickButtonEvent(OnClickCloseSoundSetting);
     }
 
     private void OnClickResume()
@@ -65,6 +65,8 @@ public class SettingUI : UIBase
     {
         _layoutSoundSetting.SetActive(false);
         _layoutButton.SetActive(true);
+
+        BindButtonEvents();
     }
 
     private void OnClickMainMenu()
