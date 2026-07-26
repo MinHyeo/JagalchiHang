@@ -153,7 +153,6 @@ public class BagNpc : MonoBehaviour
                 _currentState.Value = NpcState.Chase;
             }
         }
-        _currentState.Value = NpcState.Idle;
 
         if (behaviorAgent != null)
         {

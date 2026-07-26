@@ -119,7 +119,7 @@ public class NpcManager
         Vector3 bagNpcPos = transPosition + new Vector3(-1.0f, 0f, 0f);
 
         TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, 3.0f);
-        TryGetNavMeshPosition(bagNpcPos, out battleNpcPos, 3.0f);
+        TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, 3.0f);
 
         battleNpc.ChangeNpcPosition(transPosition);
         bagNpc.ChangeNpcPosition(transPosition);
