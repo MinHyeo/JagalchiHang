@@ -29,13 +29,18 @@ public class FarmPlot : MonoBehaviour, IInteractionable
     private void OnFarmManagerReady()
     {
         if (_farmManager != null) return;
-
         _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
-        var newPlot = new FarmPlotModel();
-        newPlot.PlotUniqueId = _plotUniqueId;
-        newPlot.IsUnlocked = false;
-        newPlot.IsPlanted = false;
-        _farmManager.AddFarmPlot(newPlot);
+
+        var existingPlot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+        if (existingPlot == null)
+        {
+            var newPlot = new FarmPlotModel();
+            newPlot.PlotUniqueId = _plotUniqueId;
+            newPlot.IsUnlocked = false;
+            newPlot.IsPlanted = false;
+            _farmManager.AddFarmPlot(newPlot);
+        }
+
         _farmManager.RegisterFarmPlot(_plotUniqueId, this);
 
         var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
@@ -46,7 +51,13 @@ public class FarmPlot : MonoBehaviour, IInteractionable
             if (cropData != null)
             {
                 string prefabPath = cropData.PrefabPath + "_" + (plot.CurrentGrowthStage + 1);
+                ChangeCropModel(prefabPath, plot.CropDataId).Forget();
             }
+        }
+
+        else if (plot != null && plot.IsUnlocked == true)
+        {
+            ActivatePlot();
         }
 
         //_farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
