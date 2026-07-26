@@ -1,17 +1,12 @@
-﻿using UnityEngine;
+﻿using System.ComponentModel;
+using UnityEngine;
 
 public class ElectricGenerator : MonoBehaviour
 {
-    private bool _isBroken;
+    private GeneratorViewModel _vm;
 
     private ParticleSystem _electricParticle;
     private RotateSubmarineBlades _rotateBlades;
-
-    private int _maxPower = 100;
-    private int _currentPower;
-
-    private int _troublePower = 500;
-    private int _currentTroblePower;
 
     private void Awake()
     {
@@ -19,65 +14,45 @@ public class ElectricGenerator : MonoBehaviour
         _rotateBlades = GetComponent<RotateSubmarineBlades>();
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void OnEnable()
     {
-        _currentPower = _maxPower;
-        _currentPower = 0;
+        _vm = NetworkManager.Instance.GeneratorService.GetGeneratorViewModel();
+        _vm.PropertyChanged += OnPropertyChanged;
 
-        RotateBlade();
+        _vm.InvokeOnceOnInit();
     }
 
-    public int UseGenerator(int amount)
+    private void OnDisable()
     {
-        if (_rotateBlades.rotate == false)
-            return 0;
+        _vm.PropertyChanged -= OnPropertyChanged;
+    }
 
-        int power = amount;
-
-        if(_currentPower < power)
+    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName) 
         {
-            power = _currentPower;
+            case nameof(GeneratorViewModel.IsStoped):
+                UpdateVisual();
+                break;
         }
+    }
 
-        if(_currentTroblePower + power >= _troublePower)
+    private void UpdateVisual()
+    {
+        _rotateBlades.rotate = _vm.IsStoped == false;
+
+        if(_vm.IsStoped == true)
         {
-            power = power - ((_currentTroblePower + power) - _troublePower);
-            BreakGenerator();
+            _electricParticle.Play();
         }
-        _currentPower = _currentPower - power;
-        _currentTroblePower = _currentTroblePower + power;
-
-        RotateBlade();
-
-        Debug.Log($"발전기 사용 : {_currentPower}");
-        return power;
-    }
-
-    private void BreakGenerator()
-    {
-        Debug.LogWarning("발전기 고장!!");
-        _electricParticle.Play();
-        _isBroken = true;
-    }
-
-    public void FixGenerator()
-    {
-        Debug.Log("발전기 수리");
-        _currentTroblePower = 0;
-        _electricParticle.Pause();
-        _isBroken = false;
-        RotateBlade();
-    }
-
-    public void ReCharageGenerator(int amount)
-    {
-        Debug.Log($"발전기 충전 : {_currentPower} => {Mathf.Min(_currentPower + amount, _maxPower)}");
-        _currentPower = Mathf.Min(_currentPower + amount, _maxPower);
-        RotateBlade();
-    }
-
-    private void RotateBlade()
-    {
-        _rotateBlades.rotate = _currentPower > 0 && _isBroken == false;
+        else
+        {
+            _electricParticle.Stop();
+        }
     }
 }
