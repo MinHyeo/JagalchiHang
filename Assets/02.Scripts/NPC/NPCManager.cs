@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using Unity.AppUI.UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
@@ -163,6 +162,8 @@ public class NpcManager
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
 
+        BunkerStateBattleNpc(); //스폰 시점에 벙커 상태 반영
+
         _viewModel.UnlockedNpcIds.Add(npcdataId);
     }
 
@@ -262,8 +263,6 @@ public class NpcManager
         // 이동 허용
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
-
-       
     }
 
     public void NpcUpdate()
@@ -303,32 +302,43 @@ public class NpcManager
             return;
         }
 
-        Vector3 playerPos = _chasePlayer.GetPosition();
-
-        Vector3 battleNpcPos = playerPos + new Vector3(1.0f, 0f, 1.0f);
-        Vector3 bagNpcPos = playerPos + new Vector3(-1.0f, 0f, 1.0f);
-        
-        /*NPC를 순간 이동 시키기 전에 순간 이동할 곳이 NavMesh 바닥 위가 맞는지 검사하고 
-        안전한 위치로 보정해서 옮겨주는 함수(가고싶은 위치, 보정되어 나올 위치, 검색반경)*/
-        
-        TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, (3.0f));
-        TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, (3.0f));
-
-        if(battleNpc != null)
-        {
-            battleNpc.InOutBunkerData(isInBunker, battleNpcPos);
-        }
-
-        if(bagNpc != null)
-        {
-            bagNpc.InOutBunkerData(isInBunker, bagNpcPos);
-        }
-  
+        BunkerStateBattleNpc();
+        BunkerStateBagNpc();
 
         Debug.Log($"[NPC 매니저] 벙커 진입");
     }
 
+    private void BunkerStateBattleNpc()
+    {
+        if(battleNpc == null || _chasePlayer == null)
+        {
+            return;
+        }
 
+        Vector3 playerPos = _chasePlayer.GetPosition();
+        Vector3 battleNpcPos = playerPos + new Vector3(1.0f, 0f, 1.0f);
+
+        TryGetNavMeshPosition(battleNpcPos, out battleNpcPos, (3.0f));
+
+        battleNpc.InOutBunkerData(_isInBunker, battleNpcPos);
+
+    }
+
+    private void BunkerStateBagNpc()
+    {
+        if(bagNpc == null || _chasePlayer == null)
+        {
+            return;
+        }
+
+        Vector3 playerPos = _chasePlayer.GetPosition();
+        Vector3 bagNpcPos = playerPos + new Vector3(-1.0f, 0f, 1.0f);
+
+        TryGetNavMeshPosition(bagNpcPos, out bagNpcPos, (3.0f));
+
+        bagNpc.InOutBunkerData(_isInBunker, bagNpcPos);
+
+    }
 
     // NavMesh 위치 찾았는지 여부 함수
     private bool TryGetNavMeshPosition(Vector3 desiredPosition, out Vector3 navMeshPosition, float maxDistance)
