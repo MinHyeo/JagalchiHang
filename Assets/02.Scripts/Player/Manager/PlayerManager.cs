@@ -7,6 +7,11 @@ public class PlayerManager : ITargetable
 
     //[나라]TODO 
     private Vector3 _playerSpawnPos = new Vector3(20f, 1f, -3f);
+    public Vector3 PlayerSpawnPos
+    {
+        get => _playerSpawnPos;
+        set => _playerSpawnPos = value;
+    }
     private PlayerController _playerController;
 
     // 플레이어 동적 생성
@@ -14,7 +19,7 @@ public class PlayerManager : ITargetable
     {
         LoadPlayerData();
 
-        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos);
+        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", PlayerSpawnPos);
         if (_player == null) return;
 
         Debug.Log($"플레이어가 생성됐다!");
