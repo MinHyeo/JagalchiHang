@@ -61,6 +61,7 @@ public class LoadGameUI : UIBase
 
     public void Init(LoadGameUIType loadGameUIType)
     {
+        Debug.Log("세이브 데이터 최신화");
         int listCount = _createdSaveSlotList.Count;
 
         if (listCount == 0)
@@ -93,7 +94,7 @@ public class LoadGameUI : UIBase
         {
             info = $"DAY : {saveModel.Day}";
         }
-        _createdSaveSlotList[index].Init(title, info, OnSlotClick);
+        _createdSaveSlotList[index].Init(index, title, info, OnSlotClick);
     }
 
     private void OnSlotClick(int clickedIndex)

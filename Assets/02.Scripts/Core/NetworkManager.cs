@@ -45,7 +45,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         return saveModel;
     }
 
-    public void RequestSaveGame(int slotIndex)
+    public SaveModel RequestSaveGame(int slotIndex)
     {
         SaveModel currentSaveData = new SaveModel();
         currentSaveData.ItemSaveModel = new List<ItemSaveModel>();
@@ -76,6 +76,8 @@ public class NetworkManager : SingletonBase<NetworkManager>
         currentSaveData.MapType = mapManager.CurrentMapType;
 
         SaveGame(slotIndex, currentSaveData);
+
+        return currentSaveData;
     }
 
     public void RequestLoadGame(SaveModel saveModel)

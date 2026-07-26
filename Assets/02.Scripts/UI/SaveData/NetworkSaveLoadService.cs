@@ -56,7 +56,9 @@ public class NetworkSaveLoadService
 
     public void SaveGame(int index)
     {
-        var saveModel = _saveLoadViewModel.SaveModelList[index];
-        NetworkManager.Instance.RequestSaveGame(index);
+        var saveModel = NetworkManager.Instance.RequestSaveGame(index);
+
+        _saveLoadViewModel.SaveModelList[index] = saveModel;
+        _saveLoadViewModel.InvokeOnceOnInit();
     }
 }

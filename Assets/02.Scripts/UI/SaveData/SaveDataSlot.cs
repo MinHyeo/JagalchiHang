@@ -25,8 +25,9 @@ public class SaveDataSlot : MonoBehaviour
         _onSlotClickAction = null;
     }
 
-    public void Init(string title, string info, Action<int> onClickAction)
+    public void Init(int index, string title, string info, Action<int> onClickAction)
     {
+        _slotIndex = index;
         _onSlotClickAction = onClickAction;
 
         UpdateSlotText(title, info);
