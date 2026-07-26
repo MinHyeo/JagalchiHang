@@ -24,9 +24,11 @@ public class CraftUI : UIBase
     private void OnEnable()
     {
         _vm = NetworkManager.Instance.CraftService.GetCraftViewModel();
+
         _vm.PropertyChanged += OnPropertyChanged_View;
 
         _buttonCraft.BindOnClickButtonEvent(OnClickCraft);
+
 
         if (_vm.CategorySlots == null || _vm.CategorySlots.Count == 0)
         {

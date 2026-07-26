@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public enum LoadGameUIType
 {
@@ -33,6 +34,8 @@ public class LoadGameUI : UIBase
 
         _exitButton.BindOnClickButtonEvent(OnClickExitButton);
         _saveLoadViewModel.PropertyChanged += OnPropertyChanged;
+
+        Init(_loadGameUIType);
     }
 
     private void OnDisable()
@@ -45,7 +48,7 @@ public class LoadGameUI : UIBase
     {
         switch (e.PropertyName)
         {
-            case nameof(SaveLoadViewModel.PropertyChanged):
+            case nameof(SaveLoadViewModel.SaveModelList):
                 Init(_loadGameUIType);
                 break;
         }
@@ -53,11 +56,12 @@ public class LoadGameUI : UIBase
 
     private void OnClickExitButton()
     {
-        UIManager.Instance.CloseUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.LoadGameUI);
     }
 
     public void Init(LoadGameUIType loadGameUIType)
     {
+        Debug.Log("세이브 데이터 최신화");
         int listCount = _createdSaveSlotList.Count;
 
         if (listCount == 0)
@@ -79,7 +83,18 @@ public class LoadGameUI : UIBase
 
         _loadGameUIType = loadGameUIType;
         var saveModel = _saveLoadViewModel.SaveModelList[index];
-        _createdSaveSlotList[index].Init(index, 0, OnSlotClick);
+
+        string title = $"슬롯 {index + 1}";
+        string info;
+        if(saveModel == null)
+        {
+            info = "비어 있음";
+        }
+        else
+        {
+            info = $"DAY : {saveModel.Day}";
+        }
+        _createdSaveSlotList[index].Init(index, title, info, OnSlotClick);
     }
 
     private void OnSlotClick(int clickedIndex)

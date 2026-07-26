@@ -16,11 +16,11 @@ public class WorldManager
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
 
-        NetworkManager.Instance.RequestLoadGame(saveModel);
-
         await _mapManager.CreateMap(saveModel.MapType);
 
-        _playerManager.SpawnPlayer().Forget();
+        await _playerManager.SpawnPlayer();
+
+        NetworkManager.Instance.RequestLoadGame(saveModel);
 
         ITargetable target = _playerManager;
 
@@ -60,6 +60,7 @@ public class WorldManager
 
     public void ExitWorld()
     {
+        UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
         UIManager.Instance.OpenUI(UIRootType.VeryFrontUI, UIType.LoadingUI);
         InputManager.Instance.EnableGamePlayInput(false);
         GameObjectManager.Instance.RemoveAllObject();

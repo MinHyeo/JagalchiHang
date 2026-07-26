@@ -25,12 +25,12 @@ public class SaveDataSlot : MonoBehaviour
         _onSlotClickAction = null;
     }
 
-    public void Init(int index, int day, Action<int> onClickAction)
+    public void Init(int index, string title, string info, Action<int> onClickAction)
     {
         _slotIndex = index;
         _onSlotClickAction = onClickAction;
 
-        UpdateSlotText(day);
+        UpdateSlotText(title, info);
     }
 
     private void BindSlotClickEvent()
@@ -38,23 +38,9 @@ public class SaveDataSlot : MonoBehaviour
         _onSlotClickAction?.Invoke(_slotIndex);
     }
 
-    private void UpdateSlotText(int day)
+    private void UpdateSlotText(string title, string info)
     {
-        if (_saveIndexText != null)
-        {
-            _saveIndexText.text = $"슬롯 {_slotIndex + 1}";
-        }
-
-        if (_saveDayText != null)
-        {
-            if (day == 0)
-            {
-                _saveDayText.text = "비어 있음";
-            }
-            else
-            {
-                _saveDayText.text = $"Day : {day}";
-            }
-        }
+        _saveIndexText.text = title;
+        _saveDayText.text = info;
     }
 }
