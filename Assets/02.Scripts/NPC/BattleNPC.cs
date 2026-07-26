@@ -173,6 +173,8 @@ public class BattleNpc : MonoBehaviour
 
             if (generatorService != null)
             {
+                generatorService.GetGeneratorViewModel();
+
                 if (generatorService.CanUsePower(energy) == false)
                 {
                     Debug.LogWarning("[BattleNpc] 발전기 전력이 부족하거나 고장이나서 충전 불가");
