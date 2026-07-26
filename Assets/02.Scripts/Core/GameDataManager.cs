@@ -66,7 +66,6 @@ public class GameDataManager : SingletonBase<GameDataManager>
     {
         string type = typeof(T).Name;
         object dictObj = null;
-
         if (_dataList.TryGetValue(type, out dictObj))
         {
             var dict = dictObj as Dictionary<string, T>;

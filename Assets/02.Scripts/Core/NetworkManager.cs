@@ -14,6 +14,9 @@ public class NetworkManager : SingletonBase<NetworkManager>
     public NetworkGeneratorService GeneratorService { get; private set; }
     public NetworkSettingService SettingService { get; private set; }
 
+    public NetworkFarmService FarmService { get; private set; }
+
+
     private string GetSaveFilePath(int slotIndex)
     {
         return Path.Combine(Application.persistentDataPath, $"saveData{slotIndex}.json");
@@ -87,6 +90,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         InventoryService.BindInventoryInputEvent();
         SettingService.BindSettingInputEvent();
         InventoryService.TestItem();
+        FarmService = new NetworkFarmService();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
@@ -163,4 +167,6 @@ public class NetworkManager : SingletonBase<NetworkManager>
     {
         InventoryService.AddItem(itemDataId, stackCount);
     }
+
+
 }
