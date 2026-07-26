@@ -159,15 +159,32 @@ public class BattleNpc : MonoBehaviour
     }
 
     public void ChargeEnergy(int energy) // 에너지 충전부 (벙커)
-    { 
-        bool isStop = (_currentEnergy <= 0);
-
-        if(_currentEnergy >= _maxEnergy)
+    {
+        if (_currentEnergy >= _maxEnergy)
         {
             _currentEnergy = _maxEnergy;
             Debug.Log("[BattleNpc] 충전이 완료 되어있습니다.");
             return;
         }
+
+        if (NetworkManager.Instance != null)
+        {
+            NetworkGeneratorService generatorService = NetworkManager.Instance.GeneratorService;
+
+            if (generatorService != null)
+            {
+                if (generatorService.CanUsePower(energy) == false)
+                {
+                    Debug.LogWarning("[BattleNpc] 발전기 전력이 부족하거나 고장이나서 충전 불가");
+
+                    return;
+                }
+
+                generatorService.UsePower(energy);
+            }
+        }
+
+        bool isStop = (_currentEnergy <= 0);
 
         _currentEnergy = _currentEnergy + energy;
 
