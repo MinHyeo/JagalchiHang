@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MaterialSlot : MonoBehaviour
 {
+    [SerializeField] private string _itemId;
     [SerializeField] private Outline _outline;
     [SerializeField] private TextMeshProUGUI _itemCountText;
     private UIButton _slotButton;
@@ -40,8 +41,25 @@ public class MaterialSlot : MonoBehaviour
         OnSlotClickedEvent?.Invoke(this);
     }
 
-    public void UpdateItemCount(int count)
+    public bool CheckRechargeable(InventoryViewModel inventoryVM, GeneratorViewModel generatorVM)
     {
+        int count = inventoryVM.GetItemCount(_itemId);
+        int maxPower = generatorVM.MaxPower;
+        int currentPower = generatorVM.CurrentPower;
+        if (count <= 0 || maxPower < currentPower)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool UpdateItemCount(InventoryViewModel inventoryVM, GeneratorViewModel generatorVM)
+    {
+        int count = inventoryVM.GetItemCount(_itemId);
+
+        inventoryVM.RemoveItem(_itemId, 1);
+
         _itemCountText.text = count.ToString();
+        return true;
     }
 }

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GeneratorUI : UIBase
 {
@@ -17,6 +18,11 @@ public class GeneratorUI : UIBase
     [Header("수리")]
     [SerializeField] private TextMeshProUGUI _fixValueText;
     [SerializeField] private UIButton _fixButton;
+    private string _itemId = "Item_Drop_03";
+    private int _fixItemCount = 15;
+
+    private string redCss = "red";
+    private string greenCss = "green";
 
     private GeneratorViewModel _generatorViewModel;
     private InventoryViewModel _inventoryViewModel;
@@ -33,6 +39,11 @@ public class GeneratorUI : UIBase
         BindOnClickEvents();
 
         UpdateFullCountText();
+        foreach(var slot in _materialSlotList)
+        {
+            slot.UpdateItemCount(_inventoryViewModel, _generatorViewModel);
+        }
+        UpdateFixValueText();
     }
 
     private void OnDisable()
@@ -67,7 +78,9 @@ public class GeneratorUI : UIBase
             case nameof(GeneratorViewModel.MaxPower):
                 UpdateFullCountText();
                 break;
-            //scase nameof()
+            case nameof(InventorySlotViewModel.ItemStackCount):
+                UpdateFixValueText();
+                break;
         }
     }
 
@@ -94,23 +107,39 @@ public class GeneratorUI : UIBase
         int maxPower = _generatorViewModel.MaxPower;
         int amount = _selectSlot.Amount;
 
-        _rechargeValueText.text = $"{currentPower}(+<color=green>{amount}</color> / {maxPower})";
+        _rechargeValueText.text = $"{currentPower}<color=green>(+{amount})</color> / {maxPower})";
     }
 
     private void RechargeGenerator()
     {
         int amount = _selectSlot.Amount;
-        NetworkManager.Instance.GeneratorService.ReChargePower(amount);
+
+        if(_selectSlot.CheckRechargeable(_inventoryViewModel, _generatorViewModel) == false)
+        {
+            return;
+        }
+
+        _selectSlot.UpdateItemCount(_inventoryViewModel, _generatorViewModel);
+        NetworkManager.Instance.GeneratorService.ReChargePower(amount); 
     }
 
     private void UpdateFixValueText()
     {
-        _fixValueText.text = "10/20";
+        int itemCount = _inventoryViewModel.GetItemCount(_itemId);
+
+        string colorString = (itemCount >= _fixItemCount) ? greenCss : redCss;
+        _fixValueText.text = $"<color={colorString}>{itemCount}</color> / {_fixItemCount}";
     }
 
     private void FixGenerator()
     {
+        int itemCount = _inventoryViewModel.GetItemCount(_itemId);
+        if(itemCount >= _fixItemCount)
+        {
+            return;
+        }
 
+        _inventoryViewModel.RemoveItem(_itemId, _fixItemCount);
         NetworkManager.Instance.GeneratorService.FixGenerator();
     }
 }
