@@ -20986,7 +20986,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4297056044449416238, guid: 7b8bbf2f922062f4584fd67b3eb8dbd1, type: 3}
+    - {fileID: 1375280984590073187, guid: 7b8bbf2f922062f4584fd67b3eb8dbd1, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1697046498914094484, guid: 7b8bbf2f922062f4584fd67b3eb8dbd1, type: 3}
@@ -46720,7 +46722,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_08 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3154162819034841446, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
+    - {fileID: 5623846937380450479, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
+    - {fileID: 1510642445259168538, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6573540730646217813, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
     - {fileID: 7158676411476903134, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
@@ -48338,7 +48343,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_04
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4025733557796887068, guid: d895085e9342bd84c8eee7079f1967f5, type: 3}
+    - {fileID: 2263489989039301457, guid: d895085e9342bd84c8eee7079f1967f5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -63608,7 +63615,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_05 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 262816876279531532, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 6667761244557281186, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 886157308331342796, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 8939691214074208353, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 2804936048447376340, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6641090374977989910, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
     - {fileID: 601060507129871408, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
@@ -65937,7 +65949,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6902011984438245655, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
+    - {fileID: 195455804468846674, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
+    - {fileID: 3769545936210946612, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
     m_RemovedGameObjects:
     - {fileID: 3449519116364904302, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
     - {fileID: 4057085443548225802, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
@@ -69652,7 +69667,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7622479686782861053, guid: b9280e5413a4b7841997b23cb21537af, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1607730308898777720, guid: b9280e5413a4b7841997b23cb21537af, type: 3}
     m_AddedGameObjects:
@@ -70370,7 +70386,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_05
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6667761244557281186, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 886157308331342796, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 8939691214074208353, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
+    - {fileID: 2804936048447376340, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6641090374977989910, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
     - {fileID: 601060507129871408, guid: 6a8fd4265cc6a504e96951574ad5a245, type: 3}
@@ -78478,7 +78498,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3769545936210946612, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
+    - {fileID: 195455804468846674, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
     m_RemovedGameObjects:
     - {fileID: 1285067221216174170, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
     - {fileID: 4057085443548225802, guid: 5e791c8ce42dd4043a932df68b7aa7bd, type: 3}
@@ -94520,7 +94542,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: House_08
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3154162819034841446, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
+    - {fileID: 5623846937380450479, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
+    - {fileID: 1510642445259168538, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8655802450474924139, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
     - {fileID: 7158676411476903134, guid: a54f7e23078ed444eab54bdbde22ab26, type: 3}
