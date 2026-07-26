@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ba1cf03267c23643b5938e2a90fb92f
+    m_Address: Sound/SeedPlant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2f5f59a22bcb195428cfe220591a66ed
     m_Address: Sounds/Walk
     m_ReadOnly: 0
