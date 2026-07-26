@@ -44,6 +44,7 @@ public class FarmSeedSelectUI : UIBase
 
             Debug.Log($"Instantiate 시도: {Prefab_SeedSlot}");
             var gObj = Instantiate(Prefab_SeedSlot, Transform_SlotRoot);
+            gObj.SetActive(false);
             Debug.Log($"슬롯 생성됨: {gObj}");
             var slotUI = gObj.GetComponent<FarmSeedSlotUI>();
             if (slotUI == null) continue;
@@ -74,6 +75,9 @@ public class FarmSeedSelectUI : UIBase
             var cropData = GameDataManager.Instance.GetData<CropData>(cropDataId);
             if (cropData == null) continue;
 
+
+            _slotList[slotIndex].gameObject.SetActive(false);
+            _slotList[slotIndex].gameObject.SetActive(true);
             _slotList[slotIndex].Init(cropData, _plotUniqueId, invenVm);
             slotIndex++;
         }
