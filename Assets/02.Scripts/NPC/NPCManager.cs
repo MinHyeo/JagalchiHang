@@ -3,7 +3,6 @@ using Unity.AppUI.UI;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class NpcManager 
 {
@@ -52,10 +51,7 @@ public class NpcManager
             return;
         }
 
-
-    }
-
-        _minuteCount = 0; 
+        _minuteCount = 0;
 
         if (_isInBunker == true)
         {
@@ -72,13 +68,13 @@ public class NpcManager
 
         else
         {
-            if (battleNpc != null) 
+            if (battleNpc != null)
             {
                 battleNpc.UseEnergy(_energyUse);
-               
+
             }
 
-            if( bagNpc != null)
+            if (bagNpc != null)
             {
                 bagNpc.UseEnergy(_energyUse);
             }
