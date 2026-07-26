@@ -18,7 +18,7 @@ public class WorldManager
 
         await _mapManager.CreateMap(saveModel.MapType);
 
-        await _playerManager.SpawnPlayer();
+        await _playerManager.SpawnPlayer(saveModel);
 
         ITargetable target = _playerManager;
         _monsterManager.Init(target);
@@ -59,7 +59,7 @@ public class WorldManager
 
     public void ExitWorld()
     {
-        UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
+        CloseAllUI();
         UIManager.Instance.OpenUI(UIRootType.VeryFrontUI, UIType.LoadingUI);
         InputManager.Instance.EnableGamePlayInput(false);
         GameObjectManager.Instance.RemoveAllObject();
@@ -105,5 +105,19 @@ public class WorldManager
     public MapManager GetMapManager()
     {
         return _mapManager;
+    }
+
+    private void CloseAllUI()
+    {
+        UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
+        UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.HudMainUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.NpcUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.CraftUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.SettingUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.GeneratorUI);
     }
 }
