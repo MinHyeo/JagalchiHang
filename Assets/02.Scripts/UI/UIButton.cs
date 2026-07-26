@@ -10,7 +10,7 @@ public class UIButton : MonoBehaviour
     [SerializeField] private Image Image_Base;
     [SerializeField] private Image Image_Select;
 
-    private void Start()
+    private void Awake()
     {
         // 1-2) 이 오브젝트가 생성될 때, 한번 컴포넌트를 찾아서 캐싱하자
         InitUIButton();
@@ -18,6 +18,7 @@ public class UIButton : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Button_Base == null) return;
         Button_Base.onClick.RemoveAllListeners();
     }
 

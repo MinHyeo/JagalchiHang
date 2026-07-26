@@ -23,6 +23,9 @@ public class HousePortal : MonoBehaviour, IInteractionable
         PlayerManager playerManager = GameUtil.GetPlayerManager();
         playerManager.TransPlayerPosition(TeleportPos.position);
 
+        NpcManager npcManager = GameUtil.GetNpcManager();
+        npcManager.TransNpcPosition(TeleportPos.position);
+
         UIManager.Instance.RemoveSlotHudInteraction(_uniqueId);
     }
 }

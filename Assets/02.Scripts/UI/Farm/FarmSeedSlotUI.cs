@@ -13,14 +13,10 @@ public class FarmSeedSlotUI : MonoBehaviour
     private string _cropDataId;
     private int _plotUniqueId;
 
-    private void OnEnable()
-    {
-        Button_Slot.BindOnClickButtonEvent(OnClick_Slot);
-    }
 
     public void Init(CropData cropData, int plotUniqueId, InventoryViewModel invenVm)
     {
-        Button_Slot.BindOnClickButtonEvent(OnClick_Slot);
+        //Button_Slot.BindOnClickButtonEvent(OnClick_Slot);
 
         _cropDataId = cropData.Id;
         _plotUniqueId = plotUniqueId;
@@ -35,6 +31,7 @@ public class FarmSeedSlotUI : MonoBehaviour
         }
 
         gameObject.SetActive(true);
+        Button_Slot.BindOnClickButtonEvent(OnClick_Slot);
         Text_SeedCount.text = $"{seedCount} / {cropData.RequiredSeedCount}";
 
         var itemData = GameDataManager.Instance.GetData<ItemData>(cropData.SeedItemDataId);
@@ -75,6 +72,7 @@ public class FarmSeedSlotUI : MonoBehaviour
 
     private void OnClick_Slot()
     {
+        Debug.Log("OnClick_Slot 호출됨");
         var farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
         var plot = farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
         if (plot == null) return;

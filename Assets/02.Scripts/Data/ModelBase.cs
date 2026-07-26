@@ -63,5 +63,5 @@ public class FarmSaveModel
 [System.Serializable]
 public class NpcSaveModel
 {
-    public List<string> UnlockedNpcIds;
+    public List<string> UnlockedNpcIds = new List<string>();
 }

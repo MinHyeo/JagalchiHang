@@ -20,12 +20,11 @@ public class WorldManager
 
         await _playerManager.SpawnPlayer();
 
-        NetworkManager.Instance.RequestLoadGame(saveModel);
-
         ITargetable target = _playerManager;
-
         _monsterManager.Init(target);
         _npcManager.Init(target);
+
+        NetworkManager.Instance.RequestLoadGame(saveModel);
 
         NetworkManager.Instance.InventoryService.TestItem();
 
