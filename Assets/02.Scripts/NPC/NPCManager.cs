@@ -21,12 +21,15 @@ public class NpcManager
     private Vector3 _BattleNPCSpawnPos = new Vector3(19f, 0.5f, -3f);
     private Vector3 _BagNPCSpawnPos = new Vector3(20f, 0.5f, -3f);
 
+    private NpcViewModel _viewModel;
+
     public void Init(ITargetable target)
     {
         _chasePlayer = target;
         Debug.Log($"{_chasePlayer}");
-    }
 
+        _viewModel = NetworkManager.Instance.NpcService.GetNpcViewModel();
+    }
 
     public async UniTaskVoid SpawnBattleNpc(string npcdataId) {
 
@@ -91,6 +94,7 @@ public class NpcManager
         agent.isStopped = true;
 
         battleNpc = _battleNpc.GetComponent<BattleNpc>();
+        _viewModel.UnlockedNpcIds.Add(npcdataId);
 
         if (battleNpc == null)
         {
@@ -108,6 +112,8 @@ public class NpcManager
         // 이동 허용
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
+
+        _viewModel.UnlockedNpcIds.Add(npcdataId);
     }
 
     public async UniTaskVoid SpawnBagNpc(string npcdataId)
@@ -174,6 +180,7 @@ public class NpcManager
         agent.isStopped = true;
 
         bagNpc = _bagNpc.GetComponent<BagNpc>();
+        _viewModel.UnlockedNpcIds.Add(npcdataId);
 
         if (bagNpc == null)
         {
@@ -191,6 +198,8 @@ public class NpcManager
         // 이동 허용
         agent.isStopped = false;
         behaviorGraphAgent.enabled = true;
+
+       
     }
 
     public void NpcUpdate()

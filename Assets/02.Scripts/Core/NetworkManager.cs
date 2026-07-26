@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -75,6 +76,10 @@ public class NetworkManager : SingletonBase<NetworkManager>
         var mapManager = GameUtil.GetMapManager();
         currentSaveData.MapType = mapManager.CurrentMapType;
 
+        var unlockedNpcIds = NpcService.GetNpcViewModel().UnlockedNpcIds;
+        currentSaveData.NpcSaveModel = new NpcSaveModel();
+        currentSaveData.NpcSaveModel.UnlockedNpcIds = unlockedNpcIds.ToList<string>();
+
         SaveGame(slotIndex, currentSaveData);
 
         return currentSaveData;
@@ -85,6 +90,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         PlayerService.LoadSaveData(saveModel.PlayerSaveModel);
         InventoryService.LoadSaveData(saveModel.ItemSaveModel);
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
+        NpcService.LoadSaveData(saveModel.NpcSaveModel);
         TimeManager.Instance.SetTime(saveModel.Day, saveModel.Time);
         TimeManager.Instance.RestartTime();
 
