@@ -26,7 +26,7 @@ public class WorldManager
 
         NetworkManager.Instance.RequestLoadGame(saveModel);
 
-        //NetworkManager.Instance.InventoryService.TestItem();
+        NetworkManager.Instance.InventoryService.TestItem();
 
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
