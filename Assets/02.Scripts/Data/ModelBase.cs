@@ -58,7 +58,7 @@ public class GeneratorSaveModel
 [System.Serializable]
 public class FarmSaveModel
 {
-
+    public List<FarmPlotModel> FarmPlotList;
 }
 
 [System.Serializable]

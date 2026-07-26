@@ -16,4 +16,26 @@ public class NetworkFarmService
 
         return _farmViewModel;
     }
+
+    public FarmSaveModel GetSaveData()
+    {
+        var farmSaveModel = new FarmSaveModel();
+        farmSaveModel.FarmPlotList = GetFarmViewModel().FarmPlotList;
+        return farmSaveModel;
+    }
+
+    public void LoadSaveData(FarmSaveModel farmSaveModel)
+    {
+        if (farmSaveModel == null)
+        {
+            return;
+        }
+
+        if (_farmViewModel == null)
+        {
+            GetFarmViewModel();
+        }
+        
+        _farmViewModel.FarmPlotList = farmSaveModel.FarmPlotList;
+    }
 }

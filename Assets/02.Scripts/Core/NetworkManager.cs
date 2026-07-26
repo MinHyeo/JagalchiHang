@@ -62,6 +62,11 @@ public class NetworkManager : SingletonBase<NetworkManager>
             currentSaveData.ItemSaveModel.AddRange(storageData);
         }
 
+        if (FarmService != null)
+        {
+            currentSaveData.FarmSaveModel = FarmService.GetSaveData();
+        }
+
         float time = TimeManager.Instance.Time;
         int day = TimeManager.Instance.Day;
         currentSaveData.Time = time;
@@ -80,6 +85,11 @@ public class NetworkManager : SingletonBase<NetworkManager>
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
         TimeManager.Instance.SetTime(saveModel.Day, saveModel.Time);
         TimeManager.Instance.RestartTime();
+
+        if (saveModel.FarmSaveModel != null)
+        {
+            FarmService.LoadSaveData(saveModel.FarmSaveModel);
+        }
     }
 
     public void InitSaveLoadService()
