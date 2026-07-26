@@ -77,7 +77,6 @@ public class FarmPlot : MonoBehaviour, IInteractionable
 
         if (plot.IsUnlocked == false)
         {
-            _farmManager.RequestUnlockNextPlot();
             return;
         }
 
