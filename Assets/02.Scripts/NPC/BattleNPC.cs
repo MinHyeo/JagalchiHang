@@ -18,6 +18,25 @@ public class BattleNpc : MonoBehaviour
     private Npc_AnimController _animController;
     private EnemySensor _sensor;
 
+    private int _currentEnergy = 100;
+    private int _maxEnergy = 100;
+
+    public int CurrentEnergy
+    {
+        get
+        {
+            return _currentEnergy;
+        }
+    }
+
+    public int MaxEnergy
+    {
+        get
+        {
+            return _maxEnergy;
+        }
+    }
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -39,9 +58,9 @@ public class BattleNpc : MonoBehaviour
         UpdateAnimation();
     }
 
-    private  void UpdateAnimation()
+    private void UpdateAnimation()
     {
-        if(_animController == null )
+        if (_animController == null)
         {
             return;
         }
@@ -51,13 +70,13 @@ public class BattleNpc : MonoBehaviour
 
         if (_agent != null && _agent.isOnNavMesh)
         {
-            if(_agent.velocity.sqrMagnitude > 0.1f)
+            if (_agent.velocity.sqrMagnitude > 0.1f)
             {
                 isMoving = true;
             }
         }
 
-        if(_currentState != null && _currentState.Value == NpcState.Attack)
+        if (_currentState != null && _currentState.Value == NpcState.Attack)
         {
             if (isMoving)
             {
@@ -72,7 +91,7 @@ public class BattleNpc : MonoBehaviour
             return;
         }
 
-        if(isMoving == true)
+        if (isMoving == true)
         {
             _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Walk);
         }
@@ -81,7 +100,115 @@ public class BattleNpc : MonoBehaviour
             _animController.SetNpcAnimState(Npc_AnimController.Npc_AnimState.Idle);
         }
     }
-    
+
+    public void UseEnergy(int energy) //에너지 소모부(파밍)
+    {
+
+        if (_currentEnergy <= 0)
+        {
+            _currentEnergy = 0;
+            EnergyNpcStop();
+
+            Debug.LogWarning("[BattleNpc] 에너지가 이미 0입니다.");
+
+            return;
+        }
+        _currentEnergy = _currentEnergy - energy;
+
+        if(_currentEnergy <= 0) //에너지 차감 후 0 밑으로 떨어졌을 경우
+        {
+            _currentEnergy = 0;
+            EnergyNpcStop();
+            Debug.LogWarning("[BattleNpc] 에너지가 0이 되었습니다.");
+
+            
+        }
+        Debug.Log($"[BattleNpc] 에너지 차감 (-{energy}) / 현재 에너지: {_currentEnergy}/{_maxEnergy}");
+    }
+
+    private void EnergyNpcStop()
+    {
+        Debug.LogWarning("[BattleNpc] 에너지가 0이 되어 기능 정지");
+
+        if (_agent != null && _agent.isOnNavMesh)
+        {
+            _agent.ResetPath();
+            _agent.velocity = Vector3.zero;
+            _agent.isStopped = true;
+        }
+
+        if (_sensor != null)
+        {
+            _sensor.ClearTarget();
+        }
+
+        if (_enemyTarget != null)
+        {
+            _enemyTarget.Value = null;
+        }
+
+        if(_currentState != null)
+        {
+            _currentState.Value = NpcState.Idle;
+        }
+
+        if(behaviorAgent != null) //행동트리도 정지
+        {
+            behaviorAgent.enabled = false;
+        }
+    }
+
+    public void ChargeEnergy(int energy) // 에너지 충전부 (벙커)
+    {
+        if (_currentEnergy >= _maxEnergy)
+        {
+            _currentEnergy = _maxEnergy;
+            Debug.Log("[BattleNpc] 충전이 완료 되어있습니다.");
+            return;
+        }
+
+        if (NetworkManager.Instance != null)
+        {
+            NetworkGeneratorService generatorService = NetworkManager.Instance.GeneratorService;
+
+            if (generatorService != null)
+            {
+                if (generatorService.CanUsePower(energy) == false)
+                {
+                    Debug.LogWarning("[BattleNpc] 발전기 전력이 부족하거나 고장이나서 충전 불가");
+
+                    return;
+                }
+
+                generatorService.UsePower(energy);
+            }
+        }
+
+        bool isStop = (_currentEnergy <= 0);
+
+        _currentEnergy = _currentEnergy + energy;
+
+        if(_currentEnergy > _maxEnergy) // 충전 후 최대치를 초과했을 때
+        {
+            _currentEnergy = _maxEnergy;
+
+            Debug.Log("[BattleNpc] 충전이 다 되었습니다.");
+        }
+
+        if(isStop == true && _currentEnergy > 0)
+        {
+            if(_agent != null && _agent.isOnNavMesh)
+            {
+                _agent.isStopped = false;
+            }
+
+            if(behaviorAgent != null)
+            {
+                behaviorAgent.enabled = true; //행동트리 다시 작동 
+            }
+        }
+        Debug.Log($"[BattleNpc] 벙커 에너지 충전 (+{energy}) / 현재 에너지: {_currentEnergy}/{_maxEnergy}");
+    }
 
     public void UpdatePlayerPosition(Vector3 currentPlayerPosition)
     {
@@ -92,49 +219,39 @@ public class BattleNpc : MonoBehaviour
     }
     public void SetBattleMode(BattleMode battleMode)
     {
-        if(_currentBattleMode != null)
+        if (_currentBattleMode != null)
         {
             _currentBattleMode.Value = battleMode;
             Debug.Log($"[BattleNpc] 블랙보드 CurrentBattleMode 값을 {battleMode}로 변경");
         }
 
-        if(_enemyTarget != null)
+        if (_enemyTarget != null)
         {
             _enemyTarget.Value = null;
         }
 
-        if(_sensor != null)
+        if (_sensor != null)
         {
             _sensor.ClearTarget();
         }
 
-        if(_currentState != null)
+        if (_currentState != null)
         {
             _currentState.Value = NpcState.Chase;
         }
 
-        if(_agent != null && _agent.isOnNavMesh)
+        if (_agent != null && _agent.isOnNavMesh)
         {
             _agent.ResetPath();
 
-            _agent.SetDestination(_playerPosition.Value); 
+            _agent.SetDestination(_playerPosition.Value);
         }
     }
-    public void InOutBunkerData(bool isInBunker, Vector3 targetSpawnPos)
+
+    public void ChangeNpcPosition(Vector3 targetSpawnPos)
     {
-
-        if(behaviorAgent != null)
-        {
-            behaviorAgent.enabled = false;
-        }
-
-
-        _isInBunker.Value = isInBunker; //블랙보드로 값 넣어주기 
-
-        _bunkerSpawnPosition.Value = targetSpawnPos;
-
         /*NavMeshAgent를 켜놓은 상태로 BattleNPC를 위치 이동시키는 건 충돌을 일으키기 때문에
-         * NavMeshAgent를 끄고 이동시킨 후 다시 켜야한다.*/
+        * NavMeshAgent를 끄고 이동시킨 후 다시 켜야한다.*/
 
         if (_agent != null)
         {
@@ -149,10 +266,25 @@ public class BattleNpc : MonoBehaviour
         {
             transform.position = targetSpawnPos;
         }
+    }
+    public void InOutBunkerData(bool isInBunker, Vector3 targetSpawnPos)
+    {
+
+        if (behaviorAgent != null)
+        {
+            behaviorAgent.enabled = false;
+        }
+
+
+        _isInBunker.Value = isInBunker; //블랙보드로 값 넣어주기 
+
+        _bunkerSpawnPosition.Value = targetSpawnPos;
+
+        ChangeNpcPosition(targetSpawnPos);
 
         if (_currentState != null)
         {
-            if(isInBunker == true)
+            if (isInBunker == true)
             {
                 _currentState.Value = NpcState.Idle;
             }
@@ -162,7 +294,7 @@ public class BattleNpc : MonoBehaviour
             }
         }
 
-        if(behaviorAgent != null)
+        if (behaviorAgent != null)
         {
             behaviorAgent.enabled = true;
         }
