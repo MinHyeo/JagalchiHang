@@ -326,7 +326,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LoadGameUI
   _saveDataSlotPrefab: {fileID: 7015521856317326407, guid: e4a85afc78b50de46a1c02e08338c2cb, type: 3}
   _saveDataRoot: {fileID: 3625241779790962279}
-  _saveDataLength: 10
   _exitButton: {fileID: 7155376649708908408}
 --- !u!1 &6420546499744632073
 GameObject:
@@ -396,7 +395,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b8a7f2d65a266d544ad7b9f5d79a9192, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 82480ef1274a77044a7e643bbce9bdbd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
