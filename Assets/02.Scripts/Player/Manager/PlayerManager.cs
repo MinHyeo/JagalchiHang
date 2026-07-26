@@ -6,20 +6,39 @@ public class PlayerManager : ITargetable
     private GameObject _player;
 
     //[나라]TODO 
-    private Vector3 _playerSpawnPos = new Vector3(20f, 1f, -3f);
+    private Vector3 _playerSpawnPos;
     public Vector3 PlayerSpawnPos
     {
         get => _playerSpawnPos;
         set => _playerSpawnPos = value;
     }
     private PlayerController _playerController;
+    private SaveModel _saveModel;
 
     // 플레이어 동적 생성
-    public async UniTask SpawnPlayer()
+    public async UniTask SpawnPlayer(SaveModel saveModel)
     {
-        LoadPlayerData();
+        if(saveModel == null)
+        {
+            return;
+        }
 
-        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", PlayerSpawnPos);
+        _saveModel = saveModel;
+
+        if (saveModel.PlayerSaveModel == null)
+        {
+            _playerSpawnPos = new Vector3(20f, 1f, -3f);
+        }
+        else
+        {
+            _playerSpawnPos = new Vector3(_saveModel.PlayerSaveModel.PositionX, _saveModel.PlayerSaveModel.PositionY, _saveModel.PlayerSaveModel.PositionZ);
+        }
+
+        LoadPlayerData();
+        
+        if (_playerSpawnPos == null) return;
+
+        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos);
         if (_player == null) return;
 
         Debug.Log($"플레이어가 생성됐다!");
