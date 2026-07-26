@@ -15,11 +15,22 @@ public class MainUI : UIBase
 
     private PlayerViewModel _vm;
 
-    public void BindViewModel(PlayerViewModel vm)
+    public void OnEnable()
     {
-        _vm = vm;
+        _vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
+
+        _vm.PropertyChanged -= OnPropertyChanged;
         _vm.PropertyChanged += OnPropertyChanged;
+
         _vm.InvokeOnceOnInit();
+    }
+
+    public void OnDisable()
+    {
+        if (_vm != null)
+        {
+            _vm.PropertyChanged -= OnPropertyChanged;
+        }
     }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

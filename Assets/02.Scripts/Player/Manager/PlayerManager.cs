@@ -10,7 +10,7 @@ public class PlayerManager : ITargetable
     private PlayerController _playerController;
 
     // 플레이어 동적 생성
-    public async UniTaskVoid SpawnPlayer()
+    public async UniTask SpawnPlayer()
     {
         LoadPlayerData();
 
@@ -23,7 +23,6 @@ public class PlayerManager : ITargetable
         if (_playerController == null) return;
 
         UpdateCameraTarget();
-        BindMainUIView();
     }
 
     public void TransPlayerPosition(Vector3 transPosition)
@@ -35,20 +34,6 @@ public class PlayerManager : ITargetable
     private void UpdateCameraTarget()
     {
         CameraController.SetTrackingTarget(_player.transform);
-    }
-
-    private void BindMainUIView()
-    {
-        var vm = NetworkManager.Instance.PlayerService.GetPlayerViewModel();
-        if (vm == null) return;
-
-        var mainUI = UIManager.Instance.GetOpenUI(UIRootType.MainUI, UIType.MainUI);
-        if (mainUI == null) return;
-
-        var mainUIComponent = mainUI.GetComponent<MainUI>();
-        if (mainUIComponent == null) return;
-
-        mainUIComponent.BindViewModel(vm);
     }
 
     public Vector3 GetPosition()

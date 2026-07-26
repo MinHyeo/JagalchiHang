@@ -16,11 +16,11 @@ public class WorldManager
         NetworkManager.Instance.InitNetworkService();
         CreateManager();
 
-        NetworkManager.Instance.RequestLoadGame(saveModel);
-
         await _mapManager.CreateMap(saveModel.MapType);
 
-        _playerManager.SpawnPlayer().Forget();
+        await _playerManager.SpawnPlayer();
+
+        NetworkManager.Instance.RequestLoadGame(saveModel);
 
         ITargetable target = _playerManager;
 
