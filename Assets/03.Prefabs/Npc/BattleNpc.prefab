@@ -452,9 +452,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8619227947552814797}
+  - component: {fileID: 4018429482125129262}
   - component: {fileID: -1998144921017209221}
   - component: {fileID: 3123327436874307077}
-  - component: {fileID: 7073435061646988896}
   - component: {fileID: 6213918589529169204}
   - component: {fileID: 9046712212350798100}
   - component: {fileID: 645058058936295360}
@@ -483,6 +483,19 @@ Transform:
   - {fileID: 4176395422292746864}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4018429482125129262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4537442388563564209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfba58f40ba35f94b9bd380d40c85519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleNpc
+  behaviorAgent: {fileID: 9046712212350798100}
 --- !u!114 &-1998144921017209221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -518,19 +531,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7073435061646988896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4537442388563564209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d0b5ddf7fd7f549ae3f0f310311eae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BattleNpc
-  behaviorAgent: {fileID: 9046712212350798100}
 --- !u!114 &6213918589529169204
 MonoBehaviour:
   m_ObjectHideFlags: 0
