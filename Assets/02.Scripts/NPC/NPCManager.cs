@@ -14,6 +14,16 @@ public class NpcManager
     public bool HasBattleNpc => _battleNpc != null || battleNpc != null;
     public bool HasBagNpc => _bagNpc != null || bagNpc != null;
 
+    public BattleNpc GetBattleNpc()
+    {
+        return battleNpc;
+    }
+
+    public BagNpc GetBagNpc()
+    {
+        return bagNpc;
+    }
+
     private ITargetable _chasePlayer;
 
     private Monster _targetMonster;

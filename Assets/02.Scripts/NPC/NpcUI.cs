@@ -7,12 +7,21 @@ public class NpcUI : UIBase
     [SerializeField] private Toggle toggleAssistAttack;
     [SerializeField] private Toggle toggleFollow;
 
+    [Header("NPC 에너지")]
+    [SerializeField] private Slider sliderBattleNpc;
+    [SerializeField] private Slider sliderBagNpc;
+
+    private NpcManager _npcManager;
+
     private void OnEnable()
     {
         toggleAutoAttack.onValueChanged.AddListener(OnAutoAttackChanged);
         toggleAssistAttack.onValueChanged.AddListener(OnAssistAttackChanged);
         toggleFollow.onValueChanged.AddListener(OnFollowChanged);
+
+        _npcManager = GameUtil.GetNpcManager();
     }
+
 
 
     private void OnDisable()
@@ -22,6 +31,54 @@ public class NpcUI : UIBase
         toggleFollow.onValueChanged.RemoveListener(OnFollowChanged);
     }
 
+    private void Update()
+    {
+        BattleNpcEnergy();
+        BagNpcEnergy();
+    }
+
+
+    private void BattleNpcEnergy()
+    {
+        if (sliderBattleNpc ==null || _npcManager == null)
+        {
+            return;
+        }
+
+        BattleNpc battleNpc = _npcManager.GetBattleNpc();
+
+        if(battleNpc == null)
+        {
+            sliderBattleNpc.value = 1f;
+            return;
+        }
+
+        if (battleNpc.MaxEnergy > 0)
+        {
+            sliderBattleNpc.value = (float)battleNpc.CurrentEnergy/ (float)battleNpc.MaxEnergy;
+        }
+    }
+
+    private void BagNpcEnergy()
+    {
+        if (sliderBagNpc == null || _npcManager == null)
+        {
+            return;
+        }
+
+        BagNpc bagNpc = _npcManager.GetBagNpc();
+
+        if (bagNpc == null)
+        {
+            sliderBagNpc.value = 1f;
+            return;
+        }
+
+        if (bagNpc.MaxEnergy > 0)
+        {
+            sliderBagNpc.value = (float)bagNpc.CurrentEnergy / (float)bagNpc.MaxEnergy;
+        }
+    }
     private void OnAutoAttackChanged(bool isOn)  //Npc매니저로 전달
     {
         if( isOn == true)

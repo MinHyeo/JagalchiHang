@@ -78,6 +78,8 @@ public class FarmSeedSlotUI : MonoBehaviour
         if (plot == null) return;
 
         bool result = farmManager.RequestPlantCrop(plot, _cropDataId);
+        SoundManager.Instance.PlaySFX("Sound/SeedPlant");
+
         if (result)
         {
             UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
