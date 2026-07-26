@@ -136,6 +136,14 @@ public class MonsterCombat : MonoBehaviour, IMonsterCombatable
 
     public void EndAttack()
     {
+        var playerTarget = SpawnManager.Instance.PlayerTarger;
+        if (playerTarget == null) return;
+
+        if(playerTarget.IsDead() == true)
+        {
+            return;
+        }
+
         _isAttacking = false;
 
         Debug.Log($"{name} : 공격 종료");
