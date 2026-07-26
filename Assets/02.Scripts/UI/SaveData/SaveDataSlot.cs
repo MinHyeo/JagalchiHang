@@ -12,7 +12,7 @@ public class SaveDataSlot : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _saveIndexText;
     [SerializeField] private TextMeshProUGUI _saveDayText;
 
-    private Action<int> _onSlotClickAction;
+    private event Action<int> _onSlotClickAction;
 
     private void OnEnable()
     {
@@ -22,6 +22,7 @@ public class SaveDataSlot : MonoBehaviour
     private void OnDisable()
     {
         _slotButton.UnBindOnClickButtonEvent(BindSlotClickEvent);
+        _onSlotClickAction = null;
     }
 
     public void Init(int index, int day, Action<int> onClickAction)

@@ -33,7 +33,6 @@ public class PlayerSaveModel
     public float PositionX = 20f;
     public float PositionY= 1f;
     public float PositionZ= -3f;
-
     public int MaxInventorySlotCount;
 }
 
@@ -58,7 +57,7 @@ public class GeneratorSaveModel
 [System.Serializable]
 public class FarmSaveModel
 {
-
+    public List<FarmPlotModel> FarmPlotList;
 }
 
 [System.Serializable]

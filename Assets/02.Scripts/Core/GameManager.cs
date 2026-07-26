@@ -9,7 +9,7 @@ public class GameManager : SingletonBase<GameManager>
     private void Start()
     {
         _lobbyManager = new LobbyManager();
-        _worldManager = new WorldManager();
+
 
         _lobbyManager.EnterLobby();
         //_worldManager.EnterWorld(); //테스트용
@@ -20,6 +20,7 @@ public class GameManager : SingletonBase<GameManager>
     // TODO : 저장되어 있는 파일 전달해줘야 함
     public void EnterInGame(SaveModel saveModel, int slotIndex)
     {
+        _worldManager = new WorldManager();
         UIManager.Instance.OpenUI(UIRootType.VeryFrontUI, UIType.LoadingUI);
         _worldManager.EnterWorld(saveModel, slotIndex).Forget();
 
@@ -30,7 +31,10 @@ public class GameManager : SingletonBase<GameManager>
 
     public void ExitInGame()
     {
-
+        _worldManager.ExitWorld();
+        _worldManager = null;
+        NetworkManager.Instance.DestroyNetworkService();
+        _lobbyManager.EnterLobby();
     }
 
     public LobbyManager GetLobbyManager()
@@ -45,6 +49,9 @@ public class GameManager : SingletonBase<GameManager>
 
     private void Update()
     {
+        if (_worldManager == null)
+            return;
+
         _worldManager.WorldUpdate();
     }
 }

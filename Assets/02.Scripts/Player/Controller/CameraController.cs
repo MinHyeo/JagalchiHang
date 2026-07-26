@@ -26,6 +26,11 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (UIManager.Instance.IsOpenUI(UIType.CraftUI) == true)
+        {
+            return;
+        }
+
         // 현재 마우스 휠 입력값 가져옴
         float scroll = Mouse.current.scroll.ReadValue().y;
 
