@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 public class WorldManager
@@ -59,8 +60,9 @@ public class WorldManager
 
     public void ExitWorld()
     {
+        UIManager.Instance.OpenUI(UIRootType.VeryFrontUI, UIType.LoadingUI);
         InputManager.Instance.EnableGamePlayInput(false);
-
+        GameObjectManager.Instance.RemoveAllObject();
     }
 
     private void CreateManager()

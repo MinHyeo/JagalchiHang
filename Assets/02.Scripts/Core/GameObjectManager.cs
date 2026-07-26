@@ -55,4 +55,17 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
     {
         _poolManager.Push(gameObject);
     }
+
+    public void RemoveAllObject()
+    {
+        _poolManager.Clear();
+
+        if (_rootTransform == null)
+            return;
+
+        for(int i = _rootTransform.childCount - 1; i >= 0; i--)
+        {
+            GameObject.Destroy(_rootTransform.GetChild(i).gameObject);
+        }
+    }
 }
