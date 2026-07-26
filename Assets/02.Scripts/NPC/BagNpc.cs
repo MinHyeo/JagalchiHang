@@ -194,8 +194,13 @@ public class BagNpc : MonoBehaviour
         {
             /*InventoryViewModel에 있는 _slotCount 를 접근할 수 있게 바꿔주고 Const를 지워주시면 
              _slotCount에 값 더해주기 */
+            int maxSlotLimit = 36;
 
-            inventoryVM.SlotCount += count;
+            if (inventoryVM.SlotCount < maxSlotLimit)
+            {
+                inventoryVM.SlotCount += count;
+
+            }
 
 
             // 인벤토리 슬롯 개수 값을 추가 슬롯으로 더해준 값으로 늘려주기 위해
