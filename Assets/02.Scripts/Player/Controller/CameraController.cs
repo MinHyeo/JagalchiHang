@@ -47,6 +47,14 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
+        if(_camera.Target.TrackingTarget == null)
+        {
+            _hiddenBuildings.Clear();
+            _detectedBuildings.Clear();
+
+            return;
+        }
+
         HideBuildings();
     }
 
@@ -96,8 +104,6 @@ public class CameraController : MonoBehaviour
 
             _detectedBuildings.Add(building);
             building.Hide();
-
-            Debug.Log($"감지된 건물: {building.name}");
         }
 
         // 이전에 숨겼던 건물 확인
