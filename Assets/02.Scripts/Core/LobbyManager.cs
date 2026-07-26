@@ -11,7 +11,7 @@ public class LobbyManager
     public void ExitLobby()
     {
         UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.LobbyUI);
-        UIManager.Instance.CloseUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.LoadGameUI);
         UIManager.Instance.CloseUI(UIRootType.BackgroundUI, UIType.LobbyBackgroundUI);
     }
 }

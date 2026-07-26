@@ -56,7 +56,7 @@ public class LoadGameUI : UIBase
 
     private void OnClickExitButton()
     {
-        UIManager.Instance.CloseUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.LoadGameUI);
     }
 
     public void Init(LoadGameUIType loadGameUIType)

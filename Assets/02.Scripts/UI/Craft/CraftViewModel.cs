@@ -96,7 +96,11 @@ public class CraftViewModel : ViewModelBase
             }
             else if (recipe.ResultId == "Item_FarmPlot")
             {
-                if (farmManager != null)
+                if (farmManager == null)
+                {
+                    slotVm.IsLocked = true;
+                }
+                else
                 {
                     var plotList = farmManager.GetFarmPlotList();
                     if (plotList != null && plotList.Count > 0)
@@ -220,23 +224,23 @@ public class CraftViewModel : ViewModelBase
         else if (resultId == "Item_FarmPlot")
         {
             var farmManager = GameUtil.GetFarmManager();
-            if (farmManager != null)
+
+            if (farmManager == null) return false;
+
+            var plotList = farmManager.GetFarmPlotList();
+            if (plotList == null || plotList.Count == 0) return false;
+
+            bool hasUnlockablePlot = false;
+            for (int i = 0; i < plotList.Count; i++)
             {
-                var plotList = farmManager.GetFarmPlotList();
-                if (plotList != null && plotList.Count > 0)
+                if (!plotList[i].IsUnlocked)
                 {
-                    bool hasUnlockablePlot = false;
-                    for (int i = 0; i < plotList.Count; i++)
-                    {
-                        if (!plotList[i].IsUnlocked)
-                        {
-                            hasUnlockablePlot = true;
-                            break;
-                        }
-                    }
-                    if (!hasUnlockablePlot) return false;
+                    hasUnlockablePlot = true;
+                    break;
                 }
             }
+
+            if (!hasUnlockablePlot) return false;
         }
         else
         {
@@ -345,7 +349,7 @@ public class CraftViewModel : ViewModelBase
                 }
             }
         }
-        else if (resultId == "Item_FarmPlot") 
+        else if (resultId == "Item_FarmPlot")
         {
             var farmManager = GameUtil.GetFarmManager();
             if (farmManager != null)
