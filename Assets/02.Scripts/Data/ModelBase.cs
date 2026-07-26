@@ -20,6 +20,7 @@ public class SaveModel : ModelBase
     public List<ItemSaveModel> ItemSaveModel;
 }
 
+[System.Serializable]
 public class PlayerSaveModel
 {
     public int CurrentHp;
@@ -33,6 +34,7 @@ public class PlayerSaveModel
     public int MaxInventorySlotCount;
 }
 
+[System.Serializable]
 public class ItemSaveModel 
 {
     public long ItemUniqueId;
