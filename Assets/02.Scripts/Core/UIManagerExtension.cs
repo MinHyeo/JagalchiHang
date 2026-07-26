@@ -104,7 +104,7 @@ public static class UIManagerExtension
   
     public static void OpenLoadGameUI(this UIManager uiManager, LoadGameUIType loadGameType)
     {
-        UIBase uiBase = uiManager.OpenUI(UIRootType.ContentUI, UIType.LoadGameUI);
+        UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.LoadGameUI);
         if (uiBase == null)
             return;
 
@@ -112,6 +112,7 @@ public static class UIManagerExtension
         {
             loadGameUI.Init(loadGameType);
         }
+        uiBase.transform.SetAsLastSibling();
     }
 
     public static void OpenFarmingUI(this UIManager uiManager, int boxUniqueId)
