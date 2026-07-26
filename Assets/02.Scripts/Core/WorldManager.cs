@@ -14,13 +14,19 @@ public class WorldManager
     {
         InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
-        CreateManager();
 
-        await _mapManager.CreateMap(saveModel.MapType);
+        _playerManager = new PlayerManager();
+        _npcManager = new NpcManager();
+        _mapManager = new MapManager();
 
         await _playerManager.SpawnPlayer(saveModel);
+        await _mapManager.CreateMap(saveModel.MapType);
+        NetworkManager.Instance.RequestLoadGame(saveModel);
+        _farmManager = new FarmManager();
+
 
         ITargetable target = _playerManager;
+        _monsterManager = new MonsterManager();
         _monsterManager.Init(target);
         _npcManager.Init(target);
 

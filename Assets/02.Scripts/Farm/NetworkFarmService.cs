@@ -31,6 +31,8 @@ public class NetworkFarmService
             return;
         }
 
+        Debug.Log($"Farm 로드됨, 밭 개수: {farmSaveModel.FarmPlotList?.Count}");
+
         if (_farmViewModel == null)
         {
             GetFarmViewModel();
