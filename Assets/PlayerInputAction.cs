@@ -226,6 +226,15 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CraftUI"",
+                    ""type"": ""Button"",
+                    ""id"": ""4aa06e2a-28e5-4b0f-90e7-8c19fbcfd944"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -622,6 +631,17 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""SettingUI"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0f142f17-6554-453d-943d-63f456995ac2"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""CraftUI"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1224,6 +1244,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_NpcUI = m_Player.FindAction("NpcUI", throwIfNotFound: true);
         m_Player_SettingUI = m_Player.FindAction("SettingUI", throwIfNotFound: true);
+        m_Player_CraftUI = m_Player.FindAction("CraftUI", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1332,6 +1353,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_NpcUI;
     private readonly InputAction m_Player_SettingUI;
+    private readonly InputAction m_Player_CraftUI;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1404,6 +1426,10 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SettingUI => m_Wrapper.m_Player_SettingUI;
         /// <summary>
+        /// Provides access to the underlying input action "Player/CraftUI".
+        /// </summary>
+        public InputAction @CraftUI => m_Wrapper.m_Player_CraftUI;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1474,6 +1500,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @SettingUI.started += instance.OnSettingUI;
             @SettingUI.performed += instance.OnSettingUI;
             @SettingUI.canceled += instance.OnSettingUI;
+            @CraftUI.started += instance.OnCraftUI;
+            @CraftUI.performed += instance.OnCraftUI;
+            @CraftUI.canceled += instance.OnCraftUI;
         }
 
         /// <summary>
@@ -1530,6 +1559,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @SettingUI.started -= instance.OnSettingUI;
             @SettingUI.performed -= instance.OnSettingUI;
             @SettingUI.canceled -= instance.OnSettingUI;
+            @CraftUI.started -= instance.OnCraftUI;
+            @CraftUI.performed -= instance.OnCraftUI;
+            @CraftUI.canceled -= instance.OnCraftUI;
         }
 
         /// <summary>
@@ -1935,6 +1967,13 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSettingUI(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CraftUI" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCraftUI(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

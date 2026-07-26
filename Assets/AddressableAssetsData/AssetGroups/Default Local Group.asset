@@ -1,4 +1,4 @@
-﻿%YAML 1.1
+%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -15,20 +15,23 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 13f035feed29ed246ba1a825e93415c4
   m_SerializeEntries:
-  - m_GUID: 0691049fca44bc346be8e725b688b327
-    m_Address: Images/Icon_Image/Image_PumpkinSeed
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0bfb54ebd3ad9c143ba2f065c8347261
-    m_Address: Images/Icon_Image/Image_CornSeed
   - m_GUID: 01a96ccfa64287c488c5ee36c3d4ed06
     m_Address: Images/Icon_Image/Image_VegetableOil
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0691049fca44bc346be8e725b688b327
+    m_Address: Images/Icon_Image/Image_PumpkinSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 06ac350fc6e8df94da06a86444066aca
     m_Address: Images/Icon_Image/Image_OnionSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0bfb54ebd3ad9c143ba2f065c8347261
+    m_Address: Images/Icon_Image/Image_CornSeed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -39,6 +42,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0f2c141ba9fe98f4f8a765d4fba98c36
     m_Address: Images/Icon_Image/Image_TomatoSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 15af2506b05157a4280d001f8d9eb08c
+    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -59,8 +67,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 24faa6c9b3122fc48ab090e079c0e5df
     m_Address: Images/Icon_Image/lmage_Carrot
-  - m_GUID: 15af2506b05157a4280d001f8d9eb08c
-    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -69,8 +75,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f5f59a22bcb195428cfe220591a66ed
+    m_Address: Sounds/Walk
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 321e3814549559f4e9fddb57d5b3f6a7
     m_Address: Prefab/Npc_Bag
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32c0cf521b2348c42a8c71f4fc2319f1
+    m_Address: Images/Icon_Image/Image_GamjaGoloke
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -79,10 +95,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38eb3a881473fd844bafbda6c9dfb009
+    m_Address: Sounds/InGame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3b2c5e5305342294e85f3cf984086f81
     m_Address: Images/Icon_Image/Image_Kalgugsu
-  - m_GUID: 32c0cf521b2348c42a8c71f4fc2319f1
-    m_Address: Images/Icon_Image/Image_GamjaGoloke
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -111,6 +130,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c74d942269bc874e8fec922edbc4891
+    m_Address: Images/Icon_Image/Image_Crowbar
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4e8bc0abd88680744a981320d6b593c6
     m_Address: Images/Icon_Image/Image_Doenjangjjigae
     m_ReadOnly: 0
@@ -121,24 +145,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 569eee06821a8374cbeeec2d692b20a6
-  - m_GUID: 4c74d942269bc874e8fec922edbc4891
-    m_Address: Images/Icon_Image/Image_Crowbar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5040602e083f4d94cbcdade4d55136f3
     m_Address: Images/Icon_Image/Image_TomatoSeed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 59fdb3d26f05fe34282f4c90e8d6b0f7
-    m_Address: Images/Icon_Image/Image_ChipCard
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 61f3a2538ba94714180a84285f337fa8
-    m_Address: Images/Icon_Image/Image_WoodStick
+  - m_GUID: 569eee06821a8374cbeeec2d692b20a6
+    m_Address: 
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -149,6 +162,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 588942777a6ebed4484220734d449e3c
     m_Address: Images/Icon_Image/lmage_Tomato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59fdb3d26f05fe34282f4c90e8d6b0f7
+    m_Address: Images/Icon_Image/Image_ChipCard
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 61f3a2538ba94714180a84285f337fa8
+    m_Address: Images/Icon_Image/Image_WoodStick
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -164,6 +187,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 66ee22a9a8d17a94ba15d5f971272001
     m_Address: Images/Icon_Image/lmage_Tomato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 687b4a2602c60ab40a0c39a244267d22
+    m_Address: Sounds/Lobe
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -197,7 +225,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 91245b1f83299af4588f6a988f3d306f
   - m_GUID: 833f603da9fa5704b9709fa20f872fdc
     m_Address: Images/Icon_Image/lmage_Corn
     m_ReadOnly: 0
@@ -228,18 +255,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 91245b1f83299af4588f6a988f3d306f
+    m_Address: 
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9c180c2c1e7bf2946b14b61c09e81ca3
     m_Address: Images/Icon_Image/lmage_Pumpkin
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a4c410ab29624994abfe3244bd901d56
-    m_Address: Images/Icon_Image/Image_Can
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a6294dc52eb759841a3656f955d532c9
-    m_Address: Images/Icon_Image/Image_WoodPiece
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -248,28 +270,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a4c410ab29624994abfe3244bd901d56
+    m_Address: Images/Icon_Image/Image_Can
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a4f1ca80895fab4449764b6142acb33f
     m_Address: Images/Icon_Image/Image_Flipper
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b04feb99e0559994597c932a7138d83e
-    m_Address: Images/Icon_Image/Image_WheatSeed
+  - m_GUID: a6294dc52eb759841a3656f955d532c9
+    m_Address: Images/Icon_Image/Image_WoodPiece
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b3ac98a2249ca4947afa2d166019c209
-    m_Address: Image/Loading_4
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c47c5c40c5dd02a44b4432ee7cc7f5a8
-    m_Address: Images/Icon_Image/Image_PeaSeed
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b3ac98a2249ca4947afa2d166019c209
-    m_Address: Image/Loading_4
   - m_GUID: a62e75fff75e9054a8679d90a5fcfe62
     m_Address: Prefab/Dog
     m_ReadOnly: 0
@@ -285,6 +300,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b04feb99e0559994597c932a7138d83e
+    m_Address: Images/Icon_Image/Image_WheatSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3ac98a2249ca4947afa2d166019c209
+    m_Address: Image/Loading_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b4756d6d3ca7b7044b50001dc9b4d37a
     m_Address: Images/Icon_Image/Image_PumpkinSeed
     m_ReadOnly: 0
@@ -292,6 +317,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c2aecd373bc54444daf814933947e093
     m_Address: Images/Icon_Image/Image_Hoe
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c47c5c40c5dd02a44b4432ee7cc7f5a8
+    m_Address: Images/Icon_Image/Image_PeaSeed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -315,6 +345,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dc3ce011d5affd24b8fd917b4f6d3282
+    m_Address: Sounds/Hit
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dd6279838cfef164e80178eb71af3571
     m_Address: Images/Icon_Image/lmage_Carrot
     m_ReadOnly: 0
@@ -330,8 +365,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e5c2d1213e9056a4687952a21a751ed2
+    m_Address: Images/Icon_Image/Image_IronPiece
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e64b8bf0e6249a14d85aa7ab01fd9fd9
     m_Address: Images/Icon_Image/Image_KongTteog
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7b2044ae62d2524babe254bd9e4b055
+    m_Address: Images/Icon_Image/lmage_Pea
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -342,16 +387,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eedf4d44c99df1a4aa52db1956a9eb22
     m_Address: Images/Icon_Image/Image_CornSeed
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e5c2d1213e9056a4687952a21a751ed2
-    m_Address: Images/Icon_Image/Image_IronPiece
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e7b2044ae62d2524babe254bd9e4b055
-    m_Address: Images/Icon_Image/lmage_Pea
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

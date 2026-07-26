@@ -140,6 +140,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "CraftUI",
+                    "type": "Button",
+                    "id": "4aa06e2a-28e5-4b0f-90e7-8c19fbcfd944",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -536,6 +545,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "SettingUI",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f142f17-6554-453d-943d-63f456995ac2",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "CraftUI",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
