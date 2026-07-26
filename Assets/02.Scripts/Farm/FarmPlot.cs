@@ -28,16 +28,36 @@ public class FarmPlot : MonoBehaviour, IInteractionable
 
     private void OnFarmManagerReady()
     {
-        Debug.Log("OnFarmManagerReady 호출됨");
-        _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+        if (_farmManager != null) return;
 
+        _farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
         var newPlot = new FarmPlotModel();
         newPlot.PlotUniqueId = _plotUniqueId;
         newPlot.IsUnlocked = false;
         newPlot.IsPlanted = false;
         _farmManager.AddFarmPlot(newPlot);
-
         _farmManager.RegisterFarmPlot(_plotUniqueId, this);
+
+        var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+        if (plot != null && plot.IsPlanted == true)
+        {
+            ActivatePlot();
+            var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
+            if (cropData != null)
+            {
+                string prefabPath = cropData.PrefabPath + "_" + (plot.CurrentGrowthStage + 1);
+            }
+        }
+
+        //_farmManager = NetworkManager.Instance.FarmService.GetFarmViewModel().GetFarmManager();
+
+        //var newPlot = new FarmPlotModel();
+        //newPlot.PlotUniqueId = _plotUniqueId;
+        //newPlot.IsUnlocked = false;
+        //newPlot.IsPlanted = false;
+        //_farmManager.AddFarmPlot(newPlot);
+
+        //_farmManager.RegisterFarmPlot(_plotUniqueId, this);
     }
 
     public void ActivatePlot()

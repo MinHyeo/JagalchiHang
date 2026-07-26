@@ -20,6 +20,8 @@ public class FarmSeedSlotUI : MonoBehaviour
 
     public void Init(CropData cropData, int plotUniqueId, InventoryViewModel invenVm)
     {
+        Button_Slot.BindOnClickButtonEvent(OnClick_Slot);
+
         _cropDataId = cropData.Id;
         _plotUniqueId = plotUniqueId;
 
