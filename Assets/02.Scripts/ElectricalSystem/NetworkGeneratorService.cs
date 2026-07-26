@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Behavior.GraphFramework;
+using UnityEngine;
 
 public class NetworkGeneratorService
 {
@@ -24,7 +25,18 @@ public class NetworkGeneratorService
         vm.MaxPower = 200;
         vm.MaxTroublePower = 100;
         vm.CurrentTroublePower = 0;
+    }
 
+    public void LoadSaveData(GeneratorSaveModel saveModel)
+    {
+        if (saveModel == null)
+            return;
+
+        _generatorViewModel.IsStoped = saveModel.IsStop;
+        _generatorViewModel.CurrentPower = saveModel.Power;
+        _generatorViewModel.MaxPower = 200;
+        _generatorViewModel.CurrentTroublePower = saveModel.TroublePower;
+        _generatorViewModel.MaxTroublePower = 100;
     }
 
     // 발전기 사용 가능 여부 체크

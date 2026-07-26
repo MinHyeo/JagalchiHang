@@ -80,15 +80,6 @@ public class WorldManager
         GameObjectManager.Instance.RemoveAllObject();
     }
 
-    private void CreateManager()
-    {
-        _playerManager = new PlayerManager();
-        _monsterManager = new MonsterManager();
-        _npcManager = new NpcManager();
-        _farmManager = new FarmManager();
-        _mapManager = new MapManager();
-    }
-
     public void WorldUpdate()
     {
         if (_npcManager != null)
