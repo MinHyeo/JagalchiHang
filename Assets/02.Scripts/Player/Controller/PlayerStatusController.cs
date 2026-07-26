@@ -93,6 +93,11 @@ public class PlayerStatusController : MonoBehaviour, IPlayerDamageable
         }
     }
 
+    private void IncreaseHp(int increaseAmount)
+    {
+        _vm.CurrentHp = Mathf.Min(_vm.CurrentHp + increaseAmount, _vm.MaxHp);
+    }
+
     private void DecreaseHp(DamageType damageType, int damageAmount)
     {
         int decreaseValue = 0;
@@ -134,6 +139,8 @@ public class PlayerStatusController : MonoBehaviour, IPlayerDamageable
         {
             DecreaseHp(DamageType.Hunger, _hungerDamage);
         }
+
+        IncreaseHp(_hungerDecrease);
     }
 
     private void DecreaseThirst()

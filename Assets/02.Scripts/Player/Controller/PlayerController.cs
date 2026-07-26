@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private Transform _attackPoint;
-    [SerializeField] private float _attackRadius = 1f;
+    [SerializeField] private float _attackRadius = 0.5f;
     [SerializeField] private LayerMask _monsterLayer;
     
     private bool _isAttacking;
