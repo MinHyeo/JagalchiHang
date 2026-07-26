@@ -60,6 +60,7 @@ public class WorldManager
 
     public void ExitWorld()
     {
+        UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
         UIManager.Instance.OpenUI(UIRootType.VeryFrontUI, UIType.LoadingUI);
         InputManager.Instance.EnableGamePlayInput(false);
         GameObjectManager.Instance.RemoveAllObject();
