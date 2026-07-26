@@ -204,6 +204,16 @@ public class PlayerController : MonoBehaviour
         SoundManager.Instance.PlaySFX("Sounds/Hit");
     }
 
+    public void OnDieEnd()
+    {
+        GameObjectManager.Instance.RequestDestroyObject(this.gameObject);
+
+        var playerManager = GameUtil.GetPlayerManager();
+        if (playerManager == null) return;
+
+        playerManager.RespawnPlayer().Forget();
+    }
+
     // 피격 애니메이션이 종료되면 피격 상태 해제
     public void OnHitEnd()
     {
@@ -238,6 +248,27 @@ public class PlayerController : MonoBehaviour
     {
         _isPressedMouseRight = isPress;
         _moveController.SetLookingToMouse(_isPressedMouseRight);
+    }
+
+    // 플레이어 리스폰 시 상태 초기화
+    public void ResetPlayerState()
+    {
+        _isHit = false;
+        _isDie = false;
+        _isAttacking = false;
+        _isPickUp = false;
+        _isPressedMouseRight = false;
+
+        _moveController.SetMoveInput(Vector2.zero);
+        _moveController.SetRunning(false);
+        _moveController.SetLookingToMouse(false);
+
+        // Animator를 처음 시작한 상태로 초기화
+        _animator.Rebind();
+        // Rebind한 내용을 즉시 적용
+        _animator.Update(0f);
+
+        SetState(StateType.Idle);
     }
 
     private void OnDrawGizmosSelected()
