@@ -96,6 +96,7 @@ public class NetworkManager : SingletonBase<NetworkManager>
         NpcService.BindInputEvents();
         InventoryService.BindInventoryInputEvent();
         SettingService.BindSettingInputEvent();
+        CraftService.BindCraftInputEvent();
     }
 
     public void RequestMoveItem_InvenToFarming(int invenIdx, int farmingIdx, int boxUniqueId)
