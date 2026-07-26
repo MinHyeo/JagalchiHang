@@ -47,6 +47,7 @@ public class MonsterHealth : MonoBehaviour, IMonsterDamageable
 
         Debug.Log($"{name} : 데미지 {amount}, 남은 체력 {_currentHealth} / {_maxHealth}");
         OnDamaged?.Invoke();
+        SoundManager.Instance.PlaySFX("Sounds/Hit");
 
         if (_currentHealth <= 0)
         {
