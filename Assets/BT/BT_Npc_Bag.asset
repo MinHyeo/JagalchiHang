@@ -555,7 +555,7 @@ MonoBehaviour:
   - rid: 6163278756051157621
   - rid: 6163278756051157685
   - rid: 6163278759144980696
-  m_VersionTimestamp: 639204302951710984
+  m_VersionTimestamp: 639207115764629646
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -3567134788917726418}
   m_RuntimeGraph: {fileID: -1665126217808811635}
@@ -724,7 +724,7 @@ MonoBehaviour:
   m_SubgraphsInfo: []
   m_BlackboardMissingManagedRef: 0
   m_GraphMissingManagedRef: 0
-  m_HasMissingTypeInManagedRef: 0
+  m_HasMissingTypeInManagedRef: 1
   m_EnumDependencyCache:
     Entries:
     - EnumTypeId: NpcState, Assembly-CSharp

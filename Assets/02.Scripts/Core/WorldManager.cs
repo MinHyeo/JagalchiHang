@@ -18,7 +18,7 @@ public class WorldManager
 
         await _mapManager.CreateMap(saveModel.MapType);
 
-        await _playerManager.SpawnPlayer();
+        await _playerManager.SpawnPlayer(saveModel);
 
         NetworkManager.Instance.RequestLoadGame(saveModel);
 
