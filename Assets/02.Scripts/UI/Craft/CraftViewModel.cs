@@ -23,8 +23,8 @@ public class CraftViewModel : ViewModelBase
     public RecipeData SelectedRecipe
     {
         get => _selectedRecipe;
-        set 
-        { 
+        set
+        {
             if (_selectedRecipe != value)
             {
                 _selectedRecipe = value;
@@ -50,7 +50,7 @@ public class CraftViewModel : ViewModelBase
     private List<CraftIngredientSlotViewModel> _ingredientSlots = new List<CraftIngredientSlotViewModel>();
     public List<CraftIngredientSlotViewModel> IngredientSlots
     {
-        get => _ingredientSlots;    
+        get => _ingredientSlots;
         set
         {
             if (_ingredientSlots != value)
@@ -69,14 +69,31 @@ public class CraftViewModel : ViewModelBase
         var recipeData = GameDataManager.Instance.GetAllData<RecipeData>();
         if (recipeData == null) return;
 
+        var npcManager = GameUtil.GetNpcManager();
+
         for (int i = 0; i < recipeData.Count; i++)
         {
             var recipe = recipeData[i];
-
             _recipeDataList[recipe.Id] = recipe;
 
             var slotVm = new CraftCategorySlotViewModel();
             slotVm.SetSlotInfo(recipe);
+
+            if (!string.IsNullOrEmpty(recipe.ResultId) && recipe.ResultId.StartsWith("Npc"))
+            {
+                if (npcManager != null)
+                {
+                    if (recipe.ResultId.Contains("Bag") && npcManager.HasBagNpc)
+                    {
+                        slotVm.IsLocked = true;
+                    }
+                    else if (recipe.ResultId.Contains("Battle") && npcManager.HasBattleNpc)
+                    {
+                        slotVm.IsLocked = true;
+                    }
+                }
+            }
+
             _categorySlots.Add(slotVm);
         }
 
@@ -105,7 +122,7 @@ public class CraftViewModel : ViewModelBase
 
         var resultItemData = GameDataManager.Instance.GetData<ItemData>(recipe.ResultId);
         ResultIconPath = resultItemData.IconPath;
-        
+
         UpdateIngredientSlots(recipe.Ingredients);
 
         OnPropertyChanged(nameof(SelectedRecipe));
@@ -128,10 +145,24 @@ public class CraftViewModel : ViewModelBase
             if (data.Length == 2)
             {
                 string itemId = data[0].Trim();
-
                 int requiredCount = System.Convert.ToInt32(data[1].Trim());
 
-                int currentCount = GetInventoryItemCount(invenVm, itemId);
+                int currentCount = 0;
+                if (itemId == "Item_Electricity")
+                {
+                    var generatorVm = NetworkManager.Instance.GeneratorService.GetGeneratorViewModel();
+                    if (generatorVm != null)
+                    {
+                        currentCount = generatorVm.CurrentPower;
+                    }
+                }
+                else
+                {
+                    if (invenVm != null)
+                    {
+                        currentCount = invenVm.GetItemCount(itemId);
+                    }
+                }
 
                 var ingVm = new CraftIngredientSlotViewModel();
                 ingVm.SetIngredientInfo(itemId, requiredCount, currentCount);
@@ -139,31 +170,6 @@ public class CraftViewModel : ViewModelBase
                 _ingredientSlots.Add(ingVm);
             }
         }
-    }
-
-    private int GetInventoryItemCount(InventoryViewModel invenVm, string itemId)
-    {
-        //if (itemId == "Item_Electricity")
-        //{
-        //    var generatorVm = NetworkManager.Instance.GeneratorService.GetLocalGeneratorViewModel;
-        //    if (generatorVm != null)
-        //    {
-        //        return generatorVm.CurrentPower;
-        //    }
-        //    return 0;
-        //}
-
-        int count = 0;
-        if (invenVm?.InventorySlots == null) return count;
-
-        foreach (var slot in invenVm.InventorySlots.Values)
-        {
-            if (slot.ItemDataId == itemId)
-            {
-                count += slot.ItemStackCount;
-            }
-        }
-        return count;
     }
 
     public bool CanCraft()
@@ -205,7 +211,7 @@ public class CraftViewModel : ViewModelBase
         {
             for (int i = 0; i < _ingredientSlots.Count; i++)
             {
-                if (_ingredientSlots[i].HasEnough) 
+                if (_ingredientSlots[i].HasEnough)
                 {
                     isEnoughIngredients = true;
                     break;
@@ -224,7 +230,7 @@ public class CraftViewModel : ViewModelBase
                 }
             }
         }
-        
+
         return isEnoughIngredients;
     }
 
@@ -237,11 +243,11 @@ public class CraftViewModel : ViewModelBase
         if (_selectedRecipe.CraftType == "Any")
         {
             CraftIngredientSlotViewModel targetIngredient = null;
-            for(int i = 0; i < _ingredientSlots.Count; i++)
+            for (int i = 0; i < _ingredientSlots.Count; i++)
             {
-                if (_ingredientSlots [i].HasEnough)
+                if (_ingredientSlots[i].HasEnough)
                 {
-                    targetIngredient = _ingredientSlots [i];
+                    targetIngredient = _ingredientSlots[i];
                     break;
                 }
             }
@@ -254,15 +260,15 @@ public class CraftViewModel : ViewModelBase
         {
             for (int j = 0; j < _ingredientSlots.Count; j++)
             {
-                var ingredient = _ingredientSlots [j];
+                var ingredient = _ingredientSlots[j];
 
                 if (ingredient.ItemId == "Item_Electricity")
                 {
-                    //var generatorVm = NetworkManager.Instance.GetLocalGeneratorViewModel;
-                    //if (generatorVm != null)
-                    //{
-                    //    generatorVm.ConsumePower(ingredient.RequireCount);
-                    //}
+                    bool canUsePower = NetworkManager.Instance.GeneratorService.CanUsePower(ingredient.RequireCount);
+                    if (canUsePower)
+                    {
+                        NetworkManager.Instance.GeneratorService.UsePower(ingredient.RequireCount);
+                    }
                 }
                 else
                 {
@@ -288,7 +294,7 @@ public class CraftViewModel : ViewModelBase
                 Debug.LogWarning($"잘못된 NPC{resultId}");
             }
 
-            for (int i = 0; i< _categorySlots.Count; i++)
+            for (int i = 0; i < _categorySlots.Count; i++)
             {
                 if (_categorySlots[i].RecipeId == _selectedRecipe.Id)
                 {
