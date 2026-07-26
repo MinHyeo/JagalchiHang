@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class NetworkNpcService
 {
@@ -41,4 +42,20 @@ public class NetworkNpcService
         return _npcViewModel;
     }
 
+    public void LoadSaveData(NpcSaveModel saveModel)
+    {
+        if (saveModel == null)
+            return;
+
+        _npcViewModel = GetNpcViewModel();
+        _npcViewModel.UnlockedNpcIds = saveModel.UnlockedNpcIds.ToHashSet<string>();
+
+        foreach(var id in _npcViewModel.UnlockedNpcIds)
+        {
+            if (id == "Npc_Bag_01")
+               GameUtil.GetNpcManager().SpawnBagNpc(id).Forget();
+            if (id == "Npc_Battle_01")
+               GameUtil.GetNpcManager().SpawnBattleNpc(id).Forget();
+        }
+    }
 }
