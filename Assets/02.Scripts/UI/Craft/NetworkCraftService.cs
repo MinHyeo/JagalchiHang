@@ -23,4 +23,26 @@ public class NetworkCraftService
         craftVm.InitCraftRecipes();
         return craftVm;
     }
+
+    public void BindCraftInputEvent()
+    {
+        InputManager.Instance.OnClickCraftUI += OnOpenCraftUI;
+    }
+
+    public void UnBindCraftInputEvent()
+    {
+        InputManager.Instance.OnClickCraftUI -= OnOpenCraftUI;
+    }
+
+    private void OnOpenCraftUI()
+    {
+        if (UIManager.Instance.IsOpenUI(UIType.CraftUI))
+        {
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.CraftUI);
+        }
+        else
+        {
+            UIManager.Instance.OpenUI(UIRootType.PopupUI, UIType.CraftUI);
+        }
+    }
 }
