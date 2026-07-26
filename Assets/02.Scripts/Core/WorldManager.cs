@@ -14,20 +14,22 @@ public class WorldManager
     {
         InputManager.Instance.EnableGamePlayInput(true);
         NetworkManager.Instance.InitNetworkService();
-        CreateManager();
 
-        await _mapManager.CreateMap(saveModel.MapType);
+        _playerManager = new PlayerManager();
+        _npcManager = new NpcManager();
+        _mapManager = new MapManager();
 
         await _playerManager.SpawnPlayer(saveModel);
+        await _mapManager.CreateMap(saveModel.MapType);
+        NetworkManager.Instance.RequestLoadGame(saveModel);
+        _farmManager = new FarmManager();
+
 
         ITargetable target = _playerManager;
+        _monsterManager = new MonsterManager();
         _monsterManager.Init(target);
         _npcManager.Init(target);
-
-        NetworkManager.Instance.RequestLoadGame(saveModel);
-
-        NetworkManager.Instance.InventoryService.TestItem();
-
+        NetworkManager.Instance.InventoryService.TestItem();//테스트코드
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
         SoundManager.Instance.PlayBGM("Sounds/InGame");

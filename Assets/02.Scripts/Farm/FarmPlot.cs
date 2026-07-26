@@ -50,7 +50,18 @@ public class FarmPlot : MonoBehaviour, IInteractionable
             var cropData = GameDataManager.Instance.GetData<CropData>(plot.CropDataId);
             if (cropData != null)
             {
-                string prefabPath = cropData.PrefabPath + "_" + (plot.CurrentGrowthStage + 1);
+                var growthStageMinutes = cropData.GetGrowthStageMinutes();
+                int stageForPrefab;
+                if (plot.CurrentGrowthStage >= growthStageMinutes.Count)
+                {
+                    stageForPrefab = plot.CurrentGrowthStage;
+                }
+                else
+                {
+                    stageForPrefab = plot.CurrentGrowthStage + 1;
+
+                }
+                string prefabPath = cropData.PrefabPath + "_" + stageForPrefab;
                 ChangeCropModel(prefabPath, plot.CropDataId).Forget();
             }
         }
