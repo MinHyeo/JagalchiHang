@@ -16,6 +16,8 @@ public class MapManager
 
     private string path = "Prefabs/Map/";
 
+    public MapType CurrentMapType => _currnetMapType;
+
     public async UniTask CreateMap()
     {
         await SpawnMap(MapType.ParmingMap, true);
