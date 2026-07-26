@@ -1,15 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class TestCode : MonoBehaviour
+public class TimeUI : MonoBehaviour
 {
-    [SerializeField] private Text _yearText;
-    [SerializeField] private Text _monthText;
     [SerializeField] private Text _dayText;
     [SerializeField] private Text _hourText;
     [SerializeField] private Text _minuteText;
 
-    private void Start()
+    private void OnEnable()
     {
         ChangeDayText();
         ChangeHourText();
@@ -20,9 +18,16 @@ public class TestCode : MonoBehaviour
         TimeManager.Instance.OnMinuteChanged += ChangeMinuteText;
     }
 
+    private void OnDisable()
+    {
+        TimeManager.Instance.OnDayChanged -= ChangeDayText;
+        TimeManager.Instance.OnHourChanged -= ChangeHourText;
+        TimeManager.Instance.OnMinuteChanged -= ChangeMinuteText;
+    }
+
     private void ChangeDayText()
     {
-        _dayText.text = TimeManager.Instance.Day.ToString("D2");
+        _dayText.text = TimeManager.Instance.Day.ToString("D2") + 'D'; 
     }
 
     private void ChangeHourText()
