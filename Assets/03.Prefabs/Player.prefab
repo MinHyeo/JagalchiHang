@@ -671,7 +671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _animator: {fileID: 2888918975945442839}
   _attackPoint: {fileID: 8345893436553426165}
-  _attackRadius: 1
+  _attackRadius: 0.5
   _monsterLayer:
     serializedVersion: 2
     m_Bits: 128

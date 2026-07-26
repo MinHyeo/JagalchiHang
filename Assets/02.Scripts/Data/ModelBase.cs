@@ -15,9 +15,13 @@ public enum ItemLocationType
 [System.Serializable]
 public class SaveModel : ModelBase
 {
-    public int day = 1;
+    public int Day = 0;
+    public float Time = 0.4f;
+    public MapType MapType = MapType.ParmingMap;
     public PlayerSaveModel PlayerSaveModel;
     public List<ItemSaveModel> ItemSaveModel;
+    public FarmSaveModel FarmSaveModel;
+    public NpcSaveModel NpcSaveModel;
 }
 
 [System.Serializable]
@@ -26,10 +30,9 @@ public class PlayerSaveModel
     public int CurrentHp;
     public int CurrentHunger;
     public int CurrentThirst;
-    public float PositionX;
-    public float PositionY;
-    public float PositionZ;
-    public MapType CurrentMapType;
+    public float PositionX = 20f;
+    public float PositionY= 1f;
+    public float PositionZ= -3f;
 
     public int MaxInventorySlotCount;
 }
@@ -42,4 +45,24 @@ public class ItemSaveModel
     public int ItemStackCount;
     public ItemLocationType Location;
     public int SlotIndex;
+}
+
+[System.Serializable]
+public class GeneratorSaveModel
+{
+    public bool IsStop = false;
+    public int Power = 100;
+    public int TroublePower = 200;
+}
+
+[System.Serializable]
+public class FarmSaveModel
+{
+
+}
+
+[System.Serializable]
+public class NpcSaveModel
+{
+    public List<string> UnlockedNpcIds;
 }

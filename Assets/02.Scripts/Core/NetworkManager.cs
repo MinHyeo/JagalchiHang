@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NetworkManager : SingletonBase<NetworkManager>
 {
-    public NetworkSaveLoadService SaveLoadService;
+    public NetworkSaveLoadService SaveLoadService { get; private set; }
     public NetworkPlayerService PlayerService { get; private set; }
     public NetworkInventoryService InventoryService { get; private set; }
     public NetworkFarmingService FarmingService { get; private set; }
@@ -62,17 +62,24 @@ public class NetworkManager : SingletonBase<NetworkManager>
             currentSaveData.ItemSaveModel.AddRange(storageData);
         }
 
+        float time = TimeManager.Instance.Time;
+        int day = TimeManager.Instance.Day;
+        currentSaveData.Time = time;
+        currentSaveData.Day = day;
+
+        var mapManager = GameUtil.GetMapManager();
+        currentSaveData.MapType = mapManager.CurrentMapType;
+
         SaveGame(slotIndex, currentSaveData);
     }
 
-    public void RequestLoadGame(int slotIndex)
+    public void RequestLoadGame(SaveModel saveModel)
     {
-        SaveModel saveModel = LoadGame(slotIndex);
-        if (saveModel == null) return;
-
         PlayerService.LoadSaveData(saveModel.PlayerSaveModel);
         InventoryService.LoadSaveData(saveModel.ItemSaveModel);
         StorageService.LoadSaveData(saveModel.ItemSaveModel);
+        TimeManager.Instance.SetTime(saveModel.Day, saveModel.Time);
+        TimeManager.Instance.RestartTime();
     }
 
     public void InitSaveLoadService()
@@ -173,6 +180,4 @@ public class NetworkManager : SingletonBase<NetworkManager>
     {
         InventoryService.AddItem(itemDataId, stackCount);
     }
-
-
 }

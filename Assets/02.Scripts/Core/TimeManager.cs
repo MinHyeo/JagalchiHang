@@ -22,14 +22,15 @@ public class TimeManager : SingletonBase<TimeManager>
 
     private DNSkyBoxSwitcher _skyBoxSwitcher;
 
+    public float Time => _time;
     public int Day => _day;
     public int Hour => (int)(_time * 24f) ;
     public int Minute => (int)((_time * 1440f) % 60f);
 
     private int _day;
     private float _time;
-    private float _startTime = 0.4f;
     private float _timeRate;
+    private float _currnetTimeRate;
     private Vector3 _noon = new Vector3(90, 0, 0);
 
     public event Action OnMinuteChanged;
@@ -40,9 +41,8 @@ public class TimeManager : SingletonBase<TimeManager>
     {
         _skyBoxSwitcher = GetComponentInChildren<DNSkyBoxSwitcher>();
 
-        _day = 0;
         _timeRate = 1.0f / _fullDayTime;
-        _time = _startTime;
+        _currnetTimeRate = 0;
 
         OnHourChanged += HandleHourChanged;
         HandleHourChanged();
@@ -59,12 +59,18 @@ public class TimeManager : SingletonBase<TimeManager>
         RenderSettings.reflectionIntensity = _reflectionIntensityMultiplier.Evaluate(_time);
     }
 
+    public void SetTime(int day, float time)
+    {
+        _day = day;
+        _time = time;
+    }
+
     private void UpdateTime()
     {
         int prevHour = Hour;
         int prevMinute = Minute;
 
-        _time = _time + _timeRate * Time.deltaTime;
+        _time = _time + _timeRate * UnityEngine.Time.deltaTime;
 
         if(_time >= 1.0f)
         {
@@ -111,12 +117,12 @@ public class TimeManager : SingletonBase<TimeManager>
 
     public void RestartTime()
     {
-        Time.timeScale = 1.0f;
+        _currnetTimeRate = _timeRate;
     }
 
     public void StopTime()
     {
-        Time.timeScale = 0f;
+        _currnetTimeRate = 0;
     }
 
     private void HandleHourChanged()
