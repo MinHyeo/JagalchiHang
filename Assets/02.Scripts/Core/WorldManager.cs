@@ -24,9 +24,12 @@ public class WorldManager
         _monsterManager.Init(target);
         _npcManager.Init(target);
 
+        bool isInBunker = IsBunkerMap(saveModel.MapType);
+        _npcManager.OnBunkerData(isInBunker);
+
         NetworkManager.Instance.RequestLoadGame(saveModel);
 
-        //NetworkManager.Instance.InventoryService.TestItem();
+        NetworkManager.Instance.InventoryService.TestItem();
 
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
@@ -56,6 +59,11 @@ public class WorldManager
         bool isBunker = (mapType == MapType.ParkingGarage) ? true : false;
 
         NetworkManager.Instance.FarmingService.OnExitMap();
+    }
+
+    private bool IsBunkerMap(MapType mapType)
+    {
+        return mapType == MapType.ParkingGarage;
     }
 
     public void ExitWorld()
