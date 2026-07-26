@@ -44,6 +44,11 @@ public class Pool
     {
         GameObject.Destroy(gameObject);
     }
+
+    public void Clear()
+    {
+        _pool.Clear();
+    }
 }
 
 public class PoolManager
@@ -85,5 +90,15 @@ public class PoolManager
     {
         Pool pool = new Pool(gameObject);
         _pools.Add(gameObject.name, pool);
+    }
+
+    public void Clear()
+    {
+        foreach(var pool in _pools.Values)
+        {
+            pool.Clear();
+        }
+
+        _pools.Clear();
     }
 }

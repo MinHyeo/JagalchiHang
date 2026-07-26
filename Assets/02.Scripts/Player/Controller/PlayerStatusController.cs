@@ -42,6 +42,15 @@ public class PlayerStatusController : MonoBehaviour, IPlayerDamageable
         return;
     }
 
+    private void OnDisable()
+    {
+        if (TimeManager.Instance != null)
+        {
+            TimeManager.Instance.OnMinuteChanged -= OnHungerChanged;
+            TimeManager.Instance.OnMinuteChanged -= OnThirstChanged;
+        }
+    }
+
     public void InitPlayerStatus(PlayerData playerData)
     {
         if (playerData == null) return;
