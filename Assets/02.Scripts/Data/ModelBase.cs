@@ -21,6 +21,7 @@ public class SaveModel : ModelBase
     public PlayerSaveModel PlayerSaveModel;
     public List<ItemSaveModel> ItemSaveModel;
     public FarmSaveModel FarmSaveModel;
+    public GeneratorSaveModel GeneratorSaveModel;
     public NpcSaveModel NpcSaveModel;
 }
 
