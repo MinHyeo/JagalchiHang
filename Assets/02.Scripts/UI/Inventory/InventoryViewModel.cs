@@ -291,6 +291,22 @@ public class InventoryViewModel : ViewModelBase
         return (currentEmptySlots + freedSlotCount) >= requiredEmptySlots;
     }
 
+    public int GetItemCount(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId) || InventorySlots == null) return 0;
+
+        int totalCount = 0;
+        foreach (var slot in InventorySlots.Values)
+        {
+            if (slot.ItemDataId == itemId)
+            {
+                totalCount += slot.ItemStackCount;
+            }
+        }
+
+        return totalCount;
+    }
+
     public void NotifySlotCountChanged()
     {
         OnPropertyChanged("ItemListAdded");
