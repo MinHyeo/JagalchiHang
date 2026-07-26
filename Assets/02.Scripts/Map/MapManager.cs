@@ -52,7 +52,7 @@ public class MapManager
             return;
 
         newMapComponent.gameObject.SetActive(true);
-        newMapComponent.GetSpawnPosition();
+        //newMapComponent.GetSpawnPosition();
     }
 
     public Vector3 GetMapSpawnPosition()
