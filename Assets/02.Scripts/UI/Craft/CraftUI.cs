@@ -18,6 +18,7 @@ public class CraftUI : UIBase
     [SerializeField] private CanvasGroup _craftButtonCanvasGroup;
 
     private CraftViewModel _vm;
+    private InventoryViewModel _invenVm;
     private List<CraftCategorySlot> _categorySlotList = new List<CraftCategorySlot>();
     private List<CraftIngredientSlotUI> _ingredientSlotList = new List<CraftIngredientSlotUI>();
 
@@ -35,6 +36,8 @@ public class CraftUI : UIBase
             _vm.InitCraftRecipes();
         }
 
+        BindInventoryEvents();
+
         InitCategoryList();
         UpdateCraftingDetail();
     }
@@ -45,6 +48,8 @@ public class CraftUI : UIBase
         {
             _vm.PropertyChanged -= OnPropertyChanged_View;
         }
+
+        UnbindInventoryEvents();
 
         ClearCategoryList();
         ClearIngredientList();
@@ -167,5 +172,58 @@ public class CraftUI : UIBase
         if (_vm == null || _vm.ResultIconPath != iconPath) return;
 
         _imageResultIcon.sprite = loadecSprite;
+    }
+
+    private void BindInventoryEvents()
+    {
+        _invenVm = NetworkManager.Instance.InventoryService.GetLocalInventoryViewModel();
+        if (_invenVm != null)
+        {
+            _invenVm.PropertyChanged -= OnInventoryPropertyChanged;
+            _invenVm.PropertyChanged += OnInventoryPropertyChanged;
+
+            if (_invenVm.InventorySlots != null)
+            {
+                foreach (var slot in _invenVm.InventorySlots.Values)
+                {
+                    slot.PropertyChanged -= OnInventorySlotPropertyChanged;
+                    slot.PropertyChanged += OnInventorySlotPropertyChanged;
+                }
+            }
+        }
+    }
+
+    private void UnbindInventoryEvents()
+    {
+        if (_invenVm != null)
+        {
+            _invenVm.PropertyChanged -= OnInventoryPropertyChanged;
+
+            if (_invenVm.InventorySlots != null)
+            {
+                foreach (var slot in _invenVm.InventorySlots.Values)
+                {
+                    slot.PropertyChanged -= OnInventorySlotPropertyChanged;
+                }
+            }
+            _invenVm = null;
+        }
+    }
+
+    private void OnInventoryPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(InventoryViewModel.InventorySlots) || e.PropertyName == "ItemListAdded" || e.PropertyName == "ItemRemoved")
+        {
+            BindInventoryEvents();
+            _vm.RefreshCurrentRecipe();
+        }
+    }
+
+    private void OnInventorySlotPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(InventorySlotViewModel.ItemStackCount) || e.PropertyName == nameof(InventorySlotViewModel.ItemDataId))
+        {
+            _vm.RefreshCurrentRecipe();
+        }
     }
 }

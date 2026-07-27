@@ -36,7 +36,7 @@ public class WorldManager
         bool isInBunker = IsBunkerMap(saveModel.MapType);
         _npcManager.OnBunkerData(isInBunker);
 
-        NetworkManager.Instance.InventoryService.TestItem();
+        //NetworkManager.Instance.InventoryService.TestItem();
 
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
@@ -117,6 +117,7 @@ public class WorldManager
     private void CloseAllUI()
     {
         UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
+        UIManager.Instance.RemoveAllSlotHudInteraction();
         UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.HudMainUI);
         UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
         UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);

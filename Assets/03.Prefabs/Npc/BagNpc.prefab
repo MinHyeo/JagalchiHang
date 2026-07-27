@@ -291,7 +291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BagNpc
   behaviorAgent: {fileID: 689298404722539788}
-  bonusSlotCount: 12
 --- !u!114 &689298404722539788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,7 +328,7 @@ MonoBehaviour:
           m_Value0: 11494552623608034845
           m_Value1: 12216301716953138442
         Name: HomePosition
-        m_Value: {x: 3.6, y: -1.495, z: 5.6}
+        m_Value: {x: 7.51, y: -5.737, z: 12.18}
 --- !u!95 &5492456328930484313
 Animator:
   serializedVersion: 7

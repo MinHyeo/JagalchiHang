@@ -584,7 +584,7 @@ MonoBehaviour:
           m_Value0: 16061956987989249595
           m_Value1: 15043235892433519376
         Name: HomePosition
-        m_Value: {x: -2.4, y: -1.505, z: 5.75}
+        m_Value: {x: 1.21, y: -5.737, z: 12.18}
 --- !u!195 &645058058936295360
 NavMeshAgent:
   m_ObjectHideFlags: 0
