@@ -21,7 +21,7 @@ public class WorldManager
 
         await _playerManager.SpawnPlayer(saveModel);
         await _mapManager.CreateMap(saveModel.MapType);
-        NetworkManager.Instance.RequestLoadGame(saveModel);
+        //NetworkManager.Instance.RequestLoadGame(saveModel);
         _farmManager = new FarmManager();
 
 
