@@ -10,7 +10,8 @@ public class FarmManager
     private Dictionary<int, List<CropObject>> _cropObjectDictionary = new Dictionary<int, List<CropObject>>();
 
     public static event Action OnFarmPlotsSpawned;
-    public FarmManager()
+
+    public void Init()
     {
         Debug.Log("FarmManager 생성자 호출됨");
 
@@ -32,8 +33,6 @@ public class FarmManager
 
         OnFarmPlotsSpawned?.Invoke();
     }
-
-    
 
 
     public void Dispose()
