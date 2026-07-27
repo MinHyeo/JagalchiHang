@@ -83,6 +83,10 @@ public class FarmSeedSelectUI : UIBase
         }
     }
 
+    public int GetPlotUniqueId()
+    {
+        return _plotUniqueId;
+    }
     private void OnClick_Close()
     {
         UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
