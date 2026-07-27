@@ -30,11 +30,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 15af2506b05157a4280d001f8d9eb08c
-    m_Address: Prefabs/Map/ParkingGarage
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 27c01446d0833814a9cb4fc88e746611
     m_Address: Images/Icon_Image/lmage_Potato
     m_ReadOnly: 0
@@ -197,6 +192,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b4756d6d3ca7b7044b50001dc9b4d37a
     m_Address: Images/Icon_Image/Image_PumpkinSeed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c29da9a8305a2dc43b69ee01821e76c7
+    m_Address: Prefabs/Map/ParkingGarage
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
