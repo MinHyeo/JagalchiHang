@@ -92,10 +92,15 @@ public class FarmPlot : MonoBehaviour, IInteractionable
     {
         if (_farmManager == null) return;
         var plot = _farmManager.GetFarmPlotCanBeNull(_plotUniqueId);
+
+        Debug.Log($"plot: {plot}, IsUnlocked: {plot.IsUnlocked}");
+
         if (plot == null)
         {
             return;
         }
+        //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+        //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
 
         if (plot.IsUnlocked == false)
         {
@@ -115,19 +120,21 @@ public class FarmPlot : MonoBehaviour, IInteractionable
     {
         if (other.CompareTag("Player"))
         {
-            var seedUI = UIManager.Instance.GetOpenUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI) as FarmSeedSelectUI;
-            if (seedUI != null && seedUI.GetPlotUniqueId() == _plotUniqueId)
-            {
-                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
-            }
-            var statusUI = UIManager.Instance.GetOpenUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI) as FarmPlotStatusUI;
-            if (statusUI != null && statusUI.GetPlotUniqueId() == _plotUniqueId)
-            {
-                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
-            }
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
 
-            //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
-            //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+            //var seedUI = UIManager.Instance.GetOpenUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI) as FarmSeedSelectUI;
+            //if (seedUI != null && seedUI.GetPlotUniqueId() == _plotUniqueId)
+            //{
+            //    UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+            //}
+
+            //var statusUI = UIManager.Instance.GetOpenUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI) as FarmPlotStatusUI;
+            //if (statusUI != null && statusUI.GetPlotUniqueId() == _plotUniqueId)
+            //{
+            //    UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+            //}
+
+            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
 
 
         }
