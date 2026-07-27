@@ -36,7 +36,7 @@ public class WorldManager
         bool isInBunker = IsBunkerMap(saveModel.MapType);
         _npcManager.OnBunkerData(isInBunker);
 
-        NetworkManager.Instance.InventoryService.TestItem();
+        //NetworkManager.Instance.InventoryService.TestItem();
 
         SoundManager.Instance.StopBGM();
         UIManager.Instance.OpenUI(UIRootType.MainUI, UIType.MainUI);
