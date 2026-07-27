@@ -13,6 +13,11 @@ public class FarmPlotStatusUI : UIBase
     private int _plotUniqueId;
     private FarmManager _farmManager;
 
+    private void Awake()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void OnEnable()
     {
         Button_Harvest.BindOnClickButtonEvent(OnClick_Harvest);
@@ -43,6 +48,11 @@ public class FarmPlotStatusUI : UIBase
         {
             UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
         }
+    }
+
+    public int GetPlotUniqueId()
+    {
+        return _plotUniqueId;
     }
 
     public void Init(int plotUniqueId)

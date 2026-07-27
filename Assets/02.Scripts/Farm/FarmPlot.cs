@@ -116,7 +116,15 @@ public class FarmPlot : MonoBehaviour, IInteractionable
         if (other.CompareTag("Player"))
         {
             UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
-            UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+            var statusUI = UIManager.Instance.GetOpenUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI) as FarmPlotStatusUI;
+            if (statusUI != null && statusUI.GetPlotUniqueId() == _plotUniqueId)
+            {
+                UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+            }
+
+            //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmSeedSelectUI);
+            //UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmPlotStatusUI);
+
 
         }
 

@@ -120,11 +120,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a6e5a15ef745e51429fec73cf97a656b
-    m_Address: Icon_Image/Image_Electricity
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aab5bb5693ac8404d83b84cfec6e34b2
     m_Address: Icon_Image/Image_Doenjangjjigae
     m_ReadOnly: 0
