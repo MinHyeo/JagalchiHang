@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class PlayerManager : ITargetable
@@ -38,7 +39,7 @@ public class PlayerManager : ITargetable
         
         if (_playerSpawnPos == null) return;
 
-        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos);
+        _player = await GameObjectManager.Instance.CreateObjectAsync("Player_1", "Prefab/Player", _playerSpawnPos + Vector3.up * 5f);
         if (_player == null) return;
 
         Debug.Log($"플레이어가 생성됐다!");
