@@ -19,18 +19,19 @@ public class WorldManager
         _npcManager = new NpcManager();
         _mapManager = new MapManager();
         _farmManager = new FarmManager();
+        _monsterManager = new MonsterManager();
 
         await _playerManager.SpawnPlayer(saveModel);
         await _mapManager.CreateMap(saveModel.MapType);
+        ITargetable target = _playerManager;
+
+        _npcManager.Init(target);
 
         NetworkManager.Instance.RequestLoadGame(saveModel);
 
         _farmManager.Init();
 
-        ITargetable target = _playerManager;
-        _monsterManager = new MonsterManager();
         _monsterManager.Init(target);
-        _npcManager.Init(target);
 
         bool isInBunker = IsBunkerMap(saveModel.MapType);
         _npcManager.OnBunkerData(isInBunker);
