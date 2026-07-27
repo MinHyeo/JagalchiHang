@@ -26,7 +26,8 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (UIManager.Instance.IsOpenUI(UIType.CraftUI) == true)
+        if (UIManager.Instance.IsOpenUI(UIType.CraftUI) == true ||
+            UIManager.Instance.IsOpenUI(UIType.LoadGameUI) == true)
         {
             return;
         }
