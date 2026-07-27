@@ -116,6 +116,7 @@ public class WorldManager
     private void CloseAllUI()
     {
         UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.MainUI);
+        UIManager.Instance.RemoveAllSlotHudInteraction();
         UIManager.Instance.CloseUI(UIRootType.MainUI, UIType.HudMainUI);
         UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.InventoryUI);
         UIManager.Instance.CloseUI(UIRootType.PopupUI, UIType.FarmingUI);

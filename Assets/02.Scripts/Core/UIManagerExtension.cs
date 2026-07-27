@@ -101,7 +101,18 @@ public static class UIManagerExtension
             hudMainUI.RemoveInteractionSlot(instanceId);
         }
     }
-  
+
+    public static void RemoveAllSlotHudInteraction(this UIManager uIManager)
+    {
+        var uiBase = uIManager.GetOpenUI(UIRootType.MainUI, UIType.HudMainUI);
+        if (uiBase == null) return;
+
+        if (uiBase is HudMainUI hudMainUI)
+        {
+            hudMainUI.RemoveAllInteractionSlot();
+        }
+    }
+
     public static void OpenLoadGameUI(this UIManager uiManager, LoadGameUIType loadGameType)
     {
         UIBase uiBase = uiManager.OpenUI(UIRootType.PopupUI, UIType.LoadGameUI);

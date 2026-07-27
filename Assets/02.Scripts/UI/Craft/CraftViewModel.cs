@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 public class CraftViewModel : ViewModelBase
@@ -391,5 +392,13 @@ public class CraftViewModel : ViewModelBase
         SelectRecipe(_selectedRecipe.Id);
 
         return true;
+    }
+    public void RefreshCurrentRecipe()
+    {
+        if (_selectedRecipe != null)
+        {
+            UpdateIngredientSlots(_selectedRecipe.Ingredients);
+            OnPropertyChanged(nameof(IngredientSlots));
+        }
     }
 }

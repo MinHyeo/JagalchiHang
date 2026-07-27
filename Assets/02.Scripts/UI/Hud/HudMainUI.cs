@@ -91,4 +91,19 @@ public class HudMainUI : UIBase
             _slotinteractionList.Remove(instanceId);
         }
     }
+
+    public void RemoveAllInteractionSlot()
+    {
+        foreach (var slot in _slotinteractionList)
+        {
+            var slotKv = slot.Value;
+
+            if (slotKv != null)
+            {
+                Destroy(slotKv.gameObject);
+            }
+        }
+
+        _slotinteractionList.Clear();
+    }
 }
