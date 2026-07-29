@@ -113,7 +113,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // 플레이어 상태 바꾸기
-    public void SetState(StateType stateType)
+    public void ChangeState(StateType stateType)
     {
         _stateMachine.SetState(stateType, this);
     }
@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
         {
             _isAttacking = true;
 
-            SetState(StateType.Attack);
+            ChangeState(StateType.Attack);
 
             Debug.Log($"공격 버튼    Hit:{_isHit}   Attack : {_isAttacking}    Die : {_isDie}");
         }
@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
     {
         _isDie = true;
 
-        SetState(StateType.Die);
+        ChangeState(StateType.Die);
     }
 
     // 피격
@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
     {
         _isAttacking = false;
         _isHit = true;
-        SetState(StateType.Hit);
+        ChangeState(StateType.Hit);
         SoundManager.Instance.PlaySFX("Sounds/Hit");
     }
 
@@ -228,7 +228,7 @@ public class PlayerController : MonoBehaviour
 
         _isPickUp = true;
 
-        SetState(StateType.PickUp);
+        ChangeState(StateType.PickUp);
         Debug.Log($"{_currentItem}을 주웠다.");
         _currentItem.DestroyItem();
     }
@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
         // Rebind한 내용을 즉시 적용
         _animator.Update(0f);
 
-        SetState(StateType.Idle);
+        ChangeState(StateType.Idle);
     }
 
     private void OnDrawGizmosSelected()
