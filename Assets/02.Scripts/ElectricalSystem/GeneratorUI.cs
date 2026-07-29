@@ -41,7 +41,7 @@ public class GeneratorUI : UIBase
         UpdateFullCountText();
         foreach(var slot in _materialSlotList)
         {
-            slot.UpdateItemCount(_inventoryViewModel, _generatorViewModel);
+            slot.UpdateItemCount(_inventoryViewModel);
         }
         UpdateFixValueText();
     }
@@ -49,6 +49,7 @@ public class GeneratorUI : UIBase
     private void OnDisable()
     {
         _generatorViewModel.PropertyChanged -= OnPropertyChanged;
+        _inventoryViewModel.PropertyChanged -= OnPropertyChanged;
 
         _exitButton.UnBindOnClickButtonEvent(ExitUI);
         _exitButton.UnBindOnClickButtonEvent(RechargeGenerator);
@@ -116,10 +117,11 @@ public class GeneratorUI : UIBase
 
         if(_selectSlot.CheckRechargeable(_inventoryViewModel, _generatorViewModel) == false)
         {
+            Debug.Log("충전 안됨");
             return;
         }
 
-        _selectSlot.UpdateItemCount(_inventoryViewModel, _generatorViewModel);
+        _selectSlot.Recharge(_inventoryViewModel);
         NetworkManager.Instance.GeneratorService.ReChargePower(amount); 
     }
 

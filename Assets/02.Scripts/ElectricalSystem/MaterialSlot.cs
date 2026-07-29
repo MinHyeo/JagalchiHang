@@ -53,11 +53,15 @@ public class MaterialSlot : MonoBehaviour
         return true;
     }
 
-    public bool UpdateItemCount(InventoryViewModel inventoryVM, GeneratorViewModel generatorVM)
+    public void Recharge(InventoryViewModel inventoryVM)
+    {
+        inventoryVM.RemoveItem(_itemId, 1);
+        UpdateItemCount(inventoryVM);
+    }
+
+    public bool UpdateItemCount(InventoryViewModel inventoryVM)
     {
         int count = inventoryVM.GetItemCount(_itemId);
-
-        inventoryVM.RemoveItem(_itemId, 1);
 
         _itemCountText.text = count.ToString();
         return true;
