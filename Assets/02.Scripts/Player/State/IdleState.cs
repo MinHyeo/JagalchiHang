@@ -14,12 +14,12 @@ public class IdleState : IPlayerState
         { 
             if(player.IsRunning == true)
             {
-                player.SetState(StateType.Run);
+                player.ChangeState(StateType.Run);
             }
 
             else
             {
-                player.SetState(StateType.Walk);
+                player.ChangeState(StateType.Walk);
             }
         }
     }

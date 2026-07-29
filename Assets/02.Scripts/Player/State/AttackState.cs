@@ -16,17 +16,17 @@ public class AttackState : IPlayerState
 
         if (player.IsWalking == false)
         {
-            player.SetState(StateType.Idle);
+            player.ChangeState(StateType.Idle);
             return;
         }
 
         if (player.IsRunning == true)
         {
-            player.SetState(StateType.Run);
+            player.ChangeState(StateType.Run);
             return;
         }
 
-        player.SetState(StateType.Walk);
+        player.ChangeState(StateType.Walk);
 
     }
 

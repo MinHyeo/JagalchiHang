@@ -12,13 +12,13 @@ public class RunState : IPlayerState
     {
         if (player.IsWalking == false)
         {
-            player.SetState(StateType.Idle);
+            player.ChangeState(StateType.Idle);
             return;
         }
 
         if (player.IsRunning == false)
         {
-            player.SetState(StateType.Walk);
+            player.ChangeState(StateType.Walk);
             return;
         }
     }
