@@ -19,6 +19,11 @@ public class GameObjectManager : SingletonBase<GameObjectManager>
         CreateObjectAsync(dataId, path, spawnSpot).Forget();
     }
 
+    public async UniTask LoadObjectAsync(string path)
+    {
+        await ResourceManager.Instance.LoadAsset<GameObject>(path);
+    }
+
     public async UniTask<GameObject> CreateObjectAsync(string dataId, string path, Vector3 spawnSpot)
     {
         Debug.Log($"CreateObjectAsync 호출됨, path: {path}");

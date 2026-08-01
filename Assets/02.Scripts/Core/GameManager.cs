@@ -15,8 +15,8 @@ public class GameManager : SingletonBase<GameManager>
 
         NetworkManager.Instance.InitSaveLoadService();
 
-        Addressables.LoadResourceLocationsAsync("Prefabs/Map/ParmingMap", typeof(GameObject));
-        Addressables.LoadResourceLocationsAsync("Prefabs/Map/ParkingGarage", typeof(GameObject));
+        GameObjectManager.Instance.LoadObjectAsync("Prefabs/Map/ParmingMap").Forget();
+        GameObjectManager.Instance.LoadObjectAsync("Prefabs/Map/ParkingGarage").Forget();
     }
 
     // TODO : 저장되어 있는 파일 전달해줘야 함
