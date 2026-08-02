@@ -12,7 +12,7 @@ public enum LoadGameUIType
     SaveGame,
 }
 
-public class LoadGameUI : UIBase
+public class SaveLoadGameUI : UIBase
 {
     [Header("프리팹")]
     [SerializeField] private GameObject _saveDataSlotPrefab;
@@ -24,7 +24,7 @@ public class LoadGameUI : UIBase
     [SerializeField] private UIButton _exitButton;
 
     private LoadGameUIType _loadGameUIType;
-    private List<SaveDataSlot> _createdSaveSlotList = new List<SaveDataSlot>();
+    private List<SaveLoadDataSlot> _createdSaveSlotList = new List<SaveLoadDataSlot>();
 
     private SaveLoadViewModel _saveLoadViewModel;
 
@@ -119,7 +119,7 @@ public class LoadGameUI : UIBase
         for(int index = 0; index < listSize; index++)
         {
             GameObject slotObject = Instantiate(_saveDataSlotPrefab, _saveDataRoot);
-            SaveDataSlot slotComponent = slotObject.GetComponent<SaveDataSlot>();
+            SaveLoadDataSlot slotComponent = slotObject.GetComponent<SaveLoadDataSlot>();
 
             _createdSaveSlotList.Add(slotComponent);
         }

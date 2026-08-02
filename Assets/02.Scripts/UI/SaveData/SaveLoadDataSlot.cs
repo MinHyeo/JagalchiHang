@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SaveDataSlot : MonoBehaviour
+public class SaveLoadDataSlot : MonoBehaviour
 {
     private int _slotIndex;
 

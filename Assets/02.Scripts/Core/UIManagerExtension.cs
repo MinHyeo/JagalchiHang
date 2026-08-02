@@ -119,7 +119,7 @@ public static class UIManagerExtension
         if (uiBase == null)
             return;
 
-        if(uiBase is LoadGameUI loadGameUI)
+        if(uiBase is SaveLoadGameUI loadGameUI)
         {
             loadGameUI.Init(loadGameType);
         }
